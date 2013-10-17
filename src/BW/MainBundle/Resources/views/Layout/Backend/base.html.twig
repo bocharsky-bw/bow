@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="{% block lang %}en{% endblock %}">
+    <head>
+        <meta charset="{% block charset %}UTF-8{% endblock %}">
+        
+        <title>{% block title %}% Base Template %{% endblock %}</title>
+        <meta name="description" content="{% block description %}{% endblock %}"/>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        
+        {% block css %}
+            <!-- % CSS % -->
+        {% endblock %}
+            
+        {% block js %}
+            <!-- % JS % -->
+        {% endblock %}
+    </head>
+    <body id="body" class="body">
+        {% block body %}
+            <div id="wrap">
+                <div id="wrap_inner">
+                    <header id="header">
+                        {% block header %}
+                            % Header Block %
+                        {% endblock %}
+                    </header>
+
+                    <div id="content">
+                        {% block pre_content %}
+                            % Pre Content Block %
+                        {% endblock %}
+
+                        {% block flash_messages %}
+                            {% for status, flashMessages in app.session.flashbag.all %}
+                                {% for flashMessage in flashMessages %}
+                                    <div class="bw_container">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="alert alert-dismissable alert-{{ status }} fade in">
+                                                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                    {{ flashMessage|raw }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endblock %}
+                        
+                        {% block content %}
+                            % Content Block %
+                        {% endblock %}
+
+                        {% block post_content %}
+                            % Post Content Block %
+                        {% endblock %}
+                    </div><!-- div#main -->
+
+                    <footer id="footer">
+                        {% block footer %}
+                            % Footer Block %
+                        {% endblock %}
+                    </footer>
+                </div>
+            </div>
+            
+            <div id="overflow">
+                {% block overflow %}
+                    % Over Flow Block %
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </body>
+</html>

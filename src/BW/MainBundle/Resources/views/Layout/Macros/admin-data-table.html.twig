@@ -1,0 +1,97 @@
+{#% import _self as tm %#}
+
+{%- macro tableClasses() -%}
+    table table-striped table-bordered valign_m
+{%- endmacro -%}
+
+{% macro checkboxCell(cell, id) %}
+    {% if cell == 'th' %}
+        <th class="align_c" width="5%">
+            <input type="checkbox" id="check_all" />
+        </th>
+    {% elseif cell == 'td' %}
+        <td class="align_c">
+            <input type="checkbox" name="item_id" value="{{ id }}" />
+        </td>
+    {% endif %}
+{% endmacro %}
+
+{% macro mainCell(cell, params) %}
+    {% if cell == 'th' %}
+        <th class="align_c">
+            Название
+        </th>
+    {% elseif cell == 'td' %}
+        <td class="align_l">
+            {% if params.heading is defined %}<a class="fsize_12em" {% if params.editPath is defined %}href="{{ params.editPath }}"{% endif %} {% if params.title is defined %}title="{{ params.title }}"{% endif %}>{{ params.heading }}</a>{% endif %} 
+            {% if params.viewPath is defined %}<a class="fsize_12em decor_n color_blue" href="{{ params.viewPath }}" title="Просмотр на сайте" target="_blank"><i class="icon-share"></i></a><br> {% endif %}
+            {% if params.slug is defined %}<small><b>slug:</b> {{ params.slug }}</small> {% endif %}
+        </td>
+    {% endif %}
+{% endmacro %}
+
+{% macro tooglePublishLinkCell(cell, isPublished, actionPath) %}
+    {% if cell == 'th' %}
+        <th class="align_c" width="5%">
+            Статус
+        </th>
+    {% elseif cell == 'td' %}
+        <td class="align_c">
+            <a class="decor_n {{ isPublished ? 'color_green' : 'color_red' }} fsize_14em" href="{{ actionPath }}" title="{{ isPublished ? 'Снять с публикации' : 'Опубликовать' }}">
+                {% if isPublished %}
+                    <i class="icon-ok-sign"></i>
+                {% else %}
+                    <i class="icon-minus-sign"></i>
+                {% endif %}
+            </a>
+        </td>
+    {% endif %}
+{% endmacro %}
+
+{% macro createdDateCell(cell, date) %}
+    {% if cell == 'th' %}
+        <th class="align_c" width="12%">
+            Дата создания
+        </th>
+    {% elseif cell == 'td' %}
+        <td class="align_c">
+           <span title="Создано в {{ date|date('H:i:s') }}">{{ date|date('d.m.Y') }}</span>
+        </td>
+    {% endif %}
+{% endmacro %}
+
+{% macro updatedDateCell(cell, date) %}
+    {% if cell == 'th' %}
+        <th class="align_c" width="12%">
+            Дата обновления
+        </th>
+    {% elseif cell == 'td' %}
+        <td class="align_c">
+            <span title="Последнее обновлние в {{ date|date('H:i:s') }}">{{ date|date('d.m.Y') }}</span>
+        </td>
+    {% endif %}
+{% endmacro %}
+
+{% macro viewsCell(cell, countViews ) %}
+    {% if cell == 'th' %}
+        <th class="align_c" width="5%">
+            <i class="icon-eye-open fsize_12em" title="Количество просмотров"></i>
+        </th>
+    {% elseif cell == 'td' %}
+        <td class="align_c">
+            {{ countViews }}
+        </td>
+    {% endif %}
+{% endmacro %}
+
+{% macro idCell(cell, itemId) %}
+    {% if cell == 'th' %}
+        <th class="align_c" width="5%">
+            ID
+        </th>
+    {% elseif cell == 'td' %}
+        <td class="align_c">
+            {{ itemId }}
+        </td>
+    {% endif %}
+{% endmacro %}

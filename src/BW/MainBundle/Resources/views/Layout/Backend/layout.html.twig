@@ -1,0 +1,81 @@
+{% extends "BWMainBundle:Layout/Backend:base.html.twig" %}
+
+{% block lang %}ru{% endblock %}
+
+{% block charset %}UTF-8{% endblock %}
+
+{% block title %}| Панель управления сайтом{% endblock %}
+
+{% block description %}{% endblock %}
+
+{% block css %}
+    <!-- % CSS % -->
+	<link href="{{ asset('css/admin-style.css') }}" type="text/css" rel="stylesheet">
+	<link href="{{ asset('libs/font-awesome/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('libs/jquery/css/jquery-ui-1.10.3.custom.min.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+    
+{% block js %}
+    <!-- % JS % -->
+    <script src="http://code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="{{ asset('libs/jquery/js/jquery-ui-1.10.3.custom.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/admin-script.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block header %}
+    <div id="main-menu-row" class="row">
+        <ul id="main-menu" class="menu-h menu-left row">
+            <li class="">
+                <a href="{{ path('admin') }}"><i class="icon-home"></i> Панель управления</a>
+            </li>
+            <li class="has-child"><a href="#">Списки</a> 
+                <ul>
+                    <li class="">
+                        <a href="{{ path('admin_posts') }}"><i class="icon-file-text before-padding"></i>Статьи</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        
+        <ul class="menu-h menu-right row">
+            <li><a href="{{ path('home') }}" target="_blank"><i class="icon-eye-open before-padding"></i>Посмотреть сайт</a></li>
+            <li><a href="#"><i class="icon-signout before-padding"></i>Выход</a></li>
+        </ul>
+    </div>
+    <div id="icon-menu">
+        <ul class="menu-s row">
+            <li><a href="#" title="Списки" class="icon-list ">Списки</a> 
+                <ul class="menu-s row">
+                    <li><a href="#" class="icon-circle-arrow-left menu-back" title="Назад">Назад</a></li>
+                    <li class="">
+                        <a href="{{ path('admin_posts') }}" title="Статьи" class="icon-file-text">Статьи</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block pre_content %}
+{% endblock %}
+
+{% block content %}
+    <div id="left">
+        {% block left %}
+        {% endblock %}
+    </div>
+        
+    <div id="right">
+        {% block right %}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block post_content %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+    
+{% block overflow %}
+{% endblock %}

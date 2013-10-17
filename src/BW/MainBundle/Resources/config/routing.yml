@@ -1,0 +1,17 @@
+###########
+# BACKEND #
+###########
+admin:
+    host:     %domain%
+    pattern:  /_admin/
+    defaults: { _controller: BWMainBundle:MainAdmin:index }
+
+
+############
+# FRONTEND #
+############
+home:
+    host:     %domain%
+    pattern:  /
+    defaults: { _controller: BWMainBundle:Main:index }
+    

@@ -1,0 +1,25 @@
+{#% import _self as tm %#}
+    
+{% macro viewButton(path) %}
+    <a class="btn btn-info" href="{{ path }}" target="_blank"><i class="icon-share"></i>&nbsp;Просмотр</a>
+{% endmacro %}
+    
+{% macro addButton(path) %}
+    <a class="btn btn-warning" href="{{ path }}"><i class="icon-plus"></i>&nbsp;Создать</a>
+{% endmacro %}
+    
+{% macro saveFormButton(formButton) %}
+    {{ form_widget(formButton, {'attr': {'class': 'btn btn-primary'}, 'label': 'Сохранить'}) }} 
+{% endmacro %}
+    
+{% macro saveAndCloseFormButton(formButton) %}
+    {{ form_widget(formButton, {'attr': {'class': 'btn btn-success'}, 'label': 'Сохранить и Закрыть'}) }} 
+{% endmacro %}
+    
+{% macro deleteButton(path) %}
+    <a class="btn btn-danger" href="{{ path }}" onclick="return confirm('Удалить текущую запись из БД?')" title="Удалить текущую запись">Удалить</a>
+{% endmacro %}
+
+{% macro cancelButton(path) %}
+    <a class="btn btn-default" href="{{ path }}">Отмена</a>
+{% endmacro %}

@@ -1,0 +1,18 @@
+month:
+    Jan: Янв
+    Feb: Фев
+    Mar: Мар
+    Apr: Апр
+    May: Май
+    Jun: Июн
+    Jul: Июл
+    Aug: Авг
+    Sep: Сен
+    Oct: Окт
+    Nov: Ноя
+    Dec: Дек
+
+house.used.count: >
+  На данный момент во Львовском <span class="big-number">%count%</span> введенный в эксплуатацию дом|
+  На данный момент во Львовском <span class="big-number">%count%</span> введенных в эксплуатацию дома|
+  На данный момент во Львовском <span class="big-number">%count%</span> введенных в эксплуатацию домов

@@ -1,0 +1,15 @@
+{% macro fullWidthField(field, labelName) %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row form-group">
+                {{ form_label(field, labelName, {'label_attr': {'class': 'col-lg-2 control-label'} }) }}
+                <div class="col-lg-10">
+                    {{ form_widget(field, {'attr': {'class': 'form-control '} }) }}
+                    <div class="error color_red">
+                        {{ form_errors(field) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

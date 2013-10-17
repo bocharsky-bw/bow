@@ -1,0 +1,30 @@
+###########
+# Backend #
+###########
+admin_posts:
+    host:     %domain%
+    pattern:  /_admin/posts
+    defaults: { _controller: BWBlogBundle:Admin/Post:posts }
+
+admin_add_post:
+    host:     %domain%
+    pattern:  /_admin/post/add
+    defaults: { _controller: BWBlogBundle:Admin/Post:add }
+
+admin_edit_post:
+    host:     %domain%
+    pattern:  /_admin/post/edit/{id}
+    defaults: { _controller: BWBlogBundle:Admin/Post:edit }
+    
+admin_toogle_published_post:
+    host:     %domain%
+    pattern:  /_admin/post/toogle-published/{id}
+    defaults: { _controller: BWBlogBundle:Admin/Post:togglePublished }
+    
+############
+# Frontend #
+############
+post:
+    host:     %domain%
+    pattern:  /posts/{slug}
+    defaults: { _controller: BWBlogBundle:Post:post }
