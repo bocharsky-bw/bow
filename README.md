@@ -1,4 +1,8 @@
-<<<<<<< HEAD
+bow
+===
+
+Bow CMS is a PHP ready-to-use CMS based on Symfony 2 framework
+
 Symfony Standard Edition
 ========================
 
@@ -170,9 +174,3 @@ Enjoy!
 [11]: http://symfony.com/doc/2.3/cookbook/logging/monolog.html
 [12]: http://symfony.com/doc/2.3/cookbook/assetic/asset_management.html
 [13]: http://symfony.com/doc/2.3/bundles/SensioGeneratorBundle/index.html
-=======
-bow
-===
-
-Bow CMS is a PHP ready-to-use CMS based on Symfony 2 framework
->>>>>>> b98ae7fc9dda93252f193113d6aa474c4bf510f6
