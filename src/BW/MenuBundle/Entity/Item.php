@@ -44,6 +44,13 @@ class Item
     private $href;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="class", type="string", length=255)
+     */
+    private $class;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="in_new", type="boolean")
@@ -373,5 +380,28 @@ class Item
     public function getHref()
     {
         return $this->href;
+    }
+
+    /**
+     * Set class
+     *
+     * @param string $class
+     * @return Item
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
+    
+        return $this;
+    }
+
+    /**
+     * Get class
+     *
+     * @return string 
+     */
+    public function getClass()
+    {
+        return $this->class;
     }
 }

@@ -29,6 +29,7 @@ class ItemType extends AbstractType
                 ->add('name', 'text')
                 ->add('title', 'text')
                 ->add('href', 'text')
+                ->add('class', 'text')
                 ->add('inNew', 'checkbox', array(
                     'required' => FALSE,
                 ))

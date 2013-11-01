@@ -1,8 +1,8 @@
 {% macro menuRecursion(items) %}
     <ul>
         {% for item in items %}
-            <li>
-                <a href="{{ item.current.href }}">{{ item.current.name }}</a>
+            <li class="item_{{ item.current.id }}{% if item.current.class %} {{ item.current.class }}{% endif %}">
+                <a href="{{ item.current.href }}"{% if item.current.title %} title="{{ item.current.title }}"{% endif %}{% if item.current.inNew %} target="_blank"{% endif %}>{{ item.current.name }}</a>
                 {% if item.children is defined %}
                     {{ _self.menuRecursion(item.children) }}
                 {% endif %}

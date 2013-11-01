@@ -58,6 +58,14 @@
         </div>
             
         <div>
+            {{ form_label(form.class, 'Атрибут class: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.class, {'attr': {'class': 'form-control '} }) }}
+            <div class="error">
+                {{ form_errors(form.class) }}
+            </div>
+        </div>
+            
+        <div>
             {{ form_label(form.ordering, 'Порядок сортировки: ', {'label_attr': {'class': ''} }) }}
             {{ form_widget(form.ordering, {'attr': {'class': 'form-control'} }) }}
             <div class="error">
