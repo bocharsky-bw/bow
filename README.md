@@ -3,8 +3,8 @@ BoW
 
 BoW CMS is a PHP ready-to-use CMS based on Symfony 2 framework
 
-Symfony Standard Edition
-========================
+Based on Symfony Standard Edition
+=================================
 
 Welcome to the Symfony Standard Edition - a fully-functional Symfony2
 application that you can use as the skeleton for your new applications.
