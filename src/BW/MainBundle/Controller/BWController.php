@@ -3,7 +3,7 @@
 namespace BW\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use BW\Helpers\PropertyOverload\PropertyOverload;
+use BW\MainBundle\Service\PropertyOverload;
 
 class BWController extends Controller {
     
