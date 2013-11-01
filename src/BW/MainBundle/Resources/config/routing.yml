@@ -3,15 +3,20 @@
 ###########
 admin:
     host:     %domain%
-    pattern:  /_admin/
-    defaults: { _controller: BWMainBundle:MainAdmin:index }
+    pattern:  /_admin/{_locale}/
+    defaults: { _controller: BWMainBundle:Admin/Main:index, _locale: %locale% }
 
+admin_config:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/config
+    defaults: { _controller: BWMainBundle:Admin/Main:config, _locale: %locale% }
+    
 
 ############
 # FRONTEND #
 ############
 home:
     host:     %domain%
-    pattern:  /
+    pattern:  /{_locale}/
     defaults: { _controller: BWMainBundle:Main:index }
     

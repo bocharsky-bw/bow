@@ -1,0 +1,14 @@
+{% extends 'BWMainBundle:Layout/Backend:layout.html.twig' %}
+
+{% block title %}Редактирование меню {{ parent() }}{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+{% endblock %}
+    
+{% block content %}
+    <h1>Редактирование меню</h1>
+    
+    {% include 'BWMenuBundle:Admin/Menu:menu.html.twig' %}
+    
+{% endblock %}

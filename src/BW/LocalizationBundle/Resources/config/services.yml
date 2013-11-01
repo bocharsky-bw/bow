@@ -1,0 +1,7 @@
+parameters:
+#    bw_localization.example.class: BW\LocalizationBundle\Example
+
+services:
+#    bw_localization.example:
+#        class: %bw_localization.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

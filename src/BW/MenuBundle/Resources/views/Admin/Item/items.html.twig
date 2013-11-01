@@ -1,0 +1,67 @@
+{% extends 'BWMainBundle:Layout/Backend:layout.html.twig' %}
+
+{% block title %}Список пунктов меню {{ parent() }}{% endblock %}
+
+{% block pre_content %}
+    <div class="form-buttons">
+        <a class="btn btn-primary icon-plus before-padding" href="{{ path('admin_item_add') }}" title="Добавить новую ссылку">Создать ссылку</a>
+    </div>
+{% endblock %}
+
+{% macro itemRecursion(items) %}
+    {% for item in items %}
+        <tr>
+            <td class="ta_c">
+                {{ app.request.attributes.set('_list_index', app.request.attributes.getInt('_list_index') + 1) }}
+                {{ app.request.attributes.getInt('_list_index') }}
+            </td>
+            <td>
+                {{ '|— '|repeat(item.current.level) }} <a href="{{ path('admin_item_edit', {'id': item.current.id}) }}" title="Редактировать пункт меню">{{ item.current.name }}</a> 
+            </td>
+            <td>
+                <a href="{{ path('admin_menu_edit', {'id': item.current.menu.id}) }}" title="Редактировать меню">{{ item.current.menu.name }}</a> 
+            </td>
+            <td class="ta_c">
+                {{ item.current.ordering }}
+            </td>
+            <td class="ta_c">
+                {% if item.current.parent %}
+                    <a href="{{ path('admin_item_edit', {'id': item.current.parent.id}) }}" title="{{ item.current.parent.name }} | изменить">{{ item.current.parent.id }}</a>
+                {% else %}
+                    ~
+                {% endif %}
+            </td>
+            <td class="ta_c">
+                <span title="ID пункта меню">{{ item.current.id }}</span>
+            </td>
+        </tr>
+        {% if item.children is defined %}
+            {{ _self.itemRecursion(item.children) }}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+{% block content %}
+    <h1>Список пунктов меню</h1>
+    {% if items %}
+        <div class="main-table">   
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr valign="middle">
+                        <th style="width: 5%" class="ta_c">№</th>
+                        <th>Название</th>
+                        <th>Меню</th>
+                        <th style="width: 5%" class="ta_c"><span title="Порядковый номер">Порядок</span></th>
+                        <th style="width: 5%" class="ta_c"><span title="ID родитителя">Родитель</span></th>
+                        <th style="width: 5%" class="ta_c">ID</th>
+                    </tr>
+                </thead> 
+                <tbody>
+                    {{ _self.itemRecursion(items) }}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="ta_c">Записи отсутствуют</div>
+    {% endif %}
+{% endblock %}

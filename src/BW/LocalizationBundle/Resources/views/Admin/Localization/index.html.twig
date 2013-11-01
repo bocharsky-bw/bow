@@ -1,0 +1,17 @@
+{% extends 'BWMainBundle:Layout/Backend:layout.html.twig' %}
+
+{% block title %}Локализация {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-globe"></i> Локализация</h1>
+        </div>
+    </div>
+    <div class="bw_container">
+        <div class="bw_row">
+            <h2><a href="{{ path('admin_localization_langs') }}"><i class="icon-flag"></i> Список языков</a></h2>
+            <h2><a href="{{ path('admin_system_localization') }}"><i class="icon-book"></i> Локализация системы</a></h2>
+        </div>
+    </div>
+{% endblock %}

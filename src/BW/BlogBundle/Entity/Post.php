@@ -25,7 +25,7 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255)
      */
     private $slug;
 
@@ -84,6 +84,14 @@ class Post
      * @ORM\Column(name="published", type="boolean")
      */
     private $published;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="\BW\LocalizationBundle\Entity\Lang")
+     * @ORM\JoinColumn(name="lang_id", referencedColumnName="id")
+     */
+    private $lang;
 
     
     /**
@@ -332,5 +340,28 @@ class Post
     public function getPublished()
     {
         return $this->published;
+    }
+
+    /**
+     * Set lang
+     *
+     * @param \BW\BlogBundle\Entity\Lang $lang
+     * @return Post
+     */
+    public function setLang(\BW\LocalizationBundle\Entity\Lang $lang = null)
+    {
+        $this->lang = $lang;
+    
+        return $this;
+    }
+
+    /**
+     * Get lang
+     *
+     * @return \BW\BlogBundle\Entity\Lang 
+     */
+    public function getLang()
+    {
+        return $this->lang;
     }
 }

@@ -19,6 +19,9 @@
 {% endblock %}
 
 {% block header %}
+    {{ render(controller('BWMenuBundle:Menu:menu', {'id': 1})) }}
+    {{ render(controller('BWMenuBundle:Menu:menu', {'id': 2})) }}
+    {{ render(controller('BWLocalizationBundle:Lang:langsMenu', {'request': app.request})) }}
 {% endblock %}
 
 {% block pre_content %}

@@ -1,0 +1,34 @@
+###########
+# Backend #
+###########
+
+# Menu
+admin_menus:
+    pattern:  /_admin/{_locale}/menus
+    defaults: { _controller: BWMenuBundle:Admin/Menu:menus, _locale: %locale% }
+    
+admin_menu_add:
+    pattern:  /_admin/{_locale}/menu/add
+    defaults: { _controller: BWMenuBundle:Admin/Menu:menu, _locale: %locale% }
+
+admin_menu_edit:
+    pattern:  /_admin/{_locale}/menu/edit/{id}
+    defaults: { _controller: BWMenuBundle:Admin/Menu:menu, _locale: %locale% }
+
+
+# Item
+admin_items:
+    pattern:  /_admin/{_locale}/items
+    defaults: { _controller: BWMenuBundle:Admin/Item:items, _locale: %locale% }
+
+admin_item_add:
+    pattern:  /_admin/{_locale}/item/add
+    defaults: { _controller: BWMenuBundle:Admin/Item:item, _locale: %locale% }
+
+admin_item_edit:
+    pattern:  /_admin/{_locale}/item/edit/{id}
+    defaults: { _controller: BWMenuBundle:Admin/Item:item, _locale: %locale% }
+
+############
+# Frontend #
+############

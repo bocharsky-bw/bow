@@ -1,0 +1,69 @@
+{% extends 'BWMainBundle:Layout/Backend:layout.html.twig' %}
+
+{% block title %}Локализация системы {{ parent() }}{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <style type="text/css" media="screen">
+        #ace-wrapper {
+            position: relative;
+            height: 500px;
+        }
+        #ace-editor { 
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <script src="{{ asset('libs/ace-builds/src-noconflict/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script>
+        $(document).ready(function(){
+            var editor = ace.edit("ace-editor");
+            editor.setTheme("ace/theme/twilight");
+            editor.getSession().setMode("ace/mode/yaml");
+            
+            $('#ace-editor').keyup(function(){
+                $('#form_messages').val(editor.getSession().getValue());
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-book"></i> Локализация системы</h1>
+        </div>
+    </div>
+    <div class="bw_container">
+        <div class="bw_row">
+            <p><em>* Для локализации системы используются переводы в YAML-формате.</em></p>
+            <div>Подробная документация по YAML-формату на оф.сайте Symfony:</div>
+            <ul>
+                <li>- <a href="http://symfony.com/doc/current/components/yaml/yaml_format.html" target="_blank">Формат YAML</a></li>
+                <li>- <a href="http://symfony.com/doc/current/book/translation.html#creating-translations" target="_blank">Правила создания переводов в YAML-формате</a></li>
+            </ul>
+        </div>
+    </div>
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+        
+        <div class="form-buttons">
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Сохранить'}) }}
+            {{ form_widget(form.saveAndExit, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и выйти из режима редактирования'}, 'label': 'Сохранить и закрыть'}) }}
+            <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_localization') }}" title="Отменить несохраненные изменения">Закрыть</a>
+        </div>
+        
+        {{ form_row(form.messages) }}
+    {{ form_end(form) }}
+    
+    <div id="ace-wrapper">
+        <pre id="ace-editor">{{ messages }}</pre>
+    </div>
+{% endblock %}

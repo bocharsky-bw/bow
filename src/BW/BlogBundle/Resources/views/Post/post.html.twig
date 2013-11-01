@@ -6,6 +6,6 @@
 
 {% block content %}
     <h1>{{ post.heading }}</h1>
-    <small>{{ post.created.format('d/m/Y в H:i:s') }}</small>
+    <small>{{ post.created.format('d/m/Y в H:i') }}</small>
     <div>{{ post.content|raw }}</div>
 {% endblock %}

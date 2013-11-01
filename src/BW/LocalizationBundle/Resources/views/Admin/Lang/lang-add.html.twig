@@ -1,0 +1,12 @@
+{% extends 'BWMainBundle:Layout/Backend:layout.html.twig' %}
+
+{% block title %}Добавление нового языка {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-plus"></i> Создание языка</h1>
+        </div>
+    </div>
+    {% include 'BWLocalizationBundle:Admin/Lang:lang.html.twig' %}
+{% endblock %}

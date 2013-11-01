@@ -1,0 +1,36 @@
+###########
+# BACKEND #
+###########
+
+# Localization
+admin_localization:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/localization
+    defaults: { _controller: BWLocalizationBundle:Admin/Localization:index, _locale: %locale% }
+    
+admin_system_localization:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/localization/system
+    defaults: { _controller: BWLocalizationBundle:Admin/Localization:system, _locale: %locale% }
+
+admin_content_localization:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/localization/content
+    defaults: { _controller: BWLocalizationBundle:Admin/Localization:content, _locale: %locale% }
+    
+# Lang
+admin_localization_langs:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/localization/langs
+    defaults: { _controller: BWLocalizationBundle:Admin/Lang:langs, _locale: %locale% }
+    
+admin_localization_add_lang:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/localization/lang/add
+    defaults: { _controller: BWLocalizationBundle:Admin/Lang:lang, _locale: %locale% }
+    
+admin_localization_edit_lang:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/localization/lang/edit/{id}
+    defaults: { _controller: BWLocalizationBundle:Admin/Lang:lang, _locale: %locale% }
+    

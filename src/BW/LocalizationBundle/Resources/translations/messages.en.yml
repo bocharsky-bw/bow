@@ -1,0 +1,19 @@
+admin:
+    control_panel: Control panel
+    system: System
+    configuration: Configuration
+    localization: Localization
+    content: Content
+    articles: Articles
+    menu: Menu
+    menu_items: Menu items
+    view_site: View site
+
+localization:
+    lang: Language
+
+user:
+    sign_out: Sign Out
+
+block:
+    main_menu: Main menu

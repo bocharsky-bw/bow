@@ -3,28 +3,33 @@
 ###########
 admin_posts:
     host:     %domain%
-    pattern:  /_admin/posts
-    defaults: { _controller: BWBlogBundle:Admin/Post:posts }
+    pattern:  /_admin/{_locale}/posts
+    defaults: { _controller: BWBlogBundle:Admin/Post:posts, _locale: %locale% }
 
 admin_add_post:
     host:     %domain%
-    pattern:  /_admin/post/add
-    defaults: { _controller: BWBlogBundle:Admin/Post:add }
+    pattern:  /_admin/{_locale}/post/add
+    defaults: { _controller: BWBlogBundle:Admin/Post:post, _locale: %locale% }
 
 admin_edit_post:
     host:     %domain%
-    pattern:  /_admin/post/edit/{id}
-    defaults: { _controller: BWBlogBundle:Admin/Post:edit }
+    pattern:  /_admin/{_locale}/post/edit/{id}
+    defaults: { _controller: BWBlogBundle:Admin/Post:post, _locale: %locale% }
     
 admin_toogle_published_post:
     host:     %domain%
-    pattern:  /_admin/post/toogle-published/{id}
-    defaults: { _controller: BWBlogBundle:Admin/Post:togglePublished }
+    pattern:  /_admin/{_locale}/post/toogle-published/{id}
+    defaults: { _controller: BWBlogBundle:Admin/Post:togglePublished, _locale: %locale% }
     
 ############
 # Frontend #
 ############
+posts:
+    host:     %domain%
+    pattern:  /{_locale}/blog/
+    defaults: { _controller: BWBlogBundle:Post:posts, _locale: %locale% }
+    
 post:
     host:     %domain%
-    pattern:  /posts/{slug}
-    defaults: { _controller: BWBlogBundle:Post:post }
+    pattern:  /{_locale}/blog/{slug}
+    defaults: { _controller: BWBlogBundle:Post:post, _locale: %locale% }

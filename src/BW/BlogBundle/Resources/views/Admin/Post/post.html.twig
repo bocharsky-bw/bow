@@ -9,7 +9,7 @@
         </div>
 
         <div class="form-buttons">
-            {% if post is defined %}
+            {% if post.slug %}
                 <a class="btn btn-primary icon-share before-padding" href="{{ path('post', {'slug': post.slug}) }}" target="_blank" title="Просмотреть на сайте">Просмотр</a>
             {% endif %}
             {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Сохранить'}) }}
@@ -28,6 +28,14 @@
             </div>
         </div>
 
+        <div>
+            {{ form_label(form.lang, 'Язык: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.lang, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.lang) }}
+            </div>
+        </div>
+        
         <div>
             {{ form_label(form.heading, 'Заголовок: ', {'label_attr': {'class': ''} }) }}
             {{ form_widget(form.heading, {'attr': {'class': 'form-control '} }) }}

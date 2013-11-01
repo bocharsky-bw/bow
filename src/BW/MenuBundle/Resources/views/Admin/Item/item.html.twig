@@ -1,0 +1,77 @@
+{{ form_start(form) }}
+    <div id="left">
+
+    </div>
+
+    <div id="right">
+        <div class="error">
+            {{ form_errors(form) }}
+        </div>
+
+        <div class="form-buttons">
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Сохранить'}) }}
+            {{ form_widget(form.saveAndExit, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и выйти из режима редактирования'}, 'label': 'Сохранить и закрыть'}) }}
+            {% if form.delete is defined %}
+                {{ form_widget(form.delete, {'attr': {'class': 'btn btn-default icon-remove before-padding', 'title': 'Удалить запись', 'onclick': "return confirm('Удалить запись из БД?')"}, 'label': 'Удалить'}) }}
+            {% endif %}
+            <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_menus') }}" title="Отменить несохраненные изменения">Закрыть</a>
+        </div>
+
+        <div>
+            {{ form_label(form.menu, 'Меню: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.menu, {'attr': {'class': 'form-control '} }) }}
+            <div class="error">
+                {{ form_errors(form.menu) }}
+            </div>
+        </div>
+
+        <div>
+            {{ form_label(form.parent, 'Родительский пункт меню: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.parent, {'attr': {'class': 'form-control '} }) }}
+            <div class="error">
+                {{ form_errors(form.parent) }}
+            </div>
+        </div>
+
+        <div>
+            {{ form_label(form.name, 'Название: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control '} }) }}
+            <div class="error">
+                {{ form_errors(form.name) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.href, 'Ссылка: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.href, {'attr': {'class': 'form-control '} }) }}
+            <div class="error">
+                {{ form_errors(form.href) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.title, 'Атрибут title: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.title, {'attr': {'class': 'form-control '} }) }}
+            <div class="error">
+                {{ form_errors(form.title) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.ordering, 'Порядок сортировки: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.ordering, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.ordering) }}
+            </div>
+        </div>
+
+        <div>
+            {{ form_label(form.inNew, 'В новом окне: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.inNew, {'attr': {'class': ''} }) }}
+            <div class="error">
+                {{ form_errors(form.inNew) }}
+            </div>
+        </div>
+
+    </div>
+{{ form_end(form) }}

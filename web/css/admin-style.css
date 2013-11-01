@@ -5,6 +5,60 @@
 .ta_j {text-align: justify;}
 /* /BWBootstrap CSS */
 
+.bw_container {
+    margin: 0 auto;
+}
+
+.bw_container .bw_row {
+    padding: 0 20px;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.alert-success {
+    color: #468847;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.alert-info {
+    color: #3a87ad;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+.alert-warning {
+    color: #c09853;
+    background-color: #fcf8e3;
+    border-color: #fbeed5;
+}
+.alert-danger {
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #eed3d7;
+}
+
+.close {
+    float: right;
+    font-size: 21px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000000;
+    text-shadow: 0 1px 0 #ffffff;
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+}
+button.close {
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    -webkit-appearance: none;
+}
+
+
 .error {
     color: red;
 }
@@ -151,11 +205,11 @@ h1, h2, h3, h4 {
     box-shadow: 0 0 10px 3px #DDD;
 }
 
-#main-menu > li {
+.menu-h > li {
 	  position: relative;
 }
 
-#main-menu > li > ul {
+.menu-h > li > ul {
   	display: none;
   	visibility: hidden;
   	opacity: 0;
@@ -172,18 +226,18 @@ h1, h2, h3, h4 {
 
 }
 
-#main-menu > li > ul a {
+.menu-h > li > ul a {
 	  color: #000;
     padding: 0 10px;
     margin: 0 5px;
     border-bottom: 1px solid #ddd;
 }
 
-#main-menu > li > ul a:hover {
+.menu-h > li > ul a:hover {
     color: #666;
 }
 
-#main-menu > li > a:hover + ul, #main-menu > li > ul:hover {
+.menu-h > li > a:hover + ul, .menu-h > li > ul:hover {
   	visibility: visible;
   	opacity: 1;
   	display: block;

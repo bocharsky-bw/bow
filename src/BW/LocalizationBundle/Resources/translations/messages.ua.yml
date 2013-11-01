@@ -1,0 +1,19 @@
+admin:
+    control_panel: Панель управління
+    system: Система
+    configuration: Налаштування
+    localization: Локалізація
+    content: Контент
+    articles: Статті
+    menu: Меню
+    menu_items: Пункти меню
+    view_site: Перегляд сайту
+
+localization:
+    lang: Мова
+
+user:
+    sign_out: Вихід
+
+block:
+    main_menu: Головне меню

@@ -1,0 +1,16 @@
+<h3>Меню выбора языка</h3>
+<ul>
+    <li class="has-child"><a href="javascript:void(0)"><i class="icon-flag before-padding"></i>{{ 'localization.lang'|trans }}: {{ request.locale|upper }}</a> 
+        <ul>
+            {% for lang in langs %}
+                <li class="">
+                    {% if request.locale == lang.sign %}
+                        <a href="javascript:void(0)"><i class="icon-flag-alt before-padding"></i><strong>{{ lang.name }}&nbsp;({{ lang.sign }})</strong></a>
+                    {% else %}
+                        <a href="{{ request.requestUri|replace({('/'~ request.locale ~'/'): ('/'~ lang.sign ~'/')}) }}"><i class="icon-flag-alt before-padding"></i>{{ lang.name }}&nbsp;({{ lang.sign }})</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </li>
+</ul>

@@ -22,10 +22,22 @@ class PostType extends AbstractType
                 ->add('shortDescription', 'textarea')
                 ->add('content', 'textarea')
                 ->add('created', 'datetime')
+                // Entities
+                // Язык
+                ->add('lang', 'entity', array(
+                    'class' => 'BWLocalizationBundle:Lang',
+                    'property' => 'name',
+                    'required' => FALSE,
+                    'empty_value' => 'Выберите язык',
+                ))
                 // Meta tags
                 ->add('slug', 'text')
                 ->add('title', 'text')
                 ->add('metaDescription', 'textarea')
+                // Buttons
+                ->add('save', 'submit')
+                ->add('saveAndExit', 'submit')
+                ->add('delete', 'submit')
             ;
     }
     

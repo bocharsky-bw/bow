@@ -15,22 +15,23 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th class="ta_c">№</th>
+                        <th style="width: 5%" class="ta_c">№</th>
                         <th>Название</th>
-                        <th class="ta_c">Статус</th>
-                        <th>Дата создания</th>
-                        <th>Дата изменения</th>
-                        <th class="ta_c">ID</th>
+                        <th style="width: 5%" class="ta_c">Статус</th>
+                        <th style="width: 10%">Дата создания</th>
+                        <th style="width: 10%">Дата изменения</th>
+                        <th style="width: 5%" class="ta_c">Язык</th>
+                        <th style="width: 5%" class="ta_c">ID</th>
                     </tr>
                 </thead> 
                 {% for post in posts %}
                     <tbody>
                         <tr>
-                            <td class="ta_c" style="width: 5%">{{ loop.index }}</td>
+                            <td class="ta_c">{{ loop.index }}</td>
                             <td>
-                                <a href="{{ path('admin_edit_post', {'id': post.id}) }}" title="{{ post.title }}">{{ post.heading }}</a> 
+                                <a href="{{ path('admin_edit_post', {'id': post.id}) }}" title="Редактировать статью">{{ post.heading }}</a> 
                             </td>
-                            <td class="ta_c" style="width: 5%">
+                            <td class="ta_c">
                                 <a href="{{ path('admin_toogle_published_post', {'id': post.id}) }}">
                                     {% if post.published %}
                                         <i class="green icon-ok-sign" style="color: green;" title="Снять с публикации"></i>
@@ -39,14 +40,21 @@
                                     {% endif %}
                                 </a>
                             </td>
-                            <td style="width: 10%">
+                            <td>
                                 {{ post.created|date('d/m/Y') }}
                             </td>
-                            <td style="width: 10%">
+                            <td>
                                 {{ post.updated|date('d/m/Y') }}
                             </td>
-                            <td class="ta_c" style="width: 5%">
-                                <span title="ID страны">{{ post.id }}</span>
+                            <td class="ta_c">
+                                {% if post.lang %}
+                                    <abbr title="{{ post.lang.name }}">{{ post.lang.sign }}</abbr>
+                                {% else %}
+                                    ~
+                                {% endif %}
+                            </td>
+                            <td class="ta_c">
+                                <span title="ID статьи в БД">{{ post.id }}</span>
                             </td>
                         </tr>
                     </tbody>

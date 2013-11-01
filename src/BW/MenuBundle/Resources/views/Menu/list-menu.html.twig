@@ -1,0 +1,17 @@
+{% macro menuRecursion(items) %}
+    <ul>
+        {% for item in items %}
+            <li>
+                <a href="{{ item.current.href }}">{{ item.current.name }}</a>
+                {% if item.children is defined %}
+                    {{ _self.menuRecursion(item.children) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+<div>
+    <h3>{{ menu.name }}</h3>
+    {{ _self.menuRecursion(items) }}
+</div>
