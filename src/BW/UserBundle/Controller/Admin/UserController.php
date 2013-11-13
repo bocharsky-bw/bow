@@ -26,6 +26,7 @@ class UserController extends BWController
     
     public function userAction($id = NULL) {
         $data = $this->getPropertyOverload();
+        $request = $this->get('request');
         
         if ($id) {
             $user = $this->getDoctrine()->getRepository('BWUserBundle:User')->find($id);
@@ -36,6 +37,42 @@ class UserController extends BWController
         $form = $this->createForm(new UserType(), $user);
         if ( ! $id) {
             $form->remove('delete');
+            $user->setPassword('userpass');
+        }
+        
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                
+                if ($id) {
+                    if ( $form->get('delete')->isClicked() ) {
+                        if ($this->getUser()->getId() != $id) {
+                            $em->remove($user);
+                            $em->flush();
+                            $this->get('session')->getFlashBag()->add('danger', '<b>Успешно!</b> Пользователь "'. $user->getUsername() .'" успешно удален из БД');
+                        } else {
+                            $this->get('session')->getFlashBag()->add('danger', '<b>Ошибка!</b> Вы не можете удалить самого себя.');
+                        }
+                        
+                        return $this->redirect( $this->generateUrl('admin_users') );
+                    }
+                }
+                
+                $em->persist($user);
+                $em->flush();
+                $this->get('session')->getFlashBag()->add(
+                        'success',
+                        'Пользователь успешно сохранен в БД'
+                    );
+                
+                if ( $form->get('saveAndClose')->isClicked() ) {
+                    return $this->redirect( $this->generateUrl('admin_users') );
+                }
+                
+                return $this->redirect( $this->generateUrl('admin_user_edit', array('id' => $user->getId())) );
+            }
         }
         
         $data->user = $user;

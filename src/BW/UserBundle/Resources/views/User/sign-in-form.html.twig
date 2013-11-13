@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-lg-12">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div style="text-align: right; line-height: 30px;">
+                Вы авторизированы как <strong>{{ app.user.email }}</strong> | <a href="{{ path('user_sign_out') }}">Выйти</a> 
+                {% if is_granted('ROLE_ADMIN') %}
+                    | <a href="{{ path('admin') }}">Панель управления</a>
+                {% endif %}
+            </div>
+        {% else %}
+            <form id="auth-form" class="clear" action="{{ path('user_sign_in_check') }}" method="POST">
+                <input id="email" type="text" name="_username" size="40" value="{{ last_username ? last_username : 'e-mail...' }}">
+                <input id="password" type="text" name="_password" size="40" value="password...">
+                {#
+                    If you want to control the URL the user
+                    is redirected to on success (more details below)
+                    <input type="hidden" name="_target_path" value="/account" />
+                #}
+                <button type="submit">Войти</button>
+            </form>
+        {% endif %}
+        <div class="clear"></div>
+    </div>
+</div>

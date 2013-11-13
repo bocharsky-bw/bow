@@ -14,30 +14,22 @@
             {% if form.delete is defined %}
                 {{ form_widget(form.delete, {'attr': {'class': 'btn btn-default icon-remove before-padding', 'title': 'Удалить запись', 'onclick': "return confirm('Удалить запись из БД?')"}, 'label': 'Удалить'}) }}
             {% endif %}
-            <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_users') }}" title="Отменить несохраненные изменения">Закрыть</a>
-        </div>
-            
-        <div>
-            {{ form_label(form.isActive, 'Актиный: ', {'label_attr': {'class': ''} }) }}
-            {{ form_widget(form.isActive, {'attr': {'class': ''} }) }}
-            <div class="error">
-                {{ form_errors(form.isActive) }}
-            </div>
+            <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_roles') }}" title="Отменить несохраненные изменения">Закрыть</a>
         </div>
 
         <div>
-            {{ form_label(form.username, 'Логин: ', {'label_attr': {'class': ''} }) }}
-            {{ form_widget(form.username, {'attr': {'class': 'form-control'} }) }}
+            {{ form_label(form.name, 'Роль: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'} }) }}
             <div class="error">
-                {{ form_errors(form.username) }}
+                {{ form_errors(form.name) }}
             </div>
         </div>
         
         <div>
-            {{ form_label(form.email, 'E-mail: ', {'label_attr': {'class': ''} }) }}
-            {{ form_widget(form.email, {'attr': {'class': 'form-control '} }) }}
+            {{ form_label(form.role, 'Alias'~ (role.id ? ' (нельзя изменить)') ~': ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.role, {'read_only': (role.id ? true : false), 'attr': {'class': 'form-control '} }) }}
             <div class="error">
-                {{ form_errors(form.email) }}
+                {{ form_errors(form.role) }}
             </div>
         </div>
 

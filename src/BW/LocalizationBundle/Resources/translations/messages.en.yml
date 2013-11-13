@@ -4,7 +4,7 @@ admin:
     configuration: Configuration
     localization: Localization
     users: Users
-    groups: Groups
+    roles: Roles
     content: Content
     pages: Pages
     articles: Articles

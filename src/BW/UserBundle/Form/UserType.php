@@ -15,10 +15,22 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                ->add('username', 'text')
-                ->add('email', 'email')
                 ->add('isActive', 'checkbox', array(
                     'required' => FALSE,
+                ))
+                ->add('username', 'text')
+                ->add('email', 'email')
+                ->add('roles', 'collection', array(
+                    // each item in the array will be an "email" field
+                    'type' => 'entity',
+                    'allow_add' => TRUE,
+                    'allow_delete' => TRUE,
+                    // these options are passed to each "email" type
+                    'options'  => array(
+                        'required'  => false,
+                        'class' => 'BWUserBundle:Role',
+                        'property' => 'name',
+                    ),
                 ))
                 // Buttons
                 ->add('save', 'submit')

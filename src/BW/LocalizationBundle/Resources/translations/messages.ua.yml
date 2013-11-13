@@ -4,7 +4,7 @@ admin:
     configuration: Налаштування
     localization: Локалізація
     users: Користувачі
-    groups: Групи
+    roles: Ролі
     content: Контент
     pages: Сторінки
     articles: Статті

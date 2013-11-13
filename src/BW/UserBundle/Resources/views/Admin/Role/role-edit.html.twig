@@ -1,0 +1,12 @@
+{% extends "BWMainBundle:Layout/Backend:layout.html.twig" %}
+
+{% block title %}Редактирование роли пользователя {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-edit"></i> Редактирование роли пользователя</h1>
+        </div>
+    </div>
+    {% include 'BWUserBundle:Admin/Role:role.html.twig' %}
+{% endblock %}
