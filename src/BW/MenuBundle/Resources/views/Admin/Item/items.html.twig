@@ -32,6 +32,13 @@
                 {% endif %}
             </td>
             <td class="ta_c">
+                {% if item.current.lang %}
+                    {{ item.current.lang.sign }}
+                {% else %}
+                    ~
+                {% endif %}
+            </td>
+            <td class="ta_c">
                 <span title="ID пункта меню">{{ item.current.id }}</span>
             </td>
         </tr>
@@ -42,7 +49,11 @@
 {% endmacro %}
 
 {% block content %}
-    <h1>Список пунктов меню</h1>
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-list"></i> Список пунктов меню</h1>
+        </div>
+    </div>
     {% if items %}
         <div class="main-table">   
             <table class="table table-striped table-hover">
@@ -53,6 +64,7 @@
                         <th>Меню</th>
                         <th style="width: 5%" class="ta_c"><span title="Порядковый номер">Порядок</span></th>
                         <th style="width: 5%" class="ta_c"><span title="ID родитителя">Родитель</span></th>
+                        <th style="width: 5%" class="ta_c">Язык</th>
                         <th style="width: 5%" class="ta_c">ID</th>
                     </tr>
                 </thead> 

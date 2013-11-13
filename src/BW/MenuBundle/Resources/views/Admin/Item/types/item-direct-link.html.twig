@@ -1,0 +1,14 @@
+<div>
+    {{ form_label(form.href, ' ', {'label_attr': {'class': ''} }) }}
+    <blockquote>
+        <div>
+            Укажите прямую ссылку на ресурс вместе с протоколом "http" или "https".<br>
+            Пример:
+        </div>
+        <pre>http://google.com.ua</pre>
+    </blockquote>
+    <abbr title="Атрибут href">{{ form_widget(form.href, {'attr': {'class': 'form-control '} }) }}</abbr>
+    <div class="error">
+        {{ form_errors(form.href) }}
+    </div>
+</div>

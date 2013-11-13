@@ -1,10 +1,24 @@
-{% macro menuRecursion(items, level = 1) %}
+{%- macro generateHref(request, item) -%}
+    {% if item.type %} 
+        {% if item.type.id == 1 %}
+            {{ item.getHref() }}
+        {% elseif item.type.id == 2 %}
+            {{ request.server.get('SCRIPT_NAME') ~'/'~ request.getLocale() ~'/'~ item.getHref() }}
+        {% elseif item.type.id == 3 %}
+            {{ path('post', {'slug': item.post.slug}) }}
+        {% elseif item.type.id == 4 %}
+            {{ path('posts') }}
+        {% endif %}
+    {% endif %}
+{%- endmacro -%}
+
+{% macro menuRecursion(request, items, level = 1) %}
     <ul class="level_{{ level }}">
         {% for item in items %}
             <li class="item_{{ item.current.id }}{% if item.current.class %} {{ item.current.class }}{% endif %}">
-                <a href="{{ item.current.href }}"{% if item.current.title %} title="{{ item.current.title }}"{% endif %}{% if item.current.inNew %} target="_blank"{% endif %}>{{ item.current.name }}</a>
+                <a href="{{ _self.generateHref(request, item.current) }}"{% if item.current.title %} title="{{ item.current.title }}"{% endif %}{% if item.current.inNew %} target="_blank"{% endif %}>{{ item.current.name }}</a>
                 {% if item.children is defined %}
-                    {{ _self.menuRecursion(item.children, level + 1) }}
+                    {{ _self.menuRecursion(request, item.children, level + 1) }}
                 {% endif %}
             </li>
         {% endfor %}
@@ -12,6 +26,8 @@
 {% endmacro %}
 
 <div>
-    <h3>{{ menu.name }}</h3>
-    {{ _self.menuRecursion(items) }}
+    {% if heading is not sameas(false) %}
+        <h3>{{ heading ? heading : menu.name }}</h3>
+    {% endif %}
+    {{ _self.menuRecursion(request, items) }}
 </div>

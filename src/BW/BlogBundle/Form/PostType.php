@@ -23,7 +23,7 @@ class PostType extends AbstractType
                 ->add('content', 'textarea')
                 ->add('created', 'datetime')
                 // Entities
-                // Язык
+                // Lang
                 ->add('lang', 'entity', array(
                     'class' => 'BWLocalizationBundle:Lang',
                     'property' => 'name',

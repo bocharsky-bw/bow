@@ -70,7 +70,7 @@ class Item
      * @ORM\Column(name="ordering", type="integer")
      */
     private $ordering;
-    
+
 
     /**
      * @var integer
@@ -94,6 +94,30 @@ class Item
      * @ORM\OneToMany(targetEntity="Item", mappedBy="parent")
      */
     private $children;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="\BW\MenuBundle\Entity\Type")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     */
+    private $type;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="\BW\LocalizationBundle\Entity\Lang")
+     * @ORM\JoinColumn(name="lang_id", referencedColumnName="id")
+     */
+    private $lang;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Post")
+     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     */
+    private $post;
 
     
     /**
@@ -403,5 +427,75 @@ class Item
     public function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * Set lang
+     *
+     * @param \BW\LocalizationBundle\Entity\Lang $lang
+     * @return Item
+     */
+    public function setLang(\BW\LocalizationBundle\Entity\Lang $lang = null)
+    {
+        $this->lang = $lang;
+    
+        return $this;
+    }
+
+    /**
+     * Get lang
+     *
+     * @return \BW\LocalizationBundle\Entity\Lang 
+     */
+    public function getLang()
+    {
+        return $this->lang;
+    }
+
+    /**
+     * Set type
+     *
+     * @param \BW\MenuBundle\Entity\Type $type
+     * @return Item
+     */
+    public function setType(\BW\MenuBundle\Entity\Type $type = null)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \BW\MenuBundle\Entity\Type 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+
+    /**
+     * Set post
+     *
+     * @param \BW\BlogBundle\Entity\Post $post
+     * @return Item
+     */
+    public function setPost(\BW\BlogBundle\Entity\Post $post = null)
+    {
+        $this->post = $post;
+    
+        return $this;
+    }
+
+    /**
+     * Get post
+     *
+     * @return \BW\BlogBundle\Entity\Post 
+     */
+    public function getPost()
+    {
+        return $this->post;
     }
 }

@@ -10,6 +10,7 @@
 
 {% block css %}
     <!-- % CSS % -->
+    <link href="{{ asset('css/bootstrap-skeleton.css') }}" type="text/css" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet">
 {% endblock %}
     
@@ -19,9 +20,35 @@
 {% endblock %}
 
 {% block header %}
-    {{ render(controller('BWMenuBundle:Menu:menu', {'id': 1})) }}
-    {{ render(controller('BWMenuBundle:Menu:menu', {'id': 2})) }}
-    {{ render(controller('BWLocalizationBundle:Lang:langsMenu', {'request': app.request})) }}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2">
+                <div id="logo">
+                    <a href="{{ path('home') }}">Logo</a>
+				</div>
+            </div>
+            <div class="col-lg-10">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form id="auth-form" class="clear" action="" method="POST">
+                            <input id="email" type="text" name="email" size="40" value="e-mail...">
+                            <input id="password" type="text" name="password" size="40" value="password...">
+                            <button type="submit">Войти</button>
+                        </form>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="main_menu">
+                            {{ render(controller('BWMenuBundle:Menu:menu', {'request': app.request, 'id': 1, 'heading': false})) }}
+                            {{ render(controller('BWLocalizationBundle:Lang:langsMenu', {'request': app.request})) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block pre_content %}
@@ -34,7 +61,38 @@
 {% endblock %}
 
 {% block footer %}
+    <div class="line"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="copyright">
+                    Copyright &copy; 2008-{{ 'now'|date('Y') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
     
 {% block overflow %}
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript">
+        function hideValue() {
+            var elem = $('#email, #password');
+            if (elem.size() > 0) {
+                elem.each(function () {
+                    var defaultVal = $(this).val();
+                    $(this).focus(function () {
+                        if ($(this).val() == defaultVal) {
+                            $(this).val('');
+                        }
+                    }).blur(function () {
+                        if ($(this).val() == '') {
+                            $(this).val(defaultVal);
+                        }
+                    });
+                });
+            }
+        }
+        hideValue();
+    </script>
 {% endblock %}

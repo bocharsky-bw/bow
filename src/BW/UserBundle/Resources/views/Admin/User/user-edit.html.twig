@@ -1,0 +1,40 @@
+{% extends "BWMainBundle:Layout/Backend:layout.html.twig" %}
+
+{% import 'BWMainBundle:Layout/Macro:admin-buttons.html.twig' as _buttons %}
+{% import 'BWMainBundle:Layout/Macro:admin-fields.html.twig' as _fields %}
+
+{% block title %}Редактирование пользователя {{ parent() }}{% endblock %}
+
+{% block content %}
+    {{ form_start(
+            form,
+            {
+                'action': path('admin_user_edit', {'id': user.id}),
+                'method': 'POST',
+                'attr':
+                {
+                    'class': 'form-horizontal'
+                } 
+            }
+    )}}
+        <div class="bw_container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1><i class="fa fa-pencil-square-o"></i> Редактирование пользователя</h1>
+                </div>
+                <div class="col-lg-6">
+                    <div class="actions">
+                        {{ _buttons.saveFormButton( form.save ) }}
+                        {{ _buttons.saveAndCloseFormButton( form.saveAndClose ) }}
+                        {{ _buttons.deleteFormButton( form.delete ) }}
+                        {{ _buttons.closeButton( path('admin_users') ) }}
+                    </div>
+                </div>
+            </div>
+                    
+            {% include 'BWUserBundle:Admin/User:user.html.twig' %}
+            
+        </div>
+
+    {{ form_end(form) }}
+{% endblock %}

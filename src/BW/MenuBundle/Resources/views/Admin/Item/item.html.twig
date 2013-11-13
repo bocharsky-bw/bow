@@ -8,13 +8,24 @@
             {{ form_errors(form) }}
         </div>
 
+        <div>
+            Тип пункта меню: <strong>{{ item.type ? item.type.name : 'Не выбран' }}</strong> | 
+            <a href="{{ path('admin_item_types', {'item_id': item.id}) }}">{{ item.type ? 'Изменить' : 'Выбрать' }}</a>
+        </div>
+            
+        {% if itemTypeFilenamePath is defined %}
+            {% include itemTypeFilenamePath %}
+        {% endif %}
+            
+        <br>
+            
         <div class="form-buttons">
             {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Сохранить'}) }}
             {{ form_widget(form.saveAndExit, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и выйти из режима редактирования'}, 'label': 'Сохранить и закрыть'}) }}
             {% if form.delete is defined %}
                 {{ form_widget(form.delete, {'attr': {'class': 'btn btn-default icon-remove before-padding', 'title': 'Удалить запись', 'onclick': "return confirm('Удалить запись из БД?')"}, 'label': 'Удалить'}) }}
             {% endif %}
-            <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_menus') }}" title="Отменить несохраненные изменения">Закрыть</a>
+            <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_items') }}" title="Отменить несохраненные изменения">Закрыть</a>
         </div>
 
         <div>
@@ -42,15 +53,7 @@
         </div>
             
         <div>
-            {{ form_label(form.href, 'Ссылка: ', {'label_attr': {'class': ''} }) }}
-            {{ form_widget(form.href, {'attr': {'class': 'form-control '} }) }}
-            <div class="error">
-                {{ form_errors(form.href) }}
-            </div>
-        </div>
-            
-        <div>
-            {{ form_label(form.title, 'Атрибут title: ', {'label_attr': {'class': ''} }) }}
+            <abbr title="Атрибут title">{{ form_label(form.title, 'Всплывающая подсказка: ', {'label_attr': {'class': ''} }) }}</abbr>
             {{ form_widget(form.title, {'attr': {'class': 'form-control '} }) }}
             <div class="error">
                 {{ form_errors(form.title) }}
@@ -58,10 +61,18 @@
         </div>
             
         <div>
-            {{ form_label(form.class, 'Атрибут class: ', {'label_attr': {'class': ''} }) }}
+            <abbr title="Атрибут class">{{ form_label(form.class, 'Дополнительный класс: ', {'label_attr': {'class': ''} }) }}</abbr>
             {{ form_widget(form.class, {'attr': {'class': 'form-control '} }) }}
             <div class="error">
                 {{ form_errors(form.class) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.lang, 'Язык: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.lang, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.lang) }}
             </div>
         </div>
             
@@ -74,7 +85,7 @@
         </div>
 
         <div>
-            {{ form_label(form.inNew, 'В новом окне: ', {'label_attr': {'class': ''} }) }}
+            {{ form_label(form.inNew, 'Открывать в новом окне? ', {'label_attr': {'class': ''} }) }}
             {{ form_widget(form.inNew, {'attr': {'class': ''} }) }}
             <div class="error">
                 {{ form_errors(form.inNew) }}

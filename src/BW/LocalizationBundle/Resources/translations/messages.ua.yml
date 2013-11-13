@@ -3,7 +3,10 @@ admin:
     system: Система
     configuration: Налаштування
     localization: Локалізація
+    users: Користувачі
+    groups: Групи
     content: Контент
+    pages: Сторінки
     articles: Статті
     menu: Меню
     menu_items: Пункти меню

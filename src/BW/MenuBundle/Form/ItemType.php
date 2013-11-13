@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ItemType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -27,13 +27,24 @@ class ItemType extends AbstractType
                     'empty_value' => 'Корневой пункт меню',
                 ))
                 ->add('name', 'text')
-                ->add('title', 'text')
-                ->add('href', 'text')
-                ->add('class', 'text')
+                ->add('title', 'text', array(
+                    'required' => FALSE,
+                ))
+                ->add('class', 'text', array(
+                    'required' => FALSE,
+                ))
                 ->add('inNew', 'checkbox', array(
                     'required' => FALSE,
                 ))
                 ->add('ordering', 'number')
+                // Entities
+                // Lang
+                ->add('lang', 'entity', array(
+                    'class' => 'BWLocalizationBundle:Lang',
+                    'property' => 'name',
+                    'required' => FALSE,
+                    'empty_value' => 'Выберите язык',
+                ))
                 // Buttons
                 ->add('save', 'submit')
                 ->add('saveAndExit', 'submit')

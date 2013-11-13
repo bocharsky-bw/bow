@@ -13,11 +13,13 @@ class PostController extends BWController
         $data = $this->getPropertyOverload();
         
         $lang = $this->getDoctrine()->getRepository('BWLocalizationBundle:Lang')->findOneBy(array('sign' => $this->getRequest()->getLocale()));
+        $type = $this->getDoctrine()->getRepository('BWBlogBundle:PostType')->findOneBy(array('alias' => 'article'));
         
         $data->posts = $this->getDoctrine()->getRepository('BWBlogBundle:Post')->findBy(
             array(
                 'published' => TRUE,
                 'lang' => $lang,
+                'type' => $type,
             ),
             array(
                 'created' => 'desc',

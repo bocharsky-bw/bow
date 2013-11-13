@@ -17,7 +17,7 @@
             {% if form.delete is defined %}
                 {{ form_widget(form.delete, {'attr': {'class': 'btn btn-default icon-remove before-padding', 'title': 'Удалить запись', 'onclick': "return confirm('Удалить запись из БД?')"}, 'label': 'Удалить'}) }}
             {% endif %}
-            <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_posts') }}" title="Отменить несохраненные изменения">Закрыть</a>
+            <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_articles') }}" title="Отменить несохраненные изменения">Закрыть</a>
         </div>
 
         <div>

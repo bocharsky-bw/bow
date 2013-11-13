@@ -111,15 +111,19 @@ class Recursion {
         
         /* Определение способа перебора элементов в зависимости от условий */
         // Если не было передано родителя
-        if ($parent === FALSE) {
-            // то выполнять перебор элементов по уровням
-            $items =& $data['levels'][$level];
-        } else {
-            // иначе выполнять перебор дочерних элементов переданного родителя
-            $items =& $data['parents'][$parent];
+        $items = array();
+        if ($data) {
+            if ($parent === FALSE) {
+                // то выполнять перебор элементов по уровням
+                $items =& $data['levels'][$level];
+            } else {
+                // иначе выполнять перебор дочерних элементов переданного родителя
+                $items =& $data['parents'][$parent];
+            }
         }
         
         /* Формирование многомерного массива */
+        $result = array();
         foreach ($items as $id => $item) {
             $this->countForeachIterations++; // Подсчет количества итераций цикла foreach
             

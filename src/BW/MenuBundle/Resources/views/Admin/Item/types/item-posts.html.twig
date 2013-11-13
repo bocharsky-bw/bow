@@ -1,0 +1,14 @@
+{#
+<div>
+    {{ form_label(form.post, ' ', {'label_attr': {'class': ''} }) }}
+    <blockquote>
+        <div>
+            Выберите статью, которую будет открывать ссылка.
+        </div>
+    </blockquote>
+    {{ form_widget(form.post, {'attr': {'class': 'form-control '} }) }}
+    <div class="error">
+        {{ form_errors(form.post) }}
+    </div>
+</div>
+#}

@@ -1,0 +1,14 @@
+<div>
+    {{ form_label(form.href, ' ', {'label_attr': {'class': ''} }) }}
+    <blockquote>
+        <div>
+            Укажите относительную ссылку на ресурс (относительно домена сайта без начального слеша).<br>
+            Пример:
+        </div>
+        <pre>contacts</pre>
+    </blockquote>
+    <abbr title="Атрибут href">{{ form_widget(form.href, {'attr': {'class': 'form-control '} }) }}</abbr>
+    <div class="error">
+        {{ form_errors(form.href) }}
+    </div>
+</div>

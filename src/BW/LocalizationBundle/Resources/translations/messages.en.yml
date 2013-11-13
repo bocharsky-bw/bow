@@ -3,7 +3,10 @@ admin:
     system: System
     configuration: Configuration
     localization: Localization
+    users: Users
+    groups: Groups
     content: Content
+    pages: Pages
     articles: Articles
     menu: Menu
     menu_items: Menu items

@@ -1,3 +1,44 @@
-bw_user_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: BWUserBundle:Default:index }
+############
+# Frontend #
+############
+user_sign_up:
+    pattern:  /user/sign-up
+    defaults: { _controller: BWUserBundle:User:signUp }
+    
+user_sign_in:
+    pattern:  /user/sign-in
+    defaults:  { _controller: BWUserBundle:User:signIn }
+    
+user_sign_in_check:
+    pattern:  /user/sign-in-check
+    
+user_sign_out:
+    pattern:  /user/sign-out
+    
+user_password_reset:
+    pattern:  /user/password-reset
+    defaults: { _controller: BWUserBundle:User:passwordReset }
+    
+###########
+# Backend #
+###########
+admin_users:
+    pattern:  /_admin/users
+    defaults: { _controller: BWUserBundle:Admin/User:users }
+    
+admin_user_add:
+    pattern:  /_admin/user/add
+    defaults: { _controller: BWUserBundle:Admin/User:user }
+
+admin_user_edit:
+    pattern:  /_admin/user/edit/{id}
+    defaults: { _controller: BWUserBundle:Admin/User:user }
+
+admin_user_delete:
+    pattern:  /_admin/user/delete/{id}
+    defaults: { _controller: BWUserBundle:Admin/User:delete }
+    
+admin_user_toogle_active:
+    pattern:  /_admin/user/toogle-active/{id}
+    defaults: { _controller: BWUserBundle:Admin/User:toogleActive }
+    

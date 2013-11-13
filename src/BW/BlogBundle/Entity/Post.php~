@@ -25,7 +25,7 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255)
      */
     private $slug;
 
@@ -88,10 +88,18 @@ class Post
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="Lang")
+     * @ORM\ManyToOne(targetEntity="\BW\LocalizationBundle\Entity\Lang")
      * @ORM\JoinColumn(name="lang_id", referencedColumnName="id")
      */
     private $lang;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\PostType")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     */
+    private $type;
 
     
     /**
@@ -340,5 +348,52 @@ class Post
     public function getPublished()
     {
         return $this->published;
+    }
+
+    /**
+     * Set lang
+     *
+     * @param \BW\BlogBundle\Entity\Lang $lang
+     * @return Post
+     */
+    public function setLang(\BW\LocalizationBundle\Entity\Lang $lang = null)
+    {
+        $this->lang = $lang;
+    
+        return $this;
+    }
+
+    /**
+     * Get lang
+     *
+     * @return \BW\BlogBundle\Entity\Lang 
+     */
+    public function getLang()
+    {
+        return $this->lang;
+    }
+    
+
+    /**
+     * Set type
+     *
+     * @param \BW\BlogBundle\Entity\PostType $type
+     * @return Post
+     */
+    public function setType(\BW\BlogBundle\Entity\PostType $type = null)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \BW\BlogBundle\Entity\PostType 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

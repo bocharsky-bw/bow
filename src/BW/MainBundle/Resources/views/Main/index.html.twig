@@ -2,6 +2,27 @@
 
 {% block title %}Главная страница сайта{% endblock %}
 
+{% block pre_content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="slider">
+                    <img src="{{ asset('images/main_image.png') }}" alt="" width="100%">
+				</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 {% block content %}
-    <h1>Главная страница</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {{ render(controller('BWMenuBundle:Menu:menu', {'request': app.request, 'id': 2})) }}
+            </div>
+            <div class="col-lg-9">
+                <h1>Главная страница</h1>
+            </div>
+        </div>
+    </div>
 {% endblock %}

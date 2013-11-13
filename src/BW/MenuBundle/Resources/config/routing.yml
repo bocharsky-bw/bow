@@ -29,6 +29,11 @@ admin_item_edit:
     pattern:  /_admin/{_locale}/item/edit/{id}
     defaults: { _controller: BWMenuBundle:Admin/Item:item, _locale: %locale% }
 
+# Item Type
+admin_item_types:
+    pattern:  /_admin/{_locale}/item-types
+    defaults: { _controller: BWMenuBundle:Admin/Type:itemTypes, _locale: %locale% }
+
 ############
 # Frontend #
 ############

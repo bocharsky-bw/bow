@@ -19,16 +19,16 @@ class PostController extends BWController
         
     }
     
-    public function postsAction() {
+    public function postsAction($type_alias) {
         $data = $this->getPropertyOverload();
         
-        $data->posts = $this->getDoctrine()->getRepository('BWBlogBundle:Post')->findBy(
+        $type = $this->getDoctrine()->getRepository('BWBlogBundle:PostType')->findOneBy(
             array(
-            ),
-            array(
-                'created' => 'desc',
+                'alias' => $type_alias,
             )
         );
+        
+        $data->posts = $type->getArticles();
         
         return $this->render('BWBlogBundle:Admin/Post:posts.html.twig', $data->toArray());
     }
@@ -49,7 +49,7 @@ class PostController extends BWController
 //                $em->flush();
 //                
 //                if ( $form->get('saveAndExit')->isClicked() ) {
-//                    return $this->redirect( $this->generateUrl('admin_posts') );
+//                    return $this->redirect( $this->generateUrl('admin_articles') );
 //                }
 //                
 //                return $this->redirect( $this->generateUrl('admin_edit_post', array('id' => $post->getId())) );
@@ -91,7 +91,7 @@ class PostController extends BWController
                             'Статья успешно удалена из БД'
                         );
 
-                        return $this->redirect( $this->generateUrl('admin_posts') );
+                        return $this->redirect( $this->generateUrl('admin_articles') );
                     }
                 }
                 
@@ -103,7 +103,7 @@ class PostController extends BWController
                     );
                 
                 if ( $form->get('saveAndExit')->isClicked() ) {
-                    return $this->redirect( $this->generateUrl('admin_posts') );
+                    return $this->redirect( $this->generateUrl('admin_articles') );
                 }
                 
                 return $this->redirect( $this->generateUrl('admin_edit_post', array('id' => $post->getId())) );
@@ -132,6 +132,6 @@ class PostController extends BWController
         
         $em->flush();
         
-        return $this->redirect($this->generateUrl('admin_posts'));
+        return $this->redirect($this->generateUrl('admin_articles'));
     }
 }

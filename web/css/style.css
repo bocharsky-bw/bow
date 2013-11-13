@@ -1,0 +1,198 @@
+
+html{
+	height: 100%;
+}
+
+body{
+	font-family: Verdana;
+/*	width: 1366px;
+	min-width: 1000px;
+	margin: 5px 0 0 0;
+	padding: 0;*/
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+div{
+	display: block;
+}
+
+ul{
+	margin: 0;
+	padding: 0;
+}
+
+li{
+	text-decoration: none;
+	list-style: none;
+	text-decoration: none;
+}
+
+a{
+	text-decoration: none;
+}
+
+p{
+	margin: 0;
+	padding: 0;
+}
+
+#wrap{
+	margin-top: 5px;
+	height: auto;
+	min-height: 100%;
+}
+
+.colum{
+	float: left;
+	display: block;
+}
+
+.clear {
+    clear: both;
+}
+.clear:after{
+	display: block;
+	content: "";
+	clear: both;
+}
+
+header{
+    padding-top: 5px;
+}
+
+#logo a{
+    display: block;
+	width: 120px;
+	height: 100px;
+	background-image: url(../images/logo.png);
+	background-repeat: no-repeat;
+    text-indent: -9999px;
+}
+
+/* Auth Block */
+#auth-form{
+	float: right;
+}
+
+#auth-form input{
+	width: 190px;
+	height: 30px;
+	padding: 0 0 0 5px;
+	border: 1px inset;
+	background-color: #128ed5;
+	color: #81c3e9;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#auth-form button{
+	width: 95px;
+	height: 30px;
+	padding: 0;
+	background-color: #d14836;
+	color: #ffeeee;
+	border: 1px solid #d14836;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+#auth-form button:hover{
+	background-color: #c53727;
+	border: 1px solid #b0281a;
+}
+/* /Registration Block */
+
+
+/* Menu Block */
+#main{
+	margin: 15px 0;
+}
+
+#main p{
+	font-size: 15px;
+}
+
+#main_menu{
+	padding-top: 50px;
+}
+
+#main_menu ul {
+    display: table;
+}
+
+#main_menu li{
+	display: block;
+	float: left;
+	margin: 0 27px 0 0;
+}
+
+#main_menu li a{
+	display: block;
+	color: #000;
+	font-size: 18px;
+	padding-bottom: 10px;
+}
+
+#main_menu li > a:hover{
+	color: #128ed5;
+}
+
+#main_menu li:hover ul{
+	display: block;
+}
+
+#main_menu ul li ul{
+	display: none;
+	width: 185px;
+	position: absolute;
+	margin-left: -47px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+#main_menu ul li ul li{
+	float: none;
+	/*line-height: 30px;*/
+	margin: 0;
+}
+
+#main_menu ul li ul li a{
+	padding: 13px 23px;
+	margin: 0;
+	font-size: 15px;
+}
+
+#main_menu ul li ul li a:hover{
+	color: #fff;
+	font-size: 18px;
+	background-color: #128ed5;
+	padding: 13px 10px 13px 33px;
+}
+/* /Menu Block */
+
+footer{
+	background-color: #128ed5;
+	margin: 0 auto;
+	height: 100px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.copyright{
+	line-height: 30px;
+	font-size: 12px;
+	color: #fff;
+}
+
+.line{
+	padding-top: 70px;
+	border-bottom: 1px solid #89c7ea;
+}

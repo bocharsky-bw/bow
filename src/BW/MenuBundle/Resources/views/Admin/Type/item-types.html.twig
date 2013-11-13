@@ -1,0 +1,26 @@
+{% extends 'BWMainBundle:Layout/Backend:layout.html.twig' %}
+
+{% block title %}Выбор типа пункта меню {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-list"></i> Выбор типа пункта меню</h1>
+        </div>
+    </div>
+    <div class="bw_container">
+        <div class="bw_row">
+            <ul>
+                {% for type in types %}
+                    <li>
+                        {% if app.request.query.get('item_id') %}
+                            <a href="{{ path('admin_item_edit', {'id': app.request.query.get('item_id'), 'type': type.alias}) }}">{{ type.name }}</a>
+                        {% else %}
+                            <a href="{{ path('admin_item_add', {'type': type.alias}) }}">{{ type.name }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

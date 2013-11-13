@@ -93,6 +93,14 @@ class Post
      */
     private $lang;
 
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\PostType", inversedBy="articles")
+     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     */
+    private $type;
+
     
     /**
      * Set default values
@@ -363,5 +371,29 @@ class Post
     public function getLang()
     {
         return $this->lang;
+    }
+    
+
+    /**
+     * Set type
+     *
+     * @param \BW\BlogBundle\Entity\PostType $type
+     * @return Post
+     */
+    public function setType(\BW\BlogBundle\Entity\PostType $type = null)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \BW\BlogBundle\Entity\PostType 
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

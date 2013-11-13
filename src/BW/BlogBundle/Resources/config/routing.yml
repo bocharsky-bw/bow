@@ -1,10 +1,15 @@
 ###########
 # Backend #
 ###########
-admin_posts:
+admin_pages:
     host:     %domain%
-    pattern:  /_admin/{_locale}/posts
-    defaults: { _controller: BWBlogBundle:Admin/Post:posts, _locale: %locale% }
+    pattern:  /_admin/{_locale}/pages
+    defaults: { _controller: BWBlogBundle:Admin/Post:posts, _locale: %locale%, type_alias: page }
+    
+admin_articles:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/articles
+    defaults: { _controller: BWBlogBundle:Admin/Post:posts, _locale: %locale%, type_alias: article }
 
 admin_add_post:
     host:     %domain%

@@ -1,0 +1,57 @@
+{% extends 'BWMainBundle:Layout/Backend:layout.html.twig' %}
+
+{% import 'BWMainBundle:Layout/Macro:admin-data-table.html.twig' as _table %}
+{% import 'BWMainBundle:Layout/Macro:admin-buttons.html.twig' as _buttons %}
+
+{% block title %}Список пользователей {% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h1><i class="fa fa-user"></i> Список пользователей</h1>
+            </div>
+            <div class="col-lg-6">
+                <div class="actions align_r">
+                    {{ _buttons.addButton( path('admin_user_add') ) }}
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12">
+                {% if users %}
+                    <table class="{{ _table.tableClasses }}">
+                        <thead>
+                            <tr>
+                                {{ _table.checkboxCell('th') }}
+                                {{ _table.mainCell('th') }}
+                                {{ _table.tooglePublishLinkCell('th') }}
+                                {{ _table.createdDateCell('th') }}
+                                {{ _table.updatedDateCell('th') }}
+                                {{ _table.idCell('th') }}
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            <tr>
+                                {{ _table.checkboxCell('td', user.id) }}
+                                {{ _table.mainCell('td', {
+                                    'editPath': path('admin_user_edit', {'id': user.id}),
+                                    'heading':  user.username,
+                                }) }}
+                                {{ _table.tooglePublishLinkCell('td', user.isActive, path('admin_user_toogle_active', {'id': user.id})) }}
+                                {{ _table.createdDateCell('td', user.created) }}
+                                {{ _table.updatedDateCell('td', user.updated) }}
+                                {{ _table.idCell('td', user.id) }}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="align_c">Не найдено ни одной записи</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

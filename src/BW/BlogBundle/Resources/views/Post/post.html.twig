@@ -5,7 +5,16 @@
 {% block description %}{{ post.metaDescription }}{% endblock %}
 
 {% block content %}
-    <h1>{{ post.heading }}</h1>
-    <small>{{ post.created.format('d/m/Y в H:i') }}</small>
-    <div>{{ post.content|raw }}</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {{ render(controller('BWMenuBundle:Menu:menu', {'request': app.request, 'id': 2})) }}
+            </div>
+            <div class="col-lg-9">
+                <h1>{{ post.heading }}</h1>
+                <small>{{ post.created.format('d/m/Y в H:i') }}</small>
+                <div>{{ post.content|raw }}</div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
