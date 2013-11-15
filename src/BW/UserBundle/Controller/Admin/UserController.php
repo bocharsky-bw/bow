@@ -60,16 +60,26 @@ class UserController extends BWController
                     }
                 }
                 
+                if ( $form->get('generatePassword')->isClicked() ) {
+                    $newPassword = $user->generatePassword();
+                    $user->setPassword($newPassword);
+                    $this->get('session')->getFlashBag()->add(
+                        'success',
+                        'Для пользователя был сгенерирован новый пароль: <strong>'. $newPassword .'</strong>'
+                    );
+                }
+                
                 $em->persist($user);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add(
-                        'success',
-                        'Пользователь успешно сохранен в БД'
-                    );
+                    'success',
+                    'Пользователь успешно сохранен в БД'
+                );
                 
                 if ( $form->get('saveAndClose')->isClicked() ) {
                     return $this->redirect( $this->generateUrl('admin_users') );
                 }
+                
                 
                 return $this->redirect( $this->generateUrl('admin_user_edit', array('id' => $user->getId())) );
             }
@@ -98,7 +108,7 @@ class UserController extends BWController
             $user = $em->getRepository('BWUserBundle:User')->find($id);
             $user->setIsActive( ! $user->getIsActive());
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', '<b>Успешно!</b> Пользователь "'. $this->getUser()->getUsername() .'" успешно заблокирован');
+            $this->get('session')->getFlashBag()->add('success', '<b>Успешно!</b> Пользователь "'. $user->getUsername() .'" успешно '. ( $user->isEnabled() ? 'разблокирован' : 'заблокирован' ));
         } else {
             $this->get('session')->getFlashBag()->add('danger', '<b>Ошибка!</b> Вы не можете заблокировать самого себя.');
         }

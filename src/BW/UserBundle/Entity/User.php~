@@ -40,6 +40,16 @@ class User implements AdvancedUserInterface, \Serializable
     private $password;
 
     /**
+     * @ORM\Column(type="string", length=40)
+     */
+    private $newPassword;
+
+    /**
+     * @ORM\Column(type="string", length=40)
+     */
+    private $confirmPassword;
+
+    /**
      * @ORM\Column(type="string", length=60, unique=true)
      */
     private $email;
@@ -85,25 +95,15 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->isActive;
     }
 
-    /**
-     * Генерирует пароль пользователя из 13 символов, уникальный для каждого нового вызова метода
-     * 
-     * @return string
-     */
-    public function generatePassword()
-    {
-        return uniqid(NULL, FALSE);
-    }
-
     
     public function __construct()
     {
         $this->roles = new ArrayCollection();
         
-        $this->isActive             = TRUE;
-        $this->salt                 = md5(uniqid(NULL, TRUE));
-        $this->created              = new \DateTime;
-        $this->updated              = new \DateTime;
+        $this->isActive = TRUE;
+        $this->salt = md5(uniqid(NULL, TRUE));
+        $this->created = new \DateTime;
+        $this->updated = new \DateTime;
     }
 
     

@@ -11,6 +11,7 @@
         <div class="form-buttons">
             {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Сохранить'}) }}
             {{ form_widget(form.saveAndClose, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и выйти из режима редактирования'}, 'label': 'Сохранить и закрыть'}) }}
+            {{ form_widget(form.generatePassword, {'attr': {'class': 'btn btn-primary icon-key before-padding', 'title': 'Сгенерировать новый пароль для пользователя и сохранить все изменения аккаунта'}, 'label': 'Сгенерировать пароль'}) }}
             {% if form.delete is defined %}
                 {{ form_widget(form.delete, {'attr': {'class': 'btn btn-default icon-remove before-padding', 'title': 'Удалить запись', 'onclick': "return confirm('Удалить запись из БД?')"}, 'label': 'Удалить'}) }}
             {% endif %}
@@ -24,6 +25,33 @@
                 {{ form_errors(form.isActive) }}
             </div>
         </div>
+            
+        <div>
+            {{ form_label(form.rolesCollection, 'Роли: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.rolesCollection, {'attr': {'class': 'form-control', 'style': 'height: auto;'} }) }}
+            <div class="error">
+                {{ form_errors(form.rolesCollection) }}
+            </div>
+        </div>
+        
+        {#
+        <div>
+            {{ form_label(form.roles, 'Роли: ', {'label_attr': {'class': ''} }) }}
+            <ul>
+            {% for role in form.roles %}
+                <li>
+                    {{ form_widget(role, {'attr': {'class': 'form-control '} }) }}
+                    <div class="error">
+                        {{ form_errors(role) }}
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+            <div class="error">
+                {{ form_errors(form.roles) }}
+            </div>
+        </div>
+        #}
 
         <div>
             {{ form_label(form.username, 'Логин: ', {'label_attr': {'class': ''} }) }}
@@ -38,6 +66,18 @@
             {{ form_widget(form.email, {'attr': {'class': 'form-control '} }) }}
             <div class="error">
                 {{ form_errors(form.email) }}
+            </div>
+        </div>
+        
+        <div>
+            {{ form_label(form.password.first, 'Новый пароль: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.password.first, {'attr': {'class': 'form-control '} }) }}
+                
+            {{ form_label(form.password.second, 'Подтверждение пароля: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.password.second, {'attr': {'class': 'form-control '} }) }}
+            <div class="error">
+                {{ form_errors(form.password.first) }}
+                {{ form_errors(form.password.second) }}
             </div>
         </div>
 
