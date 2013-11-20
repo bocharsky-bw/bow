@@ -1,3 +1,7 @@
+bw_block:
+    resource: "@BWBlockBundle/Resources/config/routing.yml"
+    prefix:   /
+
 bw_localization:
     resource: "@BWLocalizationBundle/Resources/config/routing.yml"
     prefix:   /

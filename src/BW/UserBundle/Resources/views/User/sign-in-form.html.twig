@@ -5,6 +5,8 @@
                 Вы авторизированы как <strong>{{ app.user.email }}</strong> | <a href="{{ path('user_sign_out') }}">Выйти</a> 
                 {% if is_granted('ROLE_ADMIN') %}
                     | <a href="{{ path('admin') }}">Панель управления</a>
+                    | Env: <a href="{{ request.getBasePath() ~ (request.getLocale() ? '/'~ request.getLocale : '') }}">dev</a>
+                    / <a href="{{ request.getBasePath() ~ (request.getLocale() ? '/app_dev.php/'~ request.getLocale : '') }}">prod</a>
                 {% endif %}
             </div>
         {% else %}

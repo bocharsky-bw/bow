@@ -18,29 +18,29 @@ class MenuController extends BWController
         parent::__construct();
     }
     
-
-    public function menuAction(\Symfony\Component\HttpFoundation\Request $request, $id, $heading = NULL) {
-        $data = $this->getPropertyOverload();
-        $data->heading = $heading;
-        $data->request = $request;
-
-        $menu = $this->getDoctrine()->getRepository('BWMenuBundle:Menu')->find($id);
-        $lang = $this->getDoctrine()->getRepository('BWLocalizationBundle:Lang')->findOneBy(array('sign' => $request->getLocale()));
-        $items = $this->getDoctrine()->getRepository('BWMenuBundle:Item')->findBy(
-            array(
-                'menu' => $menu,
-                'lang' => $lang,
-            ),
-            array(
-                'ordering' => 'asc',
-            )
-        );
-        
-        $recursion = new \BW\MenuBundle\Service\Recursion();
-        $data->items = $recursion->levelParentEntityRecursion($items);
-        
-        $data->menu = $menu;
-        return $this->render('BWMenuBundle:Menu:list-menu.html.twig', $data->toArray());
-    }
+    
+//    public function menuAction(\Symfony\Component\HttpFoundation\Request $request, $id, $heading = NULL) {
+//        $data = $this->getPropertyOverload();
+//        $data->heading = $heading;
+//        $data->request = $request;
+//        
+//        $menu = $this->getDoctrine()->getRepository('BWMenuBundle:Menu')->find($id);
+//        $lang = $this->get('bw.localization.lang')->findLangByLocale();
+//        $items = $this->getDoctrine()->getRepository('BWMenuBundle:Item')->findBy(
+//            array(
+//                'menu' => $menu,
+//                'lang' => $lang,
+//            ),
+//            array(
+//                'ordering' => 'asc',
+//            )
+//        );
+//        
+//        $recursion = new \BW\MenuBundle\Service\Recursion();
+//        $data->items = $recursion->levelParentEntityRecursion($items);
+//        
+//        $data->menu = $menu;
+//        return $this->render('BWMenuBundle:Menu:list-menu.html.twig', $data->toArray());
+//    }
     
 }

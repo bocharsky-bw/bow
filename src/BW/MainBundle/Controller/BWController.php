@@ -25,4 +25,11 @@ class BWController extends Controller {
 
         return new PropertyOverload();
     }
+    
+    public function render($view, array $parameters = array(), \Symfony\Component\HttpFoundation\Response $response = null) {
+        $parameters['bw']['lang'] = $this->get('bw.localization.lang')->findLangByLocale();
+        $parameters['bw']['block'] = $this->get('bw.block');
+        
+        return parent::render($view, $parameters, $response);
+    }
 }

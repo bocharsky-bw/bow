@@ -68,4 +68,27 @@ class Type
     {
         return $this->name;
     }
+
+    /**
+     * Set alias
+     *
+     * @param string $alias
+     * @return Type
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+    
+        return $this;
+    }
+
+    /**
+     * Get alias
+     *
+     * @return string 
+     */
+    public function getAlias()
+    {
+        return $this->alias;
+    }
 }

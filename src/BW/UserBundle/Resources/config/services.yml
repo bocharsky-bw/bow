@@ -5,7 +5,7 @@ services:
 #    bw_user.example:
 #        class: %bw_user.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
-    my.listener:
+    bw_user.password_encoder.listener:
         class: BW\UserBundle\EventListener\PasswordEncoder
         arguments: ["@security.encoder_factory"]
         tags:

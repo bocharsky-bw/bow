@@ -1,0 +1,12 @@
+<div>
+    {{ form_label(form.page, ' ', {'label_attr': {'class': ''} }) }}
+    <blockquote>
+        <div>
+            Выберите страницу, которую будет открывать ссылка.
+        </div>
+    </blockquote>
+    {{ form_widget(form.page, {'attr': {'class': 'form-control '} }) }}
+    <div class="error">
+        {{ form_errors(form.page) }}
+    </div>
+</div>

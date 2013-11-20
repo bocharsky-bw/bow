@@ -51,11 +51,8 @@ p{
 
 .clear {
     clear: both;
-}
-.clear:after{
-	display: block;
-	content: "";
-	clear: both;
+    height: 0;
+    overflow: hidden;
 }
 
 header{
@@ -107,6 +104,12 @@ header{
 
 
 /* Menu Block */
+#bw_main_menu {
+    float: left;
+}
+#bw_langs {
+    float: right;
+}
 #main{
 	margin: 15px 0;
 }
@@ -173,7 +176,7 @@ header{
 	color: #fff;
 	font-size: 18px;
 	background-color: #128ed5;
-	padding: 13px 10px 13px 33px;
+	padding: 11px 10px 11px 33px;
 }
 /* /Menu Block */
 

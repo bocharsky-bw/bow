@@ -25,6 +25,13 @@ class Menu
     /**
      * @var string
      *
+     * @ORM\Column(name="alias", type="string", length=255, unique=true)
+     */
+    private $alias;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -140,5 +147,28 @@ class Menu
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * Set alias
+     *
+     * @param string $alias
+     * @return Menu
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+    
+        return $this;
+    }
+
+    /**
+     * Get alias
+     *
+     * @return string 
+     */
+    public function getAlias()
+    {
+        return $this->alias;
     }
 }

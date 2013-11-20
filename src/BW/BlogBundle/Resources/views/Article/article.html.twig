@@ -1,0 +1,20 @@
+{% extends 'BWMainBundle:Layout/Frontend:layout.html.twig' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block description %}{{ article.metaDescription }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {{ bw.block.menu('main_menu')|raw }}
+            </div>
+            <div class="col-lg-9">
+                <h1>{{ article.heading }}</h1>
+                <small>{{ article.created.format('d/m/Y в H:i') }}</small>
+                <div>{{ article.content|raw }}</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

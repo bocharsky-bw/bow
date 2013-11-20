@@ -11,6 +11,11 @@ class UserController extends BWController
 {
     
     public function signInAction() {
+        if ($this->getUser()) {
+            
+            return $this->redirect($this->generateUrl('home'));
+        }
+        
         $request = $this->getRequest();
         $session = $request->getSession();
 
@@ -35,25 +40,21 @@ class UserController extends BWController
     }
     
     public function signInFormAction(Request $request) {
+        $data = $this->getPropertyOverload();
         $session = $request->getSession();
 
         // get the login error if there is one
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(
+            $data->error = $request->attributes->get(
                 SecurityContext::AUTHENTICATION_ERROR
             );
         } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $data->error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
-
-        return $this->render(
-            'BWUserBundle:User:sign-in-form.html.twig',
-            array(
-                // last username entered by the user
-                'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-                'error'         => $error,
-            )
-        );
+        $data->last_username = $session->get(SecurityContext::LAST_USERNAME);
+        
+        $data->request = $request;
+        return $this->render('BWUserBundle:User:sign-in-form.html.twig', $data->toArray());
     }
 }

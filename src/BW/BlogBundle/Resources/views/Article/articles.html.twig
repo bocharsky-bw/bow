@@ -1,0 +1,27 @@
+{% extends 'BWMainBundle:Layout/Frontend:layout.html.twig' %}
+
+{% block title %}Блог {% endblock %}
+
+{% block description %}Блог статьей{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {{ bw.block.menu('main_menu')|raw }}
+            </div>
+            <div class="col-lg-9">
+                <h1>Блог</h1>
+                {% if articles %}
+                    {% for article in articles %}
+                        <h2><a href="{{ path('article', {'slug': article.slug}) }}">{{ article.heading }}</a></h2>
+                        <small>{{ article.created.format('d/m/Y в H:i') }}</small>
+                        <div>{{ article.shortDescription|raw }}</div>
+                    {% endfor %}
+                {% else %}
+                    Нет статей для отображения
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

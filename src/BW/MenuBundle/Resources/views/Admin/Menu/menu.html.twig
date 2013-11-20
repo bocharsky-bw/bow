@@ -26,6 +26,14 @@
         </div>
 
         <div>
+            {{ form_label(form.alias, 'Alias: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.alias, {'attr': {'class': 'form-control '} }) }}
+            <div class="error">
+                {{ form_errors(form.alias) }}
+            </div>
+        </div>
+
+        <div>
             {{ form_label(form.description, 'Описание: ', {'label_attr': {'class': ''} }) }}
             {{ form_widget(form.description, {'attr': {'class': 'form-control '} }) }}
             <div class="error">

@@ -2,6 +2,7 @@
 
 namespace BW\MenuBundle\Entity;
 
+use BW\MainBundle\Entity\BWEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="BW\MenuBundle\Entity\ItemRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Item
+class Item extends BWEntity
 {
     /**
      * @var integer
@@ -114,11 +115,37 @@ class Item
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Post")
-     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Page")
+     * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
      */
-    private $post;
+    private $page;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Article")
+     * @ORM\JoinColumn(name="article_id", referencedColumnName="id")
+     */
+    private $article;
 
+    
+    /**
+     * Set default values
+     * 
+     * @ORM\PrePersist
+     * @param array $values
+     * @return Item
+     */
+    public function setDefaultValues(array $values = array(
+            'title' => '',
+            'href' => '',
+            'class' => '',
+        )) {
+        
+        parent::setDefaultValues($values);
+        
+        return $this;
+    }
     
     /**
      * Текущий уровень вложенности пункта меню
@@ -475,4 +502,51 @@ class Item
         return $this->type;
     }
 
+    
+
+    /**
+     * Set page
+     *
+     * @param \BW\BlogBundle\Entity\Page $page
+     * @return Item
+     */
+    public function setPage(\BW\BlogBundle\Entity\Page $page = null)
+    {
+        $this->page = $page;
+    
+        return $this;
+    }
+
+    /**
+     * Get page
+     *
+     * @return \BW\BlogBundle\Entity\Page 
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * Set article
+     *
+     * @param \BW\BlogBundle\Entity\Article $article
+     * @return Item
+     */
+    public function setArticle(\BW\BlogBundle\Entity\Article $article = null)
+    {
+        $this->article = $article;
+    
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return \BW\BlogBundle\Entity\Article 
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
 }

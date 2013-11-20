@@ -28,7 +28,7 @@ security:
             pattern:    ^/
             anonymous:  ~
             form_login:
-                login_path: /user/sign-in
+                login_path: /%locale%/user/sign-in
                 check_path: /user/sign-in-check
             logout:
                 path:   /user/sign-out

@@ -16,14 +16,14 @@ class LangController extends BWController
     }
 
 
-    public function langsMenuAction(\Symfony\Component\HttpFoundation\Request $request) {
-        $data = $this->getPropertyOverload();
-        //$request = $this->get('request');
-        
-        $data->request = $request;
-        $data->langs = $this->getDoctrine()->getRepository('BWLocalizationBundle:Lang')->findAll();
-        
-        return $this->render('BWLocalizationBundle:Lang:langs-menu.html.twig', $data->toArray());
-    }
+//    public function langsMenuAction(\Symfony\Component\HttpFoundation\Request $request) {
+//        $data = $this->getPropertyOverload();
+//        //$request = $this->get('request');
+//        
+//        $data->request = $request;
+//        $data->langs = $this->getDoctrine()->getRepository('BWLocalizationBundle:Lang')->findAll();
+//        
+//        return $this->render('BWLocalizationBundle:Lang:langs-menu.html.twig', $data->toArray());
+//    }
     
 }
