@@ -62,7 +62,6 @@ class UserController extends BWController
                 
                 if ( $form->get('generatePassword')->isClicked() ) {
                     $newPassword = $user->generatePassword();
-                    $user->setPassword($newPassword);
                     $this->get('session')->getFlashBag()->add(
                         'success',
                         'Для пользователя был сгенерирован новый пароль: <strong>'. $newPassword .'</strong>'
@@ -106,7 +105,7 @@ class UserController extends BWController
         
         if ($this->getUser()->getId() != $id) {
             $user = $em->getRepository('BWUserBundle:User')->find($id);
-            $user->setIsActive( ! $user->getIsActive());
+            $user->setActive( ! $user->getActive());
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', '<b>Успешно!</b> Пользователь "'. $user->getUsername() .'" успешно '. ( $user->isEnabled() ? 'разблокирован' : 'заблокирован' ));
         } else {

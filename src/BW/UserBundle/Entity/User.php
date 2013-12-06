@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="BW\UserBundle\Entity\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements AdvancedUserInterface, \Serializable
 {
@@ -45,9 +46,18 @@ class User implements AdvancedUserInterface, \Serializable
     private $email;
 
     /**
+     * Активен пользователь или нет
+     * 
      * @ORM\Column(name="is_active", type="boolean")
      */
-    private $isActive;
+    private $active;
+
+    /**
+     * Подтвержден e-mail пользователя или нет
+     * 
+     * @ORM\Column(name="is_confirm", type="boolean")
+     */
+    private $confirm;
 
     /**
      * @ORM\Column(name="created", type="datetime")
@@ -63,6 +73,11 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
      */
     private $roles;
+    
+    /**
+     * @ORM\Column(name="hash", type="string", length=255)
+     */
+    private $hash;
     
     
     public function isAccountNonExpired()
@@ -82,7 +97,12 @@ class User implements AdvancedUserInterface, \Serializable
 
     public function isEnabled()
     {
-        return $this->isActive;
+        return $this->active;
+    }
+
+    public function isConfirmed()
+    {
+        return $this->confirm;
     }
 
     /**
@@ -92,18 +112,45 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function generatePassword()
     {
-        return uniqid(NULL, FALSE);
+        $this->password = uniqid(NULL, FALSE);
+        
+        return $this->password;
     }
 
+    /**
+     * Генерирует hash для ссылки автоматической активации аккаунта
+     * 
+     * @return string
+     */
+    public function generateHash()
+    {
+        $this->hash = md5(uniqid(NULL, TRUE));
+        
+        return $this->hash;
+    }
+
+    /**
+     * Generate date of update
+     * 
+     * @ORM\PreUpdate
+     * @return \BW\UserBundle\Entity\User
+     */
+    public function generateUpdatedDate() {
+        $this->updated = new \DateTime;
+        
+        return $this;
+    }
     
     public function __construct()
     {
         $this->roles = new ArrayCollection();
         
-        $this->isActive             = TRUE;
-        $this->salt                 = md5(uniqid(NULL, TRUE));
-        $this->created              = new \DateTime;
-        $this->updated              = new \DateTime;
+        $this->active           = FALSE;
+        $this->confirm          = FALSE;
+        $this->salt             = md5(uniqid(NULL, TRUE));
+        $this->hash             = md5(uniqid(NULL, TRUE));
+        $this->created          = new \DateTime;
+        $this->updated          = new \DateTime;
     }
 
     
@@ -244,28 +291,71 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set isActive
+     * Set active
      *
-     * @param boolean $isActive
+     * @param boolean $active
      * @return User
      */
-    public function setIsActive($isActive)
+    public function setActive($active)
     {
-        $this->isActive = $isActive;
+        $this->active = $active;
     
         return $this;
     }
 
     /**
-     * Get isActive
+     * Get active
      *
      * @return boolean 
      */
-    public function getIsActive()
+    public function getActive()
     {
-        return $this->isActive;
+        return $this->active;
     }
 
+    /**
+     * Is active
+     *
+     * @return boolean 
+     */
+    public function isActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set confirm
+     *
+     * @param boolean $confirm
+     * @return User
+     */
+    public function setConfirm($confirm)
+    {
+        $this->confirm = $confirm;
+    
+        return $this;
+    }
+
+    /**
+     * Get confirm
+     *
+     * @return boolean 
+     */
+    public function getConfirm()
+    {
+        return $this->confirm;
+    }
+    
+    /**
+     * Is confirm
+     *
+     * @return boolean 
+     */
+    public function isConfirm()
+    {
+        return $this->confirm;
+    }
+    
     /**
      * Add roles
      *
@@ -333,5 +423,28 @@ class User implements AdvancedUserInterface, \Serializable
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Set hash
+     *
+     * @param string $hash
+     * @return User
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+    
+        return $this;
+    }
+
+    /**
+     * Get hash
+     *
+     * @return string 
+     */
+    public function getHash()
+    {
+        return $this->hash;
     }
 }

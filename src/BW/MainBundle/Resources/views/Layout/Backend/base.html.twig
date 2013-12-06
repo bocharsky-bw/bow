@@ -9,15 +9,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         
-        {% block css %}
-            <!-- % CSS % -->
-        {% endblock %}
+        {% block css %}<!-- % CSS % -->{% endblock %}
             
-        {% block js %}
-            <!-- % JS % -->
-        {% endblock %}
+        {% block js %}<!-- % JS % -->{% endblock %}
     </head>
-    <body id="body" class="body">
+    <body id="body">
         {% block body %}
             <div id="wrap">
                 <div id="wrap_inner">

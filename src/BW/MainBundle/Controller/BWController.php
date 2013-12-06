@@ -10,8 +10,8 @@ class BWController extends Controller {
 
     /**
      * @global \Symfony\Component\HttpFoundation\Request $request
-     * @global \Doctrine\ORM\EntityManager $em Instance of EntityManager class
      * @global \Doctrine\DBAL\Connection $conn
+     * @global \Doctrine\ORM\EntityManager $em Instance of EntityManager class
      */
     public function __construct() {
     }

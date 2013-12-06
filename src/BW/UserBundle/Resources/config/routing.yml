@@ -17,8 +17,12 @@ user_sign_out:
     pattern:  /user/sign-out
     
 user_password_reset:
-    pattern:  /{_locale}/user/password-reset
+    pattern:  /{_locale}/user/password/reset
     defaults: { _controller: BWUserBundle:User:passwordReset }
+    
+user_email_confirm:
+    pattern:  /{_locale}/user/email/confirm/{hash}
+    defaults: { _controller: BWUserBundle:User:emailConfirm }
 
 ###########
 # Backend #

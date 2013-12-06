@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <div style="text-align: right; line-height: 30px;">
-                Вы авторизированы как <strong title="{{ app.user.username }}">{{ app.user.email }}</strong> | <a href="{{ path('user_sign_out') }}">Выйти</a> 
+                Вы авторизированы как <strong title="{{ app.user.username }}">{{ app.user.email }}</strong> | <a href="{{ path('user_sign_out') }}">Выйти</a><br> 
                 {% if is_granted('ROLE_ADMIN') %}
                     | <a href="{{ path('admin') }}">Панель управления</a>
                     | Env: <a href="{{ app.request.getBasePath() ~'/app_dev.php'~ (app.request.getLocale() ? '/'~ app.request.getLocale : '') }}">dev</a>
@@ -11,7 +11,7 @@
             </div>
         {% else %}
             <form id="auth-form" action="{{ path('user_sign_in_check') }}" method="POST">
-                <input id="email" type="text" name="_username" size="40" value="e-mail...">
+                <input id="email" type="text" name="_username" size="40" value="e-mail or login...">
                 <input id="password" type="text" name="_password" size="40" value="password...">
                 {#
                     If you want to control the URL the user
@@ -19,6 +19,9 @@
                     <input type="hidden" name="_target_path" value="/account" />
                 #}
                 <button type="submit">Войти</button>
+                <div style="text-align: right;">
+                    <a href="{{ path('user_sign_up') }}" class="registration">Зарегистрироваться</a>
+                </div>
             </form>
         {% endif %}
         <div class="clear"></div>

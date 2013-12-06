@@ -1,42 +1,45 @@
 {% extends 'BWMainBundle:Layout/Frontend:layout.html.twig' %}
 
-{% block title %}Авториация на сайте ALVi Food{% endblock %}
+{% block title %}Авториация на сайте{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1><i class="fa fa-sign-in"></i> Авторизация</h1>
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-4">
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error.message }}</div>
-                    {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1><i class="fa fa-sign-in"></i> Авторизация</h1>
+                <div class="row">
+                    <div class="col-lg-4 col-lg-offset-4">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.message }}</div>
+                        {% endif %}
 
-                    <form action="{{ path('user_sign_in_check') }}" method="post">
-                        <p>
-                            <label for="username">Логин:</label><br>
-                            <input type="text" id="username" name="_username" value="{{ last_username }}" />
-                        </p>
+                        <form action="{{ path('user_sign_in_check') }}" method="post">
+                            <p>
+                                <label for="username">Логин:</label><br>
+                                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+                            </p>
 
-                        <p>
-                            <label for="password">Пароль:</label><br>
-                            <input type="password" id="password" name="_password" />
-                        </p>
+                            <p>
+                                <label for="password">Пароль:</label><br>
+                                <input type="password" id="password" name="_password" />
+                            </p>
 
-                        {#
-                            If you want to control the URL the user
-                            is redirected to on success (more details below)
-                            <input type="hidden" name="_target_path" value="/account" />
-                        #}
+                            {#
+                                If you want to control the URL the user
+                                is redirected to on success (more details below)
+                                <input type="hidden" name="_target_path" value="/account" />
+                            #}
 
-                        <p>
-                            <button class="btn btn-default" type="submit">Авторизироваться</button>
-                        </p>
-                    </form>
+                            <p>
+                                <button class="btn btn-default" type="submit">Авторизироваться</button>
+                            </p>
+                            <p>
+                                или <a href="{{ path('user_sign_up') }}">Зарегистрироваться</a>
+                            </p>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

@@ -49,7 +49,7 @@
                             </td>
                             <td class="ta_c">
                                 <a href="{{ path('admin_user_toogle_active', {'id': user.id}) }}">
-                                    {% if user.isActive %}
+                                    {% if user.isActive() %}
                                         <i class="green icon-ok-sign" style="color: green;" title="Заблокировать"></i>
                                     {% else %}
                                         <i class="red icon-minus-sign" style="color: red;" title="Разблокировать"></i>
