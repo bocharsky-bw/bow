@@ -108,13 +108,4 @@ class BlockService {
         return $this->twig->render('BWBlockBundle:Lang:langs-menu.html.twig', $data->toArray());
     }
     
-    /**
-     * Authorization form Block
-     * @return string rendered template
-     */
-    public function signInForm() {
-        $data = new PropertyOverload;
-        
-        return $this->twig->render('BWBlockBundle:User:sign-in-form.html.twig', $data->toArray());
-    }
 }

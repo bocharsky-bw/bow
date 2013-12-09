@@ -1,3 +1,40 @@
+###########
+# Backend #
+###########
+# Users
+admin_users:
+    pattern:  /_admin/{_locale}/users
+    defaults: { _controller: BWUserBundle:Admin/User:users }
+    
+admin_user_add:
+    pattern:  /_admin/{_locale}/user/add
+    defaults: { _controller: BWUserBundle:Admin/User:user }
+
+admin_user_edit:
+    pattern:  /_admin/{_locale}/user/edit/{id}
+    defaults: { _controller: BWUserBundle:Admin/User:user }
+
+admin_user_delete:
+    pattern:  /_admin/{_locale}/user/delete/{id}
+    defaults: { _controller: BWUserBundle:Admin/User:delete }
+
+admin_user_toogle_active:
+    pattern:  /_admin/{_locale}/user/toogle-active/{id}
+    defaults: { _controller: BWUserBundle:Admin/User:toogleActive }
+    
+# Roles
+admin_roles:
+    pattern:  /_admin/{_locale}/roles
+    defaults: { _controller: BWUserBundle:Admin/Role:roles }
+    
+admin_role_add:
+    pattern:  /_admin/{_locale}/role/add
+    defaults: { _controller: BWUserBundle:Admin/Role:role }
+    
+admin_role_edit:
+    pattern:  /_admin/{_locale}/role/edit/{id}
+    defaults: { _controller: BWUserBundle:Admin/Role:role }
+  
 ############
 # Frontend #
 ############
@@ -19,40 +56,11 @@ user_sign_out:
 user_password_reset:
     pattern:  /{_locale}/user/password/reset
     defaults: { _controller: BWUserBundle:User:passwordReset }
-    
+
+user_password_new:
+    pattern:  /{_locale}/user/password/new/{hash}
+    defaults: { _controller: BWUserBundle:User:passwordNew }
+
 user_email_confirm:
     pattern:  /{_locale}/user/email/confirm/{hash}
     defaults: { _controller: BWUserBundle:User:emailConfirm }
-
-###########
-# Backend #
-###########
-# Users
-admin_users:
-    pattern:  /_admin/{_locale}/users
-    defaults: { _controller: BWUserBundle:Admin/User:users }
-    
-admin_user_add:
-    pattern:  /_admin/{_locale}/user/add
-    defaults: { _controller: BWUserBundle:Admin/User:user }
-
-admin_user_edit:
-    pattern:  /_admin/{_locale}/user/edit/{id}
-    defaults: { _controller: BWUserBundle:Admin/User:user }
-    
-admin_user_toogle_active:
-    pattern:  /_admin/{_locale}/user/toogle-active/{id}
-    defaults: { _controller: BWUserBundle:Admin/User:toogleActive }
-    
-# Roles
-admin_roles:
-    pattern:  /_admin/{_locale}/roles
-    defaults: { _controller: BWUserBundle:Admin/Role:roles }
-    
-admin_role_add:
-    pattern:  /_admin/{_locale}/role/add
-    defaults: { _controller: BWUserBundle:Admin/Role:role }
-    
-admin_role_edit:
-    pattern:  /_admin/{_locale}/role/edit/{id}
-    defaults: { _controller: BWUserBundle:Admin/Role:role }

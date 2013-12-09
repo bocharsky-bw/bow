@@ -8,6 +8,7 @@ BW\UserBundle\Entity\User:
             message: 'Пользователь с таким email уже зарегистрирован'
     properties:
         username:
+            - NotBlank: ~
             - Length:
                 min: 3
                 max: 64
@@ -18,4 +19,4 @@ BW\UserBundle\Entity\User:
                 max: 64
         password:
             - Length:
-                min: 6
+                min: 5

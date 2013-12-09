@@ -5,40 +5,39 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6 col-lg-offset-3">
                 <h1><i class="fa fa-sign-in"></i> Авторизация</h1>
-                <div class="row">
-                    <div class="col-lg-4 col-lg-offset-4">
-                        {% if error %}
-                            <div class="alert alert-danger">{{ error.message }}</div>
-                        {% endif %}
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.message }}</div>
+                {% endif %}
 
-                        <form action="{{ path('user_sign_in_check') }}" method="post">
-                            <p>
-                                <label for="username">Логин:</label><br>
-                                <input type="text" id="username" name="_username" value="{{ last_username }}" />
-                            </p>
+                <form action="{{ path('user_sign_in_check') }}" method="post">
+                    <p>
+                        <label for="username">Логин:</label><br>
+                        <input type="text" id="username" name="_username" value="{{ last_username }}" />
+                    </p>
 
-                            <p>
-                                <label for="password">Пароль:</label><br>
-                                <input type="password" id="password" name="_password" />
-                            </p>
+                    <p>
+                        <label for="password">Пароль:</label><br>
+                        <input type="password" id="password" name="_password" />
+                    </p>
 
-                            {#
-                                If you want to control the URL the user
-                                is redirected to on success (more details below)
-                                <input type="hidden" name="_target_path" value="/account" />
-                            #}
+                    {#
+                        If you want to control the URL the user
+                        is redirected to on success (more details below)
+                        <input type="hidden" name="_target_path" value="/account" />
+                    #}
 
-                            <p>
-                                <button class="btn btn-default" type="submit">Авторизироваться</button>
-                            </p>
-                            <p>
-                                или <a href="{{ path('user_sign_up') }}">Зарегистрироваться</a>
-                            </p>
-                        </form>
-                    </div>
-                </div>
+                    <p>
+                        <button class="btn btn-default" type="submit">Авторизироваться</button>
+                    </p>
+                    <p>
+                        <a href="{{ path('user_password_reset') }}">Забыли пароль?</a>
+                    </p>
+                    <p>
+                        Или <a href="{{ path('user_sign_up') }}">Зарегистрироваться</a> как новый пользователь.
+                    </p>
+                </form>
             </div>
         </div>
     </div>

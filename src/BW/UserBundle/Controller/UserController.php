@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 use BW\UserBundle\Entity\User;
 use BW\UserBundle\Form\UserSignUpType;
+use BW\UserBundle\Form\UserPasswordResetType;
+use BW\UserBundle\Form\UserPasswordNewType;
 
 class UserController extends BWController
 {
@@ -19,7 +21,12 @@ class UserController extends BWController
     public function __construct() {
         parent::__construct();
     }
-    
+
+    /**
+     * Форма для регистрации нового пользователя
+     * 
+     * @return Response
+     */
     public function signUpAction() {
         if ($this->getUser()) {
             
@@ -49,8 +56,7 @@ class UserController extends BWController
                 $message = \Swift_Message::newInstance()
                         ->setSubject('Регистрация на сайте '. $request->server->get('HTTP_HOST'))
                         ->setFrom('test@ndv.net.ua')
-                        ->setTo('bocharsky.bw@gmail.com') // for_testing
-                        //->setTo($user->getEmail())
+                        ->setTo($user->getEmail())
                         ->setBody(
                             $this->renderView(
                                 'BWUserBundle:User/emails:sign-up.html.twig',
@@ -79,6 +85,11 @@ class UserController extends BWController
         return $this->render('BWUserBundle:User:user-sign-up.html.twig', $data->toArray());
     }
     
+    /**
+     * Форма для авторизации пользователя
+     * 
+     * @return Response
+     */
     public function signInAction() {
         if ($this->getUser()) {
             
@@ -108,6 +119,12 @@ class UserController extends BWController
         );
     }
     
+    /**
+     * Блок с формой для авторизации пользователя
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return Response
+     */
     public function signInFormAction(Request $request) {
         $data = $this->getPropertyOverload();
         $session = $request->getSession();
@@ -127,6 +144,12 @@ class UserController extends BWController
         return $this->render('BWUserBundle:User:sign-in-form.html.twig', $data->toArray());
     }
     
+    /**
+     * Подтверждение e-mail и активация аккаунта
+     * 
+     * @param type $hash
+     * @return redirect
+     */
     public function emailConfirmAction($hash) {
         $data = $this->getPropertyOverload();
         $em = $this->getDoctrine()->getManager();
@@ -154,5 +177,126 @@ class UserController extends BWController
         }
         
         return $this->redirect($this->generateUrl('user_sign_in'));
+    }
+    
+    /**
+     * Сброс старого пароля пользователя
+     * 
+     * @return Response
+     */
+    public function passwordResetAction() {
+        if ($this->getUser()) {
+            
+            return $this->redirect($this->generateUrl('home'));
+        }
+        
+        $data = $this->getPropertyOverload();
+        $request = $this->get('request');
+        
+        $u = array(
+            'email' => '',
+        );
+        $form = $this->createForm(new UserPasswordResetType(), $u);
+        
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $u = $form->getData();
+                $em = $this->getDoctrine()->getManager();
+                
+                $user = $em->getRepository('BWUserBundle:User')->findOneBy(
+                    array(
+                        'email' => $u['email'],
+                    )
+                );
+                
+                if ($user) {
+                    $user->generateHash();
+                    $em->flush();
+                    
+                    /* Mailer */
+                    $message = \Swift_Message::newInstance()
+                            ->setSubject('Сброс пароля на сайте '. $request->server->get('HTTP_HOST'))
+                            ->setFrom('test@ndv.net.ua')
+                            ->setTo($user->getEmail())
+                            ->setBody(
+                                $this->renderView(
+                                    'BWUserBundle:User/emails:password-reset.html.twig',
+                                    array(
+                                        'user' => $user,
+                                    )
+                                ),
+                                'text/html'
+                            )
+                        ;
+
+                    if ($this->get('mailer')->send($message)) {
+                        $this->get('session')->getFlashBag()->add('success', "На указанный Вами e-mail <b>{$u['email']}</b> было отправлено сообщение с инструкциями по сбросу пароля.<br>"
+                            .'Если Вы все-таки вспомнили свой пароль - проигнорируйте письмо и воспользуйтесь авторизацией.');
+                    } else {
+                        $this->get('session')->getFlashBag()->add('danger', 'Не удалось отправить письмо на указанный Вами e-mail <b>'. $user->getEmail() .'</b>!<br>'
+                                .'Если Вы все же уверены что указали правильный e-mail - тогда свяжитесь с администратором сайта.');
+                    }
+                    /* /Mailer */
+                    
+                    return $this->redirect($this->generateUrl('user_sign_in'));
+                } else {
+                    $this->get('session')->getFlashBag()->add('danger', "Пользователь с e-mail <b>{$u['email']}</b> не найден.<br>"
+                            ."Возможно, Вы еще не зарегистрированы или указали неправильный e-mail адрес");
+                    
+                    return $this->redirect($this->generateUrl('user_password_reset'));
+                }
+            }
+        }
+        
+        $data->form = $form->createView();
+        return $this->render('BWUserBundle:User:reset-password.html.twig', $data->toArray());
+    }
+    
+    /**
+     * Сохранение нового пароля пользователя
+     * 
+     * @param string $hash
+     * @return type
+     * @throws type
+     */
+    public function passwordNewAction($hash) {
+        if ($this->getUser()) {
+            
+            return $this->redirect($this->generateUrl('home'));
+        }
+        
+        $data = $this->getPropertyOverload();
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+        
+        $data->user = $em->getRepository('BWUserBundle:User')->findOneBy(
+            array(
+                'hash' => $hash,
+            )
+        );
+        
+        if ( ! $data->user) {
+            throw $this->createNotFoundException('Cсылка не действительна! '
+                    .'Повторите выполненные ранее действия или свяжитесь с администратором сайта.');
+        }
+        
+        $form = $this->createForm(new UserPasswordNewType(), $data->user);
+        
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isValid()) {
+                $data->user->setHash(''); // Очищаем хэш
+                $em->flush($data->user);
+                
+                $this->get('session')->getFlashBag()->add('success', '<b>Ваш пароль успешно изменен!</b><br>'
+                    .'Теперь вы можете авторизоваться на сайте по своему e-mail и новому паролю');
+                
+                return $this->redirect($this->generateUrl('user_sign_in'));
+            }
+        }
+        
+        $data->form = $form->createView();
+        return $this->render('BWUserBundle:User:new-password.html.twig', $data->toArray());
     }
 }

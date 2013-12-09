@@ -1,0 +1,3 @@
+twig:
+    globals:
+        tpl_bw_user: "@bw.user.service"
