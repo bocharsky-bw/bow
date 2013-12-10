@@ -1,36 +1,41 @@
 ###########
 # Backend #
 ###########
-
 # Menu
 admin_menus:
+    host:     %domain%
     pattern:  /_admin/{_locale}/menus
     defaults: { _controller: BWMenuBundle:Admin/Menu:menus, _locale: %locale% }
     
 admin_menu_add:
+    host:     %domain%
     pattern:  /_admin/{_locale}/menu/add
     defaults: { _controller: BWMenuBundle:Admin/Menu:menu, _locale: %locale% }
 
 admin_menu_edit:
+    host:     %domain%
     pattern:  /_admin/{_locale}/menu/edit/{id}
     defaults: { _controller: BWMenuBundle:Admin/Menu:menu, _locale: %locale% }
 
-
 # Item
 admin_items:
+    host:     %domain%
     pattern:  /_admin/{_locale}/items
     defaults: { _controller: BWMenuBundle:Admin/Item:items, _locale: %locale% }
 
 admin_item_add:
+    host:     %domain%
     pattern:  /_admin/{_locale}/item/add
     defaults: { _controller: BWMenuBundle:Admin/Item:item, _locale: %locale% }
 
 admin_item_edit:
+    host:     %domain%
     pattern:  /_admin/{_locale}/item/edit/{id}
     defaults: { _controller: BWMenuBundle:Admin/Item:item, _locale: %locale% }
 
 # Item Type
 admin_item_types:
+    host:     %domain%
     pattern:  /_admin/{_locale}/item-types
     defaults: { _controller: BWMenuBundle:Admin/Type:itemTypes, _locale: %locale% }
 

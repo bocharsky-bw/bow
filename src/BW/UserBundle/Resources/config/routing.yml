@@ -3,35 +3,43 @@
 ###########
 # Users
 admin_users:
+    host:     %domain%
     pattern:  /_admin/{_locale}/users
     defaults: { _controller: BWUserBundle:Admin/User:users }
     
 admin_user_add:
+    host:     %domain%
     pattern:  /_admin/{_locale}/user/add
     defaults: { _controller: BWUserBundle:Admin/User:user }
 
 admin_user_edit:
+    host:     %domain%
     pattern:  /_admin/{_locale}/user/edit/{id}
     defaults: { _controller: BWUserBundle:Admin/User:user }
 
 admin_user_delete:
+    host:     %domain%
     pattern:  /_admin/{_locale}/user/delete/{id}
     defaults: { _controller: BWUserBundle:Admin/User:delete }
 
 admin_user_toogle_active:
+    host:     %domain%
     pattern:  /_admin/{_locale}/user/toogle-active/{id}
     defaults: { _controller: BWUserBundle:Admin/User:toogleActive }
     
 # Roles
 admin_roles:
+    host:     %domain%
     pattern:  /_admin/{_locale}/roles
     defaults: { _controller: BWUserBundle:Admin/Role:roles }
     
 admin_role_add:
+    host:     %domain%
     pattern:  /_admin/{_locale}/role/add
     defaults: { _controller: BWUserBundle:Admin/Role:role }
     
 admin_role_edit:
+    host:     %domain%
     pattern:  /_admin/{_locale}/role/edit/{id}
     defaults: { _controller: BWUserBundle:Admin/Role:role }
   
@@ -40,27 +48,34 @@ admin_role_edit:
 ############
 # Users
 user_sign_up:
+    host:     %domain%
     pattern:  /{_locale}/user/sign-up
     defaults: { _controller: BWUserBundle:User:signUp }
     
 user_sign_in:
+    host:     %domain%
     pattern:  /{_locale}/user/sign-in
     defaults: { _controller: BWUserBundle:User:signIn }
     
 user_sign_in_check:
+    host:     %domain%
     pattern:  /user/sign-in-check
     
 user_sign_out:
+    host:     %domain%
     pattern:  /user/sign-out
     
 user_password_reset:
+    host:     %domain%
     pattern:  /{_locale}/user/password/reset
     defaults: { _controller: BWUserBundle:User:passwordReset }
 
 user_password_new:
+    host:     %domain%
     pattern:  /{_locale}/user/password/new/{hash}
     defaults: { _controller: BWUserBundle:User:passwordNew }
 
 user_email_confirm:
+    host:     %domain%
     pattern:  /{_locale}/user/email/confirm/{hash}
     defaults: { _controller: BWUserBundle:User:emailConfirm }
