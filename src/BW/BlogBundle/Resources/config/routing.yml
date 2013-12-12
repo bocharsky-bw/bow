@@ -1,64 +1,32 @@
 ###########
 # Backend #
 ###########
-# Pages
-admin_pages:
+# Posts
+admin_posts:
     host:     %domain%
-    pattern:  /_admin/{_locale}/pages
-    defaults: { _controller: BWBlogBundle:Admin/Page:pages, _locale: %locale% }
+    pattern:  /_admin/{_locale}/posts
+    defaults: { _controller: BWBlogBundle:Admin/Post:posts, _locale: %locale% }
     
-admin_page_add:
+admin_post_add:
     host:     %domain%
-    pattern:  /_admin/{_locale}/page/add
-    defaults: { _controller: BWBlogBundle:Admin/Page:page, _locale: %locale% }
+    pattern:  /_admin/{_locale}/post/add
+    defaults: { _controller: BWBlogBundle:Admin/Post:post, _locale: %locale% }
 
-admin_page_edit:
+admin_post_edit:
     host:     %domain%
-    pattern:  /_admin/{_locale}/page/edit/{id}
-    defaults: { _controller: BWBlogBundle:Admin/Page:page, _locale: %locale% }
+    pattern:  /_admin/{_locale}/post/edit/{id}
+    defaults: { _controller: BWBlogBundle:Admin/Post:post, _locale: %locale% }
 
-admin_page_toogle_published:
+admin_post_toogle_published:
     host:     %domain%
-    pattern:  /_admin/{_locale}/page/toogle-published/{id}
-    defaults: { _controller: BWBlogBundle:Admin/Page:togglePublished, _locale: %locale% }
-
-# Articles
-admin_articles:
-    host:     %domain%
-    pattern:  /_admin/{_locale}/articles
-    defaults: { _controller: BWBlogBundle:Admin/Article:articles, _locale: %locale% }
-    
-admin_article_add:
-    host:     %domain%
-    pattern:  /_admin/{_locale}/article/add
-    defaults: { _controller: BWBlogBundle:Admin/Article:article, _locale: %locale% }
-
-admin_article_edit:
-    host:     %domain%
-    pattern:  /_admin/{_locale}/article/edit/{id}
-    defaults: { _controller: BWBlogBundle:Admin/Article:article, _locale: %locale% }
-    
-admin_article_toogle_published:
-    host:     %domain%
-    pattern:  /_admin/{_locale}/article/toogle-published/{id}
-    defaults: { _controller: BWBlogBundle:Admin/Article:togglePublished, _locale: %locale% }
+    pattern:  /_admin/{_locale}/post/toogle-published/{id}
+    defaults: { _controller: BWBlogBundle:Admin/Post:togglePublished, _locale: %locale% }
     
 ############
 # Frontend #
 ############
-# Pages
-page:
+# Posts
+post:
     host:     %domain%
-    pattern:  /{_locale}/page/{slug}
-    defaults: { _controller: BWBlogBundle:Page:page, _locale: %locale% }
-
-# Articles
-articles:
-    host:     %domain%
-    pattern:  /{_locale}/blog/
-    defaults: { _controller: BWBlogBundle:Article:articles, _locale: %locale% }
-    
-article:
-    host:     %domain%
-    pattern:  /{_locale}/blog/{slug}
-    defaults: { _controller: BWBlogBundle:Article:article, _locale: %locale% }
+    pattern:  /{_locale}/post/{slug}
+    defaults: { _controller: BWBlogBundle:Post:post, _locale: %locale% }

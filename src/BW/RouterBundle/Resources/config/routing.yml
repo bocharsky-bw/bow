@@ -1,0 +1,7 @@
+bw_router_index:
+    #pattern:  /{_locale}/cms/{q}
+    pattern:  /{_locale}/{q}
+    defaults: 
+        _controller: BWRouterBundle:Router:index
+    requirements:
+        q: ".+"

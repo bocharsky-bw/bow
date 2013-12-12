@@ -6,6 +6,7 @@ admin:
     users: Users
     roles: Roles
     content: Content
+    posts: Posts
     pages: Pages
     articles: Articles
     menu: Menu

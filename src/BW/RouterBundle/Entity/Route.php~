@@ -1,0 +1,43 @@
+<?php
+
+namespace BW\RouterBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Route
+ *
+ * @ORM\Table(name="routes")
+ * @ORM\Entity(repositoryClass="BW\RouterBundle\Entity\RouteRepository")
+ */
+class Route
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="path", type="string", length=255)
+     */
+    private $path;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="defaults", type="array")
+     */
+    private $defaults;
+
+
+    public function __construct() {
+    }
+    
+    
+}

@@ -1,18 +1,18 @@
 {% extends 'BWMainBundle:Layout/Frontend:layout.html.twig' %}
 
-{% block title %}{{ page.title }}{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
 
-{% block description %}{{ page.metaDescription }}{% endblock %}
+{% block description %}{{ post.metaDescription }}{% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
-                {{ bw.block.menu('main_menu')|raw }}
+                {#{ bw.block.menu('main_menu')|raw }#}3333333333333333333
             </div>
             <div class="col-lg-9">
-                <h1>{{ page.heading }}</h1>
-                <div>{{ page.content|raw }}</div>
+                <h1>{{ post.heading }}</h1>
+                <div>{{ post.content|raw }}</div>
             </div>
         </div>
     </div>

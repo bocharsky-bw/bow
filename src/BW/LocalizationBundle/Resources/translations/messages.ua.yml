@@ -6,6 +6,7 @@ admin:
     users: Користувачі
     roles: Ролі
     content: Контент
+    posts: Записи
     pages: Сторінки
     articles: Статті
     menu: Меню

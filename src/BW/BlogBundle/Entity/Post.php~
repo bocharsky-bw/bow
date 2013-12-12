@@ -17,8 +17,8 @@ class Post
      * @var integer
      *
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
@@ -96,10 +96,10 @@ class Post
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\PostType")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="\BW\RouterBundle\Entity\Route")
+     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
      */
-    private $type;
+    private $route;
 
     
     /**
@@ -373,27 +373,4 @@ class Post
         return $this->lang;
     }
     
-
-    /**
-     * Set type
-     *
-     * @param \BW\BlogBundle\Entity\PostType $type
-     * @return Post
-     */
-    public function setType(\BW\BlogBundle\Entity\PostType $type = null)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return \BW\BlogBundle\Entity\PostType 
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
 }

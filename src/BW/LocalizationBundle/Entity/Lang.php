@@ -34,6 +34,15 @@ class Lang
      * @ORM\Column(name="sign", type="string", length=2, unique=true)
      */
     private $sign;
+    
+    
+    public function __construct() {
+    }
+    
+    public function __toString() {
+        
+        return (string) $this->getSign();
+    }
 
 
     /**

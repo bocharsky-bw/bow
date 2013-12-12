@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PageType extends AbstractType
+class PostType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -47,7 +47,7 @@ class PageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BW\BlogBundle\Entity\Page',
+            'data_class' => 'BW\BlogBundle\Entity\Post',
         ));
     }
 
@@ -56,6 +56,6 @@ class PageType extends AbstractType
      */
     public function getName()
     {
-        return 'page';
+        return 'post';
     }
 }

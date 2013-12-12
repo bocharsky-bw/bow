@@ -25,7 +25,7 @@ class MenuController extends BWController
 //        $data->request = $request;
 //        
 //        $menu = $this->getDoctrine()->getRepository('BWMenuBundle:Menu')->find($id);
-//        $lang = $this->get('bw.localization.lang')->findLangByLocale();
+//        $lang = $this->get('bw.localization.lang')->getCurrentLangEntity();
 //        $items = $this->getDoctrine()->getRepository('BWMenuBundle:Item')->findBy(
 //            array(
 //                'menu' => $menu,

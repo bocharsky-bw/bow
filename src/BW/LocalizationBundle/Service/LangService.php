@@ -27,11 +27,11 @@ class LangService {
     
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
-        $this->init();
+        $this->_init();
     }
     
     
-    private function init() {
+    private function _init() {
         $this->lang = $this->container->get('doctrine.orm.entity_manager')
                 ->getRepository('BWLocalizationBundle:Lang')
                 ->findOneBy(array(
@@ -43,7 +43,7 @@ class LangService {
         }
     }
 
-    public function findLangByLocale() {
+    public function getCurrentLangEntity() {
         
         return $this->lang;
     }

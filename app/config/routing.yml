@@ -22,3 +22,7 @@ bw_blog:
     resource: "@BWBlogBundle/Resources/config/routing.yml"
     prefix:   /
 
+# Must be last in routes list!
+bw_router:
+    resource: "@BWRouterBundle/Resources/config/routing.yml"
+    prefix:   /

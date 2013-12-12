@@ -26,6 +26,13 @@ class Item extends BWEntity
     /**
      * @var string
      *
+     * @ORM\Column(name="path", type="string", length=255)
+     */
+    private $path;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;

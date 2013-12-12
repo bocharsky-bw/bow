@@ -5,39 +5,39 @@ namespace BW\BlogBundle\Controller\Admin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use BW\MainBundle\Controller\BWController;
-use BW\BlogBundle\Entity\Page;
-use BW\BlogBundle\Form\PageType;
+use BW\BlogBundle\Entity\Post;
+use BW\BlogBundle\Form\PostType;
 
-class PageController extends BWController
+class PostController extends BWController
 {
     /**
      * @global \Symfony\Component\HttpFoundation\Request $request
-     * @global \BW\BlogBundle\Entity\Page $page
+     * @global \BW\BlogBundle\Entity\Post $post
      */
     public function __construct() {
         parent::__construct();
         
     }
     
-    public function pagesAction() {
+    public function postsAction() {
         $data = $this->getPropertyOverload();
         
-        $data->pages = $this->getDoctrine()->getRepository('BWBlogBundle:Page')->findAll();
+        $data->posts = $this->getDoctrine()->getRepository('BWBlogBundle:Post')->findAll();
         
-        return $this->render('BWBlogBundle:Admin/Page:pages.html.twig', $data->toArray());
+        return $this->render('BWBlogBundle:Admin/Post:posts.html.twig', $data->toArray());
     }
     
-    public function pageAction($id = NULL) {
+    public function postAction($id = NULL) {
         $data = $this->getPropertyOverload();
         $request = $this->get('request');
         
         if ($id) {
-            $page = $this->getDoctrine()->getRepository('BWBlogBundle:Page')->find($id);
+            $post = $this->getDoctrine()->getRepository('BWBlogBundle:Post')->find($id);
         } else {
-            $page = new Page;
+            $post = new Post;
         }
         
-        $form = $this->createForm(new PageType(), $page);
+        $form = $this->createForm(new PostType(), $post);
         if ( ! $id) {
             $form->remove('delete');
         }
@@ -50,7 +50,7 @@ class PageController extends BWController
                 
                 if ($id) {
                     if ( $form->get('delete')->isClicked() ) {
-                        $em->remove($page);
+                        $em->remove($post);
                         $em->flush();
                         
                         $this->get('session')->getFlashBag()->add(
@@ -58,11 +58,23 @@ class PageController extends BWController
                             'Страница успешно удалена из БД'
                         );
 
-                        return $this->redirect( $this->generateUrl('admin_pages') );
+                        return $this->redirect( $this->generateUrl('admin_posts') );
                     }
                 }
                 
-                $em->persist($page);
+                $route = $post->getRoute();
+                if ( ! $route) {
+                    $route = new \BW\RouterBundle\Entity\Route();
+                    $em->persist($route);
+                }
+                $route->setPath( $post->getLang() .'/cms/'. $post->getSlug() );
+                $route->setDefaults(array(
+                    '_controller' => 'BWBlogBundle:Post:post',
+                    'slug' => $post->getSlug(),
+                ));
+                $post->setRoute($route);
+                
+                $em->persist($post);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add(
                         'success',
@@ -70,21 +82,21 @@ class PageController extends BWController
                     );
                 
                 if ( $form->get('saveAndExit')->isClicked() ) {
-                    return $this->redirect( $this->generateUrl('admin_pages') );
+                    return $this->redirect( $this->generateUrl('admin_posts') );
                 }
                 
-                return $this->redirect( $this->generateUrl('admin_page_edit', array('id' => $page->getId())) );
+                return $this->redirect( $this->generateUrl('admin_post_edit', array('id' => $post->getId())) );
             }
         }
         
-        $data->page = $page;
+        $data->post = $post;
         $data->form = $form->createView();
         
         if ($id) {
-            return $this->render('BWBlogBundle:Admin/Page:edit-page.html.twig', $data->toArray());
+            return $this->render('BWBlogBundle:Admin/Post:edit-post.html.twig', $data->toArray());
         }
         
-        return $this->render('BWBlogBundle:Admin/Page:add-page.html.twig', $data->toArray());
+        return $this->render('BWBlogBundle:Admin/Post:add-post.html.twig', $data->toArray());
     }
     
     public function deleteAction() {
@@ -94,11 +106,11 @@ class PageController extends BWController
     public function togglePublishedAction($id) {
         $em = $this->getDoctrine()->getManager();
         
-        $page = $em->getRepository('BWBlogBundle:Page')->find($id);
-        $page->setPublished( ! $page->getPublished() );
+        $post = $em->getRepository('BWBlogBundle:Post')->find($id);
+        $post->setPublished( ! $post->getPublished() );
         
         $em->flush();
         
-        return $this->redirect($this->generateUrl('admin_pages'));
+        return $this->redirect($this->generateUrl('admin_posts'));
     }
 }

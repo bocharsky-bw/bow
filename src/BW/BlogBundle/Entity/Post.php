@@ -7,11 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Post
  *
- * @ORM\Table(name="pages")
- * @ORM\Entity(repositoryClass="BW\BlogBundle\Entity\PageRepository")
+ * @ORM\Table(name="posts")
+ * @ORM\Entity(repositoryClass="BW\BlogBundle\Entity\PostRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Page
+class Post
 {
     /**
      * @var integer
@@ -92,6 +92,14 @@ class Page
      * @ORM\JoinColumn(name="lang_id", referencedColumnName="id")
      */
     private $lang;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="\BW\RouterBundle\Entity\Route")
+     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     */
+    private $route;
 
     
     /**
@@ -365,4 +373,27 @@ class Page
         return $this->lang;
     }
     
+
+    /**
+     * Set route
+     *
+     * @param \BW\RouterBundle\Entity\Route $route
+     * @return Post
+     */
+    public function setRoute(\BW\RouterBundle\Entity\Route $route = null)
+    {
+        $this->route = $route;
+    
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return \BW\RouterBundle\Entity\Route 
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
 }

@@ -10,7 +10,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             //alert('DOM');
-            var editor = CKEDITOR.replace( 'page_content' );
+            var editor = CKEDITOR.replace( 'post_content' );
             CKFinder.setupCKEditor( editor, '{{ asset('libs/ckfinder2/') }}' );
         });
     </script>
@@ -23,5 +23,5 @@
             <h1><i class="icon-plus"></i> Создание страницы</h1>
         </div>
     </div>
-    {% include 'BWBlogBundle:Admin/Page:page.html.twig' %}
+    {% include 'BWBlogBundle:Admin/Post:post.html.twig' %}
 {% endblock %}

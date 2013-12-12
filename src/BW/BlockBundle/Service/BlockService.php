@@ -72,7 +72,7 @@ class BlockService {
         $data = new PropertyOverload;
         $data->heading = $heading;
         
-        $lang = $this->container->get('bw.localization.lang')->findLangByLocale();
+        $lang = $this->container->get('bw.localization.lang')->getCurrentLangEntity();
         $menu = $this->em->getRepository('BWMenuBundle:Menu')->findOneBy(array('alias' => $alias));
         
         if ( ! $menu) {
