@@ -1,8 +1,8 @@
 {% extends 'BWMainBundle:Layout/Frontend:layout.html.twig' %}
 
-{% block title %}{{ post.title }}{% endblock %}
+{% block title %}{{ category.title }}{% endblock %}
 
-{% block description %}{{ post.metaDescription }}{% endblock %}
+{% block description %}{{ category.metaDescription }}{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -11,9 +11,15 @@
                 {#{ bw.block.menu('main_menu')|raw }#}3333333333333333333
             </div>
             <div class="col-lg-9">
-                <h1>{{ post.heading }}</h1>
-                <div>{{ post.content|raw }}</div>
-            </div>
+                <div class="posts">
+                    <h1>{{ category.heading }}</h1>
+                    {% for post in category.posts %}
+                        <div class="post">
+                            <h2><a href="{{ path('bw_router_index', {'q': post.route.query}) }}">{{ post.heading }}</a></h2>
+                            <div>{{ post.shortDescription }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
         </div>
     </div>
 {% endblock %}

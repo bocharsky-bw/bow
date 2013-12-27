@@ -113,23 +113,6 @@ class Item extends BWEntity
     private $lang;
     
     /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Page")
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
-     */
-    private $page;
-    
-    /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Article")
-     * @ORM\JoinColumn(name="article_id", referencedColumnName="id")
-     */
-    private $article;
-
-    
-    /**
      * Set default values
      * 
      * @ORM\PrePersist

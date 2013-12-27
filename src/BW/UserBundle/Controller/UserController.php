@@ -91,6 +91,7 @@ class UserController extends BWController
      * @return Response
      */
     public function signInAction() {
+        
         if ($this->getUser()) {
             
             return $this->redirect($this->generateUrl('home'));

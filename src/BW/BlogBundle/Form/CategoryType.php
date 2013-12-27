@@ -6,9 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PostType extends AbstractType
+class CategoryType extends AbstractType
 {
-    /**
+        /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -19,15 +19,7 @@ class PostType extends AbstractType
                     'required' => FALSE,
                 ))
                 ->add('heading', 'text')
-                ->add('shortDescription', 'textarea')
-                ->add('content', 'textarea')
-                ->add('created', 'datetime')
                 // Entities
-                // Category
-                ->add('category', 'entity', array(
-                    'class' => 'BWBlogBundle:Category',
-                    'property' => 'heading',
-                ))
                 // Lang
                 ->add('lang', 'entity', array(
                     'class' => 'BWLocalizationBundle:Lang',
@@ -52,7 +44,7 @@ class PostType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BW\BlogBundle\Entity\Post',
+            'data_class' => 'BW\BlogBundle\Entity\Category'
         ));
     }
 
@@ -61,6 +53,6 @@ class PostType extends AbstractType
      */
     public function getName()
     {
-        return 'post';
+        return 'category';
     }
 }

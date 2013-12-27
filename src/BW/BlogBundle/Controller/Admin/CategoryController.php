@@ -5,10 +5,12 @@ namespace BW\BlogBundle\Controller\Admin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use BW\MainBundle\Controller\BWController;
+use BW\BlogBundle\Entity\Category;
 use BW\BlogBundle\Entity\Post;
+use BW\BlogBundle\Form\CategoryType;
 use BW\BlogBundle\Form\PostType;
 
-class PostController extends BWController
+class CategoryController extends BWController
 {
     /**
      * @global \Symfony\Component\HttpFoundation\Request $request
@@ -19,25 +21,25 @@ class PostController extends BWController
         
     }
     
-    public function postsAction() {
+    public function categoriesAction() {
         $data = $this->getPropertyOverload();
         
-        $data->posts = $this->getDoctrine()->getRepository('BWBlogBundle:Post')->findAll();
+        $data->categories = $this->getDoctrine()->getRepository('BWBlogBundle:Category')->findAll();
         
-        return $this->render('BWBlogBundle:Admin/Post:posts.html.twig', $data->toArray());
+        return $this->render('BWBlogBundle:Admin/Category:categories.html.twig', $data->toArray());
     }
     
-    public function postAction($id = NULL) {
+    public function categoryAction($id = NULL) {
         $data = $this->getPropertyOverload();
         $request = $this->get('request');
         
         if ($id) {
-            $post = $this->getDoctrine()->getRepository('BWBlogBundle:Post')->find($id);
+            $category = $this->getDoctrine()->getRepository('BWBlogBundle:Category')->find($id);
         } else {
-            $post = new Post;
+            $category = new Category;
         }
         
-        $form = $this->createForm(new PostType(), $post);
+        $form = $this->createForm(new CategoryType(), $category);
         if ( ! $id) {
             $form->remove('delete');
         }
@@ -50,31 +52,36 @@ class PostController extends BWController
                 
                 if ($id) {
                     if ( $form->get('delete')->isClicked() ) {
-                        $em->remove($post);
+                        $em->remove($category);
                         $em->flush();
                         
                         $this->get('session')->getFlashBag()->add(
                             'danger',
-                            'Страница успешно удалена из БД'
+                            'Элемент успешно удален из БД'
                         );
 
-                        return $this->redirect( $this->generateUrl('admin_posts') );
+                        return $this->redirect( $this->generateUrl('admin_categories') );
                     }
                 }
                 
-                $route = $post->getRoute();
+                if ( ! $category->getId()) {
+                    $em->persist($category);
+                    $em->flush(); // сохраняем в БД чтобы получить ID элемента для роута
+                }
+                $route = $category->getRoute();
                 if ( ! $route) {
                     $route = new \BW\RouterBundle\Entity\Route();
                     $em->persist($route);
                 }
-                $route->setPath( $post->getLang() .'/cms/'. $post->getSlug() );
+                $route->setPath( $category->getLang() .'/cms/'. $category->getSlug() );
+                $route->setQuery( 'cms/'. $category->getSlug() );
+                $route->setLang( $category->getLang() );                
                 $route->setDefaults(array(
-                    '_controller' => 'BWBlogBundle:Post:post',
-                    'slug' => $post->getSlug(),
+                    '_controller' => 'BWBlogBundle:Category:category',
+                    'id' => $category->getId(),
                 ));
-                $post->setRoute($route);
+                $category->setRoute($route);
                 
-                $em->persist($post);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add(
                         'success',
@@ -82,21 +89,21 @@ class PostController extends BWController
                     );
                 
                 if ( $form->get('saveAndExit')->isClicked() ) {
-                    return $this->redirect( $this->generateUrl('admin_posts') );
+                    return $this->redirect( $this->generateUrl('admin_categories') );
                 }
                 
-                return $this->redirect( $this->generateUrl('admin_post_edit', array('id' => $post->getId())) );
+                return $this->redirect( $this->generateUrl('admin_category_edit', array('id' => $category->getId())) );
             }
         }
         
-        $data->post = $post;
+        $data->category = $category;
         $data->form = $form->createView();
         
         if ($id) {
-            return $this->render('BWBlogBundle:Admin/Post:edit-post.html.twig', $data->toArray());
+            return $this->render('BWBlogBundle:Admin/Category:edit-category.html.twig', $data->toArray());
         }
         
-        return $this->render('BWBlogBundle:Admin/Post:add-post.html.twig', $data->toArray());
+        return $this->render('BWBlogBundle:Admin/Category:add-category.html.twig', $data->toArray());
     }
     
     public function deleteAction() {
@@ -106,11 +113,11 @@ class PostController extends BWController
     public function togglePublishedAction($id) {
         $em = $this->getDoctrine()->getManager();
         
-        $post = $em->getRepository('BWBlogBundle:Post')->find($id);
-        $post->setPublished( ! $post->getPublished() );
+        $category = $em->getRepository('BWBlogBundle:Category')->find($id);
+        $category->setPublished( ! $category->getPublished() );
         
         $em->flush();
         
-        return $this->redirect($this->generateUrl('admin_posts'));
+        return $this->redirect($this->generateUrl('admin_categories'));
     }
 }

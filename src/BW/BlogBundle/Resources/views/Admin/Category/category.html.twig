@@ -15,9 +15,9 @@
             {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Сохранить'}) }}
             {{ form_widget(form.saveAndExit, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и выйти из режима редактирования'}, 'label': 'Сохранить и закрыть'}) }}
             {% if form.delete is defined %}
-                {{ form_widget(form.delete, {'attr': {'class': 'btn btn-default icon-remove before-padding', 'title': 'Удалить запись', 'onclick': "return confirm('Удалить запись из БД?')"}, 'label': 'Удалить'}) }}
+                {{ form_widget(form.delete, {'attr': {'class': 'btn btn-default icon-remove before-padding', 'title': 'Удалить элемент', 'onclick': "return confirm('Удалить запись из БД?')"}, 'label': 'Удалить'}) }}
             {% endif %}
-            <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_posts') }}" title="Отменить несохраненные изменения">Закрыть</a>
+            <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_categories') }}" title="Отменить несохраненные изменения">Закрыть</a>
         </div>
 
         <div>
@@ -41,30 +41,6 @@
             {{ form_widget(form.heading, {'attr': {'class': 'form-control '} }) }}
             <div class="error">
                 {{ form_errors(form.heading) }}
-            </div>
-        </div>
-
-        <div>
-            {{ form_label(form.shortDescription, 'Короткое описание :', {'label_attr': {'class': ''} }) }}
-            {{ form_widget(form.shortDescription, {'attr': {'class': 'form-control '} }) }}
-            <div class="error">
-                {{ form_errors(form.shortDescription) }}
-            </div>
-        </div>
-
-        <div>
-            {{ form_label(form.content, 'Текст статьи: ', {'label_attr': {'class': ''} }) }}
-            {{ form_widget(form.content, {'attr': {'class': 'form-control '} }) }}
-            <div class="error">
-                {{ form_errors(form.content) }}
-            </div>
-        </div>
-
-        <div>
-            {{ form_label(form.created, 'Дата создания: ', {'label_attr': {'class': ''} }) }}
-            {{ form_widget(form.created, {'attr': {'class': ' '} }) }}
-            <div class="error">
-                {{ form_errors(form.created) }}
             </div>
         </div>
 

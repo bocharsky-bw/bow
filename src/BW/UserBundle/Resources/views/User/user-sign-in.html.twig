@@ -35,8 +35,12 @@
                         <a href="{{ path('user_password_reset') }}">Забыли пароль?</a>
                     </p>
                     <p>
-                        Или <a href="{{ path('user_sign_up') }}">Зарегистрироваться</a> как новый пользователь.
+                        Или <a href="{{ path('user_sign_up') }}">зарегистрироваться</a> как новый пользователь.
                     </p>
+                    <div>
+                        Или авторизироваться через соц. сети:<br>
+                        {% include 'BWUserBundle:User:social/facebook-sign-in.html.twig' %}
+                    </div>
                 </form>
             </div>
         </div>

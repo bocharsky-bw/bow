@@ -6,27 +6,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use BW\MainBundle\Controller\BWController;
 
-class PostController extends BWController
+class CategoryController extends BWController
 {
     
-
-    public function postAction($slug) {
+    public function categoryAction($id) {
         $data = $this->getPropertyOverload();
         
-        $lang = $this->get('bw.localization.lang')->getCurrentLangEntity();
+        $data->category = $this->getDoctrine()->getRepository('BWBlogBundle:Category')->find(array(
+            'id' => $id,
+        ));
         
-        $data->post = $this->getDoctrine()->getRepository('BWBlogBundle:Post')->findOneBy(
-            array(
-                'slug' => $slug,
-                'published' => TRUE,
-                //'lang' => $lang,
-            )
-        );
-        
-        if ( ! $data->post) {
-            throw $this->createNotFoundException('Ошибка 404. Запрашиваемая статья по адресу "'. $slug .'" не найдена. Скорее всего нужно перегенерировать ссылку страницы.');
-        }
-        
-        return $this->render('BWBlogBundle:Post:post.html.twig', $data->toArray());
+        return $this->render('BWBlogBundle:Category:category.html.twig', $data->toArray());
     }
 }

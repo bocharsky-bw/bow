@@ -51,6 +51,9 @@
             <li class="has-child"><a href="#"><i class="icon-file-text before-padding"></i>{{ 'admin.content'|trans }}</a> 
                 <ul>
                     <li class="">
+                        <a href="{{ path('admin_categories') }}"><i class="icon-folder-close before-padding"></i>{{ 'admin.categories'|trans }}</a>
+                    </li>
+                    <li class="">
                         <a href="{{ path('admin_posts') }}"><i class="icon-file-text-alt before-padding"></i>{{ 'admin.posts'|trans }}</a>
                     </li>
                 </ul>
@@ -78,16 +81,16 @@
                 <ul class="menu-s row">
                     <li><a href="#" class="icon-remove-sign menu-back" title="Закрыть панель">Закрыть</a></li>
                     <li class="">
-                        <a href="{{ path('admin_posts') }}" title="Статьи" class="icon-file-text-alt">{{ 'admin.posts'|trans }}</a>
+                        <a href="{{ path('admin_posts') }}" title="{{ 'admin.posts'|trans }}" class="icon-file-text-alt">{{ 'admin.posts'|trans }}</a>
                     </li>
                     <li class="">
-                        <a href="{{ path('admin_menus') }}" title="Меню" class="icon-align-justify">Меню</a>
+                        <a href="{{ path('admin_menus') }}" title="{{ 'admin.menu'|trans }}" class="icon-align-justify">{{ 'admin.menu'|trans }}</a>
                     </li>
                     <li class="">
-                        <a href="{{ path('admin_items') }}" title="Пункты меню" class="icon-list">Пункты меню</a>
+                        <a href="{{ path('admin_items') }}" title="{{ 'admin.menu_items'|trans }}" class="icon-list">{{ 'admin.menu_items'|trans }}</a>
                     </li>
                     <li class="">
-                        <a href="{{ path('admin_localization') }}" title="Локализация" class="icon-globe">Локализация</a>
+                        <a href="{{ path('admin_localization') }}" title="{{ 'admin.localization'|trans }}" class="icon-globe">{{ 'admin.localization'|trans }}</a>
                     </li>
                 </ul>
             </li>

@@ -1,6 +1,6 @@
 {% extends 'BWMainBundle:Layout/Backend:layout.html.twig' %}
 
-{% block title %}Редактирование страницы {{ parent() }}{% endblock %}
+{% block title %}Редактирование записи {{ parent() }}{% endblock %}
 
 {% block js %}
     {{ parent() }}
@@ -20,7 +20,7 @@
 {% block content %}
     <div class="bw_container">
         <div class="bw_row">
-            <h1><i class="icon-edit"></i> Редактирование страницы</h1>
+            <h1><i class="icon-edit"></i> Редактирование записи</h1>
         </div>
     </div>
     {% include 'BWBlogBundle:Admin/Post:post.html.twig' %}

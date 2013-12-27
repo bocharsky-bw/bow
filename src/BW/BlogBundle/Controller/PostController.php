@@ -10,14 +10,14 @@ class PostController extends BWController
 {
     
 
-    public function postAction($slug) {
+    public function postAction($id) {
         $data = $this->getPropertyOverload();
         
         $lang = $this->get('bw.localization.lang')->getCurrentLangEntity();
         
         $data->post = $this->getDoctrine()->getRepository('BWBlogBundle:Post')->findOneBy(
             array(
-                'slug' => $slug,
+                'id' => $id,
                 'published' => TRUE,
                 //'lang' => $lang,
             )

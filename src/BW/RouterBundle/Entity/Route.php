@@ -35,6 +35,21 @@ class Route
      */
     private $defaults;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="query", type="string", length=255)
+     */
+    private $query;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="\BW\LocalizationBundle\Entity\Lang")
+     * @ORM\JoinColumn(name="lang_id", referencedColumnName="id")
+     */
+    private $lang;
+    
 
     /**
      * The controller name (a string like BlogBundle:Post:index)
@@ -104,5 +119,51 @@ class Route
     public function getDefaults()
     {
         return $this->defaults;
+    }
+
+    /**
+     * Set query
+     *
+     * @param string $query
+     * @return Route
+     */
+    public function setQuery($query)
+    {
+        $this->query = $query;
+    
+        return $this;
+    }
+
+    /**
+     * Get query
+     *
+     * @return string 
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
+     * Set lang
+     *
+     * @param \BW\LocalizationBundle\Entity\Lang $lang
+     * @return Route
+     */
+    public function setLang(\BW\LocalizationBundle\Entity\Lang $lang = null)
+    {
+        $this->lang = $lang;
+    
+        return $this;
+    }
+
+    /**
+     * Get lang
+     *
+     * @return \BW\LocalizationBundle\Entity\Lang 
+     */
+    public function getLang()
+    {
+        return $this->lang;
     }
 }

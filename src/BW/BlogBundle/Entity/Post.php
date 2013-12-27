@@ -96,10 +96,17 @@ class Post
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="\BW\RouterBundle\Entity\Route")
+     * @ORM\ManyToOne(targetEntity="\BW\RouterBundle\Entity\Route", cascade={"remove"})
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
      */
     private $route;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Category", inversedBy="posts")
+     */
+    private $category;
 
     
     /**
@@ -395,5 +402,28 @@ class Post
     public function getRoute()
     {
         return $this->route;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \BW\BlogBundle\Entity\Category $category
+     * @return Post
+     */
+    public function setCategory(\BW\BlogBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+    
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \BW\BlogBundle\Entity\Category 
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

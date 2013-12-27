@@ -62,19 +62,24 @@ class PostController extends BWController
                     }
                 }
                 
+                if ( ! $post->getId()) {
+                    $em->persist($post);
+                    $em->flush(); // сохраняем в БД чтобы получить ID элемента для роута
+                }
                 $route = $post->getRoute();
                 if ( ! $route) {
                     $route = new \BW\RouterBundle\Entity\Route();
                     $em->persist($route);
                 }
-                $route->setPath( $post->getLang() .'/cms/'. $post->getSlug() );
+                $route->setPath( $post->getLang() .'/cms/'. ($post->getCategory() ? $post->getCategory()->getSlug() .'/' : '/') . $post->getSlug() );
+                $route->setQuery( 'cms/'. ($post->getCategory() ? $post->getCategory()->getSlug() .'/' : '/') . $post->getSlug() );
+                $route->setLang( $post->getLang() );
                 $route->setDefaults(array(
                     '_controller' => 'BWBlogBundle:Post:post',
-                    'slug' => $post->getSlug(),
+                    'id' => $post->getId(),
                 ));
                 $post->setRoute($route);
                 
-                $em->persist($post);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add(
                         'success',

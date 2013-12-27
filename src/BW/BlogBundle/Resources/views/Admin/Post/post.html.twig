@@ -27,12 +27,20 @@
                 {{ form_errors(form.published) }}
             </div>
         </div>
-
+            
         <div>
             {{ form_label(form.lang, 'Язык: ', {'label_attr': {'class': ''} }) }}
             {{ form_widget(form.lang, {'attr': {'class': 'form-control'} }) }}
             <div class="error">
                 {{ form_errors(form.lang) }}
+            </div>
+        </div>
+
+        <div>
+            {{ form_label(form.category, 'Категория: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.category, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.category) }}
             </div>
         </div>
         
