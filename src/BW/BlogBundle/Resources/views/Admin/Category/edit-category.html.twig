@@ -1,0 +1,27 @@
+{% extends 'BWMainBundle:Layout/Backend:layout.html.twig' %}
+
+{% block title %}Редактирование страницы {{ parent() }}{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+    <!-- CKEditor/CKFinder -->
+    <script src="{{ asset('libs/ckeditor4/ckeditor.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('libs/ckfinder2/ckfinder.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //alert('DOM');
+            var editor = CKEDITOR.replace( 'post_content' );
+            CKFinder.setupCKEditor( editor, '{{ asset('libs/ckfinder2/') }}' );
+        });
+    </script>
+    <!-- /CKEditor/CKFinder -->
+{% endblock %}
+    
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-edit"></i> Редактирование страницы</h1>
+        </div>
+    </div>
+    {% include 'BWBlogBundle:Admin/Post:post.html.twig' %}
+{% endblock %}
