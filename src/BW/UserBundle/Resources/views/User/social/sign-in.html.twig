@@ -1,0 +1,8 @@
+{% if service('bw.user.social').facebook %}
+    {#{ dump(service('bw.user.social').facebook.getUser()) }#}
+    <div>
+        <a href="{{ service('bw.user.social').getFacebook().getLoginUrl( service('service_container').getParameter('social.facebook')['params'] ) }}" title="Авторизироваться через Facebook аккаунт" rel="nofollow">
+            <img src="{{ asset('images/social/facebook/facebook_login_buttons/active_200.png') }}" alt="Facebook Login">
+        </a>
+    </div>
+{% endif %}

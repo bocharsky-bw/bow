@@ -24,7 +24,8 @@ security:
 #                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
     firewalls:
-        _admin:
+        # The name of firewall ("auth") do NOT change! use in BWUserBundleUserController::authorizeUser()
+        auth:
             pattern:    ^/
             anonymous:  ~
             form_login:

@@ -6,6 +6,8 @@ use BW\MainBundle\Controller\BWController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 use BW\UserBundle\Entity\User;
 use BW\UserBundle\Form\UserSignUpType;
@@ -17,6 +19,8 @@ class UserController extends BWController
     /**
      * @global \Symfony\Component\HttpFoundation\Request $request
      * @global \Doctrine\DBAL\Connection $conn
+     * @global \Facebook $facebook
+     * @global \Exception $e
      */
     public function __construct() {
         parent::__construct();
@@ -88,46 +92,28 @@ class UserController extends BWController
     /**
      * Форма для авторизации пользователя
      * 
+     * @global \Symfony\Component\Security\Core\SecurityContext $securityContext
+     * @global \Symfony\Component\Security\Core\Authentication\Token\AnonymousToken $token
      * @return Response
      */
     public function signInAction() {
-        
         if ($this->getUser()) {
-            
+            return $this->redirect($this->generateUrl('home'));
+        }
+        // Facebook Login
+        if ($this->signInFacebook()) {
             return $this->redirect($this->generateUrl('home'));
         }
         
-        $request = $this->getRequest();
-        $session = $request->getSession();
-
-        // get the login error if there is one
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(
-                SecurityContext::AUTHENTICATION_ERROR
-            );
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        }
+        // VKontakte Login
+        $vk = new \BW\UserBundle\Service\VKontakte(array(
+            'appId' => '4119845',
+            'secret' => '2eJ770PwIIBibuAoC5Pb',
+            'apiVersion' => '5.5',
+        ));
         
-        return $this->render(
-            'BWUserBundle:User:user-sign-in.html.twig',
-            array(
-                // last username entered by the user
-                'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-                'error'         => $error,
-            )
-        );
-    }
-    
-    /**
-     * Блок с формой для авторизации пользователя
-     * 
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return Response
-     */
-    public function signInFormAction(Request $request) {
         $data = $this->getPropertyOverload();
+        $request = $this->getRequest();
         $session = $request->getSession();
 
         // get the login error if there is one
@@ -139,11 +125,92 @@ class UserController extends BWController
             $data->error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
-        $data->last_username = $session->get(SecurityContext::LAST_USERNAME);
         
-        $data->request = $request;
-        return $this->render('BWUserBundle:User:sign-in-form.html.twig', $data->toArray());
+        $data->last_username = $session->get(SecurityContext::LAST_USERNAME);
+        return $this->render(
+            'BWUserBundle:User:user-sign-in.html.twig',
+            $data->toArray()
+        );
     }
+    
+    private function signInFacebook() {
+        $facebook = $this->get('bw.user.social')->getFacebook();
+        
+        if ($facebook->getUser()) {
+            $userProfile = $facebook->api('/me/');
+            if ($userProfile) {
+                try {
+                    $user = $this->getDoctrine()
+                            ->getRepository('BWUserBundle:User')
+                            ->loadUserByFacebookId($userProfile['id']);
+                } catch (\Exception $e) {
+                    // Создание нового пользователя
+                    $em = $this->getDoctrine()->getManager();
+                    $role = $em->getRepository('BWUserBundle:Role')->findOneBy(array(
+                        'role' => 'ROLE_USER',
+                    ));
+                    $user = new User();
+                    $user
+                            ->setFacebookId($userProfile['id'])
+                            ->setEmail($userProfile['email'])
+                            ->setUsername($userProfile['username'])
+                            ->setActive(TRUE)
+                            ->setConfirm(TRUE)
+                            ->setHash('')
+                            ->addRole($role)
+                            ->generatePassword()
+                        ;
+                    $em->persist($user);
+                    $em->flush();
+                }
+                if ($user) {
+                    $this->authorizeUser($user);
+
+                    return TRUE;
+                }
+            }
+        }
+        
+        return FALSE;
+    }
+    
+    public function signOutAction() {
+        // Facebook logout
+        $this->signOutFacebook();
+        
+        return $this->redirect($this->generateUrl('home'));
+    }
+    
+    private function signOutFacebook() {
+        $facebook = $this->get('bw.user.social')->getFacebook();
+        
+        return $facebook->destroySession();
+    }
+    
+    /**
+     * Блок с формой для авторизации пользователя
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return Response
+     */
+//    public function signInFormAction(Request $request) {
+//        $data = $this->getPropertyOverload();
+//        $session = $request->getSession();
+//
+//        // get the login error if there is one
+//        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+//            $data->error = $request->attributes->get(
+//                SecurityContext::AUTHENTICATION_ERROR
+//            );
+//        } else {
+//            $data->error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+//            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+//        }
+//        $data->last_username = $session->get(SecurityContext::LAST_USERNAME);
+//        
+//        $data->request = $request;
+//        return $this->render('BWUserBundle:User:sign-in-form.html.twig', $data->toArray());
+//    }
     
     /**
      * Подтверждение e-mail и активация аккаунта
@@ -299,5 +366,18 @@ class UserController extends BWController
         
         $data->form = $form->createView();
         return $this->render('BWUserBundle:User:new-password.html.twig', $data->toArray());
+    }
+    
+    private function authorizeUser(User $user) {
+        $request = $this->getRequest();
+        
+        /* Авторизация пользователя в системе */
+        $token = new UsernamePasswordToken($user, $user->getPassword(), 'auth', $user->getRoles());
+        $this->get('security.context')->setToken($token);
+
+        // Fire the login event
+        // Logging the user in above the way we do it doesn't do this automatically
+        $event = new InteractiveLoginEvent($request, $token);
+        $this->get('event_dispatcher')->dispatch('security.interactive_login', $event);
     }
 }

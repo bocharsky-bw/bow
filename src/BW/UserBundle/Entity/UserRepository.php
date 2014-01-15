@@ -37,6 +37,31 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
         return $user;
     }
+    
+    public function loadUserByFacebookId($facebook_id)
+    {
+        $q = $this
+            ->createQueryBuilder('u')
+            ->select('u, r')
+            ->leftJoin('u.roles', 'r')
+            ->where('u.facebookId = :facebook_id')
+            ->setParameter('facebook_id', $facebook_id)
+            ->getQuery();
+
+        try {
+            // The Query::getSingleResult() method throws an exception
+            // if there is no record matching the criteria.
+            $user = $q->getSingleResult();
+        } catch (NoResultException $e) {
+            $message = sprintf(
+                'Пользователь Facebook с id = "%s" не найден.',
+                $facebook_id
+            );
+            throw new UsernameNotFoundException($message, 0, $e);
+        }
+
+        return $user;
+    }
 
     public function refreshUser(UserInterface $user)
     {

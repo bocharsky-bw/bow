@@ -64,6 +64,7 @@ user_sign_in_check:
 user_sign_out:
     host:     %domain%
     pattern:  /user/sign-out
+    defaults: { _controller: BWUserBundle:User:signOut }
     
 user_password_reset:
     host:     %domain%

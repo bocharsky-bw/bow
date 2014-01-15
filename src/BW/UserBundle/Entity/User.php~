@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="BW\UserBundle\Entity\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements AdvancedUserInterface, \Serializable
 {
@@ -78,6 +79,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $hash;
     
+    /**
+     * @ORM\Column(name="facebook_id", type="bigint", options={"unsigned"=true})
+     */
+    private $facebookId;
+    
     
     public function isAccountNonExpired()
     {
@@ -128,6 +134,17 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->hash;
     }
 
+    /**
+     * Generate date of update
+     * 
+     * @ORM\PreUpdate
+     * @return \BW\UserBundle\Entity\User
+     */
+    public function generateUpdatedDate() {
+        $this->updated = new \DateTime;
+        
+        return $this;
+    }
     
     public function __construct()
     {
@@ -411,5 +428,51 @@ class User implements AdvancedUserInterface, \Serializable
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Set hash
+     *
+     * @param string $hash
+     * @return User
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+    
+        return $this;
+    }
+
+    /**
+     * Get hash
+     *
+     * @return string 
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    /**
+     * Set facebookId
+     *
+     * @param integer $facebookId
+     * @return User
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+    
+        return $this;
+    }
+
+    /**
+     * Get facebookId
+     *
+     * @return integer 
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
     }
 }

@@ -79,6 +79,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $hash;
     
+    /**
+     * @ORM\Column(name="facebook_id", type="bigint", options={"unsigned"=true})
+     */
+    private $facebookId;
+    
     
     public function isAccountNonExpired()
     {
@@ -151,6 +156,7 @@ class User implements AdvancedUserInterface, \Serializable
         $this->hash             = md5(uniqid(NULL, TRUE));
         $this->created          = new \DateTime;
         $this->updated          = new \DateTime;
+        $this->facebookId       = 0;
     }
 
     
@@ -446,5 +452,28 @@ class User implements AdvancedUserInterface, \Serializable
     public function getHash()
     {
         return $this->hash;
+    }
+
+    /**
+     * Set facebookId
+     *
+     * @param integer $facebookId
+     * @return User
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebookId = $facebookId;
+    
+        return $this;
+    }
+
+    /**
+     * Get facebookId
+     *
+     * @return integer 
+     */
+    public function getFacebookId()
+    {
+        return $this->facebookId;
     }
 }

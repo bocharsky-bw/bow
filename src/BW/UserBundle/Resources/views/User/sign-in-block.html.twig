@@ -19,6 +19,8 @@
                     <input type="hidden" name="_target_path" value="/account" />
                 #}
                 <button type="submit">Войти</button>
+                {# Авторизация через соц.сети #}
+                {% include 'BWUserBundle:User/social:sign-in-thumbs.html.twig' %}
                 <div style="text-align: right;">
                     <a href="{{ path('user_sign_up') }}" class="registration">Зарегистрироваться</a> | <a href="{{ path('user_password_reset') }}" class="reset_password">Забыли пароль?</a>
                 </div>
