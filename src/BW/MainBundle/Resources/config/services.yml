@@ -1,5 +1,5 @@
 parameters:
-#    bw_main.example.class: BW\MainBundle\Example
+    domain: bow.loc
 
 services:
 #    bw_main.example:
