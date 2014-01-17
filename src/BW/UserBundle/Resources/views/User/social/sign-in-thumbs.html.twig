@@ -1,9 +1,12 @@
 {% if service('bw.user.social').facebook %}
     {#{ dump(service('bw.user.social').facebook.getUser()) }#}
-    <a href="{{ service('bw.user.social').getFacebook().getLoginUrl( service('service_container').getParameter('social.facebook')['params']|merge({'redirect_uri': url('user_sign_in')}) ) }}" title="Авторизироваться через Facebook аккаунт" rel="nofollow">
-        <img src="{{ asset('images/social/facebook/logo_32.png') }}" width="30" height="30" style="vertical-align: bottom;" alt="Facebook Login">
+    <a href="{{ path('user_vkontakte_sign_in') }}" title="Авторизироваться через ВКонтакте аккаунт" rel="nofollow">
+        <img src="{{ asset('images/social/vkontakte/logo_32.png') }}" width="30" height="30" style="vertical-align: bottom;" alt="VKontakte Account Login">
     </a>
-    <a href="https://oauth.vk.com/authorize?client_id=4119845&scope=notify&redirect_uri={{ url('user_sign_in') }}&response_type=code&v=5.5" title="Авторизироваться через ВКонтакте аккаунт" rel="nofollow">
-        <img src="{{ asset('images/social/vkontakte/logo_32.png') }}" width="30" height="30" style="vertical-align: bottom;" alt="VKontakte Login">
+    <a href="{{ path('user_facebook_sign_in') }}" title="Авторизироваться через Facebook аккаунт" rel="nofollow">
+        <img src="{{ asset('images/social/facebook/logo_32.png') }}" width="30" height="30" style="vertical-align: bottom;" alt="Facebook Account Login">
+    </a>
+    <a href="{{ path('user_google_sign_in') }}" title="Авторизироваться через Google аккаунт" rel="nofollow">
+        <img src="{{ asset('images/social/google/logo_32.png') }}" width="30" height="30" style="vertical-align: bottom;" alt="Google Account Login">
     </a>
 {% endif %}

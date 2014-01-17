@@ -84,6 +84,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $facebookId;
     
+    /**
+     * @ORM\Column(name="google_id", type="bigint", options={"unsigned"=true})
+     */
+    private $googleId;
+    
     
     public function isAccountNonExpired()
     {
@@ -156,6 +161,7 @@ class User implements AdvancedUserInterface, \Serializable
         $this->hash             = md5(uniqid(NULL, TRUE));
         $this->created          = new \DateTime;
         $this->updated          = new \DateTime;
+        $this->facebookId       = 0;
     }
 
     

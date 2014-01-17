@@ -57,6 +57,21 @@ user_sign_in:
     pattern:  /{_locale}/user/sign-in
     defaults: { _controller: BWUserBundle:User:signIn }
     
+user_facebook_sign_in:
+    host:     %domain%
+    pattern:  /{_locale}/user/sign-in/facebook
+    defaults: { _controller: BWUserBundle:User:signInWithFacebook }
+    
+user_google_sign_in:
+    host:     %domain%
+    pattern:  /{_locale}/user/sign-in/google
+    defaults: { _controller: BWUserBundle:User:signInWithGoogle }
+    
+user_vkontakte_sign_in:
+    host:     %domain%
+    pattern:  /{_locale}/user/sign-in/vkontakte
+    defaults: { _controller: BWUserBundle:User:signInWithVkontakte }
+    
 user_sign_in_check:
     host:     %domain%
     pattern:  /user/sign-in-check

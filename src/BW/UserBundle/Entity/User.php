@@ -80,9 +80,14 @@ class User implements AdvancedUserInterface, \Serializable
     private $hash;
     
     /**
-     * @ORM\Column(name="facebook_id", type="bigint", options={"unsigned"=true})
+     * @ORM\Column(name="facebook_id", type="string", length=32, nullable=true, unique=true)
      */
     private $facebookId;
+    
+    /**
+     * @ORM\Column(name="google_id", type="string", length=32, nullable=true, unique=true)
+     */
+    private $googleId;
     
     
     public function isAccountNonExpired()
@@ -156,7 +161,6 @@ class User implements AdvancedUserInterface, \Serializable
         $this->hash             = md5(uniqid(NULL, TRUE));
         $this->created          = new \DateTime;
         $this->updated          = new \DateTime;
-        $this->facebookId       = 0;
     }
 
     
@@ -457,7 +461,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Set facebookId
      *
-     * @param integer $facebookId
+     * @param mixed $facebookId
      * @return User
      */
     public function setFacebookId($facebookId)
@@ -470,10 +474,33 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get facebookId
      *
-     * @return integer 
+     * @return string 
      */
     public function getFacebookId()
     {
         return $this->facebookId;
+    }
+
+    /**
+     * Set googleId
+     *
+     * @param mixed $googleId
+     * @return User
+     */
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+
+        return $this;
+    }
+
+    /**
+     * Get googleId
+     *
+     * @return string 
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
     }
 }

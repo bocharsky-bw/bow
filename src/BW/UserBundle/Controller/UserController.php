@@ -18,8 +18,11 @@ class UserController extends BWController
 {
     /**
      * @global \Symfony\Component\HttpFoundation\Request $request
+     * @global \Symfony\Component\HttpFoundation\Session\Session $session
      * @global \Doctrine\DBAL\Connection $conn
      * @global \Facebook $facebook
+     * @global \Google_Client $client
+     * @global \Google_Service_Oauth2_Userinfo $userInfo
      * @global \Exception $e
      */
     public function __construct() {
@@ -100,17 +103,6 @@ class UserController extends BWController
         if ($this->getUser()) {
             return $this->redirect($this->generateUrl('home'));
         }
-        // Facebook Login
-        if ($this->signInFacebook()) {
-            return $this->redirect($this->generateUrl('home'));
-        }
-        
-        // VKontakte Login
-        $vk = new \BW\UserBundle\Service\VKontakte(array(
-            'appId' => '4119845',
-            'secret' => '2eJ770PwIIBibuAoC5Pb',
-            'apiVersion' => '5.5',
-        ));
         
         $data = $this->getPropertyOverload();
         $request = $this->getRequest();
@@ -133,45 +125,169 @@ class UserController extends BWController
         );
     }
     
-    private function signInFacebook() {
-        $facebook = $this->get('bw.user.social')->getFacebook();
+    public function signInWithVkontakteAction() {
+        $request = $this->get('request');
+        $session = $this->get('session');
         
-        if ($facebook->getUser()) {
-            $userProfile = $facebook->api('/me/');
-            if ($userProfile) {
-                try {
-                    $user = $this->getDoctrine()
-                            ->getRepository('BWUserBundle:User')
-                            ->loadUserByFacebookId($userProfile['id']);
-                } catch (\Exception $e) {
-                    // Создание нового пользователя
-                    $em = $this->getDoctrine()->getManager();
-                    $role = $em->getRepository('BWUserBundle:Role')->findOneBy(array(
-                        'role' => 'ROLE_USER',
-                    ));
-                    $user = new User();
-                    $user
-                            ->setFacebookId($userProfile['id'])
-                            ->setEmail($userProfile['email'])
-                            ->setUsername($userProfile['username'])
-                            ->setActive(TRUE)
-                            ->setConfirm(TRUE)
-                            ->setHash('')
-                            ->addRole($role)
-                            ->generatePassword()
-                        ;
-                    $em->persist($user);
-                    $em->flush();
-                }
-                if ($user) {
-                    $this->authorizeUser($user);
-
-                    return TRUE;
-                }
-            }
+        // VKontakte Login
+        $vk = new \BW\UserBundle\Service\VKontakte($this->get('service_container')->getParameter('social')['vkontakte']);
+        $vk->setRedirectUri($this->get('router')->generate('user_vkontakte_sign_in', array(), TRUE));
+        
+        if ($request->query->has('code')) {
+            
+            $session->set('vkontakte_access_token', $vk->getAccessToken($request->query->get('code')));
+            return $this->redirect($this->generateUrl('user_vkontakte_sign_in'));
+        }
+        if ($session->has('vkontakte_access_token')) {
+            $vk->setAccessToken($session->get('vkontakte_access_token'));
         }
         
-        return FALSE;
+        $userProfile = $vk->api('users.get?fields=sex,bdate');
+        var_dump($userProfile);
+        
+        return new \Symfony\Component\HttpFoundation\Response('<a href="'. $vk->getLoginUrl() .'">Auth</a>');
+    }
+    
+    public function signInWithFacebookAction() {
+        $request = $this->get('request');
+        $facebook = $this->get('bw.user.social')->getFacebook();
+        
+        if ($request->query->has('code')) {
+            if ($facebook->getUser()) {
+                $userProfile = $facebook->api('/me/');
+                if ($userProfile) {
+                    try {
+                        $user = $this->getDoctrine()
+                                ->getRepository('BWUserBundle:User')
+                                ->loadUserBySocialId('facebookId', $userProfile['id']);
+                    } catch (\Exception $e) {
+                        // Создание нового пользователя
+                        $em = $this->getDoctrine()->getManager();
+                        $role = $em->getRepository('BWUserBundle:Role')->findOneBy(array(
+                            'role' => 'ROLE_USER',
+                        ));
+                        $user = new User();
+                        $user
+                                ->setFacebookId($userProfile['id'])
+                                ->setEmail($userProfile['email'])
+                                ->setUsername($userProfile['username'])
+                                ->setActive(TRUE)
+                                ->setConfirm(TRUE)
+                                ->setHash('')
+                                ->addRole($role)
+                                ->generatePassword()
+                            ;
+                        $em->persist($user);
+                        $em->flush();
+                    }
+                    if ($user) {
+                        
+                        $this->authorizeUser($user); // return TRUE if success
+                    }
+                }
+            }
+        } else {
+            $params = array(
+                'scope' => $this->get('service_container')->getParameter('social')['facebook']['scopes'],
+                'redirect_uri' => $this->get('router')->generate('user_facebook_sign_in', array(), TRUE),
+            );
+            
+            return $this->redirect($facebook->getLoginUrl($params));
+        }
+        
+        return $this->redirect($this->generateUrl('home'));
+    }
+    
+    public function signInWithGoogleAction() {
+        /**
+         * When we create the service here, we pass the
+         * client to it. The client then queries the service
+         * for the required scopes, and uses that when
+         * generating the authentication URL later.
+         */
+        $request = $this->get('request');
+        $session = $this->get('session');
+        $client = $this->get('bw.user.social')->getGoogleClient();
+        $service = new \Google_Service_Oauth2($client);
+        
+
+        /**
+         * If we're logging out we just need to clear our
+         * local access token in this case
+         */
+        if ($request->query->has('logout')) {
+            $session->remove('google_access_token');
+        }
+
+        /**
+         * If we have a code back from the OAuth 2.0 flow,
+         * we need to exchange that with the authenticate()
+         * function. We store the resultant access token
+         * bundle in the session, and redirect to ourself.
+         */
+        if ($request->query->has('code')) {
+            $client->authenticate($request->query->get('code'));
+            $session->set('google_access_token', $client->getAccessToken());
+
+            /**
+             * If we have an access token, we can make
+             * requests, else we generate an authentication URL.
+             */
+            if ($session->has('google_access_token')) {
+                $client->setAccessToken($session->get('google_access_token'));
+            }
+
+            /**
+             * If we're signed in and have a request to shorten
+             * a URL, then we create a new URL object, set the
+             * unshortened URL, and call the 'insert' method on
+             * the 'url' resource. Note that we re-store the
+             * access_token bundle, just in case anything
+             * changed during the request - the main thing that
+             * might happen here is the access token itself is
+             * refreshed if the application has offline access.
+             */
+            if ($client->isAccessTokenExpired()) {
+                $session->remove('google_access_token');
+            } else {
+                $userInfo = $service->userinfo->get();
+                if ($userInfo->id) {
+                    try {
+                        $user = $this->getDoctrine()
+                                ->getRepository('BWUserBundle:User')
+                                ->loadUserBySocialId('googleId', $userInfo->id);
+                    } catch (\Exception $e) {
+                        // Создание нового пользователя
+                        $em = $this->getDoctrine()->getManager();
+                        $role = $em->getRepository('BWUserBundle:Role')->findOneBy(array(
+                            'role' => 'ROLE_USER',
+                        ));
+                        $user = new User();
+                        $user
+                                ->setGoogleId($userInfo->id)
+                                ->setEmail($userInfo->email)
+                                ->setUsername($userInfo->id)
+                                ->setActive(TRUE)
+                                ->setConfirm(TRUE)
+                                ->setHash('')
+                                ->addRole($role)
+                                ->generatePassword()
+                            ;
+                        $em->persist($user);
+                        $em->flush();
+                    }
+                    if ($user) {
+                        
+                        $this->authorizeUser($user); // return TRUE if success
+                    }
+                }
+            }
+        } else {
+            
+            return $this->redirect($client->createAuthUrl());
+        }
+        
+        return $this->redirect($this->generateUrl('home'));
     }
     
     public function signOutAction() {
@@ -379,5 +495,7 @@ class UserController extends BWController
         // Logging the user in above the way we do it doesn't do this automatically
         $event = new InteractiveLoginEvent($request, $token);
         $this->get('event_dispatcher')->dispatch('security.interactive_login', $event);
+        
+        return TRUE;
     }
 }
