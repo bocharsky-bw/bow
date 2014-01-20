@@ -3,9 +3,9 @@
 namespace BW\UserBundle\Service;
 
 /**
- * Description of VKontakte
+ * The VKontakte PHP SDK
  *
- * @author Victor
+ * @author Bocharsky Victor
  */
 class VKontakte {
     
@@ -19,21 +19,37 @@ class VKontakte {
     
     /**
      * The application secret code
-     * @var integer
+     * @var string
      */
     private $secret;
     
+    /**
+     * The scope for login URL
+     * @var array
+     */
     private $scope = array();
     
+    /**
+     * The URL to which the user will be redirected
+     * @var string
+     */
     private $redirect_uri;
     
+    /**
+     * The response type of login URL
+     * @var string
+     */
     private $responceType = 'code';
     
+    /**
+     * The current access token
+     * @var \StdClass
+     */
     private $accessToken;
     
 
     /**
-     * The VKontakte instance constructor
+     * The VKontakte instance constructor for quick configuration
      * @param array $config
      */
     public function __construct(array $config) {
@@ -55,55 +71,100 @@ class VKontakte {
     }
     
     
+    /**
+     * Get the user id of current access token
+     * @return integer
+     */
+    public function getUserId() {
+        
+        return $this->accessToken->user_id;
+    }
+    
+    /**
+     * Set the application id
+     * @param integer $appId
+     * @return \VKontakte
+     */
     public function setAppId($appId) {
         $this->appId = $appId;
         
         return $this;
     }
     
+    /**
+     * Get the application id
+     * @return integer
+     */
     public function getAppId() {
         
         return $this->appId;
     }
     
-    public function getSecret() {
-        
-        return $this->secret;
-    }
-    
+    /**
+     * Set the application secret key
+     * @param string $secret
+     * @return \VKontakte
+     */
     public function setSecret($secret) {
         $this->secret = $secret;
         
         return $this;
     }
     
-    public function getScope() {
+    /**
+     * Get the application secret key
+     * @return string
+     */
+    public function getSecret() {
         
-        return $this->scope;
+        return $this->secret;
     }
     
+    /**
+     * Set the scope for login URL
+     * @param array $scope
+     * @return \VKontakte
+     */
     public function setScope(array $scope) {
         $this->scope = $scope;
         
         return $this;
     }
     
-    public function getRedirectUri() {
+    /**
+     * Get the scope for login URL
+     * @return array
+     */
+    public function getScope() {
         
-        return $this->redirect_uri;
+        return $this->scope;
     }
     
+    /**
+     * Set the URL to which the user will be redirected
+     * @param string $redirect_uri
+     * @return \VKontakte
+     */
     public function setRedirectUri($redirect_uri) {
         $this->redirect_uri = $redirect_uri;
         
         return $this;
     }
     
-    public function getResponceType() {
+    /**
+     * Get the URL to which the user will be redirected
+     * @return string
+     */
+    public function getRedirectUri() {
         
-        return $this->responceType;
+        return $this->redirect_uri;
     }
     
+    /**
+     * Set the response type of login URL
+     * @param string $responceType
+     * @return \VKontakte
+     */
     public function setResponceType($responceType) {
         $this->responceType = $responceType;
         
@@ -111,22 +172,18 @@ class VKontakte {
     }
     
     /**
-     * Make an API call.
-     *
-     * @return mixed The decoded response
+     * Get the response type of login URL
+     * @return string
      */
-    public function api($string/* polymorphic */) {
-//        $args = func_get_args();
-//        $method = array_shift($args);
-//        $query = ;
-//        
-//        $url = 'https://api.vk.com/method/'. $method .'?'
-//        var_dump($args);
-        $url = 'https://api.vk.com/method/' .$string. '&access_token='. $this->accessToken;
+    public function getResponceType() {
         
-        return json_decode($this->curl($url));
+        return $this->responceType;
     }
     
+    /**
+     * Get the login URL via VKontakte
+     * @return string
+     */
     public function getLoginUrl() {
         
         return 'https://oauth.vk.com/authorize'
@@ -138,14 +195,21 @@ class VKontakte {
             ;
     }
     
-    public function setAccessToken($token) {
-        $data = json_decode($token);
-        $this->accessToken = $data->access_token;
-        $this->expiresIn = $data->expires_in;
-        $this->userId = $data->user_id;
+    /**
+     * Check is access token expired
+     * @return boolean
+     */
+    public function isAccessTokenExpired() {
+
+        return time() > $this->accessToken->created + $this->accessToken->expires_in;
     }
     
-    public function getAccessToken($code = NULL) {
+    /**
+     * Authenticate user and get access token from server
+     * @param string $code
+     * @return \VKontakte
+     */
+    public function authenticate($code = NULL) {
         $code = $code ? $code : $_GET['code'];
         
         $url = 'https://oauth.vk.com/access_token'
@@ -154,13 +218,73 @@ class VKontakte {
                 .'&code='. urlencode($code)
                 .'&redirect_uri='. urlencode($this->getRedirectUri())
             ;
-        
+
         $token = $this->curl($url);
+        $data = json_decode($token);
+        $data->created = time(); // add access token created unix timestamp
+        $token = json_encode($data);
+        
         $this->setAccessToken($token);
 
-        return $token;
+        return $this;
     }
     
+    /**
+     * Set the access token
+     * @param string $token The access token in json format
+     * @return \VKontakte
+     */
+    public function setAccessToken($token) {
+        $this->accessToken = json_decode($token);
+        
+        return $this;
+    }
+    
+    /**
+     * Get the access token
+     * @param string $code
+     * @return string The access token in json format
+     */
+    public function getAccessToken() {
+
+        return json_encode($this->accessToken);
+    }
+    
+    /**
+     * Make an API call to https://api.vk.com/method/
+     * @return string The response, decoded from json format
+     */
+    public function api($method, array $query = array()) {
+        /* Generate query string from array */
+        $q = '';
+        foreach ($query as $param => $value) {
+            $q .= $param .'=';
+            if (is_array($value)) {
+                $q .= urlencode(implode(',', $value));
+            } else {
+                $q .= urlencode($value);
+            }
+        }
+        if ($q) {
+            $q .= '&'; // Add "&" sign for access_token if query exists
+        }
+        $url = 'https://api.vk.com/method/'. $method .'?' .$q. 'access_token='. $this->accessToken->access_token;
+        $result = json_decode($this->curl($url));
+        
+        if (isset($result->response)) {
+            
+            return $result->response;
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * Make the curl request to specified url
+     * @param string $url The url for curl() function
+     * @return mixed The result of curl_exec() function
+     * @throws \Exception
+     */
     protected function curl($url) {
         // create curl resource
         $ch = curl_init();
@@ -186,7 +310,7 @@ class VKontakte {
         if (isset($errno) && isset($error)) {
             throw new \Exception($error, $errno);
         }
-        
+
         return $result;
     }
 }

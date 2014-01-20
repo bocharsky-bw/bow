@@ -41,7 +41,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=60, unique=true)
+     * @ORM\Column(type="string", length=60, nullable=true, unique=true)
      */
     private $email;
 
@@ -88,6 +88,11 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(name="google_id", type="string", length=32, nullable=true, unique=true)
      */
     private $googleId;
+    
+    /**
+     * @ORM\Column(name="vkontakte_id", type="string", length=32, nullable=true, unique=true)
+     */
+    private $vkontakteId;
     
     
     public function isAccountNonExpired()
@@ -502,5 +507,28 @@ class User implements AdvancedUserInterface, \Serializable
     public function getGoogleId()
     {
         return $this->googleId;
+    }
+
+    /**
+     * Set vkontakteId
+     *
+     * @param string $vkontakteId
+     * @return User
+     */
+    public function setVkontakteId($vkontakteId)
+    {
+        $this->vkontakteId = $vkontakteId;
+
+        return $this;
+    }
+
+    /**
+     * Get vkontakteId
+     *
+     * @return string 
+     */
+    public function getVkontakteId()
+    {
+        return $this->vkontakteId;
     }
 }

@@ -128,24 +128,67 @@ class UserController extends BWController
     public function signInWithVkontakteAction() {
         $request = $this->get('request');
         $session = $this->get('session');
-        
-        // VKontakte Login
+
+        // VKontakte Login init
         $vk = new \BW\UserBundle\Service\VKontakte($this->get('service_container')->getParameter('social')['vkontakte']);
         $vk->setRedirectUri($this->get('router')->generate('user_vkontakte_sign_in', array(), TRUE));
         
+        
         if ($request->query->has('code')) {
+            $vk->authenticate($request->query->get('code'));
+            $session->set('vkontakte_access_token', $vk->getAccessToken());
             
-            $session->set('vkontakte_access_token', $vk->getAccessToken($request->query->get('code')));
-            return $this->redirect($this->generateUrl('user_vkontakte_sign_in'));
-        }
-        if ($session->has('vkontakte_access_token')) {
-            $vk->setAccessToken($session->get('vkontakte_access_token'));
+//            if ($session->has('vkontakte_access_token')) {
+//                $vk->setAccessToken($session->get('vkontakte_access_token'));
+//            }
+
+            if ($vk->isAccessTokenExpired()) {
+                $session->remove('vkontakte_access_token');
+            } else {
+                $userProfile = $vk->api('users.get', array(
+                    'fields' => array(
+                        'domain',
+                    ),
+                ))[0];
+
+                if ($userProfile->uid) {
+                    try {
+                        $user = $this->getDoctrine()
+                                ->getRepository('BWUserBundle:User')
+                                ->loadUserBySocialId('vkontakteId', $userProfile->uid);
+                    } catch (\Exception $e) {
+                        // Создание нового пользователя
+                        $em = $this->getDoctrine()->getManager();
+                        $role = $em->getRepository('BWUserBundle:Role')->findOneBy(array(
+                            'role' => 'ROLE_USER',
+                        ));
+                        $user = new User();
+                        $user
+                                ->setVkontakteId($userProfile->uid)
+                                ->setEmail(NULL)
+                                ->setUsername($userProfile->domain)
+                                ->setActive(TRUE)
+                                ->setConfirm(TRUE)
+                                ->setHash('')
+                                ->addRole($role)
+                                ->generatePassword()
+                            ;
+                        $em->persist($user);
+                        $em->flush();
+                    }
+                    if ($user) {
+
+                        $this->authorizeUser($user); // return TRUE if success
+                    }
+                }
+            }
+        } else {
+            // Авторизируем пользователя
+            return $this->redirect($vk->getLoginUrl());
         }
         
-        $userProfile = $vk->api('users.get?fields=sex,bdate');
-        var_dump($userProfile);
-        
-        return new \Symfony\Component\HttpFoundation\Response('<a href="'. $vk->getLoginUrl() .'">Auth</a>');
+        return $this->redirect($this->generateUrl('home'));
+        //return new \Symfony\Component\HttpFoundation\Response('<a href="'. $vk->getLoginUrl() .'">Auth</a>');
     }
     
     public function signInWithFacebookAction() {
@@ -215,9 +258,9 @@ class UserController extends BWController
          * If we're logging out we just need to clear our
          * local access token in this case
          */
-        if ($request->query->has('logout')) {
-            $session->remove('google_access_token');
-        }
+//        if ($request->query->has('logout')) {
+//            $session->remove('google_access_token');
+//        }
 
         /**
          * If we have a code back from the OAuth 2.0 flow,
