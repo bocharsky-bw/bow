@@ -48,7 +48,7 @@ admin_post_toogle_published:
 ############
     
 # Posts
-post:
-    host:     %domain%
-    pattern:  /{_locale}/post/{slug}
-    defaults: { _controller: BWBlogBundle:Post:post, _locale: %locale% }
+#post:
+#    host:     %domain%
+#    pattern:  /{_locale}/post/{slug}
+#    defaults: { _controller: BWBlogBundle:Post:post, _locale: %locale% }

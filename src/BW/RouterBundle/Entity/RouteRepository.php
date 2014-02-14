@@ -12,4 +12,28 @@ use Doctrine\ORM\EntityRepository;
  */
 class RouteRepository extends EntityRepository
 {
+    
+    public function findRouteBy($query, $locale = NULL) {
+        $qb = $this->createQueryBuilder('r')
+                ->select('r')
+                ->where('r.query = :query')
+                ->setParameter('query', $query)
+            ;
+        
+        if ($locale === NULL) {
+            $qb
+                    ->andWhere('r.lang IS NULL')
+                ;
+        } else {
+            $qb
+                    ->join('r.lang', 'l')
+                    ->andWhere('l.sign = :locale')
+                    ->setParameter('locale', $locale)
+                ;
+        }
+        
+        $qb->setMaxResults(1);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
 }

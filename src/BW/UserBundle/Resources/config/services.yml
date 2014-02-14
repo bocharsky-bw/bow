@@ -11,7 +11,7 @@ parameters:
       
         facebook:
             is_active: true
-            app_id: 440949559366247
+            appId: 440949559366247
             secret: cc8777ecc06d46368863bb5947071d98
             scopes: [email]
             #redirect_uri: http://bow.loc/web/%locale%/user/sign-in

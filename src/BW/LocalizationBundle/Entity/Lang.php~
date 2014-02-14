@@ -107,27 +107,4 @@ class Lang
     {
         return $this->sign;
     }
-
-    /**
-     * Set locale
-     *
-     * @param string $locale
-     * @return Lang
-     */
-    public function setLocale($locale)
-    {
-        $this->locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * Get locale
-     *
-     * @return string 
-     */
-    public function getLocale()
-    {
-        return $this->locale;
-    }
 }

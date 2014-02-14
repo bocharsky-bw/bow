@@ -45,22 +45,36 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->select('u, r')
             ->leftJoin('u.roles', 'r')
             ->where("u.$field = :$field")
-            ->setParameter($field, $social_id)
+            ->setParameter($field, (string)$social_id)
             ->getQuery();
 
-        try {
-            // The Query::getSingleResult() method throws an exception
-            // if there is no record matching the criteria.
-            $user = $q->getSingleResult();
-        } catch (NoResultException $e) {
-            $message = sprintf(
-                'Пользователь соц.сетей с id = "%s" не найден.',
-                $social_id
-            );
-            throw new UsernameNotFoundException($message, 0, $e);
-        }
+        $user = $q->getOneOrNullResult();
 
         return $user;
+    }
+    
+    public function isEmailExists($email)
+    {
+        $q = $this
+            ->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->where("u.email = :email")
+            ->setParameter('email', $email)
+            ->getQuery();
+
+        return (boolean)$q->getSingleScalarResult();
+    }
+    
+    public function isUsernameExists($username)
+    {
+        $q = $this
+            ->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->where("u.username = :username")
+            ->setParameter('username', $username)
+            ->getQuery();
+
+        return (boolean)$q->getSingleScalarResult();
     }
 
     public function refreshUser(UserInterface $user)

@@ -7,7 +7,7 @@ admin:
     roles: Роли
     content: Контент
     categories: Категории
-    posts: Записи
+    posts: Статьи
     pages: Страницы
     articles: Статьи
     menu: Меню

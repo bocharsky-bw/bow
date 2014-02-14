@@ -17,10 +17,10 @@ class RouterController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         // Поиск роута с учетом текущего языка
-        $this->route = $em->getRepository('BWRouterBundle:Route')->findOneBy(array('path' => $request->getLocale() .'/'. $q));
+        $this->route = $em->getRepository('BWRouterBundle:Route')->findRouteBy($q, $request->getLocale());
         if ( ! $this->route) {
             // Поиск роута без учета текущего языка
-            $this->route = $em->getRepository('BWRouterBundle:Route')->findOneBy(array('path' => '/'. $q));
+            $this->route = $em->getRepository('BWRouterBundle:Route')->findRouteBy($q);
             if ( ! $this->route) {
                 throw $this->createNotFoundException("Ошибка 404. Запрашиваемая Вами страница не найдена");
             }

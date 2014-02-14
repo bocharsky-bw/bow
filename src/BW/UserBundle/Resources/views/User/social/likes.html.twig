@@ -1,0 +1,52 @@
+<div class="social_likes">
+    {% if service('bw.user.social').googleClient %}
+        <div class="google_likes">
+            <!-- Поместите этот тег туда, где должна отображаться кнопка +1. -->
+            <div class="g-plusone" data-href="{{ app.request.uri }}"></div>
+
+            <!-- Поместите этот тег за последним тегом виджета кнопка +1. -->
+            <script type="text/javascript">
+                window.___gcfg = {lang: '{{ service('bw.localization.lang').sign }}'};
+
+                (function() {
+                    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                    po.src = 'https://apis.google.com/js/platform.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                })();
+            </script>
+        </div>
+    {% endif %}
+    {% if service('bw.user.social').facebook %}
+        <div class="facebook_likes">
+            <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/{{ service('bw.localization.lang').locale }}/all.js#xfbml=1&appId={{ service('bw.user.social').facebook.appId }}";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+            <div class="fb-like" data-href="{{ app.request.uri }}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+        </div>
+    {% endif %}
+    {% if service('bw.user.social').vkontakte %}
+        <div class="vkontakte_likes">
+            <!-- Put this script tag to the <head> of your page -->
+            <script type="text/javascript" src="//vk.com/js/api/openapi.js?105"></script>
+            <script type="text/javascript">
+                VK.init({apiId: {{ service('bw.user.social').vkontakte.appId }}, onlyWidgets: true});
+            </script>
+            <!-- Put this div tag to the place, where the Like block will be -->
+            <div id="vk_like"></div>
+            <script type="text/javascript">
+                VK.Widgets.Like("vk_like", {
+                    type: "button",
+                    height: 22,
+                    options: {
+                        pageUrl: '{{ app.request.uri }}'
+                    }
+                });
+            </script>
+        </div>
+    {% endif %}
+</div>

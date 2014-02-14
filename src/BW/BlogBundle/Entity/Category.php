@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table(name="categories")
  * @ORM\Entity(repositoryClass="BW\BlogBundle\Entity\CategoryRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Category
 {
@@ -81,10 +82,67 @@ class Category
      */
     private $posts;
     
+    /**
+     * @ORM\OneToMany(targetEntity="\BW\BlogBundle\Entity\Category", mappedBy="parent")
+     */
+    private $children;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Category", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     * ORM\OrderBy({"id" = "ASC"})
+     */
+    private $parent;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="level", type="integer")
+     */
+    private $level;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="lft", type="integer")
+     */
+    private $left;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rgt", type="integer")
+     */
+    private $right;
     
     
+    /**
+     * Текущий уровень вложенности пункта меню
+     * 
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     * @return integer
+     */
+    public function generateLevel() {
+        $this->level = 0;
+        $parent = $this->getParent();
+        
+        while ($parent) {
+            $this->level++;
+            $parent = $parent->getParent();
+        }
+        
+        return $this;
+    }
+
+
     public function __construct() {
         $this->posts = new ArrayCollection();
+        $this->children = new ArrayCollection();
+        $this->level = 0;
+        $this->left = 0;
+        $this->right = 0;
+        $this->published = TRUE;
     }
     
 
@@ -291,5 +349,125 @@ class Category
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * Add children
+     *
+     * @param BW\BlogBundle\Entity\Category $children
+     * @return Category
+     */
+    public function addChildren(\BW\BlogBundle\Entity\Category $children)
+    {
+        $this->children[] = $children;
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param BW\BlogBundle\Entity\Category $children
+     */
+    public function removeChildren(\BW\BlogBundle\Entity\Category $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param BW\BlogBundle\Entity\Category $parent
+     * @return Category
+     */
+    public function setParent(\BW\BlogBundle\Entity\Category $parent = null)
+    {
+        $this->parent = $parent;
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return BW\BlogBundle\Entity\Category 
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Set level
+     *
+     * @param integer $level
+     * @return Category
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return integer 
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * Set left
+     *
+     * @param integer $left
+     * @return Category
+     */
+    public function setLeft($left)
+    {
+        $this->left = $left;
+        return $this;
+    }
+
+    /**
+     * Get left
+     *
+     * @return integer 
+     */
+    public function getLeft()
+    {
+        return $this->left;
+    }
+
+    /**
+     * Set right
+     *
+     * @param integer $right
+     * @return Category
+     */
+    public function setRight($right)
+    {
+        $this->right = $right;
+        return $this;
+    }
+
+    /**
+     * Get right
+     *
+     * @return integer 
+     */
+    public function getRight()
+    {
+        return $this->right;
     }
 }

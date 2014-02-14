@@ -71,9 +71,19 @@ class PostController extends BWController
                     $route = new \BW\RouterBundle\Entity\Route();
                     $em->persist($route);
                 }
-                $route->setPath( $post->getLang() .'/cms/'. ($post->getCategory() ? $post->getCategory()->getSlug() .'/' : '/') . $post->getSlug() );
-                $route->setQuery( 'cms/'. ($post->getCategory() ? $post->getCategory()->getSlug() .'/' : '/') . $post->getSlug() );
-                $route->setLang( $post->getLang() );
+                
+                $segments = array();
+                $parent = $post->getCategory();
+                while ($parent) {
+                    $segments[] = $parent->getSlug();
+                    $parent = $parent->getParent();
+                }
+                $query = 'cms/'. ($segments ? implode('/', array_reverse($segments)) .'/' : '') . $post->getSlug();
+                
+                //$query = 'cms/'. ($post->getCategory() ? $post->getCategory()->getSlug() .'/' : '') . $post->getSlug();
+                $route->setPath(($post->getLang() ? $post->getLang().'/' : '') . $query);
+                $route->setQuery($query);
+                $route->setLang($post->getLang());
                 $route->setDefaults(array(
                     '_controller' => 'BWBlogBundle:Post:post',
                     'id' => $post->getId(),

@@ -27,11 +27,7 @@ class LangService {
     
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
-        $this->_init();
-    }
-    
-    
-    private function _init() {
+        
         $this->lang = $this->container->get('doctrine.orm.entity_manager')
                 ->getRepository('BWLocalizationBundle:Lang')
                 ->findOneBy(array(
@@ -43,7 +39,25 @@ class LangService {
         }
     }
 
-    public function getCurrentLangEntity() {
+    public function __call($method, $arguments) {
+        
+        if ( method_exists($this->lang, $method) ) {
+            return $this->lang->$method($arguments);
+        }
+        
+        $getter = 'get'. ucfirst($method);
+        if ( method_exists($this->lang, $getter) ) {
+            return $this->lang->$getter($arguments);
+        }
+        
+        $isser = 'is'. ucfirst($method);
+        if ( method_exists($this->lang, $isser) ) {
+            return $this->lang->$isser($arguments);
+        }
+    }
+    
+
+    public function _getCurrentLangEntity() {
         
         return $this->lang;
     }

@@ -5,3 +5,7 @@ services:
 #    bw_blog.example:
 #        class: %bw_blog.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+        
+    bw.nested_set:
+        class: BW\BlogBundle\Service\NestedSet
+        arguments: ["@database_connection"]

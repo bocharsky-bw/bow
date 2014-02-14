@@ -17,6 +17,7 @@ class LangType extends AbstractType
         $builder
                 ->add('name')
                 ->add('sign')
+                ->add('locale')
                 // Buttons
                 ->add('save', 'submit')
                 ->add('saveAndExit', 'submit')

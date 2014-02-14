@@ -1,7 +1,5 @@
-###########
-# Backend #
-###########
-# Users
+# Admin/UserController.php
+  # Users
 admin_users:
     host:     %domain%
     pattern:  /_admin/{_locale}/users
@@ -27,7 +25,7 @@ admin_user_toogle_active:
     pattern:  /_admin/{_locale}/user/toogle-active/{id}
     defaults: { _controller: BWUserBundle:Admin/User:toogleActive }
     
-# Roles
+  # Roles
 admin_roles:
     host:     %domain%
     pattern:  /_admin/{_locale}/roles
@@ -43,10 +41,8 @@ admin_role_edit:
     pattern:  /_admin/{_locale}/role/edit/{id}
     defaults: { _controller: BWUserBundle:Admin/Role:role }
   
-############
-# Frontend #
-############
-# Users
+# UserController.php
+  # Frontend
 user_sign_up:
     host:     %domain%
     pattern:  /{_locale}/user/sign-up
@@ -56,21 +52,6 @@ user_sign_in:
     host:     %domain%
     pattern:  /{_locale}/user/sign-in
     defaults: { _controller: BWUserBundle:User:signIn }
-    
-user_facebook_sign_in:
-    host:     %domain%
-    pattern:  /{_locale}/user/sign-in/facebook
-    defaults: { _controller: BWUserBundle:User:signInWithFacebook }
-    
-user_google_sign_in:
-    host:     %domain%
-    pattern:  /{_locale}/user/sign-in/google
-    defaults: { _controller: BWUserBundle:User:signInWithGoogle }
-    
-user_vkontakte_sign_in:
-    host:     %domain%
-    pattern:  /{_locale}/user/sign-in/vkontakte
-    defaults: { _controller: BWUserBundle:User:signInWithVkontakte }
     
 user_sign_in_check:
     host:     %domain%
@@ -95,3 +76,21 @@ user_email_confirm:
     host:     %domain%
     pattern:  /{_locale}/user/email/confirm/{hash}
     defaults: { _controller: BWUserBundle:User:emailConfirm }
+
+# VkontakteUserController.php
+user_vkontakte_sign_in:
+    host:     %domain%
+    pattern:  /{_locale}/user/sign-in/vkontakte
+    defaults: { _controller: BWUserBundle:VkontakteUser:signIn }
+    
+# FacebookUserController.php
+user_facebook_sign_in:
+    host:     %domain%
+    pattern:  /{_locale}/user/sign-in/facebook
+    defaults: { _controller: BWUserBundle:FacebookUser:signIn }
+    
+# GoogleUserController.php
+user_google_sign_in:
+    host:     %domain%
+    pattern:  /{_locale}/user/sign-in/google
+    defaults: { _controller: BWUserBundle:GoogleUser:signIn }

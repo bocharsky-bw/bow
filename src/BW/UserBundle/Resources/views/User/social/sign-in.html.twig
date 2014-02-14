@@ -1,14 +1,18 @@
-{% if service('bw.user.social').facebook %}
-    {#{ dump(service('bw.user.social').facebook.getUser()) }#}
-    <div>
+{#{ dump(service('bw.user.social').facebook.getUser()) }#}
+<div>
+    {% if service('bw.user.social').vkontakte %}
         <a href="{{ path('user_vkontakte_sign_in') }}" title="Авторизироваться через аккаунт ВКонтакте" rel="nofollow">
             <img src="{{ asset('images/social/vkontakte/sign-in/sign-in-with-vkontakte-x44.png') }}" alt="Sign in with VKontakte" width="177" height="44">
         </a>
+    {% endif %}
+    {% if service('bw.user.social').facebook %}
         <a href="{{ path('user_facebook_sign_in') }}" title="Авторизироваться через Facebook аккаунт" rel="nofollow">
             <img src="{{ asset('images/social/facebook/sign-in/sign-in-with-facebook-x44.png') }}" alt="Sign in with Facebook" width="100" height="44">
         </a>
+    {% endif %}
+    {% if service('bw.user.social').googleClient %}
         <a href="{{ path('user_google_sign_in') }}" title="Авторизироваться через Google аккаунт" rel="nofollow">
             <img src="{{ asset('images/social/google/sign-in/sign-in-with-google-x44.png') }}" alt="Sign in with Google" width="236" height="44">
         </a>
-    </div>
-{% endif %}
+    {% endif %}
+</div>

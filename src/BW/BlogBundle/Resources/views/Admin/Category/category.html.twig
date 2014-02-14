@@ -35,6 +35,14 @@
                 {{ form_errors(form.lang) }}
             </div>
         </div>
+
+        <div>
+            {{ form_label(form.parent, 'Родитель: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.parent, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.parent) }}
+            </div>
+        </div>
         
         <div>
             {{ form_label(form.heading, 'Заголовок: ', {'label_attr': {'class': ''} }) }}

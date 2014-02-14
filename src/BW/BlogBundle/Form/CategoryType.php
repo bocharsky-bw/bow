@@ -21,6 +21,12 @@ class CategoryType extends AbstractType
                 ->add('heading', 'text')
                 // Entities
                 // Lang
+                ->add('parent', 'entity', array(
+                    'class' => 'BWBlogBundle:Category',
+                    'property' => 'heading',
+                    'required' => FALSE,
+                    'empty_value' => 'Корневая',
+                ))
                 ->add('lang', 'entity', array(
                     'class' => 'BWLocalizationBundle:Lang',
                     'property' => 'name',

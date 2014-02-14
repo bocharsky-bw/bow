@@ -22,6 +22,7 @@
                         <th style="width: 5%" class="ta_c">№</th>
                         <th>Название</th>
                         <th style="width: 10%" class="ta_c">Sign</th>
+                        <th style="width: 10%" class="ta_c">Locale</th>
                         <th style="width: 10%" class="ta_c">По умолчанию</th>
                         <th style="width: 5%" class="ta_c">ID</th>
                     </tr>
@@ -35,6 +36,9 @@
                             </td>
                             <td class="ta_c">
                                 {{ lang.sign }}
+                            </td>
+                            <td class="ta_c">
+                                {{ lang.locale }}
                             </td>
                             <td class="ta_c">
                                 {% if lang.sign == defaultLang %}

@@ -14,6 +14,7 @@ class CategoryController extends BWController
 {
     /**
      * @global \Symfony\Component\HttpFoundation\Request $request
+     * @global \Doctrine\DBAL\Connection $conn
      * @global \BW\BlogBundle\Entity\Post $post
      */
     public function __construct() {
@@ -24,7 +25,13 @@ class CategoryController extends BWController
     public function categoriesAction() {
         $data = $this->getPropertyOverload();
         
-        $data->categories = $this->getDoctrine()->getRepository('BWBlogBundle:Category')->findAll();
+        $data->categories = $this->getDoctrine()
+                ->getRepository('BWBlogBundle:Category')
+                ->findBy(array(
+                ), array(
+                    'left' => 'ASC',
+                ))
+            ;
         
         return $this->render('BWBlogBundle:Admin/Category:categories.html.twig', $data->toArray());
     }
@@ -73,14 +80,28 @@ class CategoryController extends BWController
                     $route = new \BW\RouterBundle\Entity\Route();
                     $em->persist($route);
                 }
-                $route->setPath( $category->getLang() .'/cms/'. $category->getSlug() );
-                $route->setQuery( 'cms/'. $category->getSlug() );
+                
+                $segments = array();
+                $parent = $category;
+                while ($parent) {
+                    $segments[] = $parent->getSlug();
+                    $parent = $parent->getParent();
+                }
+                $query = 'cms/'. implode('/', array_reverse($segments));
+                
+                $route->setPath( ($category->getLang() ? $category->getLang() .'/' : '') . $query );
+                $route->setQuery( $query );
                 $route->setLang( $category->getLang() );                
                 $route->setDefaults(array(
                     '_controller' => 'BWBlogBundle:Category:category',
                     'id' => $category->getId(),
                 ));
                 $category->setRoute($route);
+                
+                // Сгенерировать и упорядочить дерево Nested Set
+                $this->get('bw.nested_set')->regenerateTree(
+                        $em->getClassMetadata('BWBlogBundle:Category')->getTableName() // Имя таблицы класса
+                    );
                 
                 $em->flush();
                 $this->get('session')->getFlashBag()->add(
@@ -120,4 +141,62 @@ class CategoryController extends BWController
         
         return $this->redirect($this->generateUrl('admin_categories'));
     }
+    
+    /* Nested Set */
+//    public function getLeft($category) {
+//        $conn = $this->get('database_connection');
+//        
+//        $left = 1; // По умолчанию lft = 1
+//        if ($category->getParent()) {
+//            $left = $conn->fetchColumn("SELECT MAX(c.lft) 
+//                FROM categories AS c 
+//                WHERE 1=1 
+//                    AND c.id != :id
+//                    AND c.parent_id = :parent_id 
+//                    AND c.level = :level 
+//            ", array(
+//                'id' => $category->getId(),
+//                'parent_id' => $category->getParent()->getId(),
+//                'level' => $category->getLevel(),
+//            ));
+//            if ( ! $left) {
+//                $left = $category->getParent()->getLeft();
+//            }
+//        } else {
+//            $left = $conn->fetchColumn("SELECT MAX(c.rgt) 
+//                FROM categories AS c 
+//                WHERE 1=1 
+//                    AND c.id != :id
+//                    AND c.parent_id IS NULL
+//                    AND c.level = :level 
+//            ", array(
+//                'id' => $category->getId(),
+//                'level' => $category->getLevel(),
+//            ));
+//        }
+//        //var_dump($left); die;
+//        
+//        return $left + 1;
+//    }
+//    
+//    public function getRight($category) {
+//        $conn = $this->get('database_connection');
+//        
+//        $right = $category->getLeft() + 1; // по умолчанию rgt на единицу больше lft
+//        if ( ! $category->getChildren()->isEmpty()) {
+//            $right = $conn->fetchColumn("SELECT MAX(c.rgt) 
+//                FROM categories AS c 
+//                WHERE 1=1 
+//                    AND c.level = :level 
+//                    AND c.parent_id = :parent_id 
+//            ", array(
+//                'level' => $category->getLevel() + 1,
+//                'parent_id' => $category->getId(),
+//            ));
+//        }
+//        //var_dump($right); die;
+//        
+//        return $right + 1;
+//    }
+    /* /Nested Set */
 }

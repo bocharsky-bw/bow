@@ -21,6 +21,7 @@
                     <tr>
                         <th style="width: 5%" class="ta_c">№</th>
                         <th>Название</th>
+                        <th>Родитель</th>
                         <th style="width: 5%" class="ta_c">Статус</th>
                         <th style="width: 5%" class="ta_c">Язык</th>
                         <th style="width: 5%" class="ta_c">ID</th>
@@ -31,7 +32,14 @@
                         <tr>
                             <td class="ta_c">{{ loop.index }}</td>
                             <td>
-                                <a href="{{ path('admin_category_edit', {'id': category.id}) }}" title="Редактировать элемент">{{ category.heading }}</a> 
+                                {{ '|— '|repeat(category.level) }} <a href="{{ path('admin_category_edit', {'id': category.id}) }}" title="Редактировать элемент">{{ category.heading }}</a> 
+                            </td>
+                            <td>
+                                {% if category.parent %}
+                                    <a href="{{ path('admin_category_edit', {'id': category.parent.id}) }}" title="Редактировать элемент {{ category.id }}">{{ category.parent.heading }}</a>
+                                {% else %}
+                                    ~
+                                {% endif %}
                             </td>
                             <td class="ta_c">
                                 <a href="{{ path('admin_category_toogle_published', {'id': category.id}) }}">

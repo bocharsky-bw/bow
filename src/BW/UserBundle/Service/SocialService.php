@@ -10,6 +10,13 @@ namespace BW\UserBundle\Service;
 class SocialService {
     
     /**
+     * The Vkontakte instance
+     * 
+     * @var \BW\Vkontakte
+     */
+    protected $vkontakte;
+    
+    /**
      * The Facebook instance
      * 
      * @var \Facebook
@@ -25,13 +32,14 @@ class SocialService {
     
 
     public function __construct($config) {
+        /* Vkontakte */
+        if ($config['vkontakte']['is_active']) {
+            $this->vkontakte = new \BW\Vkontakte($config['vkontakte']);
+        }
         
         /* Facebook */
         if ($config['facebook']['is_active']) {
-            $this->facebook = new \Facebook(array(
-                'appId' => $config['facebook']['app_id'],
-                'secret' => $config['facebook']['secret'],
-            ));
+            $this->facebook = new \Facebook($config['facebook']);
         }
         
         /* Google Login */
@@ -45,6 +53,15 @@ class SocialService {
         }
     }
     
+    
+    /**
+     * Get the Vkontakte instance
+     * @return \BW\Vkontakte
+     */
+    public function getVkontakte() {
+        
+        return $this->vkontakte;
+    }
     
     /**
      * Get the Facebook instance

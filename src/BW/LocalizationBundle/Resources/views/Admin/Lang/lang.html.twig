@@ -35,6 +35,17 @@
                 {{ form_errors(form.sign) }}
             </div>
         </div>
+            
+        <div>
+            {{ form_label(form.locale, 'Полный код: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.locale, {'attr': {'class': 'form-control', 'min-length': '5'} }) }}
+            <div class="notice">
+                <em>* длина 5 символа</em>
+            </div>
+            <div class="error">
+                {{ form_errors(form.locale) }}
+            </div>
+        </div>
 
     </div>
 {{ form_end(form) }}

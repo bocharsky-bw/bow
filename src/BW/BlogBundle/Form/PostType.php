@@ -27,6 +27,8 @@ class PostType extends AbstractType
                 ->add('category', 'entity', array(
                     'class' => 'BWBlogBundle:Category',
                     'property' => 'heading',
+                    'required' => FALSE,
+                    'empty_value' => 'Без категории',
                 ))
                 // Lang
                 ->add('lang', 'entity', array(
