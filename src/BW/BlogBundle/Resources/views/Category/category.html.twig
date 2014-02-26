@@ -7,6 +7,11 @@
 {% block content %}
     <div class="container">
         <div class="row">
+            <div class="col-lg-12">
+                {{ service('bw.breadcrumbs').generateFromCategory(category)|raw }}
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-3">
                 {#{ bw.block.menu('main_menu')|raw }#}3333333333333333333
             </div>

@@ -1,0 +1,10 @@
+<a href="{{ path('home') }}">Главная</a> /
+{% for link in links %}
+    {% if loop.last %}
+        <span>{{ link.heading }}</span>
+    {% else %}
+        <a href="{{ path('bw_router_index', {'q': link.query}) }}">
+            {{ link.heading }}
+        </a> /
+    {% endif %}
+{% endfor %}

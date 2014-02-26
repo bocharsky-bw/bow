@@ -12,6 +12,6 @@ services:
         tags:
             - { name: twig.extension }
             
-    bw.breadcrumb:
-        class: BW\MainBundle\Service\Breadcrumb
+    bw.breadcrumbs:
+        class: BW\MainBundle\Service\Breadcrumbs
         arguments: ["@service_container"]
