@@ -18,9 +18,9 @@ class ItemRelativeLinkType extends ItemType
     {
         parent::buildForm($builder, $options);
         
-        $builder
-                ->add('href', 'text')
-            ;
+//        $builder
+//                ->add('href', 'text')
+//            ;
     }
     
 }

@@ -34,10 +34,15 @@ class Role implements RoleInterface
      */
     private $users;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="\BW\MailingBundle\Entity\Message", mappedBy="roles")
+     */
+    private $messages;
+
     
-    public function __construct()
-    {
+    public function __construct() {
         $this->users = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
 
@@ -126,5 +131,37 @@ class Role implements RoleInterface
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Add messages
+     *
+     * @param BW\MailingBundle\Entity\Message $messages
+     * @return Role
+     */
+    public function addMessage(\BW\MailingBundle\Entity\Message $messages)
+    {
+        $this->messages[] = $messages;
+        return $this;
+    }
+
+    /**
+     * Remove messages
+     *
+     * @param BW\MailingBundle\Entity\Message $messages
+     */
+    public function removeMessage(\BW\MailingBundle\Entity\Message $messages)
+    {
+        $this->messages->removeElement($messages);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }

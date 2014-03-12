@@ -54,16 +54,9 @@ class Item extends BWEntity
     /**
      * @var boolean
      *
-     * @ORM\Column(name="in_new", type="boolean")
+     * @ORM\Column(name="blank", type="boolean")
      */
-    private $inNew;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="level", type="integer")
-     */
-    private $level;
+    private $blank;
 
     /**
      * @var integer
@@ -80,21 +73,6 @@ class Item extends BWEntity
      * @ORM\JoinColumn(name="menu_id", referencedColumnName="id")
      */
     private $menu;
-
-    /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
-     */
-    private $parent;
-
-    /**
-     * @var integer
-     *
-     * @ORM\OneToMany(targetEntity="Item", mappedBy="parent")
-     */
-    private $children;
     
     /**
      * @var integer
@@ -113,6 +91,52 @@ class Item extends BWEntity
     private $lang;
     
     /**
+     * @var integer
+     *
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="parent")
+     */
+    private $children;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="Item", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     */
+    private $parent;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="level", type="integer")
+     */
+    private $level;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="lft", type="integer")
+     */
+    private $left;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rgt", type="integer")
+     */
+    private $right;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="\BW\RouterBundle\Entity\Route", cascade={"remove"})
+     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     */
+    private $route;
+    
+    
+    
+    /**
      * Set default values
      * 
      * @ORM\PrePersist
@@ -129,6 +153,7 @@ class Item extends BWEntity
         
         return $this;
     }
+    
     
     /**
      * Текущий уровень вложенности пункта меню
@@ -149,42 +174,23 @@ class Item extends BWEntity
         return $this;
     }
     
-    /**
-     * Generate nesting
-     * 
-     * ORM\PrePersist
-     * ORM\PreUpdate
-     * param string $nesting
-     * return Item
-     */
-//    public function generateNesting()
-//    {
-//        $this->nesting = '0';
-//        
-//        if ($this->getId()) {
-//            $this->nesting = $this->getId();
-//            $parent = $this->getParent();
-//
-//            while ($parent) {
-//                $this->nesting = $parent->getId() .'.'. $this->nesting;
-//                $parent = $parent->getParent();
-//            }
-//        }
-//    
-//        return $this;
-//    }
-
     
+    public function __toString() {
+        
+        return str_repeat('- ', $this->getLevel()). $this->getName();
+    }
+
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        
-        $this->inNew        = FALSE;
-        $this->level        = 0;
+        $this->children     = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->blank        = FALSE;
         $this->ordering     = 0;
+        $this->level        = 0;
+        $this->left         = 0;
+        $this->right        = 0;
     }
     
 
@@ -246,26 +252,26 @@ class Item extends BWEntity
     }
 
     /**
-     * Set inNew
+     * Set blank
      *
-     * @param boolean $inNew
+     * @param boolean $blank
      * @return Item
      */
-    public function setInNew($inNew)
+    public function setBlank($blank)
     {
-        $this->inNew = $inNew;
+        $this->blank = $blank;
     
         return $this;
     }
 
     /**
-     * Get inNew
+     * Get blank
      *
      * @return boolean 
      */
-    public function getInNew()
+    public function getBlank()
     {
-        return $this->inNew;
+        return $this->blank;
     }
 
     /**
@@ -485,51 +491,69 @@ class Item extends BWEntity
         return $this->type;
     }
 
-    
-
     /**
-     * Set page
+     * Set left
      *
-     * @param \BW\BlogBundle\Entity\Page $page
+     * @param integer $left
      * @return Item
      */
-    public function setPage(\BW\BlogBundle\Entity\Page $page = null)
+    public function setLeft($left)
     {
-        $this->page = $page;
-    
+        $this->left = $left;
         return $this;
     }
 
     /**
-     * Get page
+     * Get left
      *
-     * @return \BW\BlogBundle\Entity\Page 
+     * @return integer 
      */
-    public function getPage()
+    public function getLeft()
     {
-        return $this->page;
+        return $this->left;
     }
 
     /**
-     * Set article
+     * Set right
      *
-     * @param \BW\BlogBundle\Entity\Article $article
+     * @param integer $right
      * @return Item
      */
-    public function setArticle(\BW\BlogBundle\Entity\Article $article = null)
+    public function setRight($right)
     {
-        $this->article = $article;
-    
+        $this->right = $right;
         return $this;
     }
 
     /**
-     * Get article
+     * Get right
      *
-     * @return \BW\BlogBundle\Entity\Article 
+     * @return integer 
      */
-    public function getArticle()
+    public function getRight()
     {
-        return $this->article;
+        return $this->right;
+    }
+
+    /**
+     * Set route
+     *
+     * @param BW\RouterBundle\Entity\Route $route
+     * @return Item
+     */
+    public function setRoute(\BW\RouterBundle\Entity\Route $route = null)
+    {
+        $this->route = $route;
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return BW\RouterBundle\Entity\Route 
+     */
+    public function getRoute()
+    {
+        return $this->route;
     }
 }

@@ -1,4 +1,4 @@
-{% extends 'BWMainBundle:Layout/Frontend:layout.html.twig' %}
+{% extends 'BWSkeletonBundle:Frontend:layout.html.twig' %}
 
 {% block title %}{{ post.title }}{% endblock %}
 
@@ -8,12 +8,12 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                {{ service('bw.breadcrumbs').generateFromPost(post)|raw }}
+                {{ service('bw_breadcrumbs.widget').generateFromPost(post)|raw }}
             </div>
         </div>
         <div class="row">
             <div class="col-lg-3">
-                {#{ bw.block.menu('main_menu')|raw }#}3333333333333333333
+                {{ service('bw_blog.widget').lastPosts()|raw }}
             </div>
             <div class="col-lg-9">
                 <h1>{{ post.heading }}</h1>

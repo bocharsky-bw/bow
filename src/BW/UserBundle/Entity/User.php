@@ -94,6 +94,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $vkontakteId;
     
+    /**
+     * @ORM\OneToMany(targetEntity="\BW\MailingBundle\Entity\Mailing", mappedBy="user")
+     */
+    private $mailing;
+    
     
     public function isAccountNonExpired()
     {
@@ -159,6 +164,7 @@ class User implements AdvancedUserInterface, \Serializable
     public function __construct()
     {
         $this->roles = new ArrayCollection();
+        $this->mailing = new ArrayCollection();
         
         $this->active           = FALSE;
         $this->confirm          = FALSE;
@@ -530,5 +536,37 @@ class User implements AdvancedUserInterface, \Serializable
     public function getVkontakteId()
     {
         return $this->vkontakteId;
+    }
+
+    /**
+     * Add mailing
+     *
+     * @param BW\MailingBundle\Entity\Mailing $mailing
+     * @return User
+     */
+    public function addMailing(\BW\MailingBundle\Entity\Mailing $mailing)
+    {
+        $this->mailing[] = $mailing;
+        return $this;
+    }
+
+    /**
+     * Remove mailing
+     *
+     * @param BW\MailingBundle\Entity\Mailing $mailing
+     */
+    public function removeMailing(\BW\MailingBundle\Entity\Mailing $mailing)
+    {
+        $this->mailing->removeElement($mailing);
+    }
+
+    /**
+     * Get mailing
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getMailing()
+    {
+        return $this->mailing;
     }
 }

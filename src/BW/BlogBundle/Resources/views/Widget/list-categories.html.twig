@@ -1,0 +1,8 @@
+<h3>Список категорий</h3>
+<ul>
+{% for category in categories %}
+    <li>
+        <a href="{{ path('bw_router_index', {'q': category.route.query}) }}">{{ category.heading }}</a>
+    </li>
+{% endfor %}
+</ul>

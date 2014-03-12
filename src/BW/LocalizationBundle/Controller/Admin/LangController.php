@@ -17,16 +17,6 @@ class LangController extends BWController
         parent::__construct();
     }
 
-
-    public function langsMenuItemAction(\Symfony\Component\HttpFoundation\Request $request) {
-        $data = $this->getPropertyOverload();
-
-        $data->request = $request;
-        $data->langs = $this->getDoctrine()->getRepository('BWLocalizationBundle:Lang')->findAll();
-        
-        return $this->render('BWLocalizationBundle:Admin/Lang:langs-menu-item.html.twig', $data->toArray());
-    }
-    
     public function langsAction() {
         $data = $this->getPropertyOverload();
         $request = $this->get('request');

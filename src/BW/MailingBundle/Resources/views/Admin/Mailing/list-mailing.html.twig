@@ -1,0 +1,46 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Рассылка писем {{ parent() }}{% endblock %}
+
+{% block pre_content %}
+    <div class="form-buttons">
+        <a class="btn btn-primary icon-envelope-alt before-padding" href="{{ path('admin_mailing_messages') }}" title="Создать/Изменить сообщение для рассылки">Список сообщений</a>
+        <a class="btn btn-primary icon-plus before-padding" href="{{ path('admin_mailing_add') }}" title="Добавить новую рассылку">Создать</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-envelope"></i> Рассылка писем</h1>
+        </div>
+    </div>
+    {% if mailingList %}
+        <div class="main-table">   
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 5%" class="ta_c">№</th>
+                        <th>Тема письма</th>
+                        <th style="width: 5%" class="ta_c">ID</th>
+                    </tr>
+                </thead> 
+                {% for mailing in mailingList %}
+                    <tbody>
+                        <tr>
+                            <td class="ta_c">{{ loop.index }}</td>
+                            <td>
+                                Тема письма...
+                            </td>
+                            <td class="ta_c">
+                                <span title="ID элемента в БД">{{ mailing.id }}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <div class="ta_c">Элементы отсутствуют</div>
+    {% endif %}
+{% endblock %}

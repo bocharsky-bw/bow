@@ -33,15 +33,15 @@ class ItemController extends BWController
             $criteria['menu'] = $request->query->getInt('menu_id');
         }
         
-        $items = $this->getDoctrine()->getRepository('BWMenuBundle:Item')->findBy(
+        $data->items = $this->getDoctrine()->getRepository('BWMenuBundle:Item')->findBy(
             $criteria,
             array(
-                'ordering' => 'ASC',
+                'left' => 'ASC',
             )
         );
         
-        $recursion = new \BW\MenuBundle\Service\Recursion();
-        $data->items = $recursion->levelParentEntityRecursion($items);
+//        $recursion = new \BW\MenuBundle\Service\Recursion();
+//        $data->items = $recursion->levelParentEntityRecursion($items);
         
         return $this->render('BWMenuBundle:Admin/Item:items.html.twig', $data->toArray());
     }
@@ -95,6 +95,11 @@ class ItemController extends BWController
                     if ($form->get('delete')->isClicked()) {
                         $em->remove($item);
                         $em->flush();
+                        
+                        $this->get('session')->getFlashBag()->add(
+                            'danger',
+                            'Пункт меню успешно удален'
+                        );
 
                         return $this->redirect($this->generateUrl('admin_items'));
                     }
@@ -102,6 +107,16 @@ class ItemController extends BWController
                 
                 $em->persist($item);
                 $em->flush();
+                
+                // Сгенерировать и упорядочить дерево Nested Set
+                $this->get('bw_blog.nested_set')->regenerateTree(
+                        $em->getClassMetadata('BWMenuBundle:Item')->getTableName() // Имя таблицы класса
+                    );
+                
+                $this->get('session')->getFlashBag()->add(
+                        'success',
+                        'Пункт меню успешно сохранен'
+                    );
                 
                 if ($form->get('saveAndExit')->isClicked()) {
                     return $this->redirect($this->generateUrl('admin_items', array('menu_id' => $item->getMenu()->getId())));

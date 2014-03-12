@@ -28,7 +28,7 @@ class VkontakteUserController extends UserController
         $session = $this->get('session');
 
         // Vkontakte init
-        $vk = $this->get('bw.user.social')->getVkontakte();
+        $vk = $this->get('bw_user.social')->getVkontakte();
         $vk->setRedirectUri($this->get('router')->generate('user_vkontakte_sign_in', array(), TRUE));
         
         
@@ -47,7 +47,8 @@ class VkontakteUserController extends UserController
                     'fields' => array(
                         'domain',
                     ),
-                ))[0];
+                ));
+                $userProfile = $userProfile[0];
 
                 if ($userProfile->uid) {
                     $user = $this->getDoctrine()

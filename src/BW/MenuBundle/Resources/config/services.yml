@@ -6,3 +6,6 @@ services:
 #        class: %bw_menu.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
 
+    bw_menu.widget:
+        class: BW\MenuBundle\Service\Widget
+        arguments: ["@service_container"]

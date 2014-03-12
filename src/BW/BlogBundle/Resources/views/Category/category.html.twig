@@ -1,4 +1,4 @@
-{% extends 'BWMainBundle:Layout/Frontend:layout.html.twig' %}
+{% extends 'BWSkeletonBundle:Frontend:layout.html.twig' %}
 
 {% block title %}{{ category.title }}{% endblock %}
 
@@ -8,23 +8,37 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                {{ service('bw.breadcrumbs').generateFromCategory(category)|raw }}
+                {{ service('bw_breadcrumbs.widget').generateFromCategory(category)|raw }}
             </div>
         </div>
         <div class="row">
             <div class="col-lg-3">
-                {#{ bw.block.menu('main_menu')|raw }#}3333333333333333333
+                {{ service('bw_blog.widget').lastPosts()|raw }}
             </div>
             <div class="col-lg-9">
+                <h1>Категория: {{ category.heading }}</h1>
+                {% if categories %}
+                <div class="categories">
+                    <!-- Подкатегории: -->
+                    <ul>
+                        {% for category in categories %}
+                        <li><a href="{{ path('bw_router_index', {'q': category.route.query}) }}">{{ category.heading }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% if posts %}
                 <div class="posts">
-                    <h1>Категория: {{ category.heading }}</h1>
-                    {% for post in category.posts %}
-                        <div class="post">
-                            <h2><a href="{{ path('bw_router_index', {'q': post.route.query}) }}">{{ post.heading }}</a></h2>
-                            <div>{{ post.shortDescription }}</div>
-                        </div>
+                    <!-- Статьи: -->
+                    {% for post in posts %}
+                    <div class="post">
+                        <h2><a href="{{ path('bw_router_index', {'q': post.route.query}) }}">{{ post.heading }}</a></h2>
+                        <div>{{ post.shortDescription }}</div>
+                    </div>
                     {% endfor %}
                 </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

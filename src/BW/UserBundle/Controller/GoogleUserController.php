@@ -31,7 +31,7 @@ class GoogleUserController extends UserController
          */
         $request = $this->get('request');
         $session = $this->get('session');
-        $client = $this->get('bw.user.social')->getGoogleClient();
+        $client = $this->get('bw_user.social')->getGoogleClient();
         $service = new \Google_Service_Oauth2($client);
         
 

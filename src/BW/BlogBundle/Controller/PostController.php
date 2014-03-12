@@ -13,7 +13,7 @@ class PostController extends BWController
     public function postAction($id) {
         $data = $this->getPropertyOverload();
         
-        $lang = $this->get('bw.localization.lang')->getCurrentLangEntity();
+        $lang = $this->get('bw_localization.lang')->getCurrentLangEntity();
         
         $data->post = $this->getDoctrine()->getRepository('BWBlogBundle:Post')->findOneBy(
             array(
@@ -24,7 +24,7 @@ class PostController extends BWController
         );
         
         if ( ! $data->post) {
-            throw $this->createNotFoundException('Ошибка 404. Запрашиваемая статья по адресу "'. $slug .'" не найдена. Скорее всего нужно перегенерировать ссылку страницы.');
+            throw $this->createNotFoundException("Ошибка 404. Запрашиваемая статья не найдена.\nСкорее всего нужно перегенерировать ссылку страницы.");
         }
         
         return $this->render('BWBlogBundle:Post:post.html.twig', $data->toArray());

@@ -5,6 +5,7 @@ admin:
     localization: Localization
     users: Users
     roles: Roles
+    mailing: Mailing
     content: Content
     posts: Posts
     pages: Pages

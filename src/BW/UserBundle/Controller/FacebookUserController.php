@@ -27,7 +27,7 @@ class FacebookUserController extends UserController
         $request = $this->get('request');
         $session = $this->get('session');
         // Facebook init
-        $facebook = $this->get('bw.user.social')->getFacebook();
+        $facebook = $this->get('bw_user.social')->getFacebook();
         
         if ($request->query->has('code')) {
             if ($facebook->getUser()) {
@@ -80,8 +80,9 @@ class FacebookUserController extends UserController
                 }
             }
         } else {
+            $social = $this->get('service_container')->getParameter('social');
             $params = array(
-                'scope' => $this->get('service_container')->getParameter('social')['facebook']['scopes'],
+                'scope' => $social['facebook']['scopes'],
                 'redirect_uri' => $this->get('router')->generate('user_facebook_sign_in', array(), TRUE),
             );
             

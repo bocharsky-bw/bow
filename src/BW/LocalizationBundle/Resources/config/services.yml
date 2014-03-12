@@ -5,6 +5,11 @@ services:
 #    bw_localization.example:
 #        class: %bw_localization.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
-    bw.localization.lang:
+
+    bw_localization.lang:
         class: BW\LocalizationBundle\Service\LangService
+        arguments: ["@service_container"]
+
+    bw_localization.widget:
+        class: BW\LocalizationBundle\Service\Widget
         arguments: ["@service_container"]

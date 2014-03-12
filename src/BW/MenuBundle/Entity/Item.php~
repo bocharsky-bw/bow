@@ -26,13 +26,6 @@ class Item extends BWEntity
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255)
-     */
-    private $path;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
@@ -68,13 +61,6 @@ class Item extends BWEntity
     /**
      * @var integer
      *
-     * @ORM\Column(name="level", type="integer")
-     */
-    private $level;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="ordering", type="integer")
      */
     private $ordering;
@@ -87,21 +73,6 @@ class Item extends BWEntity
      * @ORM\JoinColumn(name="menu_id", referencedColumnName="id")
      */
     private $menu;
-
-    /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
-     */
-    private $parent;
-
-    /**
-     * @var integer
-     *
-     * @ORM\OneToMany(targetEntity="Item", mappedBy="parent")
-     */
-    private $children;
     
     /**
      * @var integer
@@ -122,19 +93,48 @@ class Item extends BWEntity
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Page")
-     * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="parent")
      */
-    private $page;
+    private $children;
     
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Article")
-     * @ORM\JoinColumn(name="article_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Item", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
      */
-    private $article;
+    private $parent;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="level", type="integer")
+     */
+    private $level;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="lft", type="integer")
+     */
+    private $left;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rgt", type="integer")
+     */
+    private $right;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="\BW\RouterBundle\Entity\Route", cascade={"remove"})
+     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     */
+    private $route;
+    
+    
     
     /**
      * Set default values
@@ -153,6 +153,7 @@ class Item extends BWEntity
         
         return $this;
     }
+    
     
     /**
      * Текущий уровень вложенности пункта меню
@@ -173,42 +174,18 @@ class Item extends BWEntity
         return $this;
     }
     
-    /**
-     * Generate nesting
-     * 
-     * ORM\PrePersist
-     * ORM\PreUpdate
-     * param string $nesting
-     * return Item
-     */
-//    public function generateNesting()
-//    {
-//        $this->nesting = '0';
-//        
-//        if ($this->getId()) {
-//            $this->nesting = $this->getId();
-//            $parent = $this->getParent();
-//
-//            while ($parent) {
-//                $this->nesting = $parent->getId() .'.'. $this->nesting;
-//                $parent = $parent->getParent();
-//            }
-//        }
-//    
-//        return $this;
-//    }
 
-    
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        
+        $this->children     = new \Doctrine\Common\Collections\ArrayCollection();
         $this->inNew        = FALSE;
-        $this->level        = 0;
         $this->ordering     = 0;
+        $this->level        = 0;
+        $this->left         = 0;
+        $this->right        = 0;
     }
     
 
@@ -555,5 +532,49 @@ class Item extends BWEntity
     public function getArticle()
     {
         return $this->article;
+    }
+
+    /**
+     * Set left
+     *
+     * @param integer $left
+     * @return Item
+     */
+    public function setLeft($left)
+    {
+        $this->left = $left;
+        return $this;
+    }
+
+    /**
+     * Get left
+     *
+     * @return integer 
+     */
+    public function getLeft()
+    {
+        return $this->left;
+    }
+
+    /**
+     * Set right
+     *
+     * @param integer $right
+     * @return Item
+     */
+    public function setRight($right)
+    {
+        $this->right = $right;
+        return $this;
+    }
+
+    /**
+     * Get right
+     *
+     * @return integer 
+     */
+    public function getRight()
+    {
+        return $this->right;
     }
 }

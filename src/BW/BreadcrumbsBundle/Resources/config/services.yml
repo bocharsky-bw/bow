@@ -1,0 +1,11 @@
+parameters:
+#    bw_breadcrumbs.example.class: BW\BreadcrumbsBundle\Example
+
+services:
+#    bw_breadcrumbs.example:
+#        class: %bw_breadcrumbs.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    bw_breadcrumbs.widget:
+        class: BW\BreadcrumbsBundle\Service\Widget
+        arguments: ["@service_container"]

@@ -6,6 +6,10 @@ services:
 #        class: %bw_blog.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
         
-    bw.nested_set:
+    bw_blog.nested_set:
         class: BW\BlogBundle\Service\NestedSet
         arguments: ["@database_connection"]
+    
+    bw_blog.widget:
+        class: BW\BlogBundle\Service\Widget
+        arguments: ["@service_container"]

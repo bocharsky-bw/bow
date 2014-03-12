@@ -99,7 +99,7 @@ class CategoryController extends BWController
                 $category->setRoute($route);
                 
                 // Сгенерировать и упорядочить дерево Nested Set
-                $this->get('bw.nested_set')->regenerateTree(
+                $this->get('bw_blog.nested_set')->regenerateTree(
                         $em->getClassMetadata('BWBlogBundle:Category')->getTableName() // Имя таблицы класса
                     );
                 

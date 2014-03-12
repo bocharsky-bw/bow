@@ -117,7 +117,7 @@ class Category
     
     
     /**
-     * Текущий уровень вложенности пункта меню
+     * Текущий уровень вложенности категории
      * 
      * @ORM\PrePersist
      * @ORM\PreUpdate
@@ -137,8 +137,8 @@ class Category
 
 
     public function __construct() {
-        $this->posts = new ArrayCollection();
         $this->children = new ArrayCollection();
+        $this->posts = new ArrayCollection();
         $this->level = 0;
         $this->left = 0;
         $this->right = 0;

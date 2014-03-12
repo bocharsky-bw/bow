@@ -133,7 +133,7 @@ class UserController extends BWController
     }
     
     private function signOutFacebook() {
-        $facebook = $this->get('bw.user.social')->getFacebook();
+        $facebook = $this->get('bw_user.social')->getFacebook();
         
         return $facebook->destroySession();
     }

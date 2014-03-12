@@ -5,6 +5,7 @@ admin:
     localization: Локализация
     users: Пользователи
     roles: Роли
+    mailing: Рассылка
     content: Контент
     categories: Категории
     posts: Статьи

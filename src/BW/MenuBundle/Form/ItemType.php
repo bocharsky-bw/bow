@@ -5,6 +5,7 @@ namespace BW\MenuBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class ItemType extends AbstractType
 {
@@ -15,16 +16,8 @@ class ItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                ->add('menu', 'entity', array(
-                    'class' => 'BWMenuBundle:Menu',
-                    'property' => 'name',
-                ))
-                ->add('parent', 'entity', array(
-                    'class' => 'BWMenuBundle:Item',
-                    'property' => 'name',
-                    'group_by' => 'menu.name',
+                ->add('href', 'text', array(
                     'required' => FALSE,
-                    'empty_value' => 'Корневой пункт меню',
                 ))
                 ->add('name', 'text')
                 ->add('title', 'text', array(
@@ -33,12 +26,33 @@ class ItemType extends AbstractType
                 ->add('class', 'text', array(
                     'required' => FALSE,
                 ))
-                ->add('inNew', 'checkbox', array(
+                ->add('blank', 'checkbox', array(
                     'required' => FALSE,
                 ))
                 ->add('ordering', 'number')
                 // Entities
                 // Lang
+                ->add('menu', 'entity', array(
+                    'class' => 'BWMenuBundle:Menu',
+                    'property' => 'name',
+                ))
+                ->add('parent', 'entity', array(
+                    'class' => 'BWMenuBundle:Item',
+                    //'property' => 'name',
+                    'group_by' => 'menu.name',
+                    'required' => FALSE,
+                    'empty_value' => 'Корневой пункт меню',
+                ))
+                ->add('route', 'entity', array(
+                    'class' => 'BWRouterBundle:Route',
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('r')
+                                ->orderBy('r.path', 'ASC');
+                    },
+                    'property' => 'path',
+                    'required' => FALSE,
+                    'empty_value' => 'Ручная ссылка',
+                ))
                 ->add('lang', 'entity', array(
                     'class' => 'BWLocalizationBundle:Lang',
                     'property' => 'name',

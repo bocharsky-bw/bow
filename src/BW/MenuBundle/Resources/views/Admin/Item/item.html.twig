@@ -7,12 +7,13 @@
         <div class="error">
             {{ form_errors(form) }}
         </div>
-
+DELETE
+{#
         <div>
             Тип пункта меню: <strong>{{ item.type ? item.type.name : 'Не выбран' }}</strong> | 
             <a href="{{ path('admin_item_types', {'item_id': item.id}) }}">{{ item.type ? 'Изменить' : 'Выбрать' }}</a>
         </div>
-            
+#}            
         {% if itemTypeFilenamePath is defined %}
             {% include itemTypeFilenamePath %}
         {% endif %}
@@ -43,7 +44,25 @@
                 {{ form_errors(form.parent) }}
             </div>
         </div>
+        
+        <div>
+            {{ form_label(form.route, 'Роут: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.route, {'attr': {'class': 'form-control '} }) }}
+            <div class="error">
+                {{ form_errors(form.route) }}
+            </div>
+        </div>
 
+        <div>
+            {{ form_label(form.href, 'Ручная ссылка: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.href, {'attr': {'class': 'form-control '} }) }}
+            <div class="error">
+                {{ form_errors(form.href) }}
+            </div>
+        </div>
+        
+        <br>
+        
         <div>
             {{ form_label(form.name, 'Название: ', {'label_attr': {'class': ''} }) }}
             {{ form_widget(form.name, {'attr': {'class': 'form-control '} }) }}
@@ -85,10 +104,10 @@
         </div>
 
         <div>
-            {{ form_label(form.inNew, 'Открывать в новом окне? ', {'label_attr': {'class': ''} }) }}
-            {{ form_widget(form.inNew, {'attr': {'class': ''} }) }}
+            {{ form_label(form.blank, 'Открывать в новом окне? ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.blank, {'attr': {'class': ''} }) }}
             <div class="error">
-                {{ form_errors(form.inNew) }}
+                {{ form_errors(form.blank) }}
             </div>
         </div>
 

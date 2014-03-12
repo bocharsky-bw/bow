@@ -27,8 +27,6 @@ class BWController extends Controller {
     }
     
     public function render($view, array $parameters = array(), \Symfony\Component\HttpFoundation\Response $response = null) {
-        //$parameters['bw']['lang'] = $this->get('bw.localization.lang')->getCurrentLangEntity();
-        $parameters['bw']['block'] = $this->get('bw.block');
         
         return parent::render($view, $parameters, $response);
     }

@@ -1,0 +1,18 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Создание новой рассылки {{ parent() }}{% endblock %}
+
+{% block pre_content %}
+    <div class="form-buttons">
+        <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_mailing') }}" title="Отменить несохраненные изменения">Закрыть</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-plus"></i> Создание рассылки</h1>
+        </div>
+    </div>
+    {% include 'BWMailingBundle:Admin/Mailing:mailing.html.twig' %}
+{% endblock %}

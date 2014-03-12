@@ -1,0 +1,15 @@
+DELETE
+{#
+<div>
+    {{ form_label(form.route, ' ', {'label_attr': {'class': ''} }) }}
+    <blockquote>
+        <div>
+            Выберите категорию, которую будет открывать ссылка.
+        </div>
+    </blockquote>
+    {{ form_widget(form.route, {'attr': {'class': 'form-control '} }) }}
+    <div class="error">
+        {{ form_errors(form.route) }}
+    </div>
+</div>
+#}

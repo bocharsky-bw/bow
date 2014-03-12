@@ -1,4 +1,4 @@
-{% extends 'BWMainBundle:Layout/Backend:layout.html.twig' %}
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
 
 {% block title %}Список пунктов меню {{ parent() }}{% endblock %}
 
@@ -8,7 +8,7 @@
     </div>
 {% endblock %}
 
-{% macro itemRecursion(items) %}
+{#% macro itemRecursion(items) %}
     {% for item in items %}
         <tr>
             <td class="ta_c">
@@ -46,7 +46,7 @@
             {{ _self.itemRecursion(item.children) }}
         {% endif %}
     {% endfor %}
-{% endmacro %}
+{% endmacro %#}
 
 {% block content %}
     <div class="bw_container">
@@ -69,7 +69,41 @@
                     </tr>
                 </thead> 
                 <tbody>
-                    {{ _self.itemRecursion(items) }}
+                    {#{ _self.itemRecursion(items) }#}
+                    {% for item in items %}
+                        <tr>
+                            <td class="ta_c">
+                                {{ app.request.attributes.set('_list_index', app.request.attributes.getInt('_list_index') + 1) }}
+                                {{ app.request.attributes.getInt('_list_index') }}
+                            </td>
+                            <td>
+                                {{ '|— '|repeat(item.level) }} <a href="{{ path('admin_item_edit', {'id': item.id}) }}" title="Редактировать пункт меню">{{ item.name }}</a> 
+                            </td>
+                            <td>
+                                <a href="{{ path('admin_menu_edit', {'id': item.menu.id}) }}" title="Редактировать меню">{{ item.menu.name }}</a> 
+                            </td>
+                            <td class="ta_c">
+                                {{ item.ordering }}
+                            </td>
+                            <td class="ta_c">
+                                {% if item.parent %}
+                                    <a href="{{ path('admin_item_edit', {'id': item.parent.id}) }}" title="{{ item.parent.name }} | изменить">{{ item.parent.id }}</a>
+                                {% else %}
+                                    ~
+                                {% endif %}
+                            </td>
+                            <td class="ta_c">
+                                {% if item.lang %}
+                                    {{ item.lang.sign }}
+                                {% else %}
+                                    ~
+                                {% endif %}
+                            </td>
+                            <td class="ta_c">
+                                <span title="ID пункта меню">{{ item.id }}</span>
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

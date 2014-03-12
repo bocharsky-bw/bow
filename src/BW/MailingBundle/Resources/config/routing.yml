@@ -1,0 +1,31 @@
+#admin_mailing:
+#    pattern:  /_admin/mailing
+#    defaults: { _controller: BWMailingBundle:Admin/Mailing:list }
+#
+#admin_mailing_add:
+#    pattern:  /_admin/mailing/add
+#    defaults: { _controller: BWMailingBundle:Admin/Mailing:add }
+
+admin_mailing_messages:
+    pattern:  /_admin/mailing/messages
+    defaults: { _controller: BWMailingBundle:Admin/Message:messages }
+
+admin_mailing_message_add:
+    pattern:  /_admin/mailing/message/add
+    defaults: { _controller: BWMailingBundle:Admin/Message:message }
+
+admin_mailing_message_edit:
+    pattern:  /_admin/mailing/message/edit/{id}
+    defaults: { _controller: BWMailingBundle:Admin/Message:message }
+    
+admin_mailing_message_start:
+    pattern:  /_admin/mailing/message/start/{id}
+    defaults: { _controller: BWMailingBundle:Admin/Message:start }
+    
+admin_mailing_message_stop:
+    pattern:  /_admin/mailing/message/stop/{id}
+    defaults: { _controller: BWMailingBundle:Admin/Message:stop }
+    
+cron_mailing_messages_sending:
+    pattern:  /_cron/mailing/messages/sending
+    defaults: { _controller: BWMailingBundle:Admin/Message:sending }

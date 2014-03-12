@@ -3,8 +3,9 @@
 namespace BW\RouterBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use BW\MainBundle\Controller\BWController;
 
-class RouterController extends Controller
+class RouterController extends BWController
 {
     /**
      * Route instance
@@ -15,6 +16,9 @@ class RouterController extends Controller
     public function indexAction($q) {
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getManager();
+        
+        // Получаем entity текущего языка
+        $lang = $this->get('bw_localization.lang');
         
         // Поиск роута с учетом текущего языка
         $this->route = $em->getRepository('BWRouterBundle:Route')->findRouteBy($q, $request->getLocale());

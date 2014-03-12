@@ -1,0 +1,98 @@
+{% extends "BWSkeletonBundle:Frontend:base.html.twig" %}
+
+{% block lang %}ru{% endblock %}
+
+{% block charset %}UTF-8{% endblock %}
+
+{% block title %}% Layout Template %{% endblock %}
+
+{% block description %}{% endblock %}
+
+{% block css %}
+    <!-- % CSS % -->
+    <link href="{{ asset('css/bootstrap-skeleton.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+    
+{% block js %}
+    <!-- % JS % -->
+    <script src="{{ asset('js/script.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block header %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2">
+                <div id="logo">
+                    <a href="{{ path('home') }}">Logo</a>
+				</div>
+            </div>
+            <div class="col-lg-10">
+                {{ service('bw_user.widget').signIn()|raw }}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="main_menu">
+                            <div id="bw_main_menu">
+                                {{ service('bw_menu.widget').getMenu('main_menu')|raw }}
+                                <ul>
+                                    <li><a href="{{ path('home') }}">Главная</a></li>
+                                    <li><a href="{{ path('bw_router_index', {'q': 'news'}) }}">Новости</a></li>
+                                    <li><a href="{{ path('demo') }}">Demo</a></li>
+                                </ul>
+                            </div>
+                            <div id="bw_langs">
+                                {{ service('bw_localization.widget').langs()|raw }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block pre_content %}
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+{% block post_content %}
+{% endblock %}
+
+{% block footer %}
+    <div class="line"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="copyright">
+                    Copyright &copy; 2008-{{ 'now'|date('Y') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+    
+{% block overflow %}
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript">
+        function hideValue() {
+            var elem = $('#email, #password');
+            if (elem.size() > 0) {
+                elem.each(function () {
+                    var defaultVal = $(this).val();
+                    $(this).focus(function () {
+                        if ($(this).val() == defaultVal) {
+                            $(this).val('');
+                        }
+                    }).blur(function () {
+                        if ($(this).val() == '') {
+                            $(this).val(defaultVal);
+                        }
+                    });
+                });
+            }
+        }
+        hideValue();
+    </script>
+{% endblock %}

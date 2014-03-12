@@ -1,0 +1,126 @@
+{% extends "BWSkeletonBundle:Backend:base.html.twig" %}
+
+{% block lang %}ru{% endblock %}
+
+{% block charset %}UTF-8{% endblock %}
+
+{% block title %}| {{ 'admin.control_panel'|trans }}{% endblock %}
+
+{% block description %}{% endblock %}
+
+{% block css %}
+    <!-- % CSS % -->
+	<link href="{{ asset('css/admin-style.css') }}" type="text/css" rel="stylesheet">
+	<link href="{{ asset('libs/font-awesome/css/font-awesome.min.css') }}" type="text/css" rel="stylesheet">
+    <link href="{{ asset('libs/jquery/css/jquery-ui-1.10.3.custom.min.css') }}" type="text/css" rel="stylesheet">
+{% endblock %}
+    
+{% block js %}
+    <!-- % JS % -->
+    <script src="http://code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
+    <script src="{{ asset('libs/jquery/js/jquery-ui-1.10.3.custom.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/admin-script.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block header %}
+    <div id="main-menu-row" class="row">
+        <ul id="main-menu" class="menu-h menu-left row">
+            <li class="">
+                <a href="{{ path('admin') }}" title="{{ 'admin.control_panel'|trans }}"><i class="icon-home"></i></a>
+            </li>
+            <li class="has-child"><a href="#"><i class="icon-gears before-padding"></i>{{ 'admin.system'|trans }}</a> 
+                <ul>
+                    <li class="">
+                        <a href="{{ path('admin_config') }}"><i class="icon-wrench before-padding"></i>{{ 'admin.configuration'|trans }}</a>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('admin_localization') }}"><i class="icon-globe before-padding"></i>{{ 'admin.localization'|trans }}</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-child"><a href="#"><i class="icon-user before-padding"></i>{{ 'admin.users'|trans }}</a> 
+                <ul>
+                    <li class="">
+                        <a href="{{ path('admin_users') }}"><i class="icon-user before-padding"></i>{{ 'admin.users'|trans }}</a>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('admin_roles') }}"><i class="icon-group before-padding"></i>{{ 'admin.roles'|trans }}</a>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('admin_mailing_messages') }}"><i class="icon-envelope before-padding"></i>{{ 'admin.mailing'|trans }}</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-child"><a href="#"><i class="icon-file-text before-padding"></i>{{ 'admin.content'|trans }}</a> 
+                <ul>
+                    <li class="">
+                        <a href="{{ path('admin_categories') }}"><i class="icon-folder-close before-padding"></i>{{ 'admin.categories'|trans }}</a>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('admin_posts') }}"><i class="icon-file-text-alt before-padding"></i>{{ 'admin.posts'|trans }}</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-child"><a href="#"><i class="icon-link before-padding"></i>{{ 'admin.menu'|trans }}</a> 
+                <ul>
+                    <li class="">
+                        <a href="{{ path('admin_menus') }}"><i class="icon-align-justify before-padding"></i>{{ 'admin.menu'|trans }}</a>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('admin_items') }}"><i class="icon-list before-padding"></i>{{ 'admin.menu_items'|trans }}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul id="main-menu-right" class="menu-h menu-right row">
+            {{ service('bw_localization.widget').getAdminLangs()|raw }}
+            <li><a href="{{ path('home') }}" target="_blank"><i class="icon-share before-padding"></i>{{ 'admin.view_site'|trans }}</a></li>
+            <li><a href="{{ path('user_sign_out') }}"><i class="icon-signout before-padding"></i>{{ 'user.sign_out'|trans }}</a></li>
+        </ul>
+    </div>
+    <div id="icon-menu">
+        <ul class="menu-s row">
+            <li><a href="#" title="Открыть панель быстрого вызова" class="icon-windows ">Панель быстрого вызова</a> 
+                <ul class="menu-s row">
+                    <li><a href="#" class="icon-remove-sign menu-back" title="Закрыть панель">Закрыть</a></li>
+                    <li class="">
+                        <a href="{{ path('admin_posts') }}" title="{{ 'admin.posts'|trans }}" class="icon-file-text-alt">{{ 'admin.posts'|trans }}</a>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('admin_menus') }}" title="{{ 'admin.menu'|trans }}" class="icon-align-justify">{{ 'admin.menu'|trans }}</a>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('admin_items') }}" title="{{ 'admin.menu_items'|trans }}" class="icon-list">{{ 'admin.menu_items'|trans }}</a>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('admin_localization') }}" title="{{ 'admin.localization'|trans }}" class="icon-globe">{{ 'admin.localization'|trans }}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block pre_content %}
+{% endblock %}
+
+{% block content %}
+    <div id="left">
+        {% block left %}
+        {% endblock %}
+    </div>
+        
+    <div id="right">
+        {% block right %}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block post_content %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+    
+{% block overflow %}
+{% endblock %}

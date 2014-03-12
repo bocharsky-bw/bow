@@ -1,5 +1,4 @@
-{% if service('bw.user.social').facebook %}
-    {#{ dump(service('bw.user.social').facebook.getUser()) }#}
+{% if service('bw_user.social').facebook %}
     <a href="{{ path('user_vkontakte_sign_in') }}" title="Авторизироваться через ВКонтакте аккаунт" rel="nofollow">
         <img src="{{ asset('images/social/vkontakte/logo_32.png') }}" width="30" height="30" style="vertical-align: bottom;" alt="VKontakte Account Login">
     </a>

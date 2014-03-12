@@ -5,6 +5,7 @@ admin:
     localization: Локалізація
     users: Користувачі
     roles: Ролі
+    mailing: Розсилка
     content: Контент
     posts: Записи
     pages: Сторінки

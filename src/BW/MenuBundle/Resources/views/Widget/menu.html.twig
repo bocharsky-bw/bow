@@ -1,0 +1,8 @@
+<h3>{{ menu.name }}</h3>
+<ul>
+    {% for item in items %}
+        <li>
+            <a href="{{ item.route ? path('bw_router_index', {'q': item.route.query}) : (item.href|slice(0,4) == 'http' ? item.href : path('home') ~ item.href) }}" title="{{ item.title }}" {{ item.blank ? 'target="_blank"' }}>{{ item.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
