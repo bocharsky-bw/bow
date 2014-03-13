@@ -34,11 +34,6 @@
                         <div id="main_menu">
                             <div id="bw_main_menu">
                                 {{ service('bw_menu.widget').getMenu('main_menu')|raw }}
-                                <ul>
-                                    <li><a href="{{ path('home') }}">Главная</a></li>
-                                    <li><a href="{{ path('bw_router_index', {'q': 'news'}) }}">Новости</a></li>
-                                    <li><a href="{{ path('demo') }}">Demo</a></li>
-                                </ul>
                             </div>
                             <div id="bw_langs">
                                 {{ service('bw_localization.widget').langs()|raw }}

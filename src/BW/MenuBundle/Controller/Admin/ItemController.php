@@ -80,6 +80,11 @@ class ItemController extends BWController
             $itemTypeClassname = '\BW\MenuBundle\Form\ItemType';
         }
         
+        /* Восстанавливаем ссылку */
+        if ($item->getRoute()) {
+            $item->setHref($this->generateUrl('bw_router_index', array('q' => $item->getRoute()->getQuery()), TRUE));
+        }
+        
         $form = $this->createForm(new $itemTypeClassname(), $item);
         if ( ! $id) {
             $form->remove('delete');
@@ -102,6 +107,27 @@ class ItemController extends BWController
                         );
 
                         return $this->redirect($this->generateUrl('admin_items'));
+                    }
+                }
+                
+                /* Привязка к роуту */
+                if ($item->getHref()) {
+                    $path = str_replace(
+                        $this->generateUrl('home_root', array(), TRUE), '', $item->getHref()
+                    );
+                    $route = $em->getRepository('BWRouterBundle:Route')->findOneBy(
+                        array(
+                            'path' => $path,
+                        )
+                    );
+                    if ($route) {
+                        $item->setHref('');
+                        $item->setRoute($route);
+                    } else {
+                        $item->setHref(
+                            preg_replace('/^\w{2}\//i', '', $path) // Удаление языка из адреса
+                        );
+                        $item->setRoute(NULL);
                     }
                 }
                 

@@ -43,16 +43,16 @@ class ItemType extends AbstractType
                     'required' => FALSE,
                     'empty_value' => 'Корневой пункт меню',
                 ))
-                ->add('route', 'entity', array(
-                    'class' => 'BWRouterBundle:Route',
-                    'query_builder' => function(EntityRepository $er) {
-                        return $er->createQueryBuilder('r')
-                                ->orderBy('r.path', 'ASC');
-                    },
-                    'property' => 'path',
-                    'required' => FALSE,
-                    'empty_value' => 'Ручная ссылка',
-                ))
+//                ->add('route', 'entity', array(
+//                    'class' => 'BWRouterBundle:Route',
+//                    'query_builder' => function(EntityRepository $er) {
+//                        return $er->createQueryBuilder('r')
+//                                ->orderBy('r.path', 'ASC');
+//                    },
+//                    'property' => 'path',
+//                    'required' => FALSE,
+//                    'empty_value' => 'Ручная ссылка',
+//                ))
                 ->add('lang', 'entity', array(
                     'class' => 'BWLocalizationBundle:Lang',
                     'property' => 'name',

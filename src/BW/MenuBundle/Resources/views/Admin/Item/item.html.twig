@@ -46,15 +46,7 @@ DELETE
         </div>
         
         <div>
-            {{ form_label(form.route, 'Роут: ', {'label_attr': {'class': ''} }) }}
-            {{ form_widget(form.route, {'attr': {'class': 'form-control '} }) }}
-            <div class="error">
-                {{ form_errors(form.route) }}
-            </div>
-        </div>
-
-        <div>
-            {{ form_label(form.href, 'Ручная ссылка: ', {'label_attr': {'class': ''} }) }}
+            {{ form_label(form.href, 'Адрес ссылки: ', {'label_attr': {'class': ''} }) }}
             {{ form_widget(form.href, {'attr': {'class': 'form-control '} }) }}
             <div class="error">
                 {{ form_errors(form.href) }}

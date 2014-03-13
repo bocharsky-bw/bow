@@ -63,6 +63,16 @@
                     <pre>&#123;&#123; service('bw_localization.widget').langs()|raw &#125;&#125;</pre>
                     <p><i>Пример:</i></p>
                     {{ service('bw_localization.widget').langs()|raw }}
+                <h2>+ Список пунктов меню:</h2>
+                    <p><i>Подключение:</i></p>
+                    <pre>&#123;&#123; service('bw_menu.widget').getMenu('main_menu')|raw &#125;&#125;</pre>
+                    <p>
+                        <small>
+                            где <b>main_menu</b> - alias меню.
+                        </small>
+                    </p>
+                    <p><i>Пример:</i></p>
+                    {{ service('bw_menu.widget').getMenu('main_menu')|raw }}
             </div>
         </div>
     </div>
