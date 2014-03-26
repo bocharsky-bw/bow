@@ -1,7 +1,31 @@
-<ul>
-    {% for item in items %}
-        <li>
-            <a href="{{ item.route ? path('bw_router_index', {'q': item.route.query}) : (item.href|slice(0,4) == 'http' ? item.href : path('home') ~ item.href) }}" title="{{ item.title }}" {{ item.blank ? 'target="_blank"' }}>{{ item.name }}</a>
-        </li>
-    {% endfor %}
-</ul>
+{%- macro generate_href(item) -%}
+{% spaceless %}
+    {% if item.route %}
+        {{ path('bw_router_index', {'q': item.route.query}) }}
+    {% else %}
+        {% if item.href|slice(0,4) == 'http' %}
+            {{ item.href }}
+        {% else %}
+            {{ path('home') ~ item.href }}
+        {% endif %}
+    {% endif %}
+{% endspaceless %}
+{%- endmacro -%}
+
+{% macro generate_menu_list(nodes) %}
+    <ul>
+        {% for node in nodes %}
+            <li>
+                <a href="{{- _self.generate_href(node.entity) -}}"{% if node.entity.title %} title="{{ node.entity.title }}"{% endif %}{% if node.entity.blank %} target="_blank"{% endif %}>
+                    {{ node.entity.name }}
+                </a>
+                {% if node.children is defined %}
+                    {{ _self.generate_menu_list(node.children) }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% if display_heading %}<h3>{{ menu.name }}</h3>{% endif %}
+{{ _self.generate_menu_list(nestedNodes) }}

@@ -130,6 +130,27 @@ class NestedSet {
     }
     
     /**
+     * Генерирование многомерного массива вложенных дочерних элементов из массива сущностей
+     * @param array $entities Массив сущностей
+     * @return array Многомерный массив вложеннных дочерних сущностей
+     */
+    public function generateNestedNodesFromEntities($entities) {
+        $nestedNodes = array();
+        
+        foreach ($entities as $index => $entity) {
+            // Группирование по уровням
+            $this->nodesGroupedByLevel[$entity->getLevel()][$entity->getId()]['entity'] = $entity;
+            // Группирование по ID родителя
+            $this->nodesGroupedByParentId[$entity->getParent() ? $entity->getParent()->getId() : 0][$entity->getId()]['entity'] = $entity;
+        }
+        
+        $nestedNodes = $this->nodesGroupedByLevel[0];
+        $this->recursionByParentId($nestedNodes);
+        
+        return $nestedNodes;
+    }
+    
+    /**
      * Метод работает с оригинальным массивом по ссылке
      * @param array $nodes Ссылка на массив элементов нулевого уровня
      * @param NULL
@@ -145,4 +166,5 @@ class NestedSet {
         
         return NULL;
     }
+    
 }

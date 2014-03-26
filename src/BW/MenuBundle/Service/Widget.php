@@ -19,9 +19,10 @@ class Widget {
     }
     
     
-    public function getMenu($alias) {
+    public function getMenu($alias, $display_heading = TRUE) {
         $data = new PropertyOverload;
         
+        $data->display_heading = $display_heading;
         $data->menu = $this->container
                 ->get('doctrine.orm.entity_manager')
                 ->getRepository('BWMenuBundle:Menu')
@@ -37,6 +38,11 @@ class Widget {
                     'lang' => $this->container->get('bw_localization.lang')->getLang(),
                 )
             );
+        
+        $data->nestedNodes = $this->container
+                ->get('bw_blog.nested_set')
+                ->generateNestedNodesFromEntities($data->items)
+            ;
         
         return $this->container->get('templating')->render('BWMenuBundle:Widget:menu.html.twig', $data->toArray());
     }

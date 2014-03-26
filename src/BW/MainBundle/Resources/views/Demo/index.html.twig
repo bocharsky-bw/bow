@@ -41,7 +41,7 @@
                     <pre>&#123;&#123; service('bw_blog.widget').listCategories(2)|raw &#125;&#125;</pre>
                     <p>
                         <small>
-                            где <b>2</b> - ID категории в БД.<br>
+                            где: <b>2</b> - ID категории в БД.<br>
                             по умолчанию: список всех категорий
                         </small>
                     </p>
@@ -52,7 +52,7 @@
                     <pre>&#123;&#123; service('bw_blog.widget').lastPosts(3)|raw &#125;&#125;</pre>
                     <p>
                         <small>
-                            где <b>3</b> - количество записей.<br>
+                            где: <b>3</b> - количество записей.<br>
                             по умолчанию: 5 последних записей
                         </small>
                     </p>
@@ -65,14 +65,14 @@
                     {{ service('bw_localization.widget').langs()|raw }}
                 <h2>+ Список пунктов меню:</h2>
                     <p><i>Подключение:</i></p>
-                    <pre>&#123;&#123; service('bw_menu.widget').getMenu('main_menu')|raw &#125;&#125;</pre>
+                    <pre>&#123;&#123; service('bw_menu.widget').getMenu('main_menu', false)|raw &#125;&#125;</pre>
                     <p>
                         <small>
-                            где <b>main_menu</b> - alias меню.
+                            где: <b>main_menu</b> - alias меню, <b>false</b> - не отображать заголовок меню.<br>
                         </small>
                     </p>
                     <p><i>Пример:</i></p>
-                    {{ service('bw_menu.widget').getMenu('main_menu')|raw }}
+                    {{ service('bw_menu.widget').getMenu('main_menu', false)|raw }}
             </div>
         </div>
     </div>
