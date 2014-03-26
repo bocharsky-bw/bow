@@ -39,7 +39,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(type="string", length=40)
      */
     private $password;
-
+    
     /**
      * @ORM\Column(type="string", length=60, nullable=true, unique=true)
      */
@@ -99,6 +99,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $mailing;
     
+    /**
+     * @ORM\OneToOne(targetEntity="Profile", mappedBy="user")
+     */
+    private $profile;
+    
     
     public function isAccountNonExpired()
     {
@@ -130,7 +135,7 @@ class User implements AdvancedUserInterface, \Serializable
      * 
      * @return string
      */
-    public function generatePassword()
+    public function generateRandomPassword()
     {
         $this->password = uniqid(NULL, FALSE);
         
@@ -142,7 +147,7 @@ class User implements AdvancedUserInterface, \Serializable
      * 
      * @return string
      */
-    public function generateHash()
+    public function generateRandomHash()
     {
         $this->hash = md5(uniqid(NULL, TRUE));
         
@@ -160,6 +165,7 @@ class User implements AdvancedUserInterface, \Serializable
         
         return $this;
     }
+    
     
     public function __construct()
     {
@@ -568,5 +574,27 @@ class User implements AdvancedUserInterface, \Serializable
     public function getMailing()
     {
         return $this->mailing;
+    }
+
+    /**
+     * Set profile
+     *
+     * @param BW\UserBundle\Entity\Profile $profile
+     * @return User
+     */
+    public function setProfile(\BW\UserBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @return BW\UserBundle\Entity\Profile 
+     */
+    public function getProfile()
+    {
+        return $this->profile;
     }
 }

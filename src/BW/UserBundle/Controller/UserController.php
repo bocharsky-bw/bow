@@ -230,7 +230,7 @@ class UserController extends BWController
                 );
                 
                 if ($user) {
-                    $user->generateHash();
+                    $user->generateRandomHash();
                     $em->flush();
                     
                     /* Mailer */

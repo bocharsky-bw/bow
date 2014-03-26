@@ -52,7 +52,7 @@ class UserType extends AbstractType
                 // Buttons
                 ->add('save', 'submit')
                 ->add('saveAndClose', 'submit')
-                ->add('generatePassword', 'submit')
+                ->add('generateRandomPassword', 'submit')
                 ->add('delete', 'submit')
             ;
     }

@@ -60,8 +60,8 @@ class UserController extends BWController
                     }
                 }
                 
-                if ( $form->get('generatePassword')->isClicked() ) {
-                    $newPassword = $user->generatePassword();
+                if ( $form->get('generateRandomPassword')->isClicked() ) {
+                    $newPassword = $user->generateRandomPassword();
                     $this->get('session')->getFlashBag()->add(
                         'success',
                         'Для пользователя был сгенерирован новый пароль: <strong>'. $newPassword .'</strong>'

@@ -94,3 +94,14 @@ user_google_sign_in:
     host:     %domain%
     pattern:  /{_locale}/user/sign-in/google
     defaults: { _controller: BWUserBundle:GoogleUser:signIn }
+    
+# User Profile:
+user_profile_personal:
+    host:     %domain%
+    pattern:  /{_locale}/user/profile/personal
+    defaults: { _controller: BWUserBundle:Profile:personal }
+
+user_profile_address:
+    host:     %domain%
+    pattern:  /{_locale}/user/profile/address
+    defaults: { _controller: BWUserBundle:Profile:address }

@@ -132,4 +132,36 @@ class Role implements RoleInterface
     {
         return $this->users;
     }
+
+    /**
+     * Add messages
+     *
+     * @param BW\MailingBundle\Entity\Message $messages
+     * @return Role
+     */
+    public function addMessage(\BW\MailingBundle\Entity\Message $messages)
+    {
+        $this->messages[] = $messages;
+        return $this;
+    }
+
+    /**
+     * Remove messages
+     *
+     * @param BW\MailingBundle\Entity\Message $messages
+     */
+    public function removeMessage(\BW\MailingBundle\Entity\Message $messages)
+    {
+        $this->messages->removeElement($messages);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
 }

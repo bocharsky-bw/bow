@@ -1,0 +1,70 @@
+{% extends 'BWSkeletonBundle:Frontend:layout.html.twig' %}
+
+{% block title %}Адрес{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1><i class="fa fa-home"></i> Кабинет пользователя - Адрес</h1>
+                <div>
+                    <a href="{{ path('user_profile_personal') }}">Личные данные</a> | 
+                    <a href="{{ path('user_profile_address') }}">Адрес</a>
+                </div>
+                <br>
+                {{ form_start(form) }}
+                    {% if form_errors(form) %}
+                        <div class="alert alert-danger">
+                            {{ form_errors(form) }}
+                        </div>
+                    {% endif %}
+
+                    <div>
+                        {{ form_label(form.country, 'Страна: ', {'label_attr': {'class': ''} }) }}
+                        {{ form_widget(form.country, {'attr': {'class': 'form-control '} }) }}
+                        {{ form_errors(form.country) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.region, 'Область: ', {'label_attr': {'class': ''} }) }}
+                        {{ form_widget(form.region, {'attr': {'class': 'form-control '} }) }}
+                        {{ form_errors(form.region) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.city, 'Город: ', {'label_attr': {'class': ''} }) }}
+                        {{ form_widget(form.city, {'attr': {'class': 'form-control '} }) }}
+                        {{ form_errors(form.city) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.postcode, 'Почтовый индекс: ', {'label_attr': {'class': ''} }) }}
+                        {{ form_widget(form.postcode, {'attr': {'class': 'form-control '} }) }}
+                        {{ form_errors(form.postcode) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.street, 'Улица: ', {'label_attr': {'class': ''} }) }}
+                        {{ form_widget(form.street, {'attr': {'class': 'form-control '} }) }}
+                        {{ form_errors(form.street) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.house, '№ дома: ', {'label_attr': {'class': ''} }) }}
+                        {{ form_widget(form.house, {'attr': {'class': 'form-control '} }) }}
+                        {{ form_errors(form.house) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(form.apartment, '№ квартиры: ', {'label_attr': {'class': ''} }) }}
+                        {{ form_widget(form.apartment, {'attr': {'class': 'form-control '} }) }}
+                        {{ form_errors(form.apartment) }}
+                    </div>
+
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding'}, 'label': 'Сохранить'}) }}
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

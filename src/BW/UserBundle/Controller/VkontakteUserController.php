@@ -78,7 +78,7 @@ class VkontakteUserController extends UserController
                                 ->setConfirm(TRUE)
                                 ->setHash('')
                                 ->addRole($role)
-                                ->generatePassword()
+                                ->generateRandomPassword()
                             ;
                         $em->persist($user);
                         $em->flush();

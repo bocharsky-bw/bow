@@ -11,7 +11,7 @@
         <div class="form-buttons">
             {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Сохранить'}) }}
             {{ form_widget(form.saveAndClose, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и выйти из режима редактирования'}, 'label': 'Сохранить и закрыть'}) }}
-            {{ form_widget(form.generatePassword, {'attr': {'class': 'btn btn-primary icon-key before-padding', 'title': 'Сгенерировать новый пароль для пользователя и сохранить все изменения аккаунта'}, 'label': 'Сгенерировать пароль'}) }}
+            {{ form_widget(form.generateRandomPassword, {'attr': {'class': 'btn btn-primary icon-key before-padding', 'title': 'Сгенерировать новый пароль для пользователя и сохранить все изменения аккаунта'}, 'label': 'Сгенерировать пароль'}) }}
             {% if form.delete is defined %}
                 {{ form_widget(form.delete, {'attr': {'class': 'btn btn-default icon-remove before-padding', 'title': 'Удалить запись', 'onclick': "return confirm('Удалить запись из БД?')"}, 'label': 'Удалить'}) }}
             {% endif %}

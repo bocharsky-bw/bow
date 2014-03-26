@@ -7,7 +7,10 @@
                 {% if is_granted('ROLE_ADMIN') %}
                     env: <a href="{{ app.request.getBasePath() ~'/app_dev.php'~ (app.request.getLocale() ? '/'~ app.request.getLocale : '') }}">dev</a>
                     / <a href="{{ app.request.getBasePath() ~ (app.request.getLocale() ? '/'~ app.request.getLocale : '') }}">prod</a>
-                    | <a href="{{ path('admin') }}">Панель управления</a>
+                    | <a href="{{ path('admin') }}">Панель управления</a> | 
+                {% endif %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a href="{{ path('user_profile_personal') }}">Личный кабинет</a>
                 {% endif %}
             </div>
         {% else %}

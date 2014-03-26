@@ -23,7 +23,7 @@ class PasswordEncoder {
 
     public function prePersist(LifecycleEventArgs $args) {
         $entity = $args->getEntity();
-        $em = $args->getEntityManager();
+        //$em = $args->getEntityManager();
         
         if ($entity instanceof User) {
             // Если НЕ установлен конкретный пароль пользователя
@@ -32,29 +32,39 @@ class PasswordEncoder {
                 $entity->setPassword(md5(uniqid(NULL, TRUE)));
             }
             // Хэшируем новый пароль пользователя
-            $encoder = $this->encoderFactory->getEncoder($entity);
-            $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
-            $entity->setPassword($password);
+            $passwordHash = $this->encodePassword($entity, $entity->getPassword());
+            $entity->setPassword($passwordHash);
         }
     }
     
     public function preUpdate(PreUpdateEventArgs $args) {
         $entity = $args->getEntity();
-        $em = $args->getEntityManager();
+        //$em = $args->getEntityManager();
 
         if ($entity instanceof User) {
             if ($args->hasChangedField('password')) {
                 // Если пароль пользователя изменен
                 if ($args->getNewValue('password')) {
                     // Хэшируем новый пароль
-                    $encoder = $this->encoderFactory->getEncoder($entity);
-                    $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
-                    $args->setNewValue('password', $password);
+                    $passwordHash = $this->encodePassword($entity, $entity->getPassword());
+                    $args->setNewValue('password', $passwordHash);
                 } else {
                     // иначе оставляем старый пароль
                     $args->setNewValue('password', $args->getOldValue('password'));
                 }
             }
         }
+    }
+    
+    /**
+     * The user password hash
+     * @param User $entity The user object
+     * @return string Encoded password hash
+     */
+    public function encodePassword(User $entity, $password) {
+        $encoder = $this->encoderFactory->getEncoder($entity);
+        $passwordHash = $encoder->encodePassword($password, $entity->getSalt());
+        
+        return $passwordHash;
     }
 }
