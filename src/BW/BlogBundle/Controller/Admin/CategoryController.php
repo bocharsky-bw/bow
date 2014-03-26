@@ -87,7 +87,7 @@ class CategoryController extends BWController
                     $segments[] = $parent->getSlug();
                     $parent = $parent->getParent();
                 }
-                $query = 'cms/'. implode('/', array_reverse($segments));
+                $query = implode('/', array_reverse($segments));
                 
                 $route->setPath( ($category->getLang() ? $category->getLang() .'/' : '') . $query );
                 $route->setQuery( $query );

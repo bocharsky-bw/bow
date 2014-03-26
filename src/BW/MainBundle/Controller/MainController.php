@@ -19,8 +19,18 @@ class MainController extends BWController
     }
     
     public function indexAction() {
+        $data = $this->getPropertyOverload();
         
-        return $this->render('BWMainBundle:Main:index.html.twig');
+        $data->post = $this->getDoctrine()
+                ->getRepository('BWBlogBundle:Post')
+                ->findOneBy(array(
+                    'home' => TRUE,
+                    'published' => TRUE,
+                    'lang' => $this->get('bw_localization.lang')->getId(),
+                ))
+            ;
+        
+        return $this->render('BWMainBundle:Main:index.html.twig', $data->toArray());
     }
     
 }

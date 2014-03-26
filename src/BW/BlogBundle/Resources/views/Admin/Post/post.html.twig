@@ -29,6 +29,14 @@
         </div>
             
         <div>
+            {{ form_label(form.home, 'Главная страница: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.home, {'attr': {'class': ''} }) }}
+            <div class="error">
+                {{ form_errors(form.home) }}
+            </div>
+        </div>
+            
+        <div>
             {{ form_label(form.lang, 'Язык: ', {'label_attr': {'class': ''} }) }}
             {{ form_widget(form.lang, {'attr': {'class': 'form-control'} }) }}
             <div class="error">

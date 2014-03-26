@@ -18,6 +18,9 @@ class PostType extends AbstractType
                 ->add('published', 'checkbox', array(
                     'required' => FALSE,
                 ))
+                ->add('home', 'checkbox', array(
+                    'required' => FALSE,
+                ))
                 ->add('heading', 'text')
                 ->add('shortDescription', 'textarea')
                 ->add('content', 'textarea')

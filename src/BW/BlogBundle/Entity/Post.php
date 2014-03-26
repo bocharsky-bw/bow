@@ -86,6 +86,13 @@ class Post
     private $published;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="home", type="boolean")
+     */
+    private $home;
+
+    /**
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="\BW\LocalizationBundle\Entity\Lang")
@@ -135,6 +142,8 @@ class Post
     
 
     public function __construct() {
+        $this->published = TRUE;
+        $this->home = FALSE;
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
     }
@@ -425,5 +434,38 @@ class Post
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set home
+     *
+     * @param boolean $home
+     * @return Post
+     */
+    public function setHome($home)
+    {
+        $this->home = $home;
+        
+        return $this;
+    }
+
+    /**
+     * Is home
+     *
+     * @return boolean 
+     */
+    public function isHome()
+    {
+        return $this->home;
+    }
+
+    /**
+     * Get home
+     *
+     * @return boolean 
+     */
+    public function getHome()
+    {
+        return $this->home;
     }
 }

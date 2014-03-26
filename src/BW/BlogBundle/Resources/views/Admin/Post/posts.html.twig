@@ -22,6 +22,7 @@
                         <th style="width: 5%" class="ta_c">№</th>
                         <th>Название</th>
                         <th>Категория</th>
+                        <th style="width: 5%" class="ta_c">Главная</th>
                         <th style="width: 5%" class="ta_c">Статус</th>
                         <th style="width: 10%">Дата создания</th>
                         <th style="width: 10%">Дата изменения</th>
@@ -42,6 +43,15 @@
                                 {% else %}
                                     Без категории
                                 {% endif %}
+                            </td>
+                            <td class="ta_c">
+                                {#<a href="{{ path('admin_post_toogle_published', {'id': post.id}) }}">#}
+                                    {% if post.home %}
+                                        <i class="green icon-star" style="color: #F5BC28;" title="Больше не отображать на главной странице"></i>
+                                    {% else %}
+                                        <i class="red icon-star-empty" style="color: #AA6;" title="Отображать на главной странице"></i>
+                                    {% endif %}
+                                {#</a>#}
                             </td>
                             <td class="ta_c">
                                 <a href="{{ path('admin_post_toogle_published', {'id': post.id}) }}">

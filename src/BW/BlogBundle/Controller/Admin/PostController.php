@@ -78,9 +78,9 @@ class PostController extends BWController
                     $segments[] = $parent->getSlug();
                     $parent = $parent->getParent();
                 }
-                $query = 'cms/'. ($segments ? implode('/', array_reverse($segments)) .'/' : '') . $post->getSlug();
+                $query = ($segments ? implode('/', array_reverse($segments)) .'/' : '') . $post->getSlug();
                 
-                //$query = 'cms/'. ($post->getCategory() ? $post->getCategory()->getSlug() .'/' : '') . $post->getSlug();
+                //$query = ($post->getCategory() ? $post->getCategory()->getSlug() .'/' : '') . $post->getSlug();
                 $route->setPath(($post->getLang() ? $post->getLang().'/' : '') . $query);
                 $route->setQuery($query);
                 $route->setLang($post->getLang());
