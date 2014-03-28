@@ -123,6 +123,10 @@ class Post
      * @return \BW\BlogBundle\Entity\Post
      */
     public function setDefaultValues(array $values = array(
+            'title' => '',
+            'metaDescription' => '',
+            'shortDescription' => '',
+            'content' => '',
         )) {
         
         foreach ($values as $field => $value) {

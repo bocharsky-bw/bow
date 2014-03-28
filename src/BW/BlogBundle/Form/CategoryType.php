@@ -5,6 +5,7 @@ namespace BW\BlogBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class CategoryType extends AbstractType
 {
@@ -23,7 +24,17 @@ class CategoryType extends AbstractType
                 // Lang
                 ->add('parent', 'entity', array(
                     'class' => 'BWBlogBundle:Category',
-                    'property' => 'heading',
+                    //'property' => 'heading',
+                    'query_builder' => function(EntityRepository $er) use($options) {
+                        return $er->createQueryBuilder('c')
+                                ->where('c.id != :id')
+                                ->setParameter('id', $options['data']->getId())
+                                ->andWhere('c.left < :left OR c.left > :right')
+                                ->setParameter('left', $options['data']->getLeft())
+                                ->setParameter('right', $options['data']->getRight())
+                                ->orderBy('c.left', 'ASC')
+                            ;
+                    },
                     'required' => FALSE,
                     'empty_value' => 'Корневая',
                 ))

@@ -15,8 +15,9 @@
 {% macro generate_menu_list(nodes) %}
     <ul>
         {% for node in nodes %}
-            <li>
-                <a href="{{- _self.generate_href(node.entity) -}}"{% if node.entity.title %} title="{{ node.entity.title }}"{% endif %}{% if node.entity.blank %} target="_blank"{% endif %}>
+            {% set href = _self.generate_href(node.entity) %}
+            <li class="{% if href == app.request.requestUri %}active current {% endif %}{{ node.entity.class }}">
+                <a href="{{- href -}}" {% if node.entity.title %} title="{{ node.entity.title }}"{% endif %}{% if node.entity.blank %} target="_blank"{% endif %}>
                     {{ node.entity.name }}
                 </a>
                 {% if node.children is defined %}

@@ -5,6 +5,7 @@ namespace BW\BlogBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class PostType extends AbstractType
 {
@@ -22,14 +23,23 @@ class PostType extends AbstractType
                     'required' => FALSE,
                 ))
                 ->add('heading', 'text')
-                ->add('shortDescription', 'textarea')
-                ->add('content', 'textarea')
+                ->add('shortDescription', 'textarea', array(
+                    'required' => FALSE,
+                ))
+                ->add('content', 'textarea', array(
+                    'required' => FALSE,
+                ))
                 ->add('created', 'datetime')
                 // Entities
                 // Category
                 ->add('category', 'entity', array(
                     'class' => 'BWBlogBundle:Category',
-                    'property' => 'heading',
+                    //'property' => 'heading',
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('c')
+                                ->orderBy('c.left', 'ASC')
+                            ;
+                    },
                     'required' => FALSE,
                     'empty_value' => 'Без категории',
                 ))
@@ -42,8 +52,12 @@ class PostType extends AbstractType
                 ))
                 // Meta tags
                 ->add('slug', 'text')
-                ->add('title', 'text')
-                ->add('metaDescription', 'textarea')
+                ->add('title', 'text', array(
+                    'required' => FALSE,
+                ))
+                ->add('metaDescription', 'textarea', array(
+                    'required' => FALSE,
+                ))
                 // Buttons
                 ->add('save', 'submit')
                 ->add('saveAndExit', 'submit')

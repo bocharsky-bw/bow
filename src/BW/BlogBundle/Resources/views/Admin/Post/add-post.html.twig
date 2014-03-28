@@ -10,8 +10,10 @@
     <script type="text/javascript">
         $(document).ready(function(){
             //alert('DOM');
-            var editor = CKEDITOR.replace( 'post_content' );
-            CKFinder.setupCKEditor( editor, '{{ asset('libs/ckfinder2/') }}' );
+            var editorContent = CKEDITOR.replace( 'post_content' );
+            CKFinder.setupCKEditor( editorContent, '{{ asset('libs/ckfinder2/') }}' );
+            var editorShortDesc = CKEDITOR.replace( 'post_shortDescription' );
+            CKFinder.setupCKEditor( editorShortDesc, '{{ asset('libs/ckfinder2/') }}' );
         });
     </script>
     <!-- /CKEditor/CKFinder -->

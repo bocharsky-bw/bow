@@ -135,6 +135,9 @@ class Category
         return $this;
     }
 
+    public function __toString() {
+        return str_repeat('- ', $this->level) . $this->heading;
+    }
 
     public function __construct() {
         $this->children = new ArrayCollection();
