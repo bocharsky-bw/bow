@@ -51,7 +51,9 @@ class PostType extends AbstractType
                     'empty_value' => 'Выберите язык',
                 ))
                 // Meta tags
-                ->add('slug', 'text')
+                ->add('slug', 'text', array(
+                    'required' => FALSE,
+                ))
                 ->add('title', 'text', array(
                     'required' => FALSE,
                 ))

@@ -15,9 +15,9 @@ class Route
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
@@ -62,6 +62,8 @@ class Route
     
     
     public function __construct() {
+        $this->path = '';
+        $this->query = '';
     }
     
 

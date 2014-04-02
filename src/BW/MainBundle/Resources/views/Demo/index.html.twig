@@ -49,15 +49,16 @@
                     {{ service('bw_blog.widget').listCategories()|raw }}
                 <h2>+ Список последних статей:</h2>
                     <p><i>Подключение:</i></p>
-                    <pre>&#123;&#123; service('bw_blog.widget').lastPosts(3)|raw &#125;&#125;</pre>
+                    <pre>&#123;&#123; service('bw_blog.widget').lastPosts(3, 0)|raw &#125;&#125;</pre>
                     <p>
                         <small>
                             где: <b>3</b> - количество записей.<br>
+                            где: <b>0</b> - ID категории.<br>
                             по умолчанию: 5 последних записей
                         </small>
                     </p>
                     <p><i>Пример:</i></p>
-                    {{ service('bw_blog.widget').lastPosts(3)|raw }}
+                    {{ service('bw_blog.widget').lastPosts(3, 0)|raw }}
                 <h2>+ Список доступных языков:</h2>
                     <p><i>Подключение:</i></p>
                     <pre>&#123;&#123; service('bw_localization.widget').langs()|raw &#125;&#125;</pre>

@@ -48,13 +48,19 @@ class Widget {
         ));
     }
     
-    public function lastPosts($count = 5) {
+    public function lastPosts($count = 5, $category = FALSE) {
+        $criteria = array(
+            'published' => TRUE,
+        );
+        
+        if ($category) {
+            $criteria['category'] = $category;
+        }
+        
         $posts = $this->container->get('doctrine')
                 ->getRepository('BWBlogBundle:Post')
                 ->findBy(
-                    array(
-                        'published' => TRUE,
-                    ),
+                    $criteria,
                     array(
                         'created' => 'DESC',
                     ),

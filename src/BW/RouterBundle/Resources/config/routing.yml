@@ -4,4 +4,4 @@ bw_router_index:
     defaults: 
         _controller: BWRouterBundle:Router:index
     requirements:
-        q: ".+"
+        q: ".*"

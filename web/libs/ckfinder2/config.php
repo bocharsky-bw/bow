@@ -20,6 +20,20 @@
  */
 function CheckAuthentication()
 {
+    session_start();
+    $status = FALSE;
+    $file = dirname(__FILE__) .'/../../../app/cache/prod/sessions/sess_'. session_id();
+    if (file_exists($file)) {
+        $status = (bool)preg_match('/AllowCKFinder/i', file_get_contents($file));
+    }
+    if ( ! $status) {
+        $file = dirname(__FILE__) .'/../../../app/cache/dev/sessions/sess_'. session_id();
+        if (file_exists($file)) {
+            $status = (bool)preg_match('/AllowCKFinder/i', file_get_contents($file));
+        }
+    }
+
+    return $status;
 	// WARNING : DO NOT simply return "true". By doing so, you are allowing
 	// "anyone" to upload and list the files in your server. You must implement
 	// some kind of session validation here. Even something very simple as...
@@ -60,7 +74,8 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseUrl = '/ckfinder/userfiles/';
+//$baseUrl = '/ckfinder/userfiles/';
+$baseUrl = '/web/uploads/';
 
 /*
 $baseDir : the path to the local directory (in the server) which points to the

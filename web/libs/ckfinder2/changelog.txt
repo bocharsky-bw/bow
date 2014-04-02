@@ -1,7 +1,11 @@
 CKFinder Changelog
 ==================
 http://cksource.com/ckfinder
-Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
+Copyright (C) 2007-2014, CKSource - Frederico Knabben. All rights reserved.
+
+### Version 2.4.1
+Updated copyrights, fixed URLs inside source code, other minor fixes.
+[PHP] - Fixed: empty filename when non-UTF-8 character is found on nginx with PHP 5.4
 
 ### Version 2.4
 - Added Search box in the toolbar that performs search of those files matching the searched string in the current folder.
@@ -17,6 +21,8 @@ Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
 - Fixed: In some cases, and empty (undefined) error message was shown to the user when an error occured.
 - Updated colorbox library used by the gallery plugin to the latest version, compatible with latest versions of jQuery.
 [PHP] - Fixed paths resolving by resolveUrl() function.
+
+### Version 2.3.1.1
 
 ### Version 2.3.1
 Security Release:

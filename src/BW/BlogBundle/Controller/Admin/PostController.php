@@ -29,7 +29,9 @@ class PostController extends BWController
     
     public function postAction($id = NULL) {
         $data = $this->getPropertyOverload();
-        $request = $this->get('request');
+        $request = $this->getRequest();
+        
+        $request->getSession()->set('AllowCKFinder', TRUE); // Allow to use CKFinder
         
         if ($id) {
             $post = $this->getDoctrine()->getRepository('BWBlogBundle:Post')->find($id);
@@ -69,8 +71,12 @@ class PostController extends BWController
                 $route = $post->getRoute();
                 if ( ! $route) {
                     $route = new \BW\RouterBundle\Entity\Route();
+                    $post->setRoute($route);
                     $em->persist($route);
+                    $em->flush();
                 }
+                
+                $this->get('bw_blog.transliter')->generateSlug($post);
                 
                 $segments = array();
                 $parent = $post->getCategory();
@@ -79,8 +85,6 @@ class PostController extends BWController
                     $parent = $parent->getParent();
                 }
                 $query = ($segments ? implode('/', array_reverse($segments)) .'/' : '') . $post->getSlug();
-                
-                //$query = ($post->getCategory() ? $post->getCategory()->getSlug() .'/' : '') . $post->getSlug();
                 $route->setPath(($post->getLang() ? $post->getLang().'/' : '') . $query);
                 $route->setQuery($query);
                 $route->setLang($post->getLang());
@@ -88,7 +92,6 @@ class PostController extends BWController
                     '_controller' => 'BWBlogBundle:Post:post',
                     'id' => $post->getId(),
                 ));
-                $post->setRoute($route);
                 
                 $em->flush();
                 $this->get('session')->getFlashBag()->add(

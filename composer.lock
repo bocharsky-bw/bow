@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a5ee17c8af5cbc28f33a8a17fc9024cd",
+    "hash": "f0725095c7aaf23e3c7e3497fdb4daf2",
     "packages": [
         {
             "name": "bocharsky-bw/vkontakte-php-sdk",

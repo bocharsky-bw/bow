@@ -5,6 +5,7 @@ namespace BW\BlogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use BW\MainBundle\Controller\BWController;
+use \CKFinder;
 
 class PostController extends BWController
 {
@@ -12,7 +13,7 @@ class PostController extends BWController
 
     public function postAction($id) {
         $data = $this->getPropertyOverload();
-        
+
         $lang = $this->get('bw_localization.lang')->getCurrentLangEntity();
         
         $data->post = $this->getDoctrine()->getRepository('BWBlogBundle:Post')->findOneBy(
