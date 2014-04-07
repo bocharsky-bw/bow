@@ -1,12 +1,7 @@
 {% if slider and slider.slides.count %}
-    <ul class="bw_slider slider_{{ slider.id }}">
+    <div class="bw_slider slider_{{ slider.id }} cycle-slideshow" data-cycle-speed="700" data-cycle-log="false" data-cycle-pause-on-hover="true">
         {% for slide in slider.slides %}
-            <li class="bw_slide slide_{{ slide.id }}">
-                <a href="#{{ loop.index }}">
-                    <img class="bw_slide_image" src="{{ asset(slide.getWebPath()) }}" alt="{{ slide.name }}"><br>
-                    {{ slide.name }}
-                </a>
-            </li>
+            <img class="bw_slide slide_{{ slide.id }} cycle-slide" src="{{ asset(slide.getWebPath()) }}" alt="{{ slide.name }}">
         {% endfor %}
-    </ul>
+    </div>
 {% endif %}

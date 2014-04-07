@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div id="slider">
-                    <img src="{{ asset('images/main_image.png') }}" alt="" width="100%">
+                    {{ service('bw_slider.widget').create('slider-1')|raw }}
 				</div>
             </div>
         </div>
@@ -33,4 +33,14 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block overflow %}
+    {{ parent() }}
+    <script type="text/javascript"> 
+    if( window.jQuery ) {
+        var myjQ = jQuery.noConflict(true);
+    }
+    </script>
+    <script src="{{ asset('libs/jquery/js/jquery.cycle2.min.js') }}" type="text/javascript"></script>
 {% endblock %}
