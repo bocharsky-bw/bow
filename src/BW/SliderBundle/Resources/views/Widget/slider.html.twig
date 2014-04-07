@@ -1,0 +1,12 @@
+{% if slider and slider.slides.count %}
+    <ul class="bw_slider slider_{{ slider.id }}">
+        {% for slide in slider.slides %}
+            <li class="bw_slide slide_{{ slide.id }}">
+                <a href="#{{ loop.index }}">
+                    <img class="bw_slide_image" src="{{ asset(slide.getWebPath()) }}" alt="{{ slide.name }}"><br>
+                    {{ slide.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

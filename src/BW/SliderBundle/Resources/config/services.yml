@@ -1,0 +1,11 @@
+parameters:
+#    bw_slider.example.class: BW\SliderBundle\Example
+
+services:
+#    bw_slider.example:
+#        class: %bw_slider.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    bw_slider.widget:
+        class: BW\SliderBundle\Service\Widget
+        arguments: ["@service_container"]

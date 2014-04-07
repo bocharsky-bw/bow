@@ -1,0 +1,12 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Редактирование слайда {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-edit"></i> Редактирование слайда</h1>
+        </div>
+    </div>
+    {% include 'BWSliderBundle:Admin/Slide:slide.html.twig' %}
+{% endblock %}

@@ -8,7 +8,7 @@ services:
         
     bw_blog.nested_set:
         class: BW\BlogBundle\Service\NestedSet
-        arguments: ["@database_connection"]
+        arguments: ["@service_container"]
     
     bw_blog.widget:
         class: BW\BlogBundle\Service\Widget

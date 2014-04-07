@@ -1,0 +1,5 @@
+BW\SliderBundle\Entity\Slide:
+    properties:
+        file:
+            - File:
+                maxSize: 6000000

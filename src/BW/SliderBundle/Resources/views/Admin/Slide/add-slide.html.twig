@@ -1,0 +1,12 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Добавление нового слайда {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-plus"></i> Создание слайда</h1>
+        </div>
+    </div>
+    {% include 'BWSliderBundle:Admin/Slide:slide.html.twig' %}
+{% endblock %}

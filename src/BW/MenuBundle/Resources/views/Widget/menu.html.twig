@@ -16,7 +16,7 @@
     <ul>
         {% for node in nodes %}
             {% set href = _self.generate_href(node.entity) %}
-            <li class="{% if href == app.request.requestUri %}active current {% endif %}{{ node.entity.class }}">
+            <li class="{% if node.hasActive is defined and node.hasActive %}active {% endif %}{% if href == app.request.requestUri %}active current {% endif %}{{ node.entity.class }}">
                 <a href="{{- href -}}" {% if node.entity.title %} title="{{ node.entity.title }}"{% endif %}{% if node.entity.blank %} target="_blank"{% endif %}>
                     {{ node.entity.name }}
                 </a>

@@ -1,0 +1,40 @@
+{% if slider.slides %}
+    <div class="main-table">   
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th style="width: 5%" class="ta_c">№</th>
+                    <th style="width: 10%" class="ta_c">Preview</th>
+                    <th>Название</th>
+                    <th style="width: 5%" class="ta_c">ID</th>
+                </tr>
+            </thead> 
+            {% for slide in slider.slides %}
+                <tbody>
+                    <tr>
+                        <td class="ta_c">
+                            {{ loop.index }}
+                        </td>
+                        <td class="ta_c">
+                            {% if slide.path %}
+                                <a href="{{ path('admin_slide_edit', {'id': slide.id}) }}" title="Редактировать элемент">
+                                    <img src="{{ asset(slide.getWebPath()) }}" style="max-width: 100%">
+                                </a>
+                            {% else %}
+                                [ none ]
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_slide_edit', {'id': slide.id}) }}" title="Редактировать элемент">{{ slide.name }}</a> 
+                        </td>
+                        <td class="ta_c">
+                            <span title="ID элемента в БД">{{ slide.id }}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+{% else %}
+    <div class="ta_c">Записи отсутствуют</div>
+{% endif %}

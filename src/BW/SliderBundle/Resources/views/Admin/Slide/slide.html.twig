@@ -1,0 +1,52 @@
+{{ form_start(form) }}
+    <div class="bw_container">
+        <div class="bw_row">
+            <div class="error">
+                {{ form_errors(form) }}
+            </div>
+
+            <div class="form-buttons">
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Сохранить'}) }}
+                {{ form_widget(form.saveAndExit, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и выйти из режима редактирования'}, 'label': 'Сохранить и закрыть'}) }}
+                {% if form.delete is defined %}
+                    {{ form_widget(form.delete, {'attr': {'class': 'btn btn-default icon-remove before-padding', 'title': 'Удалить запись', 'onclick': "return confirm('Удалить запись из БД?')"}, 'label': 'Удалить'}) }}
+                {% endif %}
+                {% if slide.slider %}
+                    <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_slider_edit', {'id': slide.slider.id}) }}" title="Отменить несохраненные изменения">Закрыть</a>
+                {% else %}
+                    <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_sliders') }}" title="Отменить несохраненные изменения">Закрыть</a>
+                {% endif %}
+            </div>
+
+            <div>
+                {{ form_label(form.slider, 'Слайдер: ', {'label_attr': {'class': ''} }) }}
+                {{ form_widget(form.slider, {'attr': {'class': 'form-control '} }) }}
+                <div class="error">
+                    {{ form_errors(form.slider) }}
+                </div>
+            </div>
+                
+            <div>
+                {{ form_label(form.name, 'Название: ', {'label_attr': {'class': ''} }) }}
+                {{ form_widget(form.name, {'attr': {'class': 'form-control '} }) }}
+                <div class="error">
+                    {{ form_errors(form.name) }}
+                </div>
+            </div>
+                
+            <div>
+                {{ form_label(form.file, 'Выбрать изображение: ', {'label_attr': {'class': ''} }) }}
+                {{ form_widget(form.file, {'attr': {'class': 'form-control '} }) }}
+                <div class="error">
+                    {{ form_errors(form.file) }}
+                </div>
+            </div>
+            
+            {% if slide.path %}
+            <div>
+                <img src="{{ asset(slide.getWebPath()) }}" style="max-width: 100%;" >
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{{ form_end(form) }}

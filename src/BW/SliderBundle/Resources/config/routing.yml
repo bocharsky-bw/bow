@@ -1,0 +1,24 @@
+admin_sliders:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/sliders
+    defaults: { _controller: BWSliderBundle:Admin/Slider:sliders, _locale: %locale% }
+    
+admin_slider_add:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/slider/add
+    defaults: { _controller: BWSliderBundle:Admin/Slider:slider, _locale: %locale% }
+    
+admin_slider_edit:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/slider/edit/{id}
+    defaults: { _controller: BWSliderBundle:Admin/Slider:slider, _locale: %locale% }
+    
+admin_slide_add:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/slide/add
+    defaults: { _controller: BWSliderBundle:Admin/Slide:slide, _locale: %locale% }
+    
+admin_slide_edit:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/slide/edit/{id}
+    defaults: { _controller: BWSliderBundle:Admin/Slide:slide, _locale: %locale% }

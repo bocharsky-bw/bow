@@ -2,9 +2,15 @@
 
 namespace BW\BlogBundle\Service;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\DBAL\Connection;
 
 class NestedSet {
+    
+    /**
+     * @var Symfony\Component\DependencyInjection\ContainerInterface The service container object
+     */
+    private $container;
     
     /**
      * @var Doctrine\DBAL\Connection The database connection object
@@ -22,8 +28,9 @@ class NestedSet {
     private $nodesGroupedByParentId;
     
     
-    public function __construct(Connection $conn) {
-        $this->conn = $conn;
+    public function __construct(ContainerInterface $container) {
+        $this->container = $container;
+        $this->conn = $this->container->get('database_connection');
         $this->nodesGroupedByLevel = array();
         $this->nodesGroupedByParentId = array();
     }
@@ -130,27 +137,6 @@ class NestedSet {
     }
     
     /**
-     * Генерирование многомерного массива вложенных дочерних элементов из массива сущностей
-     * @param array $entities Массив сущностей
-     * @return array Многомерный массив вложеннных дочерних сущностей
-     */
-    public function generateNestedNodesFromEntities($entities) {
-        $nestedNodes = array();
-        
-        foreach ($entities as $index => $entity) {
-            // Группирование по уровням
-            $this->nodesGroupedByLevel[$entity->getLevel()][$entity->getId()]['entity'] = $entity;
-            // Группирование по ID родителя
-            $this->nodesGroupedByParentId[$entity->getParent() ? $entity->getParent()->getId() : 0][$entity->getId()]['entity'] = $entity;
-        }
-        
-        $nestedNodes = $this->nodesGroupedByLevel[0];
-        $this->recursionByParentId($nestedNodes);
-        
-        return $nestedNodes;
-    }
-    
-    /**
      * Метод работает с оригинальным массивом по ссылке
      * @param array $nodes Ссылка на массив элементов нулевого уровня
      * @param NULL
@@ -158,6 +144,7 @@ class NestedSet {
     private function recursionByParentId(&$nodes) {
         foreach ($nodes as $id => $node) {
             //var_dump('*');
+            var_dump($node['active']);
             if (isset($this->nodesGroupedByParentId[$id])) {
                 $nodes[$id]['children'] = $this->nodesGroupedByParentId[$id];
                 $this->recursionByParentId($nodes[$id]['children']);
@@ -167,4 +154,67 @@ class NestedSet {
         return NULL;
     }
     
+    
+    
+    
+    
+    // Need optimization
+    /**
+     * Генерирование многомерного массива вложенных дочерних элементов из массива сущностей
+     * @param array $entities Массив сущностей
+     * @return array Многомерный массив вложеннных дочерних сущностей
+     */
+    public function generateNestedNodesFromEntities($entities) {
+        $nestedNodes = array();
+        
+        $path = '';
+        $requestUri = $this->container->get('request')->getRequestUri();
+        foreach ($entities as $index => $entity) {
+            if ($entity->getRoute()) {
+                $path = $this->container->get('router')->generate('bw_router_index', 
+                    array(
+                        'q' => $entity->getRoute()->getQuery(),
+                    )
+                );
+            } else {
+                $path = $this->container->get('router')->generate('home') . $entity->getHref();
+            }
+            $isActive = $path == $requestUri;
+            // Группирование по уровням
+            $this->nodesGroupedByLevel[$entity->getLevel()][$entity->getId()]['entity'] = $entity;
+            $this->nodesGroupedByLevel[$entity->getLevel()][$entity->getId()]['isActive'] = $isActive;
+            // Группирование по ID родителя
+            $parentId = $entity->getParent() ? $entity->getParent()->getId() : 0;
+            $this->nodesGroupedByParentId[$parentId]['entities'][$entity->getId()]['entity'] = $entity;
+            $this->nodesGroupedByParentId[$parentId]['entities'][$entity->getId()]['isActive'] = $isActive;
+            $hasActive = isset($this->nodesGroupedByParentId[$parentId]['hasActive']) ? $this->nodesGroupedByParentId[$parentId]['hasActive'] : 0;
+            $this->nodesGroupedByParentId[$parentId]['hasActive'] = $hasActive || $isActive;
+        }
+        
+        $lastLevel = count($this->nodesGroupedByLevel) - 1; //?
+        
+        $nestedNodes = $this->nodesGroupedByLevel[0];
+        $this->recursionByParentId2($nestedNodes);
+        
+        return $nestedNodes;
+    }
+    
+    /**
+     * Метод работает с оригинальным массивом по ссылке
+     * @param array $nodes Ссылка на массив элементов нулевого уровня
+     * @param NULL
+     */
+    private function recursionByParentId2(&$nodes) {
+        foreach ($nodes as $id => $node) {
+            //var_dump('*');
+            //var_dump($node['isActive']);
+            if (isset($this->nodesGroupedByParentId[$id])) {
+                $nodes[$id]['children'] = $this->nodesGroupedByParentId[$id]['entities'];
+                $nodes[$id]['hasActive'] = $this->nodesGroupedByParentId[$id]['hasActive'];
+                $this->recursionByParentId2($nodes[$id]['children']);
+            }
+        }
+        
+        return NULL;
+    }
 }

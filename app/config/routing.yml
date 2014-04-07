@@ -1,3 +1,7 @@
+bw_slider:
+    resource: "@BWSliderBundle/Resources/config/routing.yml"
+    prefix:   /
+
 bw_breadcrumbs:
     resource: "@BWBreadcrumbsBundle/Resources/config/routing.yml"
     prefix:   /
