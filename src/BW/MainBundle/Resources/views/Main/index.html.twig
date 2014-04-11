@@ -37,10 +37,5 @@
 
 {% block overflow %}
     {{ parent() }}
-    <script type="text/javascript"> 
-    if( window.jQuery ) {
-        var myjQ = jQuery.noConflict(true);
-    }
-    </script>
     <script src="{{ asset('libs/jquery/js/jquery.cycle2.min.js') }}" type="text/javascript"></script>
 {% endblock %}

@@ -16,6 +16,12 @@
     
 {% block js %}
     <!-- % JS % -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript"> 
+    if( window.jQuery ) {
+        var myjQ = jQuery.noConflict(true);
+    }
+    </script>
     <script src="{{ asset('js/script.js') }}" type="text/javascript"></script>
 {% endblock %}
 
@@ -69,9 +75,8 @@
 {% endblock %}
     
 {% block overflow %}
-    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
     <script type="text/javascript">
-        function hideValue() {
+        function hideValue($) {
             var elem = $('#email, #password');
             if (elem.size() > 0) {
                 elem.each(function () {
@@ -88,6 +93,6 @@
                 });
             }
         }
-        hideValue();
+        hideValue(myjQ);
     </script>
 {% endblock %}
