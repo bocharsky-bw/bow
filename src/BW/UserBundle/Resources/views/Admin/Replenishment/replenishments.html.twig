@@ -42,7 +42,7 @@
                                 {{ replenishment.equivalentAmount }} <abbr title="{{ replenishment.currency.name }}">{{ replenishment.currency.symbol }}</abbr>
                             </td>
                             <td>
-                                {{ replenishment.created|date('Y/m/d в H:i:s') }}
+                                {{ replenishment.created|date('d/m/Y в H:i:s') }}
                             </td>
                             <td class="ta_c">
                                 {% if replenishment.confirmed %}

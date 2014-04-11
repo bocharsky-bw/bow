@@ -115,7 +115,12 @@ user_wallet:
 user_wallet_replenish:
     host:     %domain%
     pattern:  /{_locale}/user/profile/wallet/replenish
-    defaults: { _controller: BWUserBundle:Wallet:walletReplenish }
+    defaults: { _controller: BWUserBundle:Wallet:replenish }
+
+user_wallet_replenishments:
+    host:     %domain%
+    pattern:  /{_locale}/user/profile/wallet/replenishments
+    defaults: { _controller: BWUserBundle:Wallet:replenishments }
 
 # Admin/Replenishment.php:
 admin_replenishments:

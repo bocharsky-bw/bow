@@ -63,7 +63,7 @@ class WalletController extends BWController
         return $this->render('BWUserBundle:Wallet:wallet.html.twig', $data->toArray());
     }
     
-    public function walletReplenishAction() {
+    public function replenishAction() {
         $user = $this->getUser();
         if ( ! $user) {
             throw new AccessDeniedException('Доступ разрешен только авторизованным пользователям.');
@@ -116,6 +116,36 @@ class WalletController extends BWController
         
         $data->form = $form->createView();
         return $this->render('BWUserBundle:Wallet:wallet-replenish.html.twig', $data->toArray());
+    }
+    
+    public function replenishmentsAction() {
+        $user = $this->getUser();
+        if ( ! $user) {
+            throw new AccessDeniedException('Доступ разрешен только авторизованным пользователям.');
+        }
+        
+        $data = $this->getPropertyOverload();
+        $em = $this->getDoctrine()->getManager();
+        
+        // get/create profile
+        $profile = $user->getProfile();
+        if ( ! $profile) {
+            $profile = new Profile;
+            $profile->setUser($user);
+            $em->persist($profile);
+            $em->flush();
+        }
+        
+        $data->replenishments = $em->getRepository('BWUserBundle:Replenishment')->findBy(
+                array(
+                    'profile' => $profile,
+                ),
+                array(
+                    'created' => 'DESC',
+                )
+            );
+        
+        return $this->render('BWUserBundle:Wallet:wallet-replenishments.html.twig', $data->toArray());
     }
     
 }

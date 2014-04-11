@@ -9,7 +9,8 @@
                 <h1><i class="fa fa-money"></i> Личный кошелек</h1>
                 {% include 'BWUserBundle:Profile:menu.html.twig' %}
                 <h2>Список счетов</h2>
-                <a class="btn btn-primary" href="{{ path('user_wallet_replenish') }}" title="Пополнить свой кошелек">Пополнить кошелек</a>
+                <a class="btn btn-primary" href="{{ path('user_wallet_replenish') }}" title="Пополнить свой кошелек">Пополнить кошелек</a> | 
+                <a class="btn btn-primary" href="{{ path('user_wallet_replenishments') }}" title="История всех пополнений кошелька">История пополнений</a>
                 {% if wallets %}
                     <table>
                         <tbody>
