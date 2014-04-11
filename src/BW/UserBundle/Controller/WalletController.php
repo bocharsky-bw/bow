@@ -4,7 +4,8 @@ namespace BW\UserBundle\Controller;
 
 use BW\MainBundle\Controller\BWController;
 use BW\UserBundle\Entity\Wallet;
-use BW\UserBundle\Form\WalletReplenishType;
+use BW\UserBundle\Entity\Replenishment;
+use BW\UserBundle\Form\ReplenishmentType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class WalletController extends BWController
@@ -81,35 +82,31 @@ class WalletController extends BWController
             $em->flush();
         }
         
-        $form = $this->createFormBuilder()
-                ->add('additiveAmount', 'number')
-                ->add('currency', 'entity', array(
-                    'class' => 'BW\UserBundle\Entity\Currency',
-                    'property' => 'name',
-                ))
-                ->add('replenish', 'submit')
-                ->getForm()
-            ;
+        $replenishment = new Replenishment;
+        $form = $this->createForm(new ReplenishmentType, $replenishment);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
-                $formData = $form->getData();
+                $replenishment->setProfile($profile);
+                $em->persist($replenishment);
                 $wallet = $em->getRepository('BWUserBundle:Wallet')->findOneBy(array(
                     'profile' => $profile,
-                    'currency' => $formData['currency'],
+                    'currency' => $replenishment->getCurrency(),
                 ));
                 if ( ! $wallet) {
                     $wallet = new Wallet;
                     $wallet->setProfile($profile);
-                    $wallet->setCurrency($formData['currency']);
+                    $wallet->setCurrency($replenishment->getCurrency());
                     $em->persist($wallet);
-                    $em->flush();
                 }
                 // Converting amount by exchange rate
-                $amount = $formData['additiveAmount'] / $formData['currency']->getExchangeRate();
+                $replenishment->setEquivalentAmount(
+                        $replenishment->getAdditiveAmount() / $replenishment->getCurrency()->getExchangeRate()
+                    );
                 // Add additive amount to the total amount
-                $amount = $wallet->getTotalAmount() + $amount;
-                $wallet->setTotalAmount($amount);
+                $wallet->setTotalAmount(
+                        $wallet->getTotalAmount() + $replenishment->getEquivalentAmount()
+                    );
                 $em->flush();
                 $request->getSession()->getFlashBag()->add('success', 'Ваш кошелек успешно пополнен');
 

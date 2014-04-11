@@ -49,10 +49,23 @@ class Replenishment
      */
     private $confirmed;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Profile", inversedBy="replenishments")
+     * @ORM\JoinColumn(name="profile_id", referencedColumnName="id")
+     */
+    private $profile;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Currency", inversedBy="replenishments")
+     * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
+     */
+    private $currency;
+    
     
     public function __construct() {
         $this->additiveAmount = 0;
         $this->equivalentAmount = 0;
+        $this->confirmed = FALSE;
         $this->created = new \DateTime;
     }
 
@@ -153,5 +166,49 @@ class Replenishment
     public function getConfirmed()
     {
         return $this->confirmed;
+    }
+
+    /**
+     * Set profile
+     *
+     * @param BW\UserBundle\Entity\Profile $profile
+     * @return Replenishment
+     */
+    public function setProfile(\BW\UserBundle\Entity\Profile $profile = null)
+    {
+        $this->profile = $profile;
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @return BW\UserBundle\Entity\Profile 
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    /**
+     * Set currency
+     *
+     * @param BW\UserBundle\Entity\Currency $currency
+     * @return Replenishment
+     */
+    public function setCurrency(\BW\UserBundle\Entity\Currency $currency = null)
+    {
+        $this->currency = $currency;
+        return $this;
+    }
+
+    /**
+     * Get currency
+     *
+     * @return BW\UserBundle\Entity\Currency 
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
     }
 }

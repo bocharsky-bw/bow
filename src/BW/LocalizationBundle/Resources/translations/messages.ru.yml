@@ -7,6 +7,7 @@ admin:
     roles: Роли
     countries: Страны
     currencies: Валюты
+    replenishments: Пополнения
     mailing: Рассылка
     content: Контент
     categories: Категории

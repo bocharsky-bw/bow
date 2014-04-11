@@ -67,6 +67,11 @@ class Currency
      * @ORM\OneToMany(targetEntity="Wallet", mappedBy="currency")
      */
     private $wallets;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Replenishment", mappedBy="currency")
+     */
+    private $replenishments;
 
 
     public function __construct() {
@@ -246,5 +251,37 @@ class Currency
     public function getWallets()
     {
         return $this->wallets;
+    }
+
+    /**
+     * Add replenishments
+     *
+     * @param BW\UserBundle\Entity\Replenishment $replenishments
+     * @return Currency
+     */
+    public function addReplenishment(\BW\UserBundle\Entity\Replenishment $replenishments)
+    {
+        $this->replenishments[] = $replenishments;
+        return $this;
+    }
+
+    /**
+     * Remove replenishments
+     *
+     * @param BW\UserBundle\Entity\Replenishment $replenishments
+     */
+    public function removeReplenishment(\BW\UserBundle\Entity\Replenishment $replenishments)
+    {
+        $this->replenishments->removeElement($replenishments);
+    }
+
+    /**
+     * Get replenishments
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getReplenishments()
+    {
+        return $this->replenishments;
     }
 }
