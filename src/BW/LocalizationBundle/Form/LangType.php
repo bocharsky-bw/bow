@@ -20,7 +20,7 @@ class LangType extends AbstractType
                 ->add('locale')
                 // Buttons
                 ->add('save', 'submit')
-                ->add('saveAndExit', 'submit')
+                ->add('saveAndClose', 'submit')
                 ->add('delete', 'submit')
             ;
     }

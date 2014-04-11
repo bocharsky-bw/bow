@@ -1,0 +1,69 @@
+{{ form_start(form) }}
+    <div id="left">
+
+    </div>
+
+    <div id="right">
+        <div class="error">
+            {{ form_errors(form) }}
+        </div>
+
+        <div class="form-buttons">
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Сохранить'}) }}
+            {{ form_widget(form.saveAndClose, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и выйти из режима редактирования'}, 'label': 'Сохранить и закрыть'}) }}
+            {% if form.delete is defined %}
+                {{ form_widget(form.delete, {'attr': {'class': 'btn btn-default icon-remove before-padding', 'title': 'Удалить запись', 'onclick': "return confirm('Удалить запись из БД?')"}, 'label': 'Удалить'}) }}
+            {% endif %}
+            <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_currencies') }}" title="Отменить несохраненные изменения">Закрыть</a>
+        </div>
+            
+        <div>
+            {{ form_label(form.name, 'Название: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.name) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.abbr, 'Сокращение: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.abbr, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.abbr) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.symbol, 'Обозначение: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.symbol, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.symbol) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.alpha3, 'ISO код буквенный: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.alpha3, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.alpha3) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.numericCode, 'ISO код числовой: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.numericCode, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.numericCode) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.exchangeRate, 'Обменный курс: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.exchangeRate, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.exchangeRate) }}
+            </div>
+        </div>
+
+    </div>
+{{ form_end(form) }}

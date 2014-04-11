@@ -66,7 +66,7 @@ class LangController extends BWController
                 $em->persist($lang);
                 $em->flush();
                 
-                if ($form->get('saveAndExit')->isClicked()) {
+                if ($form->get('saveAndClose')->isClicked()) {
                     return $this->redirect($this->generateUrl('admin_localization_langs'));
                 }
                 

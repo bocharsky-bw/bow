@@ -48,7 +48,7 @@ class TypeController extends BWController
 //                $em->persist($item);
 //                $em->flush();
 //                                
-//                if ($form->get('saveAndExit')->isClicked()) {
+//                if ($form->get('saveAndClose')->isClicked()) {
 //                    return $this->redirect($this->generateUrl('admin_item_list', array('menu_id' => $item->getMenu()->getId())));
 //                }
 //                
@@ -98,7 +98,7 @@ class TypeController extends BWController
                 $em->persist($item);
                 $em->flush();
                 
-                if ($form->get('saveAndExit')->isClicked()) {
+                if ($form->get('saveAndClose')->isClicked()) {
                     return $this->redirect($this->generateUrl('admin_items', array('menu_id' => $item->getMenu()->getId())));
                 }
                 

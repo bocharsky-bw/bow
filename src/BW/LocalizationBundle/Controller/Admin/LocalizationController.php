@@ -45,7 +45,7 @@ class LocalizationController extends BWController
                 ->add('messages', 'hidden')
                 // Buttons
                 ->add('save', 'submit')
-                ->add('saveAndExit', 'submit')
+                ->add('saveAndClose', 'submit')
                 ->getForm();
 
         if ($request->isMethod('POST')) {
@@ -65,7 +65,7 @@ class LocalizationController extends BWController
                         'Данные успешно сохранены в файл'
                     );
 
-                    if ( $form->get('saveAndExit')->isClicked() ) {
+                    if ( $form->get('saveAndClose')->isClicked() ) {
 
                         return $this->redirect( $this->generateUrl('admin') );
                     }

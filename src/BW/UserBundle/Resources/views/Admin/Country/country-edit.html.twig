@@ -1,0 +1,12 @@
+{% extends "BWSkeletonBundle:Backend:layout.html.twig" %}
+
+{% block title %}Редактирование страны {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-edit"></i> Редактирование страны</h1>
+        </div>
+    </div>
+    {% include 'BWUserBundle:Admin/Country:country.html.twig' %}
+{% endblock %}

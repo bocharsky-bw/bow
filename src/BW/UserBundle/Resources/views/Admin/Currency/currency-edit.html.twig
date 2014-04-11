@@ -1,0 +1,12 @@
+{% extends "BWSkeletonBundle:Backend:layout.html.twig" %}
+
+{% block title %}Редактирование валюты {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-edit"></i> Редактирование валюты</h1>
+        </div>
+    </div>
+    {% include 'BWUserBundle:Admin/Currency:currency.html.twig' %}
+{% endblock %}

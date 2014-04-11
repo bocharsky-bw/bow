@@ -62,6 +62,16 @@ class Country
      * @ORM\Column(name="code", type="string", length=15)
      */
     private $code;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Currency")
+     * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
+     */
+    private $currency;
+    
+    
+    public function __construct() {
+    }
 
 
     /**
@@ -204,5 +214,27 @@ class Country
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set currency
+     *
+     * @param BW\UserBundle\Entity\Currency $currency
+     * @return Country
+     */
+    public function setCurrency(\BW\UserBundle\Entity\Currency $currency = null)
+    {
+        $this->currency = $currency;
+        return $this;
+    }
+
+    /**
+     * Get currency
+     *
+     * @return BW\UserBundle\Entity\Currency 
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
     }
 }

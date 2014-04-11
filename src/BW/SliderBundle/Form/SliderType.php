@@ -20,7 +20,7 @@ class SliderType extends AbstractType
                 'required' => FALSE,
             ))
             ->add('save', 'submit')
-            ->add('saveAndExit', 'submit')
+            ->add('saveAndClose', 'submit')
             ->add('delete', 'submit')
         ;
     }

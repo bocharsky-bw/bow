@@ -5,6 +5,8 @@ admin:
     localization: Локализация
     users: Пользователи
     roles: Роли
+    countries: Страны
+    currencies: Валюты
     mailing: Рассылка
     content: Контент
     categories: Категории

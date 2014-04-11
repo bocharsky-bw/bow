@@ -20,7 +20,7 @@ class MenuType extends AbstractType
                 ->add('description', 'textarea')
                 // Buttons
                 ->add('save', 'submit')
-                ->add('saveAndExit', 'submit')
+                ->add('saveAndClose', 'submit')
                 ->add('delete', 'submit')
             ;
     }

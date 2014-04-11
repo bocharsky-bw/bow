@@ -1,0 +1,30 @@
+{% extends 'BWSkeletonBundle:Frontend:layout.html.twig' %}
+
+{% block title %}Личный кошелек{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1><i class="fa fa-money"></i> Личный кошелек</h1>
+                {% include 'BWUserBundle:Profile:menu.html.twig' %}
+                <h2>Список счетов</h2>
+                <a class="btn btn-primary" href="{{ path('user_wallet_replenish') }}" title="Пополнить свой кошелек">Пополнить кошелек</a>
+                {% if wallets %}
+                    <table>
+                        <tbody>
+                            {% for wallet in wallets %}
+                                <tr>
+                                    <td>{{ wallet.currency.name }}</td>
+                                    <td>{{ wallet.totalAmount|number_format(2, '.', ' ') }} <abbr title="{{ wallet.currency.alpha3 }}">{{ wallet.currency.symbol }}</abbr></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    нет доступных счетов
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

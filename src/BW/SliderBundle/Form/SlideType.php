@@ -24,7 +24,7 @@ class SlideType extends AbstractType
                 'property' => 'name',
             ))
             ->add('save', 'submit')
-            ->add('saveAndExit', 'submit')
+            ->add('saveAndClose', 'submit')
             ->add('delete', 'submit')
         ;
     }
