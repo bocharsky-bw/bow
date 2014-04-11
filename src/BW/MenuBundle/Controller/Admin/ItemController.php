@@ -144,7 +144,7 @@ class ItemController extends BWController
                         'Пункт меню успешно сохранен'
                     );
                 
-                if ($form->get('saveAndExit')->isClicked()) {
+                if ($form->get('saveAndClose')->isClicked()) {
                     return $this->redirect($this->generateUrl('admin_items', array('menu_id' => $item->getMenu()->getId())));
                 }
                 

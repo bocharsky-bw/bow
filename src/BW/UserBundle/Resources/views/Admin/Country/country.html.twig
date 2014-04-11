@@ -1,0 +1,77 @@
+{{ form_start(form) }}
+    <div id="left">
+
+    </div>
+
+    <div id="right">
+        <div class="error">
+            {{ form_errors(form) }}
+        </div>
+
+        <div class="form-buttons">
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Сохранить'}) }}
+            {{ form_widget(form.saveAndClose, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и выйти из режима редактирования'}, 'label': 'Сохранить и закрыть'}) }}
+            {% if form.delete is defined %}
+                {{ form_widget(form.delete, {'attr': {'class': 'btn btn-default icon-remove before-padding', 'title': 'Удалить запись', 'onclick': "return confirm('Удалить запись из БД?')"}, 'label': 'Удалить'}) }}
+            {% endif %}
+            <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_countries') }}" title="Отменить несохраненные изменения">Закрыть</a>
+        </div>
+            
+        <div>
+            {{ form_label(form.currency, 'Валюта: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.currency, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.currency) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.name, 'Название: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.name) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.nameEn, 'Название EN: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.nameEn, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.nameEn) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.alpha2, 'Код ISO (2 буквы): ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.alpha2, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.alpha2) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.alpha3, 'Код МОК (3 буквы): ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.alpha3, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.alpha3) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.numericCode, 'Числовой код ISO: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.numericCode, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.numericCode) }}
+            </div>
+        </div>
+            
+        <div>
+            {{ form_label(form.code, 'Полный код ISO: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.code, {'attr': {'class': 'form-control'} }) }}
+            <div class="error">
+                {{ form_errors(form.code) }}
+            </div>
+        </div>
+            
+    </div>
+{{ form_end(form) }}

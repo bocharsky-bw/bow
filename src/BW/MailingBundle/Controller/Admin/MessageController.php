@@ -71,7 +71,7 @@ class MessageController extends BWController
                 }
                 
                 
-                if ( $form->get('saveAndExit')->isClicked() ) {
+                if ( $form->get('saveAndClose')->isClicked() ) {
                     return $this->redirect( $this->generateUrl('admin_mailing_messages') );
                 }
                 

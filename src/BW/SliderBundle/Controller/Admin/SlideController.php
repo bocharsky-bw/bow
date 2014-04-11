@@ -63,7 +63,7 @@ class SlideController extends BWController
                         'Слайдер успешно сохранен в БД'
                     );
                 
-                if ( $form->get('saveAndExit')->isClicked() ) {
+                if ( $form->get('saveAndClose')->isClicked() ) {
                     return $this->redirect( $this->generateUrl('admin_slider_edit', array('id' => $slide->getSlider()->getId())) );
                 }
                 

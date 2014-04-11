@@ -7,10 +7,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1><i class="fa fa-home"></i> Кабинет пользователя - Адрес</h1>
-                <div>
-                    <a href="{{ path('user_profile_personal') }}">Личные данные</a> | 
-                    <a href="{{ path('user_profile_address') }}">Адрес</a>
-                </div>
+                {% include 'BWUserBundle:Profile:menu.html.twig' %}
                 <br>
                 {{ form_start(form) }}
                     {% if form_errors(form) %}

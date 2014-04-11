@@ -61,7 +61,7 @@ class ItemType extends AbstractType
                 ))
                 // Buttons
                 ->add('save', 'submit')
-                ->add('saveAndExit', 'submit')
+                ->add('saveAndClose', 'submit')
                 ->add('delete', 'submit')
             ;
     }

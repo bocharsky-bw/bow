@@ -90,4 +90,5 @@ class ProfileController extends BWController
         $data->form = $form->createView();
         return $this->render('BWUserBundle:Profile:address.html.twig', $data->toArray());
     }
+    
 }

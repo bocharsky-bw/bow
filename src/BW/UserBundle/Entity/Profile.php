@@ -105,6 +105,11 @@ class Profile
      */
     private $user;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Wallet", mappedBy="profile")
+     */
+    private $wallets;
+    
     
     public function __construct() {
         $this->surname      = '';
@@ -393,5 +398,37 @@ class Profile
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add wallets
+     *
+     * @param BW\UserBundle\Entity\Wallet $wallets
+     * @return Profile
+     */
+    public function addWallet(\BW\UserBundle\Entity\Wallet $wallets)
+    {
+        $this->wallets[] = $wallets;
+        return $this;
+    }
+
+    /**
+     * Remove wallets
+     *
+     * @param BW\UserBundle\Entity\Wallet $wallets
+     */
+    public function removeWallet(\BW\UserBundle\Entity\Wallet $wallets)
+    {
+        $this->wallets->removeElement($wallets);
+    }
+
+    /**
+     * Get wallets
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getWallets()
+    {
+        return $this->wallets;
     }
 }

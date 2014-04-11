@@ -95,7 +95,7 @@ user_google_sign_in:
     pattern:  /{_locale}/user/sign-in/google
     defaults: { _controller: BWUserBundle:GoogleUser:signIn }
     
-# User Profile:
+# Profile.php:
 user_profile_personal:
     host:     %domain%
     pattern:  /{_locale}/user/profile/personal
@@ -105,3 +105,48 @@ user_profile_address:
     host:     %domain%
     pattern:  /{_locale}/user/profile/address
     defaults: { _controller: BWUserBundle:Profile:address }
+
+# Wallet.php:
+user_wallet:
+    host:     %domain%
+    pattern:  /{_locale}/user/profile/wallet
+    defaults: { _controller: BWUserBundle:Wallet:wallet }
+
+user_wallet_replenish:
+    host:     %domain%
+    pattern:  /{_locale}/user/profile/wallet/replenish
+    defaults: { _controller: BWUserBundle:Wallet:walletReplenish }
+    
+
+# Admin/Currency.php:
+admin_currencies:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/user/currencies
+    defaults: { _controller: BWUserBundle:Admin/Currency:currencies }
+    
+admin_currency_add:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/user/currency/add
+    defaults: { _controller: BWUserBundle:Admin/Currency:currency }
+    
+admin_currency_edit:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/user/currency/edit/{id}
+    defaults: { _controller: BWUserBundle:Admin/Currency:currency }
+
+# Admin/Country.php:
+admin_countries:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/user/countries
+    defaults: { _controller: BWUserBundle:Admin/Country:countries }
+    
+admin_country_add:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/user/country/add
+    defaults: { _controller: BWUserBundle:Admin/Country:country }
+    
+admin_country_edit:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/user/country/edit/{id}
+    defaults: { _controller: BWUserBundle:Admin/Country:country }
+

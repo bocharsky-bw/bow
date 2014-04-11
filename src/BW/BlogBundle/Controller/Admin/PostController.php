@@ -99,7 +99,7 @@ class PostController extends BWController
                         'Страница успешно сохранена в БД'
                     );
                 
-                if ( $form->get('saveAndExit')->isClicked() ) {
+                if ( $form->get('saveAndClose')->isClicked() ) {
                     return $this->redirect( $this->generateUrl('admin_posts') );
                 }
                 

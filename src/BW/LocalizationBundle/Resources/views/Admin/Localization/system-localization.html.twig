@@ -56,7 +56,7 @@
         
         <div class="form-buttons">
             {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Сохранить'}) }}
-            {{ form_widget(form.saveAndExit, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и выйти из режима редактирования'}, 'label': 'Сохранить и закрыть'}) }}
+            {{ form_widget(form.saveAndClose, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и выйти из режима редактирования'}, 'label': 'Сохранить и закрыть'}) }}
             <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_localization') }}" title="Отменить несохраненные изменения">Закрыть</a>
         </div>
         

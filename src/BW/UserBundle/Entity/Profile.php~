@@ -24,7 +24,7 @@ class Profile
     /**
      * @var string $surname
      *
-     * @ORM\Column(name="surname", type="string", length=255, options={"default" = ""})
+     * @ORM\Column(name="surname", type="string", length=255)
      */
     private $surname;
 
@@ -48,14 +48,6 @@ class Profile
      * @ORM\Column(name="phone", type="string", length=255)
      */
     private $phone;
-
-    /**
-     * @var string $country
-     *
-     * @ORM\ManyToOne(targetEntity="Country")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
-     */
-    private $country;
 
     /**
      * @var string $region
@@ -100,10 +92,23 @@ class Profile
     private $apartment;
 
     /**
+     * @var string $country
+     *
+     * @ORM\ManyToOne(targetEntity="Country")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     */
+    private $country;
+
+    /**
      * @ORM\OneToOne(targetEntity="User", inversedBy="profile")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Wallet", mappedBy="profile")
+     */
+    private $wallets;
     
     
     public function __construct() {
@@ -393,5 +398,37 @@ class Profile
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add wallets
+     *
+     * @param BW\UserBundle\Entity\Wallet $wallets
+     * @return Profile
+     */
+    public function addWallet(\BW\UserBundle\Entity\Wallet $wallets)
+    {
+        $this->wallets[] = $wallets;
+        return $this;
+    }
+
+    /**
+     * Remove wallets
+     *
+     * @param BW\UserBundle\Entity\Wallet $wallets
+     */
+    public function removeWallet(\BW\UserBundle\Entity\Wallet $wallets)
+    {
+        $this->wallets->removeElement($wallets);
+    }
+
+    /**
+     * Get wallets
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getWallets()
+    {
+        return $this->wallets;
     }
 }

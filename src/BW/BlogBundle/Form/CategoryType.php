@@ -50,7 +50,7 @@ class CategoryType extends AbstractType
                 ->add('metaDescription', 'textarea')
                 // Buttons
                 ->add('save', 'submit')
-                ->add('saveAndExit', 'submit')
+                ->add('saveAndClose', 'submit')
                 ->add('delete', 'submit')
             ;
     }

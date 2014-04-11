@@ -24,7 +24,7 @@ class MessageType extends AbstractType
                     'expanded' => TRUE,
                 ))
                 ->add('save', 'submit')
-                ->add('saveAndExit', 'submit')
+                ->add('saveAndClose', 'submit')
                 ->add('delete', 'submit')
             ;
     }
