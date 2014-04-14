@@ -21,6 +21,7 @@ class UserType extends AbstractType
                 ->add('rolesCollection', 'entity', array(
                     'class' => 'BWUserBundle:Role',
                     'property' => 'name',
+                    'expanded' => TRUE,
                     'multiple' => TRUE,
                     'required' => TRUE,
                     'attr' => array(

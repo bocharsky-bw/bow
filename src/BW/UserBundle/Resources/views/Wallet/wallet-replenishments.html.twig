@@ -34,10 +34,12 @@
                                         {{ replenishment.created|date('d/m/Y в H:i:s') }}
                                     </td>
                                     <td class="ta_c">
-                                        {% if replenishment.confirmed %}
-                                            <span title="Пополнение подтверждено"><i class="icon icon-check" ></i>V</span>
+                                        {% if replenishment.status == 2 %}
+                                            <i class="icon icon-check-minus" title="Отклонено">X</i>
+                                        {% elseif replenishment.status == 1 %}
+                                            <i class="icon icon-check" title="Подтверждено">V</i>
                                         {% else %}
-                                            <span title="Пополнение отклонено"><i class="icon icon-unchecked" ></i>X</span>
+                                            <i class="icon icon-unchecked" title="На рассмотрении">O</i>
                                         {% endif %}
                                     </td>
                                 </tr>

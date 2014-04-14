@@ -24,6 +24,7 @@
                         <th>Сумма пополнения</th>
                         <th>Эквивалент в валюте</th>
                         <th>Пополнено</th>
+                        <th class="ta_c">Статус</th>
                         <th class="ta_c">Действия</th>
                         <th style="width: 5%" class="ta_c">ID</th>
                     </tr>
@@ -45,11 +46,17 @@
                                 {{ replenishment.created|date('d/m/Y в H:i:s') }}
                             </td>
                             <td class="ta_c">
-                                {% if replenishment.confirmed %}
-                                    <a href="{{ path('admin_replenishment_toggle', {'id': replenishment.id}) }}" title="Отклонить пополнение"><i class="icon icon-check" ></i></a>
+                                {% if replenishment.status == 2 %}
+                                    <i class="icon icon-check-minus" title="Отклонено"></i>
+                                {% elseif replenishment.status == 1 %}
+                                    <i class="icon icon-check" title="Подтверждено"></i>
                                 {% else %}
-                                    <a href="{{ path('admin_replenishment_toggle', {'id': replenishment.id}) }}" title="Подтвердить пополнение"><i class="icon icon-unchecked" ></i></a>
+                                    <i class="icon icon-unchecked" title="На рассмотрении"></i>
                                 {% endif %}
+                            </td>
+                            <td class="ta_c">
+                                <a href="{{ path('admin_replenishment_confirm', {'id': replenishment.id}) }}" title="Подтвердить пополнение"><i class="icon icon-ok-sign"></i></a>
+                                <a href="{{ path('admin_replenishment_reject', {'id': replenishment.id}) }}" title="Отклонить пополнение"><i class="icon icon-remove-sign"></i></a>
                             </td>
                             <td class="ta_c">
                                 <span title="ID элемента в БД">{{ replenishment.id }}</span>

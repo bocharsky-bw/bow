@@ -121,7 +121,6 @@ class Profile
         $this->name         = '';
         $this->patronymic   = '';
         $this->phone        = '';
-        $this->country      = '';
         $this->region       = '';
         $this->city         = '';
         $this->postcode     = '';

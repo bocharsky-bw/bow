@@ -6,22 +6,22 @@ parameters:
             is_active: true
             app_id: 4119845
             secret: 2eJ770PwIIBibuAoC5Pb
-            scopes: [notify]
             response_type: code
+            scopes: [notify]
       
         facebook:
             is_active: true
             appId: 440949559366247
             secret: cc8777ecc06d46368863bb5947071d98
-            scopes: [email]
             #redirect_uri: http://bow.loc/web/%locale%/user/sign-in
+            scopes: [email]
 
         google:
             is_active: true
             client_id: 217012306960-vi6djap9rmnfg4lf6079nsfee64vag4m.apps.googleusercontent.com
             client_secret: A7GUTAFWb9iUML6KsWn8Td-W
-            redirect_uri: http://ndv.net.ua/redirect.php
             developer_key: AIzaSyAuFpsZo7mTzmAv36mUgROHcSPw-N-ZjiI
+            redirect_uri: http://bow.server.ndv.net.ua/app_dev.php/%locale%/user/sign-in/google
             scopes: [https://www.googleapis.com/auth/plus.me, https://www.googleapis.com/auth/userinfo.email, https://www.googleapis.com/auth/userinfo.profile]
 
 services:

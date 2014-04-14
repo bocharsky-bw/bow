@@ -26,28 +26,41 @@ class ReplenishmentController extends BWController
         return $this->render('BWUserBundle:Admin/Replenishment:replenishments.html.twig', $data->toArray());
     }
     
-    public function replenishmentToggleAction($id) {
+    public function replenishmentConfirmAction($id) {
         $replenishment = $this->getDoctrine()->getRepository('BWUserBundle:Replenishment')->find($id);
         
         if ($replenishment) {
-            $status = ! $replenishment->getConfirmed();
-            $replenishment->setConfirmed($status);
-            $this->getDoctrine()->getManager()->flush();
-            if ($status) {
-                $this->getRequest()
-                        ->getSession()
-                        ->getFlashBag()
-                        ->add('success', "Пополнение с ID = {$replenishment->getId()} успешно подтверждено")
-                    ;
-            } else {
-                $this->getRequest()
-                        ->getSession()
-                        ->getFlashBag()
-                        ->add('danger', "Пополнение с ID = {$replenishment->getId()} успешно отклонено")
-                    ;
-            }
+            $replenishment->setStatus(1);
+            $this->getDoctrine()
+                    ->getManager()
+                    ->flush()
+                ;
+            $this->getRequest()
+                    ->getSession()
+                    ->getFlashBag()
+                    ->add('success', "Пополнение с ID = {$replenishment->getId()} успешно подтверждено")
+                ;
         }
         
+        return $this->redirect($this->generateUrl('admin_replenishments'));
+    }
+    
+    public function replenishmentRejectAction($id) {
+        $replenishment = $this->getDoctrine()->getRepository('BWUserBundle:Replenishment')->find($id);
+        
+        if ($replenishment) {
+            $replenishment->setStatus(2);
+            $this->getDoctrine()
+                    ->getManager()
+                    ->flush()
+                ;
+            $this->getRequest()
+                    ->getSession()
+                    ->getFlashBag()
+                    ->add('danger', "Пополнение с ID = {$replenishment->getId()} успешно отклонено")
+                ;
+        }
+                
         return $this->redirect($this->generateUrl('admin_replenishments'));
     }
     

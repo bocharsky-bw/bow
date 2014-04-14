@@ -9,17 +9,17 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "~2.4",
-        "doctrine/orm": "~2.2.3",
+        "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "twig/extensions": "~1.0",
         "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~2.3",
-        "sensio/framework-extra-bundle": "~2.3",
+        "sensio/framework-extra-bundle": "~3.0",
         "sensio/generator-bundle": "~2.3",
         "incenteev/composer-parameter-handler": "~2.0",
-        
+
         "bocharsky-bw/vkontakte-php-sdk": "~1.0",
         "facebook/php-sdk": "~3.2",
         "google/apiclient": "~1.0.0-alpha"
@@ -43,7 +43,6 @@
     "config": {
         "bin-dir": "bin"
     },
-    "minimum-stability": "beta",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",

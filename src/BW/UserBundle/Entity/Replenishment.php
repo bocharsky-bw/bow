@@ -43,11 +43,12 @@ class Replenishment
     private $created;
 
     /**
-     * @var boolean $confirmed
+     * @var boolean $status 
+     * Настраивается в BW/UserBundle/Resources/config/config.yml
      *
-     * @ORM\Column(name="confirmed", type="boolean")
+     * @ORM\Column(name="status", type="smallint")
      */
-    private $confirmed;
+    private $status;
     
     /**
      * @ORM\ManyToOne(targetEntity="Profile", inversedBy="replenishments")
@@ -65,7 +66,7 @@ class Replenishment
     public function __construct() {
         $this->additiveAmount = 0;
         $this->equivalentAmount = 0;
-        $this->confirmed = FALSE;
+        $this->status = 0;
         $this->created = new \DateTime;
     }
 
@@ -147,25 +148,25 @@ class Replenishment
     }
 
     /**
-     * Set confirmed
+     * Set status
      *
-     * @param boolean $confirmed
+     * @param smallint $status
      * @return Replenishment
      */
-    public function setConfirmed($confirmed)
+    public function setStatus($status)
     {
-        $this->confirmed = $confirmed;
+        $this->status = $status;
         return $this;
     }
 
     /**
-     * Get confirmed
+     * Get status
      *
-     * @return boolean 
+     * @return smallint 
      */
-    public function getConfirmed()
+    public function getStatus()
     {
-        return $this->confirmed;
+        return $this->status;
     }
 
     /**

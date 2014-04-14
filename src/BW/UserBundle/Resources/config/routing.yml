@@ -128,10 +128,15 @@ admin_replenishments:
     pattern:  /_admin/{_locale}/user/replenishments
     defaults: { _controller: BWUserBundle:Admin/Replenishment:replenishments }
 
-admin_replenishment_toggle:
+admin_replenishment_confirm:
     host:     %domain%
-    pattern:  /_admin/{_locale}/user/replenishment/toggle/{id}
-    defaults: { _controller: BWUserBundle:Admin/Replenishment:replenishmentToggle }
+    pattern:  /_admin/{_locale}/user/replenishment/confirm/{id}
+    defaults: { _controller: BWUserBundle:Admin/Replenishment:replenishmentConfirm }
+    
+admin_replenishment_reject:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/user/replenishment/reject/{id}
+    defaults: { _controller: BWUserBundle:Admin/Replenishment:replenishmentReject }
 
 # Admin/Currency.php:
 admin_currencies:
