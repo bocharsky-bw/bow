@@ -87,6 +87,14 @@ class WalletController extends BWController
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
+                // Обработка квитанции
+                $receipt = $replenishment->getReceipt();
+                if ($receipt->getPath()) {
+                    $em->persist($receipt);
+                } else {
+                    $replenishment->setReceipt(NULL);
+                }
+                
                 $replenishment->setProfile($profile);
                 $em->persist($replenishment);
                 $wallet = $em->getRepository('BWUserBundle:Wallet')->findOneBy(array(

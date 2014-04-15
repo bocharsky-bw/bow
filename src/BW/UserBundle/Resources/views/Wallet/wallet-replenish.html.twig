@@ -29,6 +29,12 @@
                     </div>
                 
                     <div>
+                        {{ form_label(form.receipt.file, 'Квитанция: ', {'label_attr': {'class': ''} }) }}
+                        {{ form_widget(form.receipt.file, {'attr': {'class': 'form-control '} }) }}
+                        {{ form_errors(form.receipt.file) }}
+                    </div>
+                
+                    <div>
                         {{ form_widget(form.replenish, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Пополнить'}) }}
                     </div>
 

@@ -35,11 +35,11 @@
                                     </td>
                                     <td class="ta_c">
                                         {% if replenishment.status == 2 %}
-                                            <i class="icon icon-check-minus" title="Отклонено">X</i>
+                                            <i class="icon icon-check-minus" title="{{ replenishment_statuses[2] }}">X</i>
                                         {% elseif replenishment.status == 1 %}
-                                            <i class="icon icon-check" title="Подтверждено">V</i>
+                                            <i class="icon icon-check" title="{{ replenishment_statuses[1] }}">V</i>
                                         {% else %}
-                                            <i class="icon icon-unchecked" title="На рассмотрении">O</i>
+                                            <i class="icon icon-unchecked" title="{{ replenishment_statuses[0] }}">O</i>
                                         {% endif %}
                                     </td>
                                 </tr>

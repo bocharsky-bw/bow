@@ -59,7 +59,7 @@ class Currency
     /**
      * @var decimal $exchangeRate
      *
-     * @ORM\Column(name="exchange_rate", type="decimal", precision=10, scale=2)
+     * @ORM\Column(name="exchange_rate", type="decimal", precision=15, scale=2)
      */
     private $exchangeRate;
     

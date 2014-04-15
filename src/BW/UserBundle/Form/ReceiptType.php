@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ReplenishmentType extends AbstractType
+class ReceiptType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,20 +15,9 @@ class ReplenishmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('additiveAmount', 'number')
-            ->add('currency', 'entity', array(
-                'class' => 'BW\UserBundle\Entity\Currency',
-                'property' => 'name',
+            ->add('file', 'file', array(
+                'required' => FALSE,
             ))
-            ->add('receipt', new ReceiptType)
-//            ->add('receipt', 'entity', array(
-//                'class' => 'BW\UserBundle\Entity\Receipt',
-//                'property' => 'file',
-//            ))
-//            ->add('receipt', 'file', array(
-//                'required' => FALSE,
-//            ))
-            ->add('replenish', 'submit')
         ;
     }
     
@@ -38,7 +27,7 @@ class ReplenishmentType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BW\UserBundle\Entity\Replenishment'
+            'data_class' => 'BW\UserBundle\Entity\Receipt'
         ));
     }
 
@@ -47,6 +36,6 @@ class ReplenishmentType extends AbstractType
      */
     public function getName()
     {
-        return 'bw_userbundle_replenishment';
+        return 'bw_receipt';
     }
 }

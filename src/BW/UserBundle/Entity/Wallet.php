@@ -24,7 +24,7 @@ class Wallet
     /**
      * @var decimal $totalAmount
      *
-     * @ORM\Column(name="total_amount", type="decimal", precision=10, scale=4)
+     * @ORM\Column(name="total_amount", type="decimal", precision=15, scale=2)
      */
     private $totalAmount;
 

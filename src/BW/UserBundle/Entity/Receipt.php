@@ -1,18 +1,21 @@
 <?php
 
-namespace BW\MainBundle\Entity;
+namespace BW\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * BW\MainBundle\Entity\Document
+ * BW\UserBundle\Entity\Receipt
+ *
+ * @ORM\Table(name="receipts")
+ * @ORM\Entity(repositoryClass="BW\UserBundle\Entity\ReceiptRepository")
  * @ORM\HasLifecycleCallbacks
  */
-abstract class Document
+class Receipt
 {
-
+    
     /**
      * @var integer $id
      *
@@ -45,21 +48,21 @@ abstract class Document
     {
         return null === $this->path
             ? null
-            : $this->getUploadRootDir().'/'.$this->path;
+            : $this->getUploadRootDir() .'/'. $this->path;
     }
 
     public function getWebPath()
     {
         return null === $this->path
             ? null
-            : $this->getUploadDir().'/'.$this->path;
+            : $this->getUploadDir() .'/'. $this->path;
     }
 
     protected function getUploadRootDir()
     {
         // the absolute directory path where uploaded
         // documents should be saved
-        return __DIR__.'/../../../../web/uploads/'.$this->getUploadDir();
+        return __DIR__ .'/../../../../web/'. $this->getUploadDir();
     }
 
     /**
@@ -111,7 +114,7 @@ abstract class Document
         if (null !== $this->getFile()) {
             // do whatever you want to generate a unique name
             $filename = sha1(uniqid(mt_rand(), true));
-            $this->path = $filename.'.'.$this->getFile()->guessExtension();
+            $this->path = $filename .'.'. $this->getFile()->guessExtension();
         }
     }
 
@@ -133,7 +136,7 @@ abstract class Document
         // check if we have an old image
         if (isset($this->temp)) {
             // delete the old image
-            unlink($this->getUploadRootDir().'/'.$this->temp);
+            unlink($this->getUploadRootDir() .'/'. $this->temp);
             // clear the temp image path
             $this->temp = null;
         }
@@ -152,9 +155,10 @@ abstract class Document
     
     
     public function __construct() {
+        $this->name = '';
     }
     
-    
+
     /**
      * Get id
      *
@@ -164,7 +168,7 @@ abstract class Document
     {
         return $this->id;
     }
-    
+
     /**
      * Set name
      *
@@ -174,6 +178,7 @@ abstract class Document
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -196,6 +201,7 @@ abstract class Document
     public function setPath($path)
     {
         $this->path = $path;
+
         return $this;
     }
 

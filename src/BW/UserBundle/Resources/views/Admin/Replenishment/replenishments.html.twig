@@ -26,6 +26,7 @@
                         <th>Пополнено</th>
                         <th class="ta_c">Статус</th>
                         <th class="ta_c">Действия</th>
+                        <th class="ta_c">Квитанция</th>
                         <th style="width: 5%" class="ta_c">ID</th>
                     </tr>
                 </thead> 
@@ -47,16 +48,25 @@
                             </td>
                             <td class="ta_c">
                                 {% if replenishment.status == 2 %}
-                                    <i class="icon icon-check-minus" title="Отклонено"></i>
+                                    <i class="icon icon-check-minus" title="{{ replenishment_statuses[2] }}"></i>
                                 {% elseif replenishment.status == 1 %}
-                                    <i class="icon icon-check" title="Подтверждено"></i>
+                                    <i class="icon icon-check" title="{{ replenishment_statuses[1] }}"></i>
                                 {% else %}
-                                    <i class="icon icon-unchecked" title="На рассмотрении"></i>
+                                    <i class="icon icon-unchecked" title="{{ replenishment_statuses[0] }}"></i>
                                 {% endif %}
                             </td>
                             <td class="ta_c">
                                 <a href="{{ path('admin_replenishment_confirm', {'id': replenishment.id}) }}" title="Подтвердить пополнение"><i class="icon icon-ok-sign"></i></a>
                                 <a href="{{ path('admin_replenishment_reject', {'id': replenishment.id}) }}" title="Отклонить пополнение"><i class="icon icon-remove-sign"></i></a>
+                            </td>
+                            <td class="ta_c">
+                                {% if replenishment.receipt %}
+                                    <a href="{{ asset(replenishment.receipt.getWebPath()) }}" target="_blank">
+                                        <i class="icon icon-eye-open" title="Просмотреть квитанцию"></i>
+                                    </a>
+                                {% else %}
+                                    <span title="Квитанция отсутствует">~</span>
+                                {% endif %}
                             </td>
                             <td class="ta_c">
                                 <span title="ID элемента в БД">{{ replenishment.id }}</span>

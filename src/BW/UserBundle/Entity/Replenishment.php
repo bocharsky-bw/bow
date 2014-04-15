@@ -24,14 +24,14 @@ class Replenishment
     /**
      * @var decimal $additiveAmount
      *
-     * @ORM\Column(name="additive_amount", type="decimal", precision=10, scale=4)
+     * @ORM\Column(name="additive_amount", type="decimal", precision=15, scale=2)
      */
     private $additiveAmount;
 
     /**
      * @var decimal $equivalentAmount
      *
-     * @ORM\Column(name="equivalent_amount", type="decimal", precision=10, scale=4)
+     * @ORM\Column(name="equivalent_amount", type="decimal", precision=15, scale=2)
      */
     private $equivalentAmount;
 
@@ -44,7 +44,7 @@ class Replenishment
 
     /**
      * @var boolean $status 
-     * Настраивается в BW/UserBundle/Resources/config/config.yml
+     * replenishment_statuses в BW/UserBundle/Resources/config/config.yml
      *
      * @ORM\Column(name="status", type="smallint")
      */
@@ -61,6 +61,12 @@ class Replenishment
      * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
      */
     private $currency;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Receipt")
+     * @ORM\JoinColumn(name="receipt_id", referencedColumnName="id")
+     */
+    private $receipt;
     
     
     public function __construct() {
@@ -211,5 +217,28 @@ class Replenishment
     public function getCurrency()
     {
         return $this->currency;
+    }
+
+    /**
+     * Set receipt
+     *
+     * @param \BW\UserBundle\Entity\Receipt $receipt
+     * @return Replenishment
+     */
+    public function setReceipt(\BW\UserBundle\Entity\Receipt $receipt = null)
+    {
+        $this->receipt = $receipt;
+
+        return $this;
+    }
+
+    /**
+     * Get receipt
+     *
+     * @return \BW\UserBundle\Entity\Receipt 
+     */
+    public function getReceipt()
+    {
+        return $this->receipt;
     }
 }
