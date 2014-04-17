@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table(name="menus")
  * @ORM\Entity(repositoryClass="BW\MenuBundle\Entity\MenuRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Menu
 {
@@ -50,6 +51,39 @@ class Menu
      */
     private $items;
 
+    /**
+     * Set default values
+     * 
+     * @ORM\PrePersist
+     * @param array $values
+     * @return Category
+     */
+    public function setDefaultValues(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+        $values = array(
+            'alias' => '',
+            'description' => '',
+        );
+        
+        $item = $args->getEntity();
+        $class = __CLASS__;
+        if ($item instanceof $class) {
+            foreach ($values as $field => $value) {
+                $getter = 'get'. ucfirst($field);
+                if (method_exists($this, $getter)) {
+                    if ($this->$getter() === NULL) {
+                        $setter = 'set'. ucfirst($field);
+                        if (method_exists($this, $setter)) {
+                            $this->$setter($value);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return $this;
+    }
+    
+    
 
     /**
      * Constructor

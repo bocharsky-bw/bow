@@ -5,11 +5,9 @@ namespace BW\BlogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use BW\MainBundle\Controller\BWController;
-use \CKFinder;
 
 class PostController extends BWController
 {
-    
 
     public function postAction($id) {
         $data = $this->getPropertyOverload();
@@ -30,4 +28,5 @@ class PostController extends BWController
         
         return $this->render('BWBlogBundle:Post:post.html.twig', $data->toArray());
     }
+    
 }

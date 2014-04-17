@@ -1,0 +1,104 @@
+{% extends 'BWSkeletonBundle:Frontend:layout.html.twig' %}
+
+{% block title %}{{ contact.title }}{% endblock %}
+
+{% block description %}{{ contact.metaDescription }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {{ service('bw_blog.widget').lastPosts()|raw }}
+            </div>
+            <div class="col-lg-9">
+                <div class="contact">
+                    <h1>{{ contact.heading }}</h1>
+                    {% if false 
+                        or contact.country 
+                        or contact.city 
+                    %}
+                        <p>
+                            {% if contact.country %}<span class="country">{{ contact.country }}</span>{% endif %}
+                            {% if contact.city %}<span class="city">{{ contact.city }}</span>{% endif %}
+                        </p>
+                    {% endif %}
+                    {% if false 
+                        or contact.street 
+                        or contact.house 
+                        or contact.office 
+                    %}
+                        <p>
+                            {% if contact.street %}<span class="street">{{ contact.street }}</span>{% endif %}
+                            {% if contact.house %}<span class="house">{{ contact.house }}</span>{% endif %}
+                            {% if contact.office %}<span class="office">{{ contact.office }}</span>{% endif %}
+                        </p>
+                    {% endif %}
+                    {% if contact.person %}
+                        <p class="person">Контактное лицо: {{ contact.person }}</p>
+                    {% endif %}
+                    {% if contact.email %}
+                        <p class="email">E-mail: {{ contact.email }}</p>
+                    {% endif %}
+                    {% if contact.phone %}
+                        <p class="phone">Телефон: {{ contact.phone }}</p>
+                    {% endif %}
+                    {% if contact.skype %}
+                        <p class="skype">Skype: {{ contact.skype }}</p>
+                    {% endif %}
+                    {% if contact.companyName %}
+                        <p class="company_name">Название компании: {{ contact.companyName }}</p>
+                    {% endif %}
+                    {% if contact.companyDescription %}
+                        <p class="company_description">Описание компании: {{ contact.companyDescription }}</p>
+                    {% endif %}
+                    <br>
+                    <div class="feedback">
+                        {{ form_start(form) }}
+                            <fieldset>
+                                <legend>Форма для обратной связи</legend>
+                                <div class="error">
+                                    {{ form_errors(form) }}
+                                </div>
+                                <div>
+                                    {{ form_label(form.fio, 'ФИО: ', {'label_attr': {'class': ''} }) }}
+                                    {{ form_widget(form.fio, {'attr': {'class': ''} }) }}
+                                    <div class="error">
+                                        {{ form_errors(form.fio) }}
+                                    </div>
+                                </div>
+                                <div>
+                                    {{ form_label(form.email, 'E-mail: ', {'label_attr': {'class': ''} }) }}
+                                    {{ form_widget(form.email, {'attr': {'class': ''} }) }}
+                                    <div class="error">
+                                        {{ form_errors(form.email) }}
+                                    </div>
+                                </div>
+                                <div>
+                                    {{ form_label(form.phone, 'Телефон: ', {'label_attr': {'class': ''} }) }}
+                                    {{ form_widget(form.phone, {'attr': {'class': ''} }) }}
+                                    <div class="error">
+                                        {{ form_errors(form.phone) }}
+                                    </div>
+                                </div>
+                                <div>
+                                    {{ form_label(form.message, 'Сообщение: ', {'label_attr': {'class': ''} }) }}
+                                    {{ form_widget(form.message, {'attr': {'class': ''} }) }}
+                                    <div class="error">
+                                        {{ form_errors(form.message) }}
+                                    </div>
+                                </div>
+                                <div>
+                                    {{ form_widget(form.send , {'attr': {'class': '', 'title': 'Отправить сообщение'}, 'label': 'Отправить'}) }}
+                                </div>
+                            </fieldset>
+                        {{ form_end(form) }}
+                    </div>
+                    <br>
+                    {% if contact.map %}
+                        <p class="map">{{ contact.map|raw }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

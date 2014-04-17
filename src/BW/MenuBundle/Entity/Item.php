@@ -129,31 +129,10 @@ class Item extends BWEntity
     /**
      * @var integer
      *
-     * @ORM\ManyToOne(targetEntity="\BW\RouterBundle\Entity\Route", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="\BW\RouterBundle\Entity\Route")
      * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
      */
     private $route;
-    
-    
-    
-    /**
-     * Set default values
-     * 
-     * @ORM\PrePersist
-     * @param array $values
-     * @return Item
-     */
-    public function setDefaultValues(array $values = array(
-            'title' => '',
-            'href' => '',
-            'class' => '',
-        )) {
-        
-        parent::setDefaultValues($values);
-        
-        return $this;
-    }
-    
     
     /**
      * Текущий уровень вложенности пункта меню
@@ -180,6 +159,41 @@ class Item extends BWEntity
         return str_repeat('- ', $this->getLevel()). $this->getName();
     }
 
+    /**
+     * Set default values
+     * 
+     * @ORM\PrePersist
+     * @param array $values
+     * @return Item
+     */
+    public function setDefaultValues(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+        $values = array(
+            'title' => '',
+            'href' => '',
+            'class' => '',
+        );
+        
+        $item = $args->getEntity();
+        $class = __CLASS__;
+        if ($item instanceof $class) {
+            foreach ($values as $field => $value) {
+                $getter = 'get'. ucfirst($field);
+                if (method_exists($this, $getter)) {
+                    if ($this->$getter() === NULL) {
+                        $setter = 'set'. ucfirst($field);
+                        if (method_exists($this, $setter)) {
+                            $this->$setter($value);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return $this;
+    }
+    
+    
+    
     /**
      * Constructor
      */

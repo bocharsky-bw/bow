@@ -144,7 +144,6 @@ class NestedSet {
     private function recursionByParentId(&$nodes) {
         foreach ($nodes as $id => $node) {
             //var_dump('*');
-            var_dump($node['active']);
             if (isset($this->nodesGroupedByParentId[$id])) {
                 $nodes[$id]['children'] = $this->nodesGroupedByParentId[$id];
                 $this->recursionByParentId($nodes[$id]['children']);

@@ -81,6 +81,8 @@ class CategoryController extends BWController
                     $em->persist($route);
                 }
                 
+                $this->get('bw_blog.transliter')->generateSlug($category);
+                
                 $segments = array();
                 $parent = $category;
                 while ($parent) {

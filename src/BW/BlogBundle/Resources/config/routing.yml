@@ -1,7 +1,7 @@
 ###########
 # Backend #
 ###########
-# Categories
+# Category
 admin_categories:
     host:     %domain%
     pattern:  /_admin/{_locale}/categories
@@ -22,7 +22,7 @@ admin_category_toogle_published:
     pattern:  /_admin/{_locale}/category/toogle-published/{id}
     defaults: { _controller: BWBlogBundle:Admin/Category:togglePublished, _locale: %locale% }
     
-# Posts
+# Post
 admin_posts:
     host:     %domain%
     pattern:  /_admin/{_locale}/posts
@@ -42,6 +42,22 @@ admin_post_toogle_published:
     host:     %domain%
     pattern:  /_admin/{_locale}/post/toogle-published/{id}
     defaults: { _controller: BWBlogBundle:Admin/Post:togglePublished, _locale: %locale% }
+    
+# Contact
+admin_contacts:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/contacts
+    defaults: { _controller: BWBlogBundle:Admin/Contact:contacts, _locale: %locale% }
+  
+admin_contact_add:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/contact/add
+    defaults: { _controller: BWBlogBundle:Admin/Contact:contact, _locale: %locale% }
+
+admin_contact_edit:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/contact/edit/{id}
+    defaults: { _controller: BWBlogBundle:Admin/Contact:contact, _locale: %locale% }
     
 ############
 # Frontend #

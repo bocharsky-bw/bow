@@ -5,7 +5,6 @@ namespace BW\BlogBundle\Service;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
-use BW\BlogBundle\Entity\Post;
 
 class Transliter {
 
@@ -110,7 +109,11 @@ class Transliter {
     
     
     public function generateSlug($entity) {
-        if ($entity instanceof Post) {
+        if ( FALSE
+            || $entity instanceof \BW\BlogBundle\Entity\Category
+            || $entity instanceof \BW\BlogBundle\Entity\Post
+            || $entity instanceof \BW\BlogBundle\Entity\Contact
+        ) {
             // Если не задано slug, формирование slug из заголовка
             if ( ! $entity->getSlug()) {
                 $entity->setSlug($entity->getHeading());

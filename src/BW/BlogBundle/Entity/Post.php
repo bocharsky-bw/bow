@@ -115,27 +115,33 @@ class Post
      */
     private $category;
 
-    
     /**
      * Set default values
      * 
      * @ORM\PrePersist
-     * @return \BW\BlogBundle\Entity\Post
+     * @param array $values
+     * @return Post
      */
-    public function setDefaultValues(array $values = array(
+    public function setDefaultValues(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+        $values = array(
+            'slug' => '',
             'title' => '',
             'metaDescription' => '',
             'shortDescription' => '',
             'content' => '',
-        )) {
+        );
         
-        foreach ($values as $field => $value) {
-            $getter = 'get'. ucfirst($field);
-            if (method_exists($this, $getter)) {
-                if ($this->$getter() === NULL) {
-                    $setter = 'set'. ucfirst($field);
-                    if (method_exists($this, $setter)) {
-                        $this->$setter($value);
+        $item = $args->getEntity();
+        $class = __CLASS__;
+        if ($item instanceof $class) {
+            foreach ($values as $field => $value) {
+                $getter = 'get'. ucfirst($field);
+                if (method_exists($this, $getter)) {
+                    if ($this->$getter() === NULL) {
+                        $setter = 'set'. ucfirst($field);
+                        if (method_exists($this, $setter)) {
+                            $this->$setter($value);
+                        }
                     }
                 }
             }

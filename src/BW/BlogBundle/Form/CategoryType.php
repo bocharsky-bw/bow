@@ -45,9 +45,15 @@ class CategoryType extends AbstractType
                     'empty_value' => 'Выберите язык',
                 ))
                 // Meta tags
-                ->add('slug', 'text')
-                ->add('title', 'text')
-                ->add('metaDescription', 'textarea')
+                ->add('slug', 'text', array(
+                    'required' => FALSE,
+                ))
+                ->add('title', 'text', array(
+                    'required' => FALSE,
+                ))
+                ->add('metaDescription', 'textarea', array(
+                    'required' => FALSE,
+                ))
                 // Buttons
                 ->add('save', 'submit')
                 ->add('saveAndClose', 'submit')
@@ -70,6 +76,6 @@ class CategoryType extends AbstractType
      */
     public function getName()
     {
-        return 'category';
+        return 'bw_category';
     }
 }

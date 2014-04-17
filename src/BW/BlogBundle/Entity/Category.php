@@ -138,6 +138,40 @@ class Category
     public function __toString() {
         return str_repeat('- ', $this->level) . $this->heading;
     }
+    
+    /**
+     * Set default values
+     * 
+     * @ORM\PrePersist
+     * @param array $values
+     * @return Category
+     */
+    public function setDefaultValues(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+        $values = array(
+            'slug' => '',
+            'title' => '',
+            'metaDescription' => '',
+        );
+        
+        $item = $args->getEntity();
+        $class = __CLASS__;
+        if ($item instanceof $class) {
+            foreach ($values as $field => $value) {
+                $getter = 'get'. ucfirst($field);
+                if (method_exists($this, $getter)) {
+                    if ($this->$getter() === NULL) {
+                        $setter = 'set'. ucfirst($field);
+                        if (method_exists($this, $setter)) {
+                            $this->$setter($value);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return $this;
+    }
+    
 
     public function __construct() {
         $this->children = new ArrayCollection();

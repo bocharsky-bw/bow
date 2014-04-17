@@ -52,19 +52,32 @@ class MenuController extends BWController
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 
-                if ($form->get('delete')->isClicked()) {
-                    $em->remove($menu);
-                    $em->flush();
-                    
-                    return $this->redirect($this->generateUrl('admin_menus'));
+                if ($id) {
+                    if ($form->get('delete')->isClicked()) {
+                        $em->remove($menu);
+                        $em->flush();
+
+                        return $this->redirect($this->generateUrl('admin_menus'));
+                    }
                 }
+                
+                if ( ! $menu->getId()) {
+                    $em->persist($menu);
+                }
+                
+                if ( ! $menu->getAlias()) {
+                    $menu->setAlias($menu->getName());
+                }
+                $menu->setAlias(
+                    strtolower($this->get('bw_blog.transliter')->toSlug($menu->getAlias()))
+                );
                 
                 $em->flush();
                 
                 if ($form->get('saveAndClose')->isClicked()) {
                     return $this->redirect($this->generateUrl('admin_menus'));
                 }
-                
+
                 return $this->redirect($this->generateUrl('admin_menu_edit', array('id' => $menu->getId())));
             }
         }

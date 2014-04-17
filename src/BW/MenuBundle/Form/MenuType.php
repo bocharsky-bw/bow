@@ -16,8 +16,12 @@ class MenuType extends AbstractType
     {
         $builder
                 ->add('name', 'text')
-                ->add('alias', 'text')
-                ->add('description', 'textarea')
+                ->add('alias', 'text', array(
+                    'required' => FALSE,
+                ))
+                ->add('description', 'textarea', array(
+                    'required' => FALSE,
+                ))
                 // Buttons
                 ->add('save', 'submit')
                 ->add('saveAndClose', 'submit')
