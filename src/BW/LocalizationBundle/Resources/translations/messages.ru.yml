@@ -6,8 +6,6 @@ admin:
     users: Пользователи
     roles: Роли
     countries: Страны
-    currencies: Валюты
-    replenishments: Пополнения
     mailing: Рассылка
     content: Контент
     categories: Категории
@@ -18,6 +16,9 @@ admin:
     menu: Меню
     menu_items: Пункты меню
     view_site: Просмотр сайта
+    finances: Финансы
+    currencies: Валюты
+    replenishments: Пополнения
 
 localization:
     lang: Язык

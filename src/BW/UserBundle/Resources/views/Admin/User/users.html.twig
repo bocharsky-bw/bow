@@ -19,14 +19,15 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th style="width: 5%" class="ta_c">№</th>
+                        <th class="ta_c" style="width: 5%">№</th>
                         <th>Логин</th>
                         <th>E-mail</th>
                         <th>Роли</th>
-                        <th style="width: 5%" class="ta_c">Активный</th>
-                        <th style="width: 10%">Дата создания</th>
-                        <th style="width: 10%">Дата изменения</th>
-                        <th style="width: 5%" class="ta_c">ID</th>
+                        <th>Кошельки</th>
+                        <th class="ta_c" style="width: 5%" class="ta_c">Активный</th>
+                        <th class="ta_c" style="width: 14%"><span title="Дата регистрации">Создан</span></th>
+                        <th class="ta_c" style="width: 14%"><span title="Последний раз заходил на сайт">Обновлен</span></th>
+                        <th class="ta_c" style="width: 5%">ID</th>
                     </tr>
                 </thead> 
                 {% for user in users %}
@@ -47,6 +48,24 @@
                                     <span title="{{ role.role }}">{{ role.name }}</span>{{ not loop.last ? ', ' }}
                                 {% endfor %}
                             </td>
+                            <td>
+                                {% if user.profile %}
+                                    {% if user.profile.wallets.count %}
+                                        <ul>
+                                        {% for wallet in user.profile.wallets %}
+                                            <li>
+                                                {{ wallet.totalAmount }}
+                                                {{ wallet.currency.symbol }}
+                                            </li>
+                                        {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <span title="Нет кошельков">~</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span title="Нет кошельков">~</span>
+                                {% endif %}
+                            </td>
                             <td class="ta_c">
                                 <a href="{{ path('admin_user_toogle_active', {'id': user.id}) }}">
                                     {% if user.isActive() %}
@@ -56,11 +75,11 @@
                                     {% endif %}
                                 </a>
                             </td>
-                            <td>
-                                {{ user.created|date('d/m/Y') }}
+                            <td class="ta_c">
+                                {{ user.created|date('d/m/Y в H:i') }}
                             </td>
-                            <td>
-                                {{ user.updated|date('d/m/Y') }}
+                            <td class="ta_c">
+                                {{ user.updated|date('d/m/Y в H:i') }}
                             </td>
                             <td class="ta_c">
                                 <span title="ID статьи в БД">{{ user.id }}</span>

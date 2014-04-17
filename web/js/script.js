@@ -1,1 +1,5 @@
-//alert('load');
+myjQ(function($) {
+
+    
+    
+});

@@ -5,6 +5,7 @@ namespace BW\UserBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class ProfileAddressType extends AbstractType
 {
@@ -18,6 +19,11 @@ class ProfileAddressType extends AbstractType
             ->add('country', 'entity', array(
                 'class' => 'BWUserBundle:Country',
                 'property' => 'name',
+                'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                            ->where('c.enabled = 1')
+                        ;
+                },
                 'empty_value' => 'Не выбрано',
                 'required' => FALSE,
             ))

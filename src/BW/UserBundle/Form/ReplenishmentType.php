@@ -21,13 +21,6 @@ class ReplenishmentType extends AbstractType
                 'property' => 'name',
             ))
             ->add('receipt', new ReceiptType)
-//            ->add('receipt', 'entity', array(
-//                'class' => 'BW\UserBundle\Entity\Receipt',
-//                'property' => 'file',
-//            ))
-//            ->add('receipt', 'file', array(
-//                'required' => FALSE,
-//            ))
             ->add('replenish', 'submit')
         ;
     }

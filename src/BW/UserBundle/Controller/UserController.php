@@ -125,9 +125,12 @@ class UserController extends BWController
         );
     }
     
+    public function signInCheckAction() {
+        
+        return $this->redirect($this->generateUrl('home'));
+    }
+    
     public function signOutAction() {
-        // Facebook logout
-        $this->signOutFacebook();
         
         return $this->redirect($this->generateUrl('home'));
     }

@@ -55,11 +55,12 @@ user_sign_in:
     
 user_sign_in_check:
     host:     %domain%
-    pattern:  /user/sign-in-check
+    pattern:  /{_locale}/user/sign-in-check
+    defaults: { _controller: BWUserBundle:User:signInCheck }
     
 user_sign_out:
     host:     %domain%
-    pattern:  /user/sign-out
+    pattern:  /{_locale}/user/sign-out
     defaults: { _controller: BWUserBundle:User:signOut }
     
 user_password_reset:
@@ -169,4 +170,9 @@ admin_country_edit:
     host:     %domain%
     pattern:  /_admin/{_locale}/user/country/edit/{id}
     defaults: { _controller: BWUserBundle:Admin/Country:country }
+    
+admin_country_toggle_status:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/user/country/toggle/{id}
+    defaults: { _controller: BWUserBundle:Admin/Country:toggleStatus }
 

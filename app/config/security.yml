@@ -1,3 +1,4 @@
+# http://symfony.com/doc/current/reference/configuration/security.html
 security:
     encoders:
         BW\UserBundle\Entity\User:
@@ -30,10 +31,11 @@ security:
             anonymous:  ~
             form_login:
                 login_path: /%locale%/user/sign-in
-                check_path: /user/sign-in-check
+                check_path: user_sign_in_check
+                success_handler: bw_user.auth_success_handler
             logout:
-                path:   /user/sign-out
-                target: /%locale%/
+                path:   user_sign_out
+                target: home
         
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/

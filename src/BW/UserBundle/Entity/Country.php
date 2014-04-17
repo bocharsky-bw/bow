@@ -69,8 +69,16 @@ class Country
      */
     private $currency;
     
+    /**
+     * @var string $code
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    private $enabled;
+    
     
     public function __construct() {
+        $this->enabled = TRUE;
     }
 
 
@@ -236,5 +244,28 @@ class Country
     public function getCurrency()
     {
         return $this->currency;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return Country
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 }

@@ -52,12 +52,6 @@
                     <li class="">
                         <a href="{{ path('admin_countries') }}"><i class="icon-flag before-padding"></i>{{ 'admin.countries'|trans }}</a>
                     </li>
-                    <li class="">
-                        <a href="{{ path('admin_currencies') }}"><i class="icon-money before-padding"></i>{{ 'admin.currencies'|trans }}</a>
-                    </li>
-                    <li class="">
-                        <a href="{{ path('admin_replenishments') }}"><i class="icon-cloud-download before-padding"></i>{{ 'admin.replenishments'|trans }}</a>
-                    </li>
                 </ul>
             </li>
             <li class="has-child"><a href="#"><i class="icon-file-text before-padding"></i>{{ 'admin.content'|trans }}</a> 
@@ -83,6 +77,16 @@
                     </li>
                 </ul>
             </li>
+            <li class="has-child"><a href="#"><i class="icon-user before-padding"></i>{{ 'admin.finances'|trans }}</a> 
+                <ul>
+                    <li class="">
+                        <a href="{{ path('admin_currencies') }}"><i class="icon-money before-padding"></i>{{ 'admin.currencies'|trans }}</a>
+                    </li>
+                    <li class="">
+                        <a href="{{ path('admin_replenishments') }}"><i class="icon-cloud-download before-padding"></i>{{ 'admin.replenishments'|trans }}</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <ul id="main-menu-right" class="menu-h menu-right row">
             {{ service('bw_localization.widget').getAdminLangs()|raw }}
@@ -96,16 +100,13 @@
                 <ul class="menu-s row">
                     <li><a href="#" class="icon-remove-sign menu-back" title="Закрыть панель">Закрыть</a></li>
                     <li class="">
-                        <a href="{{ path('admin_posts') }}" title="{{ 'admin.posts'|trans }}" class="icon-file-text-alt">{{ 'admin.posts'|trans }}</a>
+                        <a href="{{ path('admin_categories') }}" title="{{ 'admin.categories'|trans }}"><i class="icon-folder-close before-padding"></i>{{ 'admin.categories'|trans }}</a>
                     </li>
                     <li class="">
-                        <a href="{{ path('admin_menus') }}" title="{{ 'admin.menu'|trans }}" class="icon-align-justify">{{ 'admin.menu'|trans }}</a>
+                        <a href="{{ path('admin_posts') }}" title="{{ 'admin.posts'|trans }}"><i class="icon-file-text-alt before-padding"></i>{{ 'admin.posts'|trans }}</a>
                     </li>
                     <li class="">
-                        <a href="{{ path('admin_items') }}" title="{{ 'admin.menu_items'|trans }}" class="icon-list">{{ 'admin.menu_items'|trans }}</a>
-                    </li>
-                    <li class="">
-                        <a href="{{ path('admin_localization') }}" title="{{ 'admin.localization'|trans }}" class="icon-globe">{{ 'admin.localization'|trans }}</a>
+                        <a href="{{ path('admin_users') }}" title="{{ 'admin.users'|trans }}"><i class="icon-user before-padding"></i>{{ 'admin.users'|trans }}</a>
                     </li>
                 </ul>
             </li>

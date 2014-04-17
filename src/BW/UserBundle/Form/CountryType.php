@@ -15,6 +15,9 @@ class CountryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('enabled', 'checkbox', array(
+                'required' => FALSE,
+            ))
             ->add('name', 'text')
             ->add('nameEn', 'text')
             ->add('alpha2', 'text')

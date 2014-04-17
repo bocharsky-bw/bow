@@ -473,4 +473,27 @@ class Category
     {
         return $this->right;
     }
+
+    /**
+     * Add children
+     *
+     * @param \BW\BlogBundle\Entity\Category $children
+     * @return Category
+     */
+    public function addChild(\BW\BlogBundle\Entity\Category $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \BW\BlogBundle\Entity\Category $children
+     */
+    public function removeChild(\BW\BlogBundle\Entity\Category $children)
+    {
+        $this->children->removeElement($children);
+    }
 }

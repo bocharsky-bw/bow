@@ -87,23 +87,21 @@ class CountryController extends BWController
     }
     
     /**
-     * Блокирование пользователя по его id
+     * Опубиликовать / Снять с публикации
      * 
-     * @param integer $id
+     * @param integer $id The Country ID
      * @return redirect
      */
-    public function toogleActiveAction($id) {
+    public function toggleStatusAction($id) {
         $em = $this->getDoctrine()->getManager();
         
-        if ($this->getUser()->getId() != $id) {
-            $user = $em->getRepository('BWUserBundle:User')->find($id);
-            $user->setActive( ! $user->getActive());
+        $country = $em->getRepository('BWUserBundle:Country')->find($id);
+        if ($country) {
+            $country->setEnabled( ! $country->getEnabled());
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', '<b>Успешно!</b> Пользователь "'. $user->getUsername() .'" успешно '. ( $user->isEnabled() ? 'разблокирован' : 'заблокирован' ));
-        } else {
-            $this->get('session')->getFlashBag()->add('danger', '<b>Ошибка!</b> Вы не можете заблокировать самого себя.');
+            $this->get('session')->getFlashBag()->add('success', '<b>Успешно!</b> Страна успешно '. ( $country->getEnabled() ? 'опубликована' : 'снята с публикации' ));
         }
         
-        return $this->redirect($this->generateUrl('admin_users'));
+        return $this->redirect($this->generateUrl('admin_countries'));
     }
 }

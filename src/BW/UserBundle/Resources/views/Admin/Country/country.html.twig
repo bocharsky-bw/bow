@@ -18,6 +18,14 @@
         </div>
             
         <div>
+            {{ form_label(form.enabled, 'Опубликовано: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.enabled, {'attr': {'class': ''} }) }}
+            <div class="error">
+                {{ form_errors(form.enabled) }}
+            </div>
+        </div>
+            
+        <div>
             {{ form_label(form.currency, 'Валюта: ', {'label_attr': {'class': ''} }) }}
             {{ form_widget(form.currency, {'attr': {'class': 'form-control'} }) }}
             <div class="error">

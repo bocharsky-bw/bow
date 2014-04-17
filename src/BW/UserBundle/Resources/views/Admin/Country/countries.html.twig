@@ -26,6 +26,7 @@
                         <th class="ta_c">МОК</th>
                         <th class="ta_c">Числовой код</th>
                         <th class="ta_c">Полный код</th>
+                        <th class="ta_c">Статус</th>
                         <th style="width: 5%" class="ta_c">ID</th>
                     </tr>
                 </thead> 
@@ -50,6 +51,15 @@
                             </td>
                             <td class="ta_c">
                                 {{ country.code }}
+                            </td>
+                            <td class="ta_c">
+                                <a href="{{ path('admin_country_toggle_status', {'id': country.id}) }}">
+                                    {% if country.enabled %}
+                                        <i class="green icon-ok-sign" style="color: green;" title="Снять с публикации"></i>
+                                    {% else %}
+                                        <i class="red icon-minus-sign" style="color: red;" title="Опубликовать"></i>
+                                    {% endif %}
+                                </a>
                             </td>
                             <td class="ta_c">
                                 <span title="ID записи в БД">{{ country.id }}</span>
