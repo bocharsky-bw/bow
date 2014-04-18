@@ -88,6 +88,9 @@
                                     </div>
                                 </div>
                                 <div>
+                                    {{ captcha|raw }}
+                                </div>
+                                <div>
                                     {{ form_widget(form.send , {'attr': {'class': '', 'title': 'Отправить сообщение'}, 'label': 'Отправить'}) }}
                                 </div>
                             </fieldset>

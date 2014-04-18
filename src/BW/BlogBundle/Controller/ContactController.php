@@ -10,8 +10,13 @@ class ContactController extends BWController
 {
 
     public function contactAction($id) {
+        $publickey = "6LcT9fESAAAAADYP6P-m718_8jW3HAtFF-2OkkuU";
+        $privatekey = "6LcT9fESAAAAACU1kJwoJZBOOqADiyL-KATRCIYi";
+                
         $data = $this->getPropertyOverload();
         $request = $this->getRequest();
+        
+        $data->captcha = recaptcha_get_html($publickey);
 
         $data->contact = $this->getDoctrine()->getRepository('BWBlogBundle:Contact')->find($id);
         if ( ! $data->contact) {
@@ -36,36 +41,48 @@ class ContactController extends BWController
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $feedback = $form->getData();
-
-                /* Swift Mailer */
-                $message = \Swift_Message::newInstance()
-                        ->setSubject("Сообщение c сайта {$request->getHttpHost()}")
-                        ->setFrom($feedback['email'])
-                        ->setTo($data->contact->getEmail())
-                        ->setBody(
-                                $this->renderView('BWBlogBundle:Contact:feedback.html.twig', array(
-                                    'feedback' => $feedback,
-                                ))
-                            )
-                    ;
-                if ($this->get('mailer')->send($message)) {
-                    $request->getSession()
-                            ->getFlashBag()
-                            ->add('success', 'Ваше сообщение успешно отправлено')
+                $r = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+                if (recaptcha_check_answer(
+                    $privatekey,
+                    $r->server->get("REMOTE_ADDR"),
+                    $r->request->get("recaptcha_challenge_field"),
+                    $r->request->get("recaptcha_response_field")
+                )->is_valid) {
+                    /* Swift Mailer */
+                    $message = \Swift_Message::newInstance()
+                            ->setSubject("Сообщение c сайта {$request->getHttpHost()}")
+                            ->setFrom($feedback['email'])
+                            ->setTo($data->contact->getEmail())
+                            ->setBody(
+                                    $this->renderView('BWBlogBundle:Contact:feedback.html.twig', array(
+                                        'feedback' => $feedback,
+                                    ))
+                                )
                         ;
-                    
-                    return $this->redirect(
-                            $this->generateUrl('bw_router_index', array(
-                                'q' => $data->contact->getRoute()->getQuery(),
-                            ))
-                        );
+                    if ($this->get('mailer')->send($message)) {
+                        $request->getSession()
+                                ->getFlashBag()
+                                ->add('success', 'Ваше сообщение успешно отправлено')
+                            ;
+
+                        return $this->redirect(
+                                $this->generateUrl('bw_router_index', array(
+                                    'q' => $data->contact->getRoute()->getQuery(),
+                                ))
+                            );
+                    } else {
+                        $request->getSession()
+                                ->getFlashBag()
+                                ->add('danger', 'Произошла ошибка при отправке сообщения')
+                            ;
+                    }
+                    /* /Swift Mailer */
                 } else {
                     $request->getSession()
                             ->getFlashBag()
-                            ->add('danger', 'Произошла ошибка при отправке сообщения')
+                            ->add('danger', 'Неправильно введено проверочное слово')
                         ;
                 }
-                /* /Swift Mailer */
             }
         }
         
