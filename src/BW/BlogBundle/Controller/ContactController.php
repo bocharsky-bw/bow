@@ -16,7 +16,7 @@ class ContactController extends BWController
         $data = $this->getPropertyOverload();
         $request = $this->getRequest();
         
-        $data->captcha = recaptcha_get_html($publickey);
+        $data->captcha = new \BW\Captcha\Recaptcha($publickey, $privatekey);
 
         $data->contact = $this->getDoctrine()->getRepository('BWBlogBundle:Contact')->find($id);
         if ( ! $data->contact) {
@@ -42,12 +42,7 @@ class ContactController extends BWController
             if ($form->isValid()) {
                 $feedback = $form->getData();
                 $r = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
-                if (recaptcha_check_answer(
-                    $privatekey,
-                    $r->server->get("REMOTE_ADDR"),
-                    $r->request->get("recaptcha_challenge_field"),
-                    $r->request->get("recaptcha_response_field")
-                )->is_valid) {
+                if ($data->captcha->checkAnswer()->isValid()) {
                     /* Swift Mailer */
                     $message = \Swift_Message::newInstance()
                             ->setSubject("Сообщение c сайта {$request->getHttpHost()}")

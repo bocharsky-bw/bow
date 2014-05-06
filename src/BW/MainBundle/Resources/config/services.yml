@@ -1,5 +1,5 @@
 parameters:
-    domain: bow.server.ndv.net.ua
+    domain: bow.localhost
 
 services:
 #    bw_main.example:
