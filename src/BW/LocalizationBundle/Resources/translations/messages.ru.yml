@@ -10,6 +10,7 @@ admin:
     content: Контент
     categories: Категории
     posts: Статьи
+    custom_fields: Настраиваемые поля
     contacts: Контакты
     pages: Страницы
     articles: Статьи

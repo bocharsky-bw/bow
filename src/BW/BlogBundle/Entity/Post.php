@@ -114,6 +114,13 @@ class Post
      * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Category", inversedBy="posts")
      */
     private $category;
+    
+    /**
+     * @var integer
+     * 
+     * @ORM\ManyToMany(targetEntity="CustomField", inversedBy="posts")
+     */
+    private $customFields;
 
     /**
      * Set default values
@@ -156,6 +163,7 @@ class Post
         $this->home = FALSE;
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
+        $this->customFields = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     
@@ -477,5 +485,38 @@ class Post
     public function getHome()
     {
         return $this->home;
+    }
+
+    /**
+     * Add customFields
+     *
+     * @param \BW\BlogBundle\Entity\CustomFields $customFields
+     * @return Post
+     */
+    public function addCustomField(\BW\BlogBundle\Entity\CustomFields $customFields)
+    {
+        $this->customFields[] = $customFields;
+
+        return $this;
+    }
+
+    /**
+     * Remove customFields
+     *
+     * @param \BW\BlogBundle\Entity\CustomFields $customFields
+     */
+    public function removeCustomField(\BW\BlogBundle\Entity\CustomFields $customFields)
+    {
+        $this->customFields->removeElement($customFields);
+    }
+
+    /**
+     * Get customFields
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCustomFields()
+    {
+        return $this->customFields;
     }
 }

@@ -104,20 +104,20 @@ class Category
     /**
      * @var integer
      *
-     * @ORM\Column(name="left", type="integer")
+     * @ORM\Column(name="lft", type="integer")
      */
     private $left;
     
     /**
      * @var integer
      *
-     * @ORM\Column(name="right", type="integer")
+     * @ORM\Column(name="rgt", type="integer")
      */
     private $right;
     
     
     /**
-     * Текущий уровень вложенности пункта меню
+     * Текущий уровень вложенности категории
      * 
      * @ORM\PrePersist
      * @ORM\PreUpdate
@@ -134,12 +134,51 @@ class Category
         
         return $this;
     }
+
+    public function __toString() {
+        return str_repeat('- ', $this->level) . $this->heading;
+    }
     
+    /**
+     * Set default values
+     * 
+     * @ORM\PrePersist
+     * @param array $values
+     * @return Category
+     */
+    public function setDefaultValues(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+        $values = array(
+            'slug' => '',
+            'title' => '',
+            'metaDescription' => '',
+        );
+        
+        $item = $args->getEntity();
+        $class = __CLASS__;
+        if ($item instanceof $class) {
+            foreach ($values as $field => $value) {
+                $getter = 'get'. ucfirst($field);
+                if (method_exists($this, $getter)) {
+                    if ($this->$getter() === NULL) {
+                        $setter = 'set'. ucfirst($field);
+                        if (method_exists($this, $setter)) {
+                            $this->$setter($value);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return $this;
+    }
     
+
     public function __construct() {
-        $this->posts = new ArrayCollection();
         $this->children = new ArrayCollection();
+        $this->posts = new ArrayCollection();
         $this->level = 0;
+        $this->left = 0;
+        $this->right = 0;
         $this->published = TRUE;
     }
     
@@ -423,5 +462,72 @@ class Category
     public function getLevel()
     {
         return $this->level;
+    }
+
+    /**
+     * Set left
+     *
+     * @param integer $left
+     * @return Category
+     */
+    public function setLeft($left)
+    {
+        $this->left = $left;
+        return $this;
+    }
+
+    /**
+     * Get left
+     *
+     * @return integer 
+     */
+    public function getLeft()
+    {
+        return $this->left;
+    }
+
+    /**
+     * Set right
+     *
+     * @param integer $right
+     * @return Category
+     */
+    public function setRight($right)
+    {
+        $this->right = $right;
+        return $this;
+    }
+
+    /**
+     * Get right
+     *
+     * @return integer 
+     */
+    public function getRight()
+    {
+        return $this->right;
+    }
+
+    /**
+     * Add children
+     *
+     * @param \BW\BlogBundle\Entity\Category $children
+     * @return Category
+     */
+    public function addChild(\BW\BlogBundle\Entity\Category $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \BW\BlogBundle\Entity\Category $children
+     */
+    public function removeChild(\BW\BlogBundle\Entity\Category $children)
+    {
+        $this->children->removeElement($children);
     }
 }

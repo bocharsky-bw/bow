@@ -109,5 +109,18 @@
                 {{ form_errors(form.metaDescription) }}
             </div>
         </div>
+        
+        <h2>Настраиваемые поля</h2>
+        <div>
+            {{ form_label(form.customFields, 'Настраиваемые поля: ', {'label_attr': {'class': ''} }) }}
+            <ul>
+                {% for field in form.customFields %}
+                    <li>{{ form_widget(field) }} - {{ form_label(field) }}</li>
+                {% endfor %}
+            </ul>
+            <div class="error">
+                {{ form_errors(form.customFields) }}
+            </div>
+        </div>
     </div>
 {{ form_end(form) }}

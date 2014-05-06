@@ -64,6 +64,14 @@ class PostType extends AbstractType
                 ->add('save', 'submit')
                 ->add('saveAndClose', 'submit')
                 ->add('delete', 'submit')
+                // custom fields
+                ->add('customFields', 'entity', array(
+                    'class' => 'BWBlogBundle:CustomField',
+                    'property' => 'name',
+                    'required' => FALSE,
+                    'expanded' => TRUE,
+                    'multiple' => TRUE,
+                ))
             ;
     }
     

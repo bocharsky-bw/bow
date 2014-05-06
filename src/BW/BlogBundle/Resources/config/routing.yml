@@ -59,6 +59,22 @@ admin_contact_edit:
     pattern:  /_admin/{_locale}/contact/edit/{id}
     defaults: { _controller: BWBlogBundle:Admin/Contact:contact, _locale: %locale% }
     
+# Contact
+admin_custom_fields:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/custom-fields
+    defaults: { _controller: BWBlogBundle:Admin/CustomField:customFields, _locale: %locale% }
+  
+admin_custom_field_add:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/custom-field/add
+    defaults: { _controller: BWBlogBundle:Admin/CustomField:customField, _locale: %locale% }
+
+admin_custom_field_edit:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/custom-field/edit/{id}
+    defaults: { _controller: BWBlogBundle:Admin/CustomField:customField, _locale: %locale% }
+    
 ############
 # Frontend #
 ############
