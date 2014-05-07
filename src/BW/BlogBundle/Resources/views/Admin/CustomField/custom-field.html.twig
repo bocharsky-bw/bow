@@ -9,6 +9,7 @@
         </div>
 
         <div class="form-buttons">
+            <a class="btn btn-primary icon-plus before-padding" href="{{ path('admin_custom_field_property_add') }}" title="Добавить новое свойство">Создать свойство</a>
             {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Сохранить'}) }}
             {{ form_widget(form.saveAndClose, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и выйти из режима редактирования'}, 'label': 'Сохранить и закрыть'}) }}
             {% if form.delete is defined %}
@@ -24,6 +25,8 @@
                 {{ form_errors(form.name) }}
             </div>
         </div>
+        
+        {% include 'BWBlogBundle:Admin/CustomFieldProperty:custom-field-properties.html.twig' %}
 
     </div>
 {{ form_end(form) }}

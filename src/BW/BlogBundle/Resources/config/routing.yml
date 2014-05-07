@@ -74,6 +74,16 @@ admin_custom_field_edit:
     host:     %domain%
     pattern:  /_admin/{_locale}/custom-field/edit/{id}
     defaults: { _controller: BWBlogBundle:Admin/CustomField:customField, _locale: %locale% }
+  
+admin_custom_field_property_add:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/custom-field-property/add
+    defaults: { _controller: BWBlogBundle:Admin/CustomFieldProperty:customFieldProperty, _locale: %locale% }
+
+admin_custom_field_property_edit:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/custom-field-property/edit/{id}
+    defaults: { _controller: BWBlogBundle:Admin/CustomFieldProperty:customFieldProperty, _locale: %locale% }
     
 ############
 # Frontend #

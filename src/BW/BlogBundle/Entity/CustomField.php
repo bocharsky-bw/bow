@@ -35,6 +35,31 @@ class CustomField
      */
     private $posts;
     
+    /**
+     * @var integer
+     * 
+     * @ORM\OneToMany(targetEntity="CustomFieldProperty", mappedBy="customField")
+     */
+    private $customFieldProperties;
+    
+    
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->customFieldProperties = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * @return string
+     */
+    public function __toString() 
+    {
+        return $this->name;
+    }
+    
     
     /**
      * Get id
@@ -66,17 +91,6 @@ class CustomField
      */
     public function getName()
     {
-        return $this->name;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    public function __toString() {
         return $this->name;
     }
 
@@ -111,5 +125,38 @@ class CustomField
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * Add customFieldProperties
+     *
+     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
+     * @return CustomField
+     */
+    public function addCustomFieldProperty(\BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties)
+    {
+        $this->customFieldProperties[] = $customFieldProperties;
+
+        return $this;
+    }
+
+    /**
+     * Remove customFieldProperties
+     *
+     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
+     */
+    public function removeCustomFieldProperty(\BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties)
+    {
+        $this->customFieldProperties->removeElement($customFieldProperties);
+    }
+
+    /**
+     * Get customFieldProperties
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCustomFieldProperties()
+    {
+        return $this->customFieldProperties;
     }
 }
