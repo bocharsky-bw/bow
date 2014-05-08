@@ -31,10 +31,17 @@ class CustomFieldProperty
     /**
      * @var integer
      * 
-     * @ORM\ManyToOne(targetEntity="customField", inversedBy="customFieldProperties")
+     * @ORM\ManyToOne(targetEntity="CustomField", inversedBy="customFieldProperties")
      * @ORM\JoinColumn(name="custom_field_id", referencedColumnName="id")
      */
     private $customField;
+    
+    /**
+     * @var integer
+     * 
+     * @ORM\ManyToMany(targetEntity="Post", mappedBy="customFieldProperties")
+     */
+    private $posts;
 
     
     
@@ -74,10 +81,10 @@ class CustomFieldProperty
     /**
      * Set customField
      *
-     * @param \BW\BlogBundle\Entity\customField $customField
+     * @param \BW\BlogBundle\Entity\CustomField $customField
      * @return CustomFieldProperty
      */
-    public function setCustomField(\BW\BlogBundle\Entity\customField $customField = null)
+    public function setCustomField(\BW\BlogBundle\Entity\CustomField $customField = null)
     {
         $this->customField = $customField;
 
@@ -87,10 +94,50 @@ class CustomFieldProperty
     /**
      * Get customField
      *
-     * @return \BW\BlogBundle\Entity\customField 
+     * @return \BW\BlogBundle\Entity\CustomField
      */
     public function getCustomField()
     {
         return $this->customField;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add posts
+     *
+     * @param \BW\BlogBundle\Entity\Post $posts
+     * @return CustomFieldProperty
+     */
+    public function addPost(\BW\BlogBundle\Entity\Post $posts)
+    {
+        $this->posts[] = $posts;
+
+        return $this;
+    }
+
+    /**
+     * Remove posts
+     *
+     * @param \BW\BlogBundle\Entity\Post $posts
+     */
+    public function removePost(\BW\BlogBundle\Entity\Post $posts)
+    {
+        $this->posts->removeElement($posts);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }

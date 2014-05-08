@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Post
 {
+    public $name;
     /**
      * @var integer
      *
@@ -83,14 +84,14 @@ class Post
      *
      * @ORM\Column(name="published", type="boolean")
      */
-    private $published;
+    private $published = true;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="home", type="boolean")
      */
-    private $home;
+    private $home = false;
 
     /**
      * @var integer
@@ -121,6 +122,13 @@ class Post
      * @ORM\ManyToMany(targetEntity="CustomField", inversedBy="posts")
      */
     private $customFields;
+    
+    /**
+     * @var integer
+     * 
+     * @ORM\ManyToMany(targetEntity="CustomFieldProperty", inversedBy="posts")
+     */
+    private $customFieldProperties;
 
     /**
      * Set default values
@@ -144,7 +152,7 @@ class Post
             foreach ($values as $field => $value) {
                 $getter = 'get'. ucfirst($field);
                 if (method_exists($this, $getter)) {
-                    if ($this->$getter() === NULL) {
+                    if ($this->$getter() === null) {
                         $setter = 'set'. ucfirst($field);
                         if (method_exists($this, $setter)) {
                             $this->$setter($value);
@@ -159,11 +167,10 @@ class Post
     
 
     public function __construct() {
-        $this->published = TRUE;
-        $this->home = FALSE;
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
         $this->customFields = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->customFieldProperties = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     
@@ -518,5 +525,38 @@ class Post
     public function getCustomFields()
     {
         return $this->customFields;
+    }
+
+    /**
+     * Add customFieldProperties
+     *
+     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
+     * @return Post
+     */
+    public function addCustomFieldProperty(\BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties)
+    {
+        $this->customFieldProperties[] = $customFieldProperties;
+
+        return $this;
+    }
+
+    /**
+     * Remove customFieldProperties
+     *
+     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
+     */
+    public function removeCustomFieldProperty(\BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties)
+    {
+        $this->customFieldProperties->removeElement($customFieldProperties);
+    }
+
+    /**
+     * Get customFieldProperties
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCustomFieldProperties()
+    {
+        return $this->customFieldProperties;
     }
 }

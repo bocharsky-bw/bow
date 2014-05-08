@@ -1,0 +1,18 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Добавление нового свойства {{ parent() }}{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-plus"></i> Создание свойства</h1>
+        </div>
+    </div>
+
+    {% include 'BWBlogBundle:Admin/CustomFieldProperty:custom-field-property.html.twig' %}
+
+{% endblock %}

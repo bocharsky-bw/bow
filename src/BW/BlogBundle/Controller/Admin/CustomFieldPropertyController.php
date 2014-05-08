@@ -18,19 +18,22 @@ class CustomFieldPropertyController extends BWController
         
     }
     
-    public function customFieldPropertyAction($id = NULL) {
+    public function customFieldPropertyAction($field_id, $id = NULL) {
         $data = $this->getPropertyOverload();
         $request = $this->getRequest();
         
         //$request->getSession()->set('AllowCKFinder', TRUE); // Allow to use CKFinder
-        
         if ($id) {
-            $customFieldProperty = $this->getDoctrine()->getRepository('BWBlogBundle:customFieldProperty')->find($id);
+            $customFieldProperty = $this->getDoctrine()->getRepository('BWBlogBundle:CustomFieldProperty')->find($id);
         } else {
             $customFieldProperty = new CustomFieldProperty();
         }
+        $customFieldProperty->setCustomField(
+            $this->getDoctrine()->getRepository('BWBlogBundle:CustomField')->find($field_id)
+        );
         
-        $form = $this->createForm(new CustomFieldPropertyType(), customFieldProperty);
+        
+        $form = $this->createForm(new CustomFieldPropertyType(), $customFieldProperty);
         if ( ! $id) {
             $form->remove('delete');
         }
@@ -48,10 +51,12 @@ class CustomFieldPropertyController extends BWController
                         
                         $this->get('session')->getFlashBag()->add(
                             'danger',
-                            'Настраиваемое поле успешно удалено из БД'
+                            'Свойство успешно удалено из БД'
                         );
 
-                        return $this->redirect( $this->generateUrl('admin_custom_fields') );
+                        return $this->redirect($this->generateUrl('admin_custom_field_edit', array(
+                            'id' => $field_id,
+                        )));
                     }
                 }
                 
@@ -62,25 +67,30 @@ class CustomFieldPropertyController extends BWController
                 
                 $this->get('session')->getFlashBag()->add(
                         'success',
-                        'Настраиваемое поле успешно сохранено в БД'
+                        'Свойство успешно сохранено в БД'
                     );
                 
                 if ( $form->get('saveAndClose')->isClicked() ) {
-                    return $this->redirect( $this->generateUrl('admin_custom_fields') );
+                    return $this->redirect($this->generateUrl('admin_custom_field_edit', array(
+                        'id' => $field_id,
+                    )));
                 }
                 
-                return $this->redirect( $this->generateUrl('admin_custom_field_edit', array('id' => $customFieldProperty->getId())) );
+                return $this->redirect( $this->generateUrl('admin_custom_field_property_edit', array(
+                    'field_id' => $field_id,
+                    'id' => $customFieldProperty->getId(),
+                )));
             }
         }
-        
+
         $data->customFieldProperty = $customFieldProperty;
         $data->form = $form->createView();
         
         if ($id) {
-            return $this->render('BWBlogBundle:Admin/CustomField:edit-custom-field.html.twig', $data->toArray());
+            return $this->render('BWBlogBundle:Admin/CustomFieldProperty:edit-custom-field-property.html.twig', $data->toArray());
         }
         
-        return $this->render('BWBlogBundle:Admin/CustomField:add-custom-field.html.twig', $data->toArray());
+        return $this->render('BWBlogBundle:Admin/CustomFieldProperty:add-custom-field-property.html.twig', $data->toArray());
     }
     
 }

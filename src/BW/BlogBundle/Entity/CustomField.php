@@ -31,16 +31,16 @@ class CustomField
     /**
      * @var integer
      * 
-     * @ORM\ManyToMany(targetEntity="Post", mappedBy="customFields")
+     * @ORM\OneToMany(targetEntity="CustomFieldProperty", mappedBy="customField")
      */
-    private $posts;
+    private $customFieldProperties;
     
     /**
      * @var integer
      * 
-     * @ORM\OneToMany(targetEntity="CustomFieldProperty", mappedBy="customField")
+     * @ORM\ManyToMany(targetEntity="Post", mappedBy="customFields")
      */
-    private $customFieldProperties;
+    private $posts;
     
     
     /**

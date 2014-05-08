@@ -31,16 +31,16 @@ class CustomField
     /**
      * @var integer
      * 
-     * @ORM\ManyToMany(targetEntity="Post", mappedBy="customFields")
+     * @ORM\OneToMany(targetEntity="CustomFieldProperty", mappedBy="customField")
      */
-    private $posts;
+    private $customFieldProperties;
     
     /**
      * @var integer
      * 
-     * @ORM\OneToMany(targetEntity="CustomFieldProperty", mappedBy="customFields")
+     * @ORM\ManyToMany(targetEntity="Post", mappedBy="customFields")
      */
-    private $customFieldProperties;
+    private $posts;
     
     
     /**
@@ -49,6 +49,7 @@ class CustomField
     public function __construct()
     {
         $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->customFieldProperties = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**

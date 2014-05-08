@@ -22,6 +22,7 @@ class CustomFieldController extends BWController
         $data = $this->getPropertyOverload();
         
         $data->customFields = $this->getDoctrine()->getRepository('BWBlogBundle:CustomField')->findAll();
+//        $data->customFieldProperties = $this->getDoctrine()->getRepository('BWBlogBundle:CustomFieldProperty')->findAll();
         
         return $this->render('BWBlogBundle:Admin/CustomField:custom-fields.html.twig', $data->toArray());
     }
@@ -33,12 +34,12 @@ class CustomFieldController extends BWController
         //$request->getSession()->set('AllowCKFinder', TRUE); // Allow to use CKFinder
         
         if ($id) {
-            $customFields = $this->getDoctrine()->getRepository('BWBlogBundle:CustomField')->find($id);
+            $customField = $this->getDoctrine()->getRepository('BWBlogBundle:CustomField')->find($id);
         } else {
-            $customFields = new CustomField;
+            $customField = new CustomField;
         }
         
-        $form = $this->createForm(new CustomFieldType(), $customFields);
+        $form = $this->createForm(new CustomFieldType(), $customField);
         if ( ! $id) {
             $form->remove('delete');
         }
@@ -51,7 +52,7 @@ class CustomFieldController extends BWController
                 
                 if ($id) {
                     if ( $form->get('delete')->isClicked() ) {
-                        $em->remove($customFields);
+                        $em->remove($customField);
                         $em->flush();
                         
                         $this->get('session')->getFlashBag()->add(
@@ -63,8 +64,8 @@ class CustomFieldController extends BWController
                     }
                 }
                 
-                if ( ! $customFields->getId()) {
-                    $em->persist($customFields);
+                if ( ! $customField->getId()) {
+                    $em->persist($customField);
                 }
                 $em->flush();
                 
@@ -77,11 +78,11 @@ class CustomFieldController extends BWController
                     return $this->redirect( $this->generateUrl('admin_custom_fields') );
                 }
                 
-                return $this->redirect( $this->generateUrl('admin_custom_field_edit', array('id' => $customFields->getId())) );
+                return $this->redirect( $this->generateUrl('admin_custom_field_edit', array('id' => $customField->getId())) );
             }
         }
         
-        $data->customFields = $customFields;
+        $data->customField = $customField;
         $data->form = $form->createView();
         
         if ($id) {

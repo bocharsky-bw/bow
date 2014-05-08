@@ -14,12 +14,12 @@ admin_category_add:
 
 admin_category_edit:
     host:     %domain%
-    pattern:  /_admin/{_locale}/category/edit/{id}
+    pattern:  /_admin/{_locale}/category/{id}/edit
     defaults: { _controller: BWBlogBundle:Admin/Category:category, _locale: %locale% }
 
 admin_category_toogle_published:
     host:     %domain%
-    pattern:  /_admin/{_locale}/category/toogle-published/{id}
+    pattern:  /_admin/{_locale}/category/{id}/toogle-published
     defaults: { _controller: BWBlogBundle:Admin/Category:togglePublished, _locale: %locale% }
     
 # Post
@@ -35,12 +35,12 @@ admin_post_add:
 
 admin_post_edit:
     host:     %domain%
-    pattern:  /_admin/{_locale}/post/edit/{id}
+    pattern:  /_admin/{_locale}/post/{id}/edit
     defaults: { _controller: BWBlogBundle:Admin/Post:post, _locale: %locale% }
 
 admin_post_toogle_published:
     host:     %domain%
-    pattern:  /_admin/{_locale}/post/toogle-published/{id}
+    pattern:  /_admin/{_locale}/post/{id}/toogle-published
     defaults: { _controller: BWBlogBundle:Admin/Post:togglePublished, _locale: %locale% }
     
 # Contact
@@ -56,10 +56,10 @@ admin_contact_add:
 
 admin_contact_edit:
     host:     %domain%
-    pattern:  /_admin/{_locale}/contact/edit/{id}
+    pattern:  /_admin/{_locale}/contact/{id}/edit
     defaults: { _controller: BWBlogBundle:Admin/Contact:contact, _locale: %locale% }
     
-# Contact
+# Custom Fields 
 admin_custom_fields:
     host:     %domain%
     pattern:  /_admin/{_locale}/custom-fields
@@ -72,17 +72,18 @@ admin_custom_field_add:
 
 admin_custom_field_edit:
     host:     %domain%
-    pattern:  /_admin/{_locale}/custom-field/edit/{id}
+    pattern:  /_admin/{_locale}/custom-field/{id}/edit
     defaults: { _controller: BWBlogBundle:Admin/CustomField:customField, _locale: %locale% }
   
+# Custom Field Properties
 admin_custom_field_property_add:
     host:     %domain%
-    pattern:  /_admin/{_locale}/custom-field-property/add
+    pattern:  /_admin/{_locale}/custom-field/{field_id}/property/add
     defaults: { _controller: BWBlogBundle:Admin/CustomFieldProperty:customFieldProperty, _locale: %locale% }
 
 admin_custom_field_property_edit:
     host:     %domain%
-    pattern:  /_admin/{_locale}/custom-field-property/edit/{id}
+    pattern:  /_admin/{_locale}/custom-field/{field_id}/property/{id}/edit
     defaults: { _controller: BWBlogBundle:Admin/CustomFieldProperty:customFieldProperty, _locale: %locale% }
     
 ############
