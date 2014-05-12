@@ -14,29 +14,32 @@
         <div class="row">
             <div class="col-lg-3">
                 {{ service('bw_blog.widget').lastPosts()|raw }}
+                
+                {{ service('bw_blog.widget').customFilter()|raw }}
             </div>
             <div class="col-lg-9">
                 <h1>Категория: {{ category.heading }}</h1>
                 {% if categories %}
-                <div class="categories">
-                    <!-- Подкатегории: -->
-                    <ul>
-                        {% for category in categories %}
-                        <li><a href="{{ path('bw_router_index', {'q': category.route.query}) }}">{{ category.heading }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
-                {% if posts %}
-                <div class="posts">
-                    <!-- Статьи: -->
-                    {% for post in posts %}
-                    <div class="post">
-                        <h2><a href="{{ path('bw_router_index', {'q': post.route.query}) }}">{{ post.heading }}</a></h2>
-                        <div>{{ post.shortDescription }}</div>
+                    <div class="categories">
+                        <!-- Подкатегории: -->
+                        <ul>
+                            {% for category in categories %}
+                            <li><a href="{{ path('bw_router_index', {'q': category.route.query}) }}">{{ category.heading }}</a></li>
+                            {% endfor %}
+                        </ul>
                     </div>
-                    {% endfor %}
-                </div>
+                {% endif %}
+                
+                {% if posts %}
+                    <div class="posts">
+                        <!-- Статьи: -->
+                        {% for post in posts %}
+                        <div class="post">
+                            <h2><a href="{{ path('bw_router_index', {'q': post.route.query}) }}">{{ post.heading }}</a></h2>
+                            <div>{{ post.shortDescription|raw }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 {% endif %}
             </div>
         </div>

@@ -110,8 +110,35 @@
             </div>
         </div>
         
-        {#
         <h2>Настраиваемые поля</h2>
+        <div>
+            {#
+                @TODO Rendered manually to separated select lists
+                {{ dump(form.customFieldProperties.vars.choices) }}
+            #}
+            
+            {# generate named separators for rendering checkboxes groups #}
+            {% set separators = [] %}
+            {% set offset = 0 %}
+            {% for name, choice in form.customFieldProperties.vars.choices %}
+                {% set separators = separators|merge({('index_' ~ offset): name}) %}
+                {% set offset = offset + choice|length %}
+            {% endfor %}
+            
+            {{ form_label(form.customFieldProperties, 'Настраиваемые поля: ', {'label_attr': {'class': ''} }) }}
+            <ul>
+                {% for property in form.customFieldProperties %}
+                    {% if separators['index_' ~ loop.index0] is defined %}
+                        <li class="separator">{{ separators['index_' ~ loop.index0] }}</li>
+                    {% endif %}
+                    <li>{{ form_widget(property) }} - {{ form_label(property) }}</li>
+                {% endfor %}
+            </ul>
+            <div class="error">
+                {{ form_errors(form.customFieldProperties) }}
+            </div>
+        </div>
+        {#
         <div>
             {{ form_label(form.customFields, 'Настраиваемые поля: ', {'label_attr': {'class': ''} }) }}
             <ul>

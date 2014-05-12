@@ -13,7 +13,7 @@ services:
     bw_blog.widget:
         class: BW\BlogBundle\Service\Widget
         arguments: ["@service_container"]
-        
+    
     bw_blog.transliter:
         class: BW\BlogBundle\Service\Transliter
         arguments: ["@service_container"]

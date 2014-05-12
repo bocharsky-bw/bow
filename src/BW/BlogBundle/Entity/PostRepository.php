@@ -26,6 +26,15 @@ class PostRepository extends EntityRepository {
                 ->orderBy('p.created', 'DESC')
             ;
         
+        if (isset($_GET['form'])) {
+            $qb = $qb
+                    ->innerJoin('p.customFieldProperties', 'cfp')
+                    ->andWhere('cfp.id IN ('. implode(',', $_GET['form']['properteis']) .') ')
+                    //->andWhere('cfp.id IN (:properties)')
+                    //->setParameter('properties', implode(',', $_GET['form']['properteis']))
+                ;
+        }
+        
         return $qb->getQuery()->getResult();
     }
     

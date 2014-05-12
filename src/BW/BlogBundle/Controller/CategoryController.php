@@ -26,7 +26,7 @@ class CategoryController extends BWController
                 'published' => TRUE,
             )
         );
-        
+
         $data->posts = $this->getDoctrine()->getRepository('BWBlogBundle:Post')->findNestedBy(
             $data->category->getLeft(),
             $data->category->getRight()

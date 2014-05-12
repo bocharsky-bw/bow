@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Post
 {
-    public $name;
     /**
      * @var integer
      *
@@ -124,12 +123,12 @@ class Post
     private $customFields;
     
     /**
-     * @var integer
+     * @var \Doctrine\Common\Collections\ArrayCollection
      * 
      * @ORM\ManyToMany(targetEntity="CustomFieldProperty", inversedBy="posts")
      */
     private $customFieldProperties;
-
+    
     /**
      * Set default values
      * 
@@ -559,4 +558,5 @@ class Post
     {
         return $this->customFieldProperties;
     }
+    
 }

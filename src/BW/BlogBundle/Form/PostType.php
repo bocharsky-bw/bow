@@ -65,13 +65,6 @@ class PostType extends AbstractType
                 ->add('saveAndClose', 'submit')
                 ->add('delete', 'submit')
                 // CustomFields
-//                ->add('customFields', 'entity', array(
-//                    'class' => 'BWBlogBundle:CustomField',
-//                    'property' => 'name',
-//                    'required' => FALSE,
-//                    'expanded' => TRUE,
-//                    'multiple' => TRUE,
-//                ))
                 ->add('customFieldProperties', 'entity', array(
                     'class' => 'BWBlogBundle:CustomFieldProperty',
                     'property' => 'name',
@@ -80,7 +73,15 @@ class PostType extends AbstractType
                     'expanded' => TRUE,
                     'multiple' => TRUE,
                 ))
-//                ->add('name', new CustomFieldType())
+//                ->add('customFields', 'entity', array(
+//                    'class' => 'BWBlogBundle:CustomField',
+//                    'property' => 'name',
+//                    'required' => FALSE,
+//                    'expanded' => TRUE,
+//                    'multiple' => TRUE,
+//                ))
+//                ->add('customFieldProperties', 'collection')
+//                ->add('customFields', new CustomFieldType())
             ;
     }
     
@@ -89,9 +90,11 @@ class PostType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'BW\BlogBundle\Entity\Post',
-        ));
+        $resolver
+            ->setDefaults(array(
+                'data_class' => 'BW\BlogBundle\Entity\Post',
+            ))
+        ;
     }
 
     /**
