@@ -13,6 +13,7 @@
 # bow
 /*~
 /nbproject/
+/.idea/
 /web/uploads/
 /app/config/parameters_local.yml
 /app/config/parameters_server.yml
