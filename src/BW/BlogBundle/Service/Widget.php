@@ -8,21 +8,25 @@ class Widget {
     
     /**
      * The Service Container
-     * @var Symfony\Component\DependencyInjection\ContainerInterface 
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
 
     
     /**
      * The constructor
-     * @global Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @global Symfony\Component\Form\FormBuilderInterface $form
+     * @global \Symfony\Component\Form\FormFactoryInterface $formFactory
+     * @global \Symfony\Component\Form\FormBuilderInterface $form
      */
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
     }
 
-    
+
+    /**
+     * Список категорий
+     * @param null|int $category
+     */
     public function listCategories($category = NULL) {
         $criteria = array(
             'published' => TRUE,
@@ -53,14 +57,27 @@ class Widget {
                 'categories' => $categories,
             ));
     }
-    
-    public function lastPosts($count = 5, $category = FALSE) {
+
+    /**
+     * Список последних постов категории / нескольких категорий
+     * @param int $count Количество постов
+     * @param bool|int|array $categories
+     */
+    public function lastPosts($count = 5, $categories = FALSE) {
         $criteria = array(
             'published' => TRUE,
         );
-        
-        if ($category) {
-            $criteria['category'] = $category;
+
+        if ($categories) {
+            if (is_array($categories)) {
+                foreach ($categories as &$category) {
+                    $category = (int)$category;
+                }
+                unset($category); // unset reference
+                $criteria['category'] = $categories;
+            } else {
+                $criteria['category'] = (int)$categories;
+            }
         }
         
         $posts = $this->container->get('doctrine')
@@ -78,16 +95,19 @@ class Widget {
                 'posts' => $posts,
             ));
     }
-    
+
+    /**
+     * Фильтр для настраиваемых параметров
+     */
     public function customFilter() {
         
         $fields = $this->container->get('doctrine')
             ->getRepository('BWBlogBundle:CustomField')
             ->findAll();
         
-        $properteis = $this->container->get('doctrine')
-            ->getRepository('BWBlogBundle:CustomFieldProperty')
-            ->findAll();
+//        $properteis = $this->container->get('doctrine')
+//            ->getRepository('BWBlogBundle:CustomFieldProperty')
+//            ->findAll();
         
         $defaults = array('properteis' => new \Doctrine\Common\Collections\ArrayCollection);
         $formFactory = $this->container->get('form.factory');
