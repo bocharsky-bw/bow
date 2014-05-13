@@ -13,6 +13,8 @@ use Doctrine\ORM\EntityRepository;
 class PostRepository extends EntityRepository {
     
     public function findNestedBy($left, $right) {
+        $request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+        
         $qb = $this->createQueryBuilder('p')
                 ->innerJoin('p.category', 'c')
                 ->innerJoin('p.route', 'r')
@@ -26,14 +28,18 @@ class PostRepository extends EntityRepository {
                 ->orderBy('p.created', 'DESC')
             ;
         
-        if (isset($_GET['form'])) {
-            $qb = $qb
-                    ->innerJoin('p.customFieldProperties', 'cfp')
-                    ->andWhere('cfp.id IN ('. implode(',', $_GET['form']['properteis']) .') ')
-                    //->andWhere('cfp.id IN (:properties)')
-                    //->setParameter('properties', implode(',', $_GET['form']['properteis']))
-                ;
+        /* Custom Filter */
+        $form = $request->query->get('form', FALSE);
+        if ($form) {
+            if (isset($form['properteis'])) {
+                $qb = $qb
+                        ->innerJoin('p.customFieldProperties', 'cfp')
+                        ->andWhere('cfp.id IN (:properties)')
+                        ->setParameter('properties', $form['properteis'])
+                    ;
+            }
         }
+        /* /Custom Filter */
         
         return $qb->getQuery()->getResult();
     }
