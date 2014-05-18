@@ -103,5 +103,16 @@ DELETE
             </div>
         </div>
 
+        <div>
+            <div>
+                <img src="{{ asset(item.getWebPath()) }}" alt="" style="max-width: 150px; max-height: 150px;" />
+            </div>
+            {{ form_label(form.file, 'Изображение: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.file, {'attr': {'class': ''} }) }}
+            <div class="error">
+                {{ form_errors(form.file) }}
+            </div>
+        </div>
+
     </div>
 {{ form_end(form) }}

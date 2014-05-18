@@ -59,6 +59,9 @@ class ItemType extends AbstractType
                     'required' => FALSE,
                     'empty_value' => 'Выберите язык',
                 ))
+                ->add('file', 'file', array(
+                    'required' => FALSE,
+                ))
                 // Buttons
                 ->add('save', 'submit')
                 ->add('saveAndClose', 'submit')
