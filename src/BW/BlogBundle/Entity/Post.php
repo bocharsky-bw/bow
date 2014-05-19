@@ -496,10 +496,10 @@ class Post
     /**
      * Add customFields
      *
-     * @param \BW\BlogBundle\Entity\CustomFields $customFields
+     * @param \BW\BlogBundle\Entity\CustomField $customFields
      * @return Post
      */
-    public function addCustomField(\BW\BlogBundle\Entity\CustomFields $customFields)
+    public function addCustomField(\BW\BlogBundle\Entity\CustomField $customFields)
     {
         $this->customFields[] = $customFields;
 
@@ -509,9 +509,9 @@ class Post
     /**
      * Remove customFields
      *
-     * @param \BW\BlogBundle\Entity\CustomFields $customFields
+     * @param \BW\BlogBundle\Entity\CustomField $customFields
      */
-    public function removeCustomField(\BW\BlogBundle\Entity\CustomFields $customFields)
+    public function removeCustomField(\BW\BlogBundle\Entity\CustomField $customFields)
     {
         $this->customFields->removeElement($customFields);
     }
