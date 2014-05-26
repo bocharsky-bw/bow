@@ -2,10 +2,12 @@
 
 namespace BW\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * BW\UserBundle\Entity\Profile
+ * Class Profile
+ * @package BW\UserBundle\Entity
  *
  * @ORM\Table(name="profiles")
  * @ORM\Entity(repositoryClass="BW\UserBundle\Entity\ProfileRepository")
@@ -26,107 +28,105 @@ class Profile
      *
      * @ORM\Column(name="surname", type="string", length=255)
      */
-    private $surname;
+    private $surname = '';
 
     /**
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string $patronymic
      *
      * @ORM\Column(name="patronymic", type="string", length=255)
      */
-    private $patronymic;
+    private $patronymic = '';
 
     /**
      * @var string $phone
      *
      * @ORM\Column(name="phone", type="string", length=255)
      */
-    private $phone;
+    private $phone = '';
 
     /**
      * @var string $region
      *
      * @ORM\Column(name="region", type="string", length=255)
      */
-    private $region;
+    private $region = '';
 
     /**
      * @var string $city
      *
      * @ORM\Column(name="city", type="string", length=255)
      */
-    private $city;
+    private $city = '';
 
     /**
      * @var string $postcode
      *
      * @ORM\Column(name="postcode", type="string", length=255)
      */
-    private $postcode;
+    private $postcode = '';
 
     /**
      * @var string $street
      *
      * @ORM\Column(name="street", type="string", length=255)
      */
-    private $street;
+    private $street = '';
 
     /**
      * @var string $house
      *
      * @ORM\Column(name="house", type="string", length=255)
      */
-    private $house;
+    private $house = '';
 
     /**
      * @var string $apartment
      *
      * @ORM\Column(name="apartment", type="string", length=255)
      */
-    private $apartment;
+    private $apartment = '';
 
     /**
      * @var string $country
      *
-     * @ORM\ManyToOne(targetEntity="Country")
+     * @ORM\ManyToOne(targetEntity="BW\UserBundle\Entity\Country")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      */
-    private $country;
+    private $country = '';
 
     /**
-     * @ORM\OneToOne(targetEntity="User", inversedBy="profile")
+     * @var null|User
+     *
+     * @ORM\OneToOne(targetEntity="BW\UserBundle\Entity\User", inversedBy="profile")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
-    
+
     /**
-     * @ORM\OneToMany(targetEntity="Wallet", mappedBy="profile")
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="BW\UserBundle\Entity\Wallet", mappedBy="profile")
      */
     private $wallets;
-    
+
     /**
-     * @ORM\OneToMany(targetEntity="Replenishment", mappedBy="profile")
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="BW\UserBundle\Entity\Replenishment", mappedBy="profile")
      */
     private $replenishments;
     
     
     public function __construct() {
-        $this->surname      = '';
-        $this->name         = '';
-        $this->patronymic   = '';
-        $this->phone        = '';
-        $this->region       = '';
-        $this->city         = '';
-        $this->postcode     = '';
-        $this->street       = '';
-        $this->house        = '';
-        $this->apartment    = '';
+        $this->wallets = new ArrayCollection();
+        $this->replenishments= new ArrayCollection();
     }
 
 
@@ -385,10 +385,11 @@ class Profile
     /**
      * Set user
      *
-     * @param BW\UserBundle\Entity\User $user
-     * @return Profile
+     * @param \BW\UserBundle\Entity\User $user
+     *
+     * @return $this
      */
-    public function setUser(\BW\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
         return $this;
@@ -397,7 +398,7 @@ class Profile
     /**
      * Get user
      *
-     * @return BW\UserBundle\Entity\User 
+     * @return \BW\UserBundle\Entity\User
      */
     public function getUser()
     {
@@ -407,10 +408,11 @@ class Profile
     /**
      * Add wallets
      *
-     * @param BW\UserBundle\Entity\Wallet $wallets
-     * @return Profile
+     * @param \BW\UserBundle\Entity\Wallet $wallets
+     *
+     * @return $this
      */
-    public function addWallet(\BW\UserBundle\Entity\Wallet $wallets)
+    public function addWallet(Wallet $wallets)
     {
         $this->wallets[] = $wallets;
         return $this;
@@ -419,9 +421,9 @@ class Profile
     /**
      * Remove wallets
      *
-     * @param BW\UserBundle\Entity\Wallet $wallets
+     * @param \BW\UserBundle\Entity\Wallet $wallets
      */
-    public function removeWallet(\BW\UserBundle\Entity\Wallet $wallets)
+    public function removeWallet(Wallet $wallets)
     {
         $this->wallets->removeElement($wallets);
     }
@@ -429,7 +431,7 @@ class Profile
     /**
      * Get wallets
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWallets()
     {
@@ -439,10 +441,11 @@ class Profile
     /**
      * Add replenishments
      *
-     * @param BW\UserBundle\Entity\Replenishment $replenishments
+     * @param \BW\UserBundle\Entity\Replenishment $replenishments
+     *
      * @return Profile
      */
-    public function addReplenishment(\BW\UserBundle\Entity\Replenishment $replenishments)
+    public function addReplenishment(Replenishment $replenishments)
     {
         $this->replenishments[] = $replenishments;
         return $this;
@@ -451,17 +454,17 @@ class Profile
     /**
      * Remove replenishments
      *
-     * @param BW\UserBundle\Entity\Replenishment $replenishments
+     * @param \BW\UserBundle\Entity\Replenishment $replenishment
      */
-    public function removeReplenishment(\BW\UserBundle\Entity\Replenishment $replenishments)
+    public function removeReplenishment(Replenishment $replenishment)
     {
-        $this->replenishments->removeElement($replenishments);
+        $this->replenishments->removeElement($replenishment);
     }
 
     /**
      * Get replenishments
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getReplenishments()
     {

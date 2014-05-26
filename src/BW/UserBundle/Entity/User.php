@@ -4,7 +4,6 @@ namespace BW\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
@@ -547,7 +546,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Add mailing
      *
-     * @param BW\MailingBundle\Entity\Mailing $mailing
+     * @param \BW\MailingBundle\Entity\Mailing $mailing
      * @return User
      */
     public function addMailing(\BW\MailingBundle\Entity\Mailing $mailing)
@@ -559,7 +558,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Remove mailing
      *
-     * @param BW\MailingBundle\Entity\Mailing $mailing
+     * @param \BW\MailingBundle\Entity\Mailing $mailing
      */
     public function removeMailing(\BW\MailingBundle\Entity\Mailing $mailing)
     {
@@ -569,7 +568,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get mailing
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMailing()
     {
@@ -579,7 +578,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Set profile
      *
-     * @param BW\UserBundle\Entity\Profile $profile
+     * @param \BW\UserBundle\Entity\Profile $profile
      * @return User
      */
     public function setProfile(\BW\UserBundle\Entity\Profile $profile = null)
@@ -591,7 +590,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Get profile
      *
-     * @return BW\UserBundle\Entity\Profile 
+     * @return \BW\UserBundle\Entity\Profile
      */
     public function getProfile()
     {
