@@ -4,32 +4,49 @@ namespace BW\SliderBundle\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class Widget
+ * @package BW\SliderBundle\Service
+ */
 class Widget {
     
     /**
      * The Service Container
-     * @var Symfony\Component\DependencyInjection\ContainerInterface 
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected $container;
 
-    
+
+    /**
+     * The constructor
+     *
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
     }
 
-    
+
+    /**
+     * Render HTML code of slider by alias
+     *
+     * @param $alias The slider alias
+     *
+     * @return string
+     */
     public function create($alias) {
         $slider = $this->container->get('doctrine')
-                ->getRepository('BWSliderBundle:Slider')
-                ->findOneBy(
-                    array(
-                        'alias' => $alias,
-                    )
-                )
-            ;
+            ->getRepository('BWSliderBundle:Slider')
+            ->findOneBy(array(
+                'alias' => $alias,
+            ))
+        ;
         
-        return $this->container->get('templating')->render('BWSliderBundle:Widget:slider.html.twig', array(
-            'slider' => $slider,
-        ));
+        return $this->container
+            ->get('templating')
+            ->render('BWSliderBundle:Widget:slider.html.twig', array(
+                'slider' => $slider,
+            ))
+        ;
     }
 }

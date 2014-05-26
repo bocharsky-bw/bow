@@ -1,6 +1,3 @@
-parameters:
-    domain: bow.localhost
-
 services:
 #    bw_main.example:
 #        class: %bw_main.example.class%

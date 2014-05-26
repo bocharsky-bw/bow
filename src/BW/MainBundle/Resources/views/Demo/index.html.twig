@@ -23,65 +23,57 @@
                 </p>
             </div>
             <div class="col-lg-9">
-                <h1>Demo</h1>
-                    <p><i>Адрес демо-странички:</i></p>
+                <div class="example">
+                    <h1>Demo</h1>
+                    <i>Адрес этой демо-странички:</i><br/>
                     <pre>BWMainBundle:Demo:index.html.twig</pre>
-                <h2>+ Лайки соц.сетей:</h2>
-                    <p><i>Подключение:</i></p>
-                    <pre>&#123;&#37; include 'BWUserBundle:User/social:likes.html.twig' &#37;&#125;</pre>
-                    <p><i>Пример:</i></p>
-                    {% include 'BWUserBundle:User/social:likes.html.twig' %}
-                <h2>+ Блок статического HTML кода:</h2>
-                    <p><i>Подключение:</i></p>
-                    <pre>&#123;&#37; include 'BWMainBundle:Static:banner.html.twig' &#37;&#125;</pre>
-                    <p><i>Пример:</i></p>
+                    <a href="https://github.com/bocharsky-bw/bow/blob/master/src/BW/MainBundle/Resources/views/Demo/index.html.twig" target="_blank">Исходный код</a><br/>
+                </div>
+                <div class="example">
+                    <h2>+ Блок статического HTML кода:</h2>
+                    <pre>{{ '{%' }} include 'BWMainBundle:Static:banner.html.twig' {{ '%}' }}</pre>
+                    <a href="http://twig.sensiolabs.org/doc/tags/include.html#include" target="_blank">Документация</a><br/>
+                    <i>Пример:</i><br/>
                     {% include 'BWMainBundle:Static:banner.html.twig' %}
-                <h2>+ Список категорий:</h2>
-                    <p><i>Подключение:</i></p>
-                    <pre>&#123;&#123; service('bw_blog.widget').listCategories(2)|raw &#125;&#125;</pre>
-                    <p>
-                        <small>
-                            где: <b>2</b> - ID категории в БД.<br>
-                            по умолчанию: список всех категорий
-                        </small>
-                    </p>
-                    <p><i>Пример:</i></p>
+                </div>
+                <div class="example">
+                    <h2>+ Лайки соц.сетей:</h2>
+                    <pre>{{ '{%' }} include 'BWUserBundle:User/social:likes.html.twig' {{ '%}' }}</pre>
+                    <i>Пример:</i><br/>
+                    {% include 'BWUserBundle:User/social:likes.html.twig' %}
+                </div>
+                <div class="example">
+                    <h2>+ Список категорий:</h2>
+                    <pre>{{ '{{' }} service('bw_blog.widget').listCategories($categories = null, $template = 'list-categories')|raw {{ '}}' }}</pre>
+                    <a href="https://github.com/bocharsky-bw/bow/blob/master/src/BW/BlogBundle/Service/Widget.php#L35" target="_blank">Документация</a><br/>
+                    <i>Пример:</i><br/>
                     {{ service('bw_blog.widget').listCategories()|raw }}
-                <h2>+ Список последних статей:</h2>
-                    <p><i>Подключение:</i></p>
-                    <pre>&#123;&#123; service('bw_blog.widget').lastPosts(3, 0)|raw &#125;&#125;</pre>
-                    <p>
-                        <small>
-                            где: <b>3</b> - количество записей.<br>
-                            где: <b>0</b> - ID категории. Или передать несколько ID категорий массивам как <b>[1,2,3]</b>.<br>
-                            по умолчанию: 5 последних записей
-                        </small>
-                    </p>
-                    <p><i>Пример:</i></p>
-                    {{ service('bw_blog.widget').lastPosts(3, 0)|raw }}
-                <h2>+ Список доступных языков:</h2>
-                    <p><i>Подключение:</i></p>
-                    <pre>&#123;&#123; service('bw_localization.widget').langs()|raw &#125;&#125;</pre>
-                    <p><i>Пример:</i></p>
+                </div>
+                <div class="example">
+                    <h2>+ Список последних статей:</h2>
+                    <pre>{{ '{{' }} service('bw_blog.widget').lastPosts($count = 5, $categories = null, $template = 'last-posts')|raw {{ '}}' }}</pre>
+                    <a href="https://github.com/bocharsky-bw/bow/blob/master/src/BW/BlogBundle/Service/Widget.php#L73" target="_blank">Документация</a><br/>
+                    <i>Пример:</i><br/>
+                    {{ service('bw_blog.widget').lastPosts()|raw }}
+                </div>
+                <div class="example">
+                    <h2>+ Список доступных языков:</h2>
+                    <pre>{{ '{{' }} service('bw_localization.widget').langs()|raw {{ '}}' }}</pre>
+                    <i>Пример:</i><br/>
                     {{ service('bw_localization.widget').langs()|raw }}
-                <h2>+ Список пунктов меню:</h2>
-                    <p><i>Подключение:</i></p>
-                    <pre>&#123;&#123; service('bw_menu.widget').getMenu('main_menu', false)|raw &#125;&#125;</pre>
-                    <p>
-                        <small>
-                            где: <b>main_menu</b> - alias меню, <b>false</b> - не отображать заголовок меню.<br>
-                        </small>
-                    </p>
-                    <p><i>Пример:</i></p>
-                    {{ service('bw_menu.widget').getMenu('main_menu', false)|raw }}
-                <h2>+ Слайдер:</h2>
-                    <p><i>Подключение:</i></p>
-                    <pre>&#123;&#123; service('bw_slider.widget').create('slider-1')|raw &#125;&#125;</pre>
-                    <p>
-                        <small>
-                            где: <b>slider-1</b> - alias слайдера
-                        </small>
-                    </p>
+                </div>
+                <div class="example">
+                    <h2>+ Список пунктов меню:</h2>
+                    <pre>{{ '{{' }} service('bw_menu.widget').getMenu($alias, $display_heading = true)|raw {{ '}}' }}</pre>
+                    <a href="https://github.com/bocharsky-bw/bow/blob/master/src/BW/MenuBundle/Service/Widget.php#L39" target="_blank">Документация</a><br/>
+                    <i>Пример:</i><br/>
+                    {{ service('bw_menu.widget').getMenu('main_menu')|raw }}
+                </div>
+                <div class="example">
+                    <h2>+ Слайдер:</h2>
+                    <pre>{{ '{{' }} service('bw_slider.widget').create('slider-1')|raw {{ '}}' }}</pre>
+                    <a href="https://github.com/bocharsky-bw/bow/blob/master/src/BW/SliderBundle/Service/Widget.php#L37" target="_blank">Документация</a><br/>
+                </div>
             </div>
         </div>
     </div>
