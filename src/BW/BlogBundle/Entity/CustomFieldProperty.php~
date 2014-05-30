@@ -44,6 +44,19 @@ class CustomFieldProperty
     private $posts;
 
     
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    public function __toString()
+    {
+        return $this->name;
+    }
+    
     
     /**
      * Get id
@@ -99,13 +112,6 @@ class CustomFieldProperty
     public function getCustomField()
     {
         return $this->customField;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

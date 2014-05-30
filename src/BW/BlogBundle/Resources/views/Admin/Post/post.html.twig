@@ -84,6 +84,15 @@
             </div>
         </div>
 
+        <div>
+            <div>
+                {% if post.image %}
+                    <img src="{{ asset(post.image.webPath) }}" alt=""/>
+                {% endif %}
+            </div>
+            {{ form_row(form.image) }}
+        </div>
+
         <h2>Meta теги:</h2>
 
         <div>

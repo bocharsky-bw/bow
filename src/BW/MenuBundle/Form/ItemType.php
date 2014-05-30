@@ -2,6 +2,7 @@
 
 namespace BW\MenuBundle\Form;
 
+use BW\BlogBundle\Form\ImageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -59,7 +60,7 @@ class ItemType extends AbstractType
                     'required' => FALSE,
                     'empty_value' => 'Выберите язык',
                 ))
-                ->add('file', 'file', array(
+                ->add('image', new ImageType('posts'), array(
                     'required' => FALSE,
                 ))
                 // Buttons

@@ -20,6 +20,12 @@ class CategoryType extends AbstractType
                     'required' => FALSE,
                 ))
                 ->add('heading', 'text')
+                ->add('shortDescription', 'textarea', array(
+                    'required' => FALSE,
+                ))
+                ->add('description', 'textarea', array(
+                    'required' => FALSE,
+                ))
                 // Entities
                 // Lang
                 ->add('parent', 'entity', array(
@@ -43,6 +49,9 @@ class CategoryType extends AbstractType
                     'property' => 'name',
                     'required' => FALSE,
                     'empty_value' => 'Выберите язык',
+                ))
+                ->add('image', new ImageType('posts'), array(
+                    'required' => FALSE,
                 ))
                 // Meta tags
                 ->add('slug', 'text', array(

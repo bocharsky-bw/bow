@@ -2,7 +2,6 @@
 
 namespace BW\MenuBundle\Entity;
 
-use BW\BlogBundle\Entity\Image;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

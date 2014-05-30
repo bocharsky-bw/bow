@@ -3,7 +3,7 @@
 ###########
 admin_root:
     host:     %domain%
-    pattern:  /_admin
+    pattern:  /_admin/
     defaults:
         _controller:  FrameworkBundle:Redirect:urlRedirect
         path:         /_admin/%locale%/

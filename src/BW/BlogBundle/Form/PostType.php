@@ -50,6 +50,7 @@ class PostType extends AbstractType
                     'required' => FALSE,
                     'empty_value' => 'Выберите язык',
                 ))
+                ->add('image', new ImageType('categories'))
                 // Meta tags
                 ->add('slug', 'text', array(
                     'required' => FALSE,

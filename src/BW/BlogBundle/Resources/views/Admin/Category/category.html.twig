@@ -52,6 +52,31 @@
             </div>
         </div>
 
+        <div>
+            {{ form_label(form.shortDescription, 'Короткое описание: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.shortDescription, {'attr': {'class': 'form-control ', 'style': 'height: 50px;'} }) }}
+            <div class="error">
+                {{ form_errors(form.shortDescription) }}
+            </div>
+        </div>
+
+        <div>
+            {{ form_label(form.description, 'Полное описание: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-control ', 'style': 'height: 50px;'} }) }}
+            <div class="error">
+                {{ form_errors(form.description) }}
+            </div>
+        </div>
+
+        <div>
+            <div>
+                {% if category.image %}
+                    <img src="{{ asset(category.image.webPath) }}" alt=""/>
+                {% endif %}
+            </div>
+            {{ form_row(form.image) }}
+        </div>
+
         <h2>Meta теги:</h2>
 
         <div>
