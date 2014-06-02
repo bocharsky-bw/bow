@@ -36,7 +36,7 @@ class Slide
      *
      * @ORM\Column(name="link", type="string", length=255)
      */
-    private $link = '';
+    private $link;
 
     /**
      * @ORM\ManyToOne(targetEntity="Slider", inversedBy="slides")
@@ -251,11 +251,7 @@ class Slide
      */
     public function setLink($link)
     {
-        if (isset($link)) {
-            $this->link = $link;
-        } else {
-            $this->link = '';
-        }
+        $this->link = $link;
 
         return $this;
     }
