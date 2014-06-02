@@ -15,7 +15,7 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
     	'127.0.0.1', 
     	'fe80::1', 
     	'::1',
-    	'192.168.0.103',
+    	'192.168.0.157',
 	))
 ) {
     header('HTTP/1.0 403 Forbidden');
