@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Entity;
 
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -102,10 +103,24 @@ class Contact
     /**
      * @var string
      *
-     * @ORM\Column(name="company_description", type="string", length=255)
+     * @ORM\Column(name="company_description", type="text")
      */
     private $companyDescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
     
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="captcha", type="boolean")
+     */
+    private $captcha = false;
+
     /**
      * @var string
      *
@@ -152,12 +167,13 @@ class Contact
 
     /**
      * Set default values
-     * 
+     *
      * @ORM\PrePersist
-     * @param array $values
-     * @return Category
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     *
+     * @return $this
      */
-    public function setDefaultValues(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+    public function setDefaultValues(LifecycleEventArgs $args) {
         $values = array(
             'country' => '',
             'city' => '',
@@ -170,6 +186,7 @@ class Contact
             'skype' => '',
             'companyName' => '',
             'companyDescription' => '',
+            'description' => '',
             'map' => '',
             'slug' => '',
             'title' => '',
@@ -635,5 +652,51 @@ class Contact
     public function getRoute()
     {
         return $this->route;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Contact
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set captcha
+     *
+     * @param boolean $captcha
+     * @return Contact
+     */
+    public function setCaptcha($captcha)
+    {
+        $this->captcha = $captcha;
+
+        return $this;
+    }
+
+    /**
+     * Get captcha
+     *
+     * @return boolean 
+     */
+    public function isCaptcha()
+    {
+        return $this->captcha;
     }
 }

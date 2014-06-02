@@ -15,6 +15,9 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('captcha', 'checkbox', array(
+                'required' => FALSE,
+            ))
             ->add('heading', 'text')
             // Lang
             ->add('lang', 'entity', array(
@@ -53,7 +56,10 @@ class ContactType extends AbstractType
             ->add('companyName', 'text', array(
                 'required' => FALSE,
             ))
-            ->add('companyDescription', 'text', array(
+            ->add('companyDescription', 'textarea', array(
+                'required' => FALSE,
+            ))
+            ->add('description', 'textarea', array(
                 'required' => FALSE,
             ))
             ->add('map', 'textarea', array(

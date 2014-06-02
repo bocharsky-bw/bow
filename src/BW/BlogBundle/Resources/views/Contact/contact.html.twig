@@ -40,7 +40,12 @@
                         <p class="email">E-mail: {{ contact.email }}</p>
                     {% endif %}
                     {% if contact.phone %}
-                        <p class="phone">Телефон: {{ contact.phone }}</p>
+                        <p class="phone">
+                            Телефон: <br/>
+                            {% for phone in contact.phone|split('||') %}
+                                {{ phone }}<br/>
+                            {% endfor %}
+                        </p>
                     {% endif %}
                     {% if contact.skype %}
                         <p class="skype">Skype: {{ contact.skype }}</p>
@@ -49,7 +54,10 @@
                         <p class="company_name">Название компании: {{ contact.companyName }}</p>
                     {% endif %}
                     {% if contact.companyDescription %}
-                        <p class="company_description">Описание компании: {{ contact.companyDescription }}</p>
+                        <div class="company_description">Описание компании: {{ contact.companyDescription|raw }}</div>
+                    {% endif %}
+                    {% if contact.description %}
+                        <div class="description">Описание: {{ contact.description|raw }}</div>
                     {% endif %}
                     <br>
                     <div class="feedback">
@@ -87,9 +95,11 @@
                                         {{ form_errors(form.message) }}
                                     </div>
                                 </div>
-                                <div>
-                                    {{ captcha|raw }}
-                                </div>
+                                {% if contact.captcha %}
+                                    <div>
+                                        {{ captcha|raw }}
+                                    </div>
+                                {% endif %}
                                 <div>
                                     {{ form_widget(form.send , {'attr': {'class': '', 'title': 'Отправить сообщение'}, 'label': 'Отправить'}) }}
                                 </div>

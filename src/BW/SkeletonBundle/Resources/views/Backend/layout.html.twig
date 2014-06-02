@@ -96,7 +96,7 @@
         </ul>
         <ul id="main-menu-right" class="menu-h menu-right row">
             {{ service('bw_localization.widget').getAdminLangs()|raw }}
-            <li><a href="{{ path('home') }}" target="_blank"><i class="icon-share before-padding"></i>{{ 'admin.view_site'|trans }}</a></li>
+            <li><a href="{{ path('home') }}"><i class="icon-share before-padding"></i>{{ 'admin.view_site'|trans }}</a></li>
             <li><a href="{{ path('user_sign_out') }}"><i class="icon-signout before-padding"></i>{{ 'user.sign_out'|trans }}</a></li>
         </ul>
     </div>

@@ -10,39 +10,37 @@ class ContactController extends BWController
 {
 
     public function contactAction($id) {
-        $publickey = "6LcT9fESAAAAADYP6P-m718_8jW3HAtFF-2OkkuU";
-        $privatekey = "6LcT9fESAAAAACU1kJwoJZBOOqADiyL-KATRCIYi";
+        $publicKey = "6LcT9fESAAAAADYP6P-m718_8jW3HAtFF-2OkkuU";
+        $privateKey = "6LcT9fESAAAAACU1kJwoJZBOOqADiyL-KATRCIYi";
                 
         $data = $this->getPropertyOverload();
-        $request = $this->getRequest();
-        
-        $data->captcha = new \BW\Captcha\Recaptcha($publickey, $privatekey);
+        $request = $this->get('request');
 
         $data->contact = $this->getDoctrine()->getRepository('BWBlogBundle:Contact')->find($id);
         if ( ! $data->contact) {
             throw $this->createNotFoundException("Ошибка 404. Запрашиваемая страница не найдена.\nСкорее всего нужно перегенерировать ссылку страницы.");
         }
-        
-        $form = $this->createFormBuilder(array(
-            // default values:
-            'fio' => '',
-            'email' => '',
-            'phone' => '',
-            'message' => '',
-        ))
-                ->add('fio', 'text')
-                ->add('email', 'email')
-                ->add('phone', 'text')
-                ->add('message', 'textarea')
-                ->add('send', 'submit')
-                ->getForm()
-            ;
+
+        // create captcha
+        if ($data->contact->isCaptcha()) {
+            $data->captcha = new \BW\Captcha\Recaptcha($publicKey, $privateKey);
+        } else {
+            $data->captcha = false;
+        }
+
+        $form = $this->feedbackFrom();
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $feedback = $form->getData();
-                $r = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
-                if ($data->captcha->checkAnswer()->isValid()) {
+
+                if ($data->contact->isCaptcha()) {
+                    $isValidCaptcha = $data->captcha->checkAnswer()->isValid();
+                } else {
+                    $isValidCaptcha = true;
+                }
+
+                if ($isValidCaptcha) {
                     /* Swift Mailer */
                     $message = \Swift_Message::newInstance()
                             ->setSubject("Сообщение c сайта {$request->getHttpHost()}")
@@ -83,6 +81,24 @@ class ContactController extends BWController
         
         $data->form = $form->createView();
         return $this->render('BWBlogBundle:Contact:contact.html.twig', $data->toArray());
+    }
+
+    private function feedbackFrom()
+    {
+        return $this->createFormBuilder(array(
+            // default values:
+            'fio' => '',
+            'email' => '',
+            'phone' => '',
+            'message' => '',
+        ))
+            ->add('fio', 'text')
+            ->add('email', 'email')
+            ->add('phone', 'text')
+            ->add('message', 'textarea')
+            ->add('send', 'submit')
+            ->getForm()
+        ;
     }
     
 }

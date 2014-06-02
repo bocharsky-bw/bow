@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Entity;
 
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -105,7 +106,21 @@ class Contact
      * @ORM\Column(name="company_description", type="string", length=255)
      */
     private $companyDescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
     
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="captcha", type="boolean")
+     */
+    private $captcha;
+
     /**
      * @var string
      *
@@ -152,12 +167,13 @@ class Contact
 
     /**
      * Set default values
-     * 
+     *
      * @ORM\PrePersist
-     * @param array $values
-     * @return Category
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     *
+     * @return $this
      */
-    public function setDefaultValues(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+    public function setDefaultValues(LifecycleEventArgs $args) {
         $values = array(
             'country' => '',
             'city' => '',
@@ -170,6 +186,7 @@ class Contact
             'skype' => '',
             'companyName' => '',
             'companyDescription' => '',
+            'description' => '',
             'map' => '',
             'slug' => '',
             'title' => '',
@@ -635,5 +652,28 @@ class Contact
     public function getRoute()
     {
         return $this->route;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Contact
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
