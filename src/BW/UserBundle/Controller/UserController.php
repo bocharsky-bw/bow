@@ -105,7 +105,7 @@ class UserController extends BWController
         }
         
         $data = $this->getPropertyOverload();
-        $request = $this->getRequest();
+        $request = $this->get('request');
         $session = $request->getSession();
 
         // get the login error if there is one
@@ -328,7 +328,7 @@ class UserController extends BWController
      * @return boolean
      */
     protected function authorizeUser(User $user) {
-        $request = $this->getRequest();
+        $request = $this->get('request');
         
         /* Авторизация пользователя в системе */
         $token = new UsernamePasswordToken($user, $user->getPassword(), 'auth', $user->getRoles());

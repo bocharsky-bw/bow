@@ -20,7 +20,7 @@ class CustomFieldPropertyController extends BWController
     
     public function customFieldPropertyAction($field_id, $id = NULL) {
         $data = $this->getPropertyOverload();
-        $request = $this->getRequest();
+        $request = $this->get('request');
         
         //$request->getSession()->set('AllowCKFinder', TRUE); // Allow to use CKFinder
         if ($id) {
