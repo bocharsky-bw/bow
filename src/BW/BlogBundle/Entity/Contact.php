@@ -699,4 +699,14 @@ class Contact
     {
         return $this->captcha;
     }
+
+    /**
+     * Get captcha
+     *
+     * @return boolean 
+     */
+    public function getCaptcha()
+    {
+        return $this->captcha;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,20 +28,20 @@ class CustomField
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name = '';
-    
+
     /**
-     * @var integer
+     * @var ArrayCollection
      * 
      * @ORM\OneToMany(targetEntity="CustomFieldProperty", mappedBy="customField")
      */
     private $customFieldProperties;
-    
+
     /**
-     * @var integer
-     * 
-     * @ORM\ManyToMany(targetEntity="Post", mappedBy="customFields")
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="BW\BlogBundle\Entity\PostCustomField", mappedBy="customField")
      */
-    private $posts;
+    private $postCustomFields;
     
     
     /**
@@ -48,8 +49,8 @@ class CustomField
      */
     public function __construct()
     {
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->customFieldProperties = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->postCustomFields = new ArrayCollection();
+        $this->customFieldProperties = new ArrayCollection();
     }
     
     /**
@@ -94,39 +95,6 @@ class CustomField
         return $this->name;
     }
 
-        /**
-     * Add posts
-     *
-     * @param \BW\BlogBundle\Entity\Post $posts
-     * @return CustomField
-     */
-    public function addPost(\BW\BlogBundle\Entity\Post $posts)
-    {
-        $this->posts[] = $posts;
-
-        return $this;
-    }
-
-    /**
-     * Remove posts
-     *
-     * @param \BW\BlogBundle\Entity\Post $posts
-     */
-    public function removePost(\BW\BlogBundle\Entity\Post $posts)
-    {
-        $this->posts->removeElement($posts);
-    }
-
-    /**
-     * Get posts
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPosts()
-    {
-        return $this->posts;
-    }
-
     /**
      * Add customFieldProperties
      *
@@ -158,5 +126,71 @@ class CustomField
     public function getCustomFieldProperties()
     {
         return $this->customFieldProperties;
+    }
+
+    /**
+     * Add postCustomFields
+     *
+     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
+     * @return CustomField
+     */
+    public function addPostCustomField(\BW\BlogBundle\Entity\PostCustomField $postCustomFields)
+    {
+        $this->postCustomFields[] = $postCustomFields;
+
+        return $this;
+    }
+
+    /**
+     * Remove postCustomFields
+     *
+     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
+     */
+    public function removePostCustomField(\BW\BlogBundle\Entity\PostCustomField $postCustomFields)
+    {
+        $this->postCustomFields->removeElement($postCustomFields);
+    }
+
+    /**
+     * Get postCustomFields
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPostCustomFields()
+    {
+        return $this->postCustomFields;
+    }
+
+    /**
+     * Add posts
+     *
+     * @param \BW\BlogBundle\Entity\Post $posts
+     * @return CustomField
+     */
+    public function addPost(\BW\BlogBundle\Entity\Post $posts)
+    {
+        $this->posts[] = $posts;
+
+        return $this;
+    }
+
+    /**
+     * Remove posts
+     *
+     * @param \BW\BlogBundle\Entity\Post $posts
+     */
+    public function removePost(\BW\BlogBundle\Entity\Post $posts)
+    {
+        $this->posts->removeElement($posts);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }

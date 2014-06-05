@@ -120,13 +120,8 @@
         </div>
         
         <h2>Настраиваемые поля</h2>
+        {#
         <div>
-            {#
-                @TODO Rendered manually to separated select lists
-                {{ dump(form.customFieldProperties.vars.choices) }}
-            #}
-            
-            {# generate named separators for rendering checkboxes groups #}
             {% set separators = [] %}
             {% set offset = 0 %}
             {% for name, choice in form.customFieldProperties.vars.choices %}
@@ -147,6 +142,7 @@
                 {{ form_errors(form.customFieldProperties) }}
             </div>
         </div>
+        #}
         {#
         <div>
             {{ form_label(form.customFields, 'Настраиваемые поля: ', {'label_attr': {'class': ''} }) }}

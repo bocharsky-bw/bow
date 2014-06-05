@@ -1,7 +1,8 @@
 <h3>Фильтр контента</h3>
+{{ form(form) }}
+{#
 {{ form_start(form) }}
     <div>
-        {# generate named separators for rendering checkboxes groups #}
         {% set separators = [] %}
         {% set offset = 0 %}
         {% for name, choice in form.properteis.vars.choices %}
@@ -26,3 +27,4 @@
         {{ form_widget(form.apply, {'attr': {'class': 'btn btn-primary icon-save before-padding'}, 'label': 'Применить'}) }}
     </div>
 {{ form_end(form) }}
+#}

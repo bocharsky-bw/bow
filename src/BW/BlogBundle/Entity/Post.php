@@ -2,6 +2,8 @@
 
 namespace BW\BlogBundle\Entity;
 
+use BW\LocalizationBundle\Entity\Lang;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -93,7 +95,7 @@ class Post
     private $home = false;
 
     /**
-     * @var integer
+     * @var \BW\LocalizationBundle\Entity\Lang
      *
      * @ORM\ManyToOne(targetEntity="\BW\LocalizationBundle\Entity\Lang")
      * @ORM\JoinColumn(name="lang_id", referencedColumnName="id")
@@ -109,38 +111,34 @@ class Post
     private $route;
     
     /**
-     * @var integer
+     * @var \BW\BlogBundle\Entity\Category
      *
      * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Category", inversedBy="posts")
      */
     private $category;
-    
-    /**
-     * @var integer
-     * 
-     * @ORM\ManyToMany(targetEntity="CustomField", inversedBy="posts")
-     */
-    private $customFields;
-    
-    /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     * 
-     * @ORM\ManyToMany(targetEntity="CustomFieldProperty", inversedBy="posts")
-     */
-    private $customFieldProperties;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="BW\BlogBundle\Entity\PostCustomField", mappedBy="post")
+     */
+    private $postCustomFields;
+
+    /**
+     * @var \BW\BlogBundle\Entity\Image
+     *
      * @ORM\OneToOne(targetEntity="\BW\BlogBundle\Entity\Image", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      */
     private $image;
-    
+
     /**
      * Set default values
-     * 
      * @ORM\PrePersist
-     * @param array $values
-     * @return Post
+     *
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     *
+     * @return $this
      */
     public function setDefaultValues(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
         $values = array(
@@ -174,8 +172,7 @@ class Post
     public function __construct() {
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
-        $this->customFields = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->customFieldProperties = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->postCustomFields = new ArrayCollection();
     }
     
     
@@ -399,7 +396,7 @@ class Post
     /**
      * Set lang
      *
-     * @param \BW\BlogBundle\Entity\Lang $lang
+     * @param Lang $lang
      * @return Post
      */
     public function setLang(\BW\LocalizationBundle\Entity\Lang $lang = null)
@@ -412,7 +409,7 @@ class Post
     /**
      * Get lang
      *
-     * @return \BW\BlogBundle\Entity\Lang 
+     * @return Lang
      */
     public function getLang()
     {
@@ -500,72 +497,6 @@ class Post
     }
 
     /**
-     * Add customFields
-     *
-     * @param \BW\BlogBundle\Entity\CustomField $customFields
-     * @return Post
-     */
-    public function addCustomField(\BW\BlogBundle\Entity\CustomField $customFields)
-    {
-        $this->customFields[] = $customFields;
-
-        return $this;
-    }
-
-    /**
-     * Remove customFields
-     *
-     * @param \BW\BlogBundle\Entity\CustomField $customFields
-     */
-    public function removeCustomField(\BW\BlogBundle\Entity\CustomField $customFields)
-    {
-        $this->customFields->removeElement($customFields);
-    }
-
-    /**
-     * Get customFields
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCustomFields()
-    {
-        return $this->customFields;
-    }
-
-    /**
-     * Add customFieldProperties
-     *
-     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
-     * @return Post
-     */
-    public function addCustomFieldProperty(\BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties)
-    {
-        $this->customFieldProperties[] = $customFieldProperties;
-
-        return $this;
-    }
-
-    /**
-     * Remove customFieldProperties
-     *
-     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
-     */
-    public function removeCustomFieldProperty(\BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties)
-    {
-        $this->customFieldProperties->removeElement($customFieldProperties);
-    }
-
-    /**
-     * Get customFieldProperties
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCustomFieldProperties()
-    {
-        return $this->customFieldProperties;
-    }
-
-    /**
      * Set image
      *
      * @param \BW\BlogBundle\Entity\Image $image
@@ -592,5 +523,71 @@ class Post
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Add postCustomFields
+     *
+     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
+     * @return Post
+     */
+    public function addPostCustomField(\BW\BlogBundle\Entity\PostCustomField $postCustomFields)
+    {
+        $this->postCustomFields[] = $postCustomFields;
+
+        return $this;
+    }
+
+    /**
+     * Remove postCustomFields
+     *
+     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
+     */
+    public function removePostCustomField(\BW\BlogBundle\Entity\PostCustomField $postCustomFields)
+    {
+        $this->postCustomFields->removeElement($postCustomFields);
+    }
+
+    /**
+     * Get postCustomFields
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPostCustomFields()
+    {
+        return $this->postCustomFields;
+    }
+
+    /**
+     * Add customFields
+     *
+     * @param \BW\BlogBundle\Entity\PostCustomField $customFields
+     * @return Post
+     */
+    public function addCustomField(\BW\BlogBundle\Entity\PostCustomField $customFields)
+    {
+        $this->customFields[] = $customFields;
+
+        return $this;
+    }
+
+    /**
+     * Remove customFields
+     *
+     * @param \BW\BlogBundle\Entity\PostCustomField $customFields
+     */
+    public function removeCustomField(\BW\BlogBundle\Entity\PostCustomField $customFields)
+    {
+        $this->customFields->removeElement($customFields);
+    }
+
+    /**
+     * Get customFields
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCustomFields()
+    {
+        return $this->customFields;
     }
 }

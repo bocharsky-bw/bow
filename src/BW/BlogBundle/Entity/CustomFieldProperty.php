@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,13 +36,6 @@ class CustomFieldProperty
      * @ORM\JoinColumn(name="custom_field_id", referencedColumnName="id")
      */
     private $customField;
-    
-    /**
-     * @var integer
-     * 
-     * @ORM\ManyToMany(targetEntity="Post", mappedBy="customFieldProperties")
-     */
-    private $posts;
 
     
     /**
@@ -49,9 +43,9 @@ class CustomFieldProperty
      */
     public function __construct()
     {
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
+
     public function __toString()
     {
         return $this->name;
@@ -112,38 +106,5 @@ class CustomFieldProperty
     public function getCustomField()
     {
         return $this->customField;
-    }
-
-    /**
-     * Add posts
-     *
-     * @param \BW\BlogBundle\Entity\Post $posts
-     * @return CustomFieldProperty
-     */
-    public function addPost(\BW\BlogBundle\Entity\Post $posts)
-    {
-        $this->posts[] = $posts;
-
-        return $this;
-    }
-
-    /**
-     * Remove posts
-     *
-     * @param \BW\BlogBundle\Entity\Post $posts
-     */
-    public function removePost(\BW\BlogBundle\Entity\Post $posts)
-    {
-        $this->posts->removeElement($posts);
-    }
-
-    /**
-     * Get posts
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPosts()
-    {
-        return $this->posts;
     }
 }
