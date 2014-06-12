@@ -3,17 +3,16 @@
 namespace BW\BlogBundle\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Doctrine\DBAL\Connection;
 
 class NestedSet {
     
     /**
-     * @var Symfony\Component\DependencyInjection\ContainerInterface The service container object
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface The service container object
      */
     private $container;
     
     /**
-     * @var Doctrine\DBAL\Connection The database connection object
+     * @var \Doctrine\DBAL\Connection The database connection object
      */
     private $conn;
     
@@ -120,7 +119,7 @@ class NestedSet {
                 SELECT 
                     ". implode(',', $required_fields) ." 
                 FROM $table 
-                ORDER BY level ASC 
+                ORDER BY level ASC, ordering ASC
             ");
         
         while ($node = $stmt->fetch(\PDO::FETCH_ASSOC)) {
@@ -138,8 +137,10 @@ class NestedSet {
     
     /**
      * Метод работает с оригинальным массивом по ссылке
+     *
      * @param array $nodes Ссылка на массив элементов нулевого уровня
-     * @param NULL
+     *
+     * @return null
      */
     private function recursionByParentId(&$nodes) {
         foreach ($nodes as $id => $node) {
@@ -150,7 +151,7 @@ class NestedSet {
             }
         }
         
-        return NULL;
+        return null;
     }
     
     
@@ -160,7 +161,9 @@ class NestedSet {
     // Need optimization
     /**
      * Генерирование многомерного массива вложенных дочерних элементов из массива сущностей
+     *
      * @param array $entities Массив сущностей
+     *
      * @return array Многомерный массив вложеннных дочерних сущностей
      */
     public function generateNestedNodesFromEntities($entities) {
@@ -200,8 +203,10 @@ class NestedSet {
     
     /**
      * Метод работает с оригинальным массивом по ссылке
+     *
      * @param array $nodes Ссылка на массив элементов нулевого уровня
-     * @param NULL
+     *
+     * @return NULL
      */
     private function recursionByParentId2(&$nodes) {
         foreach ($nodes as $id => $node) {
@@ -214,6 +219,6 @@ class NestedSet {
             }
         }
         
-        return NULL;
+        return null;
     }
 }

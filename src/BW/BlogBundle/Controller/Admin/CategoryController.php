@@ -99,17 +99,18 @@ class CategoryController extends BWController
                     'id' => $category->getId(),
                 ));
                 $category->setRoute($route);
-                
+
+                $em->flush();
+
                 // Сгенерировать и упорядочить дерево Nested Set
                 $this->get('bw_blog.nested_set')->regenerateTree(
-                        $em->getClassMetadata('BWBlogBundle:Category')->getTableName() // Имя таблицы класса
-                    );
-                
-                $em->flush();
+                    $em->getClassMetadata('BWBlogBundle:Category')->getTableName() // Имя таблицы класса
+                );
+
                 $this->get('session')->getFlashBag()->add(
-                        'success',
-                        'Страница успешно сохранена в БД'
-                    );
+                    'success',
+                    'Страница успешно сохранена в БД'
+                );
                 
                 if ( $form->get('saveAndClose')->isClicked() ) {
                     return $this->redirect( $this->generateUrl('admin_categories') );

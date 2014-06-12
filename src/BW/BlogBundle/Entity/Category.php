@@ -112,7 +112,7 @@ class Category
      * @ORM\Column(name="lft", type="integer")
      */
     private $left;
-    
+
     /**
      * @var integer
      *
@@ -133,6 +133,13 @@ class Category
      * @ORM\Column(name="description", type="text")
      */
     private $description = '';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ordering", type="integer")
+     */
+    private $order;
 
     /**
      * @var \BW\BlogBundle\Entity\Image
@@ -610,6 +617,29 @@ class Category
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     * @return Category
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 
     /**

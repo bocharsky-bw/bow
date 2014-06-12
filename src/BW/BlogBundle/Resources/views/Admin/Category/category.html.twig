@@ -69,6 +69,14 @@
         </div>
 
         <div>
+            {{ form_label(form.order, 'Порядок: ', {'label_attr': {'class': ''} }) }}
+            {{ form_widget(form.order, {'attr': {'class': 'form-control '} }) }}
+            <div class="error">
+                {{ form_errors(form.order) }}
+            </div>
+        </div>
+
+        <div>
             <div>
                 {% if category.image %}
                     <img src="{{ asset(category.image.webPath) }}" alt=""/>

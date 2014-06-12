@@ -16,58 +16,61 @@ class CategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                ->add('published', 'checkbox', array(
-                    'required' => FALSE,
-                ))
-                ->add('heading', 'text')
-                ->add('shortDescription', 'textarea', array(
-                    'required' => FALSE,
-                ))
-                ->add('description', 'textarea', array(
-                    'required' => FALSE,
-                ))
-                // Entities
-                // Lang
-                ->add('parent', 'entity', array(
-                    'class' => 'BWBlogBundle:Category',
-                    //'property' => 'heading',
-                    'query_builder' => function(EntityRepository $er) use($options) {
-                        return $er->createQueryBuilder('c')
-                                ->where('c.id != :id')
-                                ->setParameter('id', $options['data']->getId())
-                                ->andWhere('c.left < :left OR c.left > :right')
-                                ->setParameter('left', $options['data']->getLeft())
-                                ->setParameter('right', $options['data']->getRight())
-                                ->orderBy('c.left', 'ASC')
-                            ;
-                    },
-                    'required' => FALSE,
-                    'empty_value' => 'Корневая',
-                ))
-                ->add('lang', 'entity', array(
-                    'class' => 'BWLocalizationBundle:Lang',
-                    'property' => 'name',
-                    'required' => FALSE,
-                    'empty_value' => 'Выберите язык',
-                ))
-                ->add('image', new ImageType('posts'), array(
-                    'required' => FALSE,
-                ))
-                // Meta tags
-                ->add('slug', 'text', array(
-                    'required' => FALSE,
-                ))
-                ->add('title', 'text', array(
-                    'required' => FALSE,
-                ))
-                ->add('metaDescription', 'textarea', array(
-                    'required' => FALSE,
-                ))
-                // Buttons
-                ->add('save', 'submit')
-                ->add('saveAndClose', 'submit')
-                ->add('delete', 'submit')
-            ;
+            ->add('published', 'checkbox', array(
+                'required' => FALSE,
+            ))
+            ->add('heading', 'text')
+            ->add('shortDescription', 'textarea', array(
+                'required' => FALSE,
+            ))
+            ->add('description', 'textarea', array(
+                'required' => FALSE,
+            ))
+            // Entities
+            // Lang
+            ->add('parent', 'entity', array(
+                'class' => 'BWBlogBundle:Category',
+                //'property' => 'heading',
+                'query_builder' => function(EntityRepository $er) use($options) {
+                    return $er->createQueryBuilder('c')
+                            ->where('c.id != :id')
+                            ->setParameter('id', $options['data']->getId())
+                            ->andWhere('c.left < :left OR c.left > :right')
+                            ->setParameter('left', $options['data']->getLeft())
+                            ->setParameter('right', $options['data']->getRight())
+                            ->orderBy('c.left', 'ASC')
+                        ;
+                },
+                'required' => FALSE,
+                'empty_value' => 'Корневая',
+            ))
+            ->add('lang', 'entity', array(
+                'class' => 'BWLocalizationBundle:Lang',
+                'property' => 'name',
+                'required' => FALSE,
+                'empty_value' => 'Выберите язык',
+            ))
+            ->add('image', new ImageType('posts'), array(
+                'required' => FALSE,
+            ))
+            // Meta tags
+            ->add('slug', 'text', array(
+                'required' => FALSE,
+            ))
+            ->add('title', 'text', array(
+                'required' => FALSE,
+            ))
+            ->add('metaDescription', 'textarea', array(
+                'required' => FALSE,
+            ))
+            ->add('order', 'number', array(
+                'required' => false,
+            ))
+            // Buttons
+            ->add('save', 'submit')
+            ->add('saveAndClose', 'submit')
+            ->add('delete', 'submit')
+        ;
     }
     
     /**

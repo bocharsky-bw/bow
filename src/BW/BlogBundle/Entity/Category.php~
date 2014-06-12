@@ -112,13 +112,20 @@ class Category
      * @ORM\Column(name="lft", type="integer")
      */
     private $left;
-    
+
     /**
      * @var integer
      *
      * @ORM\Column(name="rgt", type="integer")
      */
     private $right;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ordering", type="integer")
+     */
+    private $order;
 
     /**
      * @var string

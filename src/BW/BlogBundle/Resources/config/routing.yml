@@ -89,7 +89,10 @@ admin_custom_field_property_edit:
 ############
 # Frontend #
 ############
-    
+search:
+    host:     %domain%
+    pattern:  /{_locale}/search
+    defaults: { _controller: BWBlogBundle:Search:index, _locale: %locale% }
 # Posts
 #post:
 #    host:     %domain%
