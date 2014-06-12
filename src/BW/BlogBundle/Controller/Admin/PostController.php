@@ -29,7 +29,7 @@ class PostController extends BWController
     
     public function postAction($id = NULL) {
         $data = $this->getPropertyOverload();
-        $request = $this->getRequest();
+        $request = $this->get('request');
         
         $request->getSession()->set('AllowCKFinder', TRUE); // Allow to use CKFinder
         

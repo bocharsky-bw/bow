@@ -31,7 +31,7 @@ class SliderController extends BWController
     
     public function sliderAction($id = NULL) {
         $data = $this->getPropertyOverload();
-        $request = $this->getRequest();
+        $request = $this->get('request');
         
         if ($id) {
             $slider = $this->getDoctrine()->getRepository('BWSliderBundle:Slider')->find($id);

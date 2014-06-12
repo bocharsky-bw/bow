@@ -31,7 +31,7 @@ class ProfileController extends BWController
         }
         
         $data = $this->getPropertyOverload();
-        $request = $this->getRequest();
+        $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
         
         $profile = $user->getProfile();
@@ -65,7 +65,7 @@ class ProfileController extends BWController
         }
         
         $data = $this->getPropertyOverload();
-        $request = $this->getRequest();
+        $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
         
         $profile = $user->getProfile();

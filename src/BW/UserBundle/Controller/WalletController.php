@@ -31,7 +31,7 @@ class WalletController extends BWController
         }
         
         $data = $this->getPropertyOverload();
-        $request = $this->getRequest();
+        $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
         
         // get/create profile
@@ -70,7 +70,7 @@ class WalletController extends BWController
         }
         
         $data = $this->getPropertyOverload();
-        $request = $this->getRequest();
+        $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
         
         // get/create profile
@@ -109,12 +109,21 @@ class WalletController extends BWController
                 }
                 // Converting amount by exchange rate
                 $replenishment->setEquivalentAmount(
-                        $replenishment->getAdditiveAmount() / $replenishment->getCurrency()->getExchangeRate()
-                    );
-                // Add additive amount to the total amount
-                $wallet->setTotalAmount(
+                    $replenishment->getAdditiveAmount() / $replenishment->getCurrency()->getExchangeRate()
+                );
+
+                /**
+                 * There is parameter in BWUserBundle/Resources/config/config.yml
+                 * @var string $replenishment_mode = before_confirmation || after_confirmation
+                 */
+                $replenishment_mode = $this->get('service_container')->getParameter('replenishment_mode');
+                if ($replenishment_mode === 'before_confirmation') {
+                    // Add additive amount to the total amount
+                    $wallet->setTotalAmount(
                         $wallet->getTotalAmount() + $replenishment->getEquivalentAmount()
                     );
+                }
+
                 $em->flush();
                 $request->getSession()->getFlashBag()->add('success', 'Ваш кошелек успешно пополнен');
 
