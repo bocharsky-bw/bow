@@ -94,7 +94,13 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseDir = resolveUrl($baseUrl);
+//$baseDir = resolveUrl($baseUrl);
+$baseDir = dirname(__FILE__) . '/../../uploads/';
+/* get clear path without level up */
+do {
+    $length = strlen($baseDir);
+    $baseDir = preg_replace('#[^/]+/\.\./#', '', $baseDir);
+} while ($length !== strlen($baseDir));
 
 /*
  * ### Advanced Settings
