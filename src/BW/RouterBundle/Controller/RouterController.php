@@ -14,7 +14,7 @@ class RouterController extends BWController
     public $route;
     
     public function indexAction($q) {
-        $request = $this->getRequest();
+        $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
         
         // Получаем entity текущего языка

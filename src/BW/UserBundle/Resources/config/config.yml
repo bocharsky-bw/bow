@@ -1,3 +1,8 @@
+parameters:
+    # wallet replenishment mode:
+    #replenishment_mode: before_confirmation
+    replenishment_mode: after_confirmation
+
 twig:
     globals:
         replenishment_statuses: [На рассмотрении, Подтверждено, Отклонено]
