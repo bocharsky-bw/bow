@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +36,20 @@ class PostCustomField
      * @ORM\JoinColumn(name="custom_field_id", referencedColumnName="id")
      */
     private $customField;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="BW\BlogBundle\Entity\CustomFieldProperty", inversedBy="postCustomFields")
+     * @ORM\JoinTable(name="post_customfield_customfieldproperty")
+     */
+    private $customFieldProperties;
+
+
+    public function __construct()
+    {
+        $this->customFieldProperties = new ArrayCollection();
+    }
 
 
     /**

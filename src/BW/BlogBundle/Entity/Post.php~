@@ -118,27 +118,19 @@ class Post
     private $category;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\ManyToMany(targetEntity="BW\BlogBundle\Entity\PostCustomField", mappedBy="post")
-     * @ORM\JoinTable(name="post_custom_field")
-     */
-    private $customFields;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="BW\BlogBundle\Entity\PostCustomField", mappedBy="post")
-     */
-    private $postCustomFields;
-
-    /**
      * @var \BW\BlogBundle\Entity\Image
      *
      * @ORM\OneToOne(targetEntity="\BW\BlogBundle\Entity\Image", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      */
     private $image;
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="BW\BlogBundle\Entity\PostCustomField", mappedBy="post")
+     */
+    private $postCustomFields;
 
     /**
      * Set default values
@@ -566,36 +558,4 @@ class Post
         return $this->postCustomFields;
     }
 
-    /**
-     * Add customFields
-     *
-     * @param \BW\BlogBundle\Entity\PostCustomField $customFields
-     * @return Post
-     */
-    public function addCustomField(\BW\BlogBundle\Entity\PostCustomField $customFields)
-    {
-        $this->customFields[] = $customFields;
-
-        return $this;
-    }
-
-    /**
-     * Remove customFields
-     *
-     * @param \BW\BlogBundle\Entity\PostCustomField $customFields
-     */
-    public function removeCustomField(\BW\BlogBundle\Entity\PostCustomField $customFields)
-    {
-        $this->customFields->removeElement($customFields);
-    }
-
-    /**
-     * Get customFields
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCustomFields()
-    {
-        return $this->customFields;
-    }
 }

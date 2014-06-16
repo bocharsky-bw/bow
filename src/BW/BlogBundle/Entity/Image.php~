@@ -171,9 +171,17 @@ class Image
     public function removeUpload()
     {
         if ($file = $this->getAbsolutePath()) {
-            unlink($file);
+        	if (file_exists($file)) {
+            	unlink($file);
+        	}
         }
     }
+
+
+    public function __construct()
+    {
+    }
+
 
     /**
      * Set subFolder
@@ -188,11 +196,7 @@ class Image
         return $this;
     }
 
-
-    public function __construct()
-    {
-    }
-
+    /* SETTERS / GETTERS */
 
     /**
      * Get id

@@ -30,16 +30,9 @@ class CustomField
     private $name = '';
 
     /**
-     * @var integer
-     *
-     * @ORM\ManyToMany(targetEntity="Post", mappedBy="customFields")
-     */
-    private $posts;
-    
-    /**
      * @var ArrayCollection
      * 
-     * @ORM\OneToMany(targetEntity="CustomFieldProperty", mappedBy="customField")
+     * @ORM\OneToMany(targetEntity="BW\BlogBundle\Entity\CustomFieldProperty", mappedBy="customField")
      */
     private $customFieldProperties;
 
@@ -56,8 +49,8 @@ class CustomField
      */
     public function __construct()
     {
-        $this->postCustomFields = new ArrayCollection();
         $this->customFieldProperties = new ArrayCollection();
+        $this->postCustomFields = new ArrayCollection();
     }
     
     /**

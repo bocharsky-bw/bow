@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CustomField
  *
- * @ORM\Table(name="custom_fields")
+ * @ORM\Table(name="customfields")
  * @ORM\Entity(repositoryClass="BW\BlogBundle\Entity\CustomFieldRepository")
  */
 class CustomField
@@ -32,7 +32,7 @@ class CustomField
     /**
      * @var ArrayCollection
      * 
-     * @ORM\OneToMany(targetEntity="CustomFieldProperty", mappedBy="customField")
+     * @ORM\OneToMany(targetEntity="BW\BlogBundle\Entity\CustomFieldProperty", mappedBy="customField")
      */
     private $customFieldProperties;
 
@@ -49,8 +49,8 @@ class CustomField
      */
     public function __construct()
     {
-        $this->postCustomFields = new ArrayCollection();
         $this->customFieldProperties = new ArrayCollection();
+        $this->postCustomFields = new ArrayCollection();
     }
     
     /**
@@ -159,38 +159,5 @@ class CustomField
     public function getPostCustomFields()
     {
         return $this->postCustomFields;
-    }
-
-    /**
-     * Add posts
-     *
-     * @param \BW\BlogBundle\Entity\Post $posts
-     * @return CustomField
-     */
-    public function addPost(\BW\BlogBundle\Entity\Post $posts)
-    {
-        $this->posts[] = $posts;
-
-        return $this;
-    }
-
-    /**
-     * Remove posts
-     *
-     * @param \BW\BlogBundle\Entity\Post $posts
-     */
-    public function removePost(\BW\BlogBundle\Entity\Post $posts)
-    {
-        $this->posts->removeElement($posts);
-    }
-
-    /**
-     * Get posts
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPosts()
-    {
-        return $this->posts;
     }
 }

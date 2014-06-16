@@ -37,13 +37,20 @@ class CustomFieldProperty
      */
     private $customField;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="BW\BlogBundle\Entity\PostCustomField", mappedBy="customFieldProperties")
+     */
+    private $postCustomFields;
+
     
     /**
      * The constructor
      */
     public function __construct()
     {
-        $this->posts = new ArrayCollection();
+        $this->postCustomFields = new ArrayCollection();
     }
 
 
