@@ -31,7 +31,7 @@ class SliderController extends BWController
     
     public function sliderAction($id = NULL) {
         $data = $this->getPropertyOverload();
-        $request = $this->get('request');
+        $request = $this->getRequest();
         
         if ($id) {
             $slider = $this->getDoctrine()->getRepository('BWSliderBundle:Slider')->find($id);
@@ -60,7 +60,7 @@ class SliderController extends BWController
                             'Слайдер  успешно удален из БД'
                         );
 
-                        return $this->redirect($this->generateUrl('admin_sliders'));
+                        return $this->redirect( $this->generateUrl('admin_slider_group_edit', array('id' => $slider->getGroup()->getId())) );
                     }
                 }
                 
@@ -81,7 +81,7 @@ class SliderController extends BWController
                     );
                 
                 if ( $form->get('saveAndClose')->isClicked() ) {
-                    return $this->redirect( $this->generateUrl('admin_sliders') );
+                    return $this->redirect( $this->generateUrl('admin_slider_group_edit', array('id' => $slider->getGroup()->getId())) );
                 }
                 
                 return $this->redirect( $this->generateUrl('admin_slider_edit', array('id' => $slider->getId())) );

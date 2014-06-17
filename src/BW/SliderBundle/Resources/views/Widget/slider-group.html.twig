@@ -1,0 +1,36 @@
+{% if app.environment == 'dev' %}
+<!-- /src/BW/SliderBundle/Resources/views/Widget/slider-group.html.twig -->
+{% endif %}
+
+{% if group %}
+    <div class="slider">
+        <div class="slides">
+
+        </div>
+
+        <div class="slide-sets">
+            <div class="triangle"></div>
+            <div class="prev-set"><a href="#"></a></div>
+            {% if group.sliders.count %}
+                <ul class="sets-menu">
+                    {% for slider in group.sliders %}
+                        <li><a href="#" data-set="#slides-set-{{ slider.id }}">{{ slider.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <div class="next-set"><a href="#"></a></div>
+        </div>
+    </div>
+
+    <script src="{{ asset('libs/jquery/js/jquery.cycle2.min.js') }}" type="text/javascript"></script>
+
+    {% if group.sliders.count %}
+        {% for slider in group.sliders %}
+            <script id="slides-set-{{ slider.id }}" type="text/cycle">
+                {% for slide in slider.slides %}
+                    <img src='{{ asset(slide.webPath) }}'>
+                {% endfor %}
+            </script>
+        {% endfor %}
+    {% endif %}
+{% endif %}

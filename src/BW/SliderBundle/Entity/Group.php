@@ -1,39 +1,38 @@
 <?php
 
 namespace BW\SliderBundle\Entity;
-
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class Slider
+ * Class Group
  * @package BW\SliderBundle\Entity
  */
-class Slider
+class Group
 {
     /**
-     * @var integer $id
+     * @var integer
      */
     private $id;
 
     /**
-     * @var string $name
+     * @var string
      */
     private $name;
 
     /**
-     * @var string $alias
+     * @var string
      */
     private $alias;
-    
+
     /**
      * @var ArrayCollection
      */
-    private $slides;
-    
-    
+    private $sliders;
+
+
     public function __construct()
     {
-        $this->slides = new ArrayCollection();
+        $this->sliders = new ArrayCollection();
     }
 
 
@@ -53,6 +52,7 @@ class Slider
      * Set name
      *
      * @param string $name
+     *
      * @return $this
      */
     public function setName($name)
@@ -73,9 +73,10 @@ class Slider
     }
 
     /**
-     * Set alias
+     * Set name
      *
-     * @param string $alias
+     * @param $alias
+     *
      * @return $this
      */
     public function setAlias($alias)
@@ -86,9 +87,9 @@ class Slider
     }
 
     /**
-     * Get alias
+     * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getAlias()
     {
@@ -96,36 +97,36 @@ class Slider
     }
 
     /**
-     * Add slides
+     * Add sliders
      *
-     * @param \BW\SliderBundle\Entity\Slide $slides
+     * @param \BW\SliderBundle\Entity\Slider $sliders
      *
      * @return $this
      */
-    public function addSlide(\BW\SliderBundle\Entity\Slide $slides)
+    public function addSlider(\BW\SliderBundle\Entity\Slider $sliders)
     {
-        $this->slides[] = $slides;
+        $this->sliders[] = $sliders;
 
         return $this;
     }
 
     /**
-     * Remove slides
+     * Remove sliders
      *
-     * @param \BW\SliderBundle\Entity\Slide $slides
+     * @param \BW\SliderBundle\Entity\Slider $sliders
      */
-    public function removeSlide(\BW\SliderBundle\Entity\Slide $slides)
+    public function removeSlider(\BW\SliderBundle\Entity\Slider $sliders)
     {
-        $this->slides->removeElement($slides);
+        $this->sliders->removeElement($sliders);
     }
 
     /**
-     * Get slides
+     * Get sliders
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getSlides()
+    public function getSliders()
     {
-        return $this->slides;
+        return $this->sliders;
     }
 }

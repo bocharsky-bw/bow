@@ -16,11 +16,8 @@ class SlideType extends AbstractType
     {
         $builder
             ->add('name', 'text')
-            ->add('link', 'text', array(
-                'required' => false,
-            ))
             ->add('file', 'file', array(
-                'required' => false,
+                'required' => FALSE,
             ))
             ->add('slider', 'entity', array(
                 'class' => 'BW\SliderBundle\Entity\Slider',

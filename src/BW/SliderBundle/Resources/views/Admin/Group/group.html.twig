@@ -6,25 +6,15 @@
             </div>
 
             <div class="form-buttons">
-                <a class="btn btn-primary icon-plus before-padding" href="{{ path('admin_slide_add') }}" title="Добавить новый слайд">Создать слайд</a>
+                {% if group.id %}
+                    <a class="btn btn-primary icon-plus before-padding" href="{{ path('admin_slider_add') }}" title="Добавить новый слайдер">Создать слайдер</a>
+                {% endif %}
                 {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и остаться в режиме редактирования'}, 'label': 'Сохранить'}) }}
                 {{ form_widget(form.saveAndClose, {'attr': {'class': 'btn btn-primary icon-save before-padding', 'title': 'Сохранить и выйти из режима редактирования'}, 'label': 'Сохранить и закрыть'}) }}
                 {% if form.delete is defined %}
                     {{ form_widget(form.delete, {'attr': {'class': 'btn btn-default icon-remove before-padding', 'title': 'Удалить запись', 'onclick': "return confirm('Удалить запись из БД?')"}, 'label': 'Удалить'}) }}
                 {% endif %}
-                {% if slider.group %}
-                    <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_slider_group_edit', {'id': slider.group.id}) }}" title="Отменить несохраненные изменения">Закрыть</a>
-                {% else %}
-                    <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_slider_groups') }}" title="Отменить несохраненные изменения">Закрыть</a>
-                {% endif %}
-            </div>
-
-            <div>
-                {{ form_label(form.group, 'Группа слайдеров: ', {'label_attr': {'class': ''} }) }}
-                {{ form_widget(form.group, {'attr': {'class': 'form-control '} }) }}
-                <div class="error">
-                    {{ form_errors(form.group) }}
-                </div>
+                <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_slider_groups') }}" title="Отменить несохраненные изменения">Закрыть</a>
             </div>
 
             <div>

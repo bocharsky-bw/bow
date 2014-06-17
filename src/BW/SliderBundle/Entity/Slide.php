@@ -8,44 +8,26 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * BW\SliderBundle\Entity\Slide
- *
- * @ORM\Table(name="slides")
- * @ORM\Entity(repositoryClass="BW\SliderBundle\Entity\SlideRepository")
- * @ORM\HasLifecycleCallbacks
  */
 class Slide
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
     /**
      * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-
+    
     /**
-     * @var string $link
-     *
-     * @ORM\Column(name="link", type="string", length=255)
-     */
-    private $link = '';
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Slider", inversedBy="slides")
-     * @ORM\JoinColumn(name="slider_id", referencedColumnName="id")
+     * @var Slider $slider
      */
     private $slider;
-
+    
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string $path
      */
     private $path;
     
@@ -55,7 +37,7 @@ class Slide
     private $file;
     
     private $temp;
-    
+
 
     public function getAbsolutePath()
     {
@@ -114,8 +96,8 @@ class Slide
     }
 
     /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
+     * ORM\PrePersist()
+     * ORM\PreUpdate()
      */
     public function preUpload()
     {
@@ -127,8 +109,8 @@ class Slide
     }
 
     /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
+     * ORM\PostPersist()
+     * ORM\PostUpdate()
      */
     public function upload()
     {
@@ -152,7 +134,7 @@ class Slide
     }
 
     /**
-     * @ORM\PostRemove()
+     * ORM\PostRemove()
      */
     public function removeUpload()
     {
@@ -161,11 +143,8 @@ class Slide
         }
     }
     
-    
-    
-    public function __construct() {
-    }
 
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
@@ -181,11 +160,13 @@ class Slide
      * Set name
      *
      * @param string $name
-     * @return Slide
+     *
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -203,11 +184,13 @@ class Slide
      * Set slider
      *
      * @param \BW\SliderBundle\Entity\Slider $slider
-     * @return Slide
+     *
+     * @return $this
      */
     public function setSlider(\BW\SliderBundle\Entity\Slider $slider = null)
     {
         $this->slider = $slider;
+
         return $this;
     }
 
@@ -225,11 +208,13 @@ class Slide
      * Set path
      *
      * @param string $path
-     * @return Slide
+     *
+     * @return $this
      */
     public function setPath($path)
     {
         $this->path = $path;
+
         return $this;
     }
 
@@ -241,32 +226,5 @@ class Slide
     public function getPath()
     {
         return $this->path;
-    }
-
-    /**
-     * Set link
-     *
-     * @param string $link
-     * @return Slide
-     */
-    public function setLink($link)
-    {
-        if (isset($link)) {
-            $this->link = $link;
-        } else {
-            $this->link = '';
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get link
-     *
-     * @return string 
-     */
-    public function getLink()
-    {
-        return $this->link;
     }
 }

@@ -1,0 +1,28 @@
+BW\SliderBundle\Entity\Slide:
+    type: entity
+    table: slides
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        path:
+            type: string
+            length: 255
+            nullable: true
+    manyToOne:
+        slider:
+            targetEntity: BW\SliderBundle\Entity\Slider
+            inversedBy: slides
+            joinColumn:
+                name: slider_id
+                referencedColumnName: id
+    lifecycleCallbacks:
+        prePersist: [preUpload, upload]
+        preUpdate: [preUpload, upload]
+        postRemove: [removeUpload]

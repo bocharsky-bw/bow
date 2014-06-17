@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class SliderType extends AbstractType
+class GroupType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -17,11 +17,7 @@ class SliderType extends AbstractType
         $builder
             ->add('name', 'text')
             ->add('alias', 'text', array(
-                'required' => FALSE,
-            ))
-            ->add('group', 'entity', array(
-                'class' => 'BW\SliderBundle\Entity\Group',
-                'property' => 'name',
+                'required' => 'false',
             ))
             ->add('save', 'submit')
             ->add('saveAndClose', 'submit')
@@ -35,7 +31,7 @@ class SliderType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BW\SliderBundle\Entity\Slider'
+            'data_class' => 'BW\SliderBundle\Entity\Group'
         ));
     }
 
@@ -44,6 +40,6 @@ class SliderType extends AbstractType
      */
     public function getName()
     {
-        return 'bw_slider';
+        return 'bw_slider_group';
     }
 }

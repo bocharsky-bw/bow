@@ -1,0 +1,27 @@
+BW\SliderBundle\Entity\Slider:
+    type: entity
+    table: sliders
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        alias:
+            type: string
+            length: 255
+            unique: true
+    oneToMany:
+        slides:
+            targetEntity: BW\SliderBundle\Entity\Slide
+            mappedBy: slider
+            cascade: [remove]
+    manyToOne:
+        group:
+            targetEntity: BW\SliderBundle\Entity\Group
+            inversedBy: sliders
+    lifecycleCallbacks: {  }

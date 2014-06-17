@@ -1,0 +1,22 @@
+BW\SliderBundle\Entity\Group:
+    type: entity
+    table: slider_groups
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        alias:
+            type: string
+            length: 255
+            unique: true
+    oneToMany:
+        sliders:
+            targetEntity: BW\SliderBundle\Entity\Slider
+            mappedBy: group
+    lifecycleCallbacks: {  }

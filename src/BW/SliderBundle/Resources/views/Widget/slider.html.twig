@@ -1,3 +1,7 @@
+{% if app.environment == 'dev' %}
+    <!-- /src/BW/SliderBundle/Resources/views/Widget/slider.html.twig -->
+{% endif %}
+
 {% if slider and slider.slides.count %}
     <div class="bw_slider slider_{{ slider.id }} cycle-slideshow" data-cycle-speed="700" data-cycle-log="false" data-cycle-pause-on-hover="true">
         {% for slide in slider.slides %}

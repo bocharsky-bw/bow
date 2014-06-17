@@ -1,8 +1,18 @@
-admin_sliders:
+admin_slider_groups:
     host:     %domain%
-    pattern:  /_admin/{_locale}/sliders
-    defaults: { _controller: BWSliderBundle:Admin/Slider:sliders, _locale: %locale% }
-    
+    pattern:  /_admin/{_locale}/slider-groups
+    defaults: { _controller: BWSliderBundle:Admin/Group:groups, _locale: %locale% }
+
+admin_slider_group_add:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/slider-group/add
+    defaults: { _controller: BWSliderBundle:Admin/Group:group, _locale: %locale% }
+
+admin_slider_group_edit:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/slider-group/{id}/edit
+    defaults: { _controller: BWSliderBundle:Admin/Group:group, _locale: %locale% }
+
 admin_slider_add:
     host:     %domain%
     pattern:  /_admin/{_locale}/slider/add
@@ -10,7 +20,7 @@ admin_slider_add:
     
 admin_slider_edit:
     host:     %domain%
-    pattern:  /_admin/{_locale}/slider/edit/{id}
+    pattern:  /_admin/{_locale}/slider/{id}/edit
     defaults: { _controller: BWSliderBundle:Admin/Slider:slider, _locale: %locale% }
     
 admin_slide_add:
@@ -20,5 +30,5 @@ admin_slide_add:
     
 admin_slide_edit:
     host:     %domain%
-    pattern:  /_admin/{_locale}/slide/edit/{id}
+    pattern:  /_admin/{_locale}/slide/{id}/edit
     defaults: { _controller: BWSliderBundle:Admin/Slide:slide, _locale: %locale% }

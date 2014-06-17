@@ -23,7 +23,7 @@ class SlideController extends BWController
     
     public function slideAction($id = NULL) {
         $data = $this->getPropertyOverload();
-        $request = $this->get('request');
+        $request = $this->getRequest();
         
         if ($id) {
             $slide = $this->getDoctrine()->getRepository('BWSliderBundle:Slide')->find($id);

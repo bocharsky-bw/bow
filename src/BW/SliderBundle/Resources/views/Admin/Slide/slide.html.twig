@@ -14,7 +14,7 @@
                 {% if slide.slider %}
                     <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_slider_edit', {'id': slide.slider.id}) }}" title="Отменить несохраненные изменения">Закрыть</a>
                 {% else %}
-                    <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_sliders') }}" title="Отменить несохраненные изменения">Закрыть</a>
+                    <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_slider_groups') }}" title="Отменить несохраненные изменения">Закрыть</a>
                 {% endif %}
             </div>
 
@@ -25,20 +25,12 @@
                     {{ form_errors(form.slider) }}
                 </div>
             </div>
-
+                
             <div>
                 {{ form_label(form.name, 'Название: ', {'label_attr': {'class': ''} }) }}
                 {{ form_widget(form.name, {'attr': {'class': 'form-control '} }) }}
                 <div class="error">
                     {{ form_errors(form.name) }}
-                </div>
-            </div>
-
-            <div>
-                {{ form_label(form.link, 'Ссылка: ', {'label_attr': {'class': ''} }) }}
-                {{ form_widget(form.link, {'attr': {'class': 'form-control '} }) }}
-                <div class="error">
-                    {{ form_errors(form.link) }}
                 </div>
             </div>
                 

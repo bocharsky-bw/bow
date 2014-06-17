@@ -2,48 +2,47 @@
 
 namespace BW\SliderBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * BW\SliderBundle\Entity\Slider
- *
- * @ORM\Table(name="sliders")
- * @ORM\Entity(repositoryClass="BW\SliderBundle\Entity\SliderRepository")
+ * Class Slider
+ * @package BW\SliderBundle\Entity
  */
 class Slider
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
     /**
      * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
      * @var string $alias
-     *
-     * @ORM\Column(name="alias", type="string", length=255)
      */
     private $alias;
     
     /**
-     * @ORM\OneToMany(targetEntity="Slide", mappedBy="slider", cascade={"remove"})
+     * @var ArrayCollection
      */
     private $slides;
+
+    /**
+     * @var Group
+     */
+    private $group;
+
     
-    
-    public function __construct() {
+    public function __construct()
+    {
+        $this->slides = new ArrayCollection();
     }
 
+
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
@@ -59,11 +58,12 @@ class Slider
      * Set name
      *
      * @param string $name
-     * @return Slider
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -81,11 +81,12 @@ class Slider
      * Set alias
      *
      * @param string $alias
-     * @return Slider
+     * @return $this
      */
     public function setAlias($alias)
     {
         $this->alias = $alias;
+
         return $this;
     }
 
@@ -102,19 +103,21 @@ class Slider
     /**
      * Add slides
      *
-     * @param BW\SliderBundle\Entity\Slide $slides
-     * @return Slider
+     * @param \BW\SliderBundle\Entity\Slide $slides
+     *
+     * @return $this
      */
     public function addSlide(\BW\SliderBundle\Entity\Slide $slides)
     {
         $this->slides[] = $slides;
+
         return $this;
     }
 
     /**
      * Remove slides
      *
-     * @param BW\SliderBundle\Entity\Slide $slides
+     * @param \BW\SliderBundle\Entity\Slide $slides
      */
     public function removeSlide(\BW\SliderBundle\Entity\Slide $slides)
     {
@@ -124,10 +127,33 @@ class Slider
     /**
      * Get slides
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSlides()
     {
         return $this->slides;
+    }
+
+    /**
+     * Set group
+     *
+     * @param \BW\SliderBundle\Entity\Group $group
+     * @return Slider
+     */
+    public function setGroup(\BW\SliderBundle\Entity\Group $group = null)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return \BW\SliderBundle\Entity\Group 
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }
