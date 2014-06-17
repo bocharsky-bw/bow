@@ -75,7 +75,7 @@ Examples:
 ATTENTION: The trailing slash is required.
 */
 //$baseUrl = '/ckfinder/userfiles/';
-$baseUrl = '/web/uploads/';
+$baseUrl = '/uploads/';
 
 /*
 $baseDir : the path to the local directory (in the server) which points to the
@@ -94,7 +94,13 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseDir = resolveUrl($baseUrl);
+//$baseDir = resolveUrl($baseUrl);
+$baseDir = dirname(__FILE__) . '/../../uploads/';
+/* get clear path without level up */
+do {
+    $length = strlen($baseDir);
+    $baseDir = preg_replace('#[^/]+/\.\./#', '', $baseDir);
+} while ($length !== strlen($baseDir));
 
 /*
  * ### Advanced Settings
