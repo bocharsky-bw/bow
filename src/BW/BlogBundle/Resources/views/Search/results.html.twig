@@ -1,9 +1,10 @@
 <h2>Результаты поиска</h2>
-<p>Всего найдено {{ results|length }} совпадений:</p>
+<p>Совпадения найдены в <b>{{ results|length }}</b> разделах:</p>
 {% if results %}
     {% for repository, entities in results %}
         {% if entities %}
             <h3>{{ repository }}</h3>
+            <p>Всего найдено <b>{{ entities|length }}</b> совпадений:</p>
             {% for entity in entities %}
                 <div>
                     <h4>

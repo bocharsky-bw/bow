@@ -37,12 +37,16 @@ class SearchController extends Controller
                         'class' => 'BWBlogBundle:Post',
                         'properties' => array(
                             'heading',
+                            'shortDescription',
+                            'content',
                         ),
                     ),
                     array(
                         'class' => 'BWBlogBundle:Category',
                         'properties' => array(
                             'heading',
+                            'shortDescription',
+                            'description',
                         ),
                     ),
                 ),
@@ -50,31 +54,22 @@ class SearchController extends Controller
 
             foreach ($searchBy as $mode => $target) {
                 switch ($mode) {
-                    case 'entities':
+                    case 'entities': {
                         foreach ($target as $index => $entity) {
                             $alias = 'a' . $index;
-                            $results[$entity['class']] = $em->getRepository($entity['class'])
-                                ->createQueryBuilder($alias)
-                                ->where("$alias.heading LIKE :query")
-                                ->setParameter('query', '%' . $query . '%', \PDO::PARAM_STR)
-                                ->getQuery()
-                                ->getResult()
-                            ;
+                            $qb = $em->getRepository($entity['class'])->createQueryBuilder($alias);
+                            foreach ($entity['properties'] as $property) {
+                                $qb->orWhere("{$alias}.{$property} LIKE :query");
+                            }
+                            $qb->setParameter("query", "%{$query}%", \PDO::PARAM_STR);
+
+                            $results[$entity['class']] = $qb->getQuery()->getResult();
                         }
 
                         break;
+                    }
                 }
             }
-
-
-//            $results['Category'] = $em->getRepository('BWBlogBundle:Category')
-//                ->createQueryBuilder('c')
-//                ->where('c.heading LIKE :query')
-//                ->setParameter('query', '%' . $query . '%', \PDO::PARAM_STR)
-//                ->getQuery()
-//                ->getResult()
-//            ;
-
         }
 
         return $this->render('BWBlogBundle:Search:index.html.twig', array(
