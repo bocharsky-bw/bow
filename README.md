@@ -1,6 +1,8 @@
 BoW
 ===
 
+[![Build Status](https://travis-ci.org/bocharsky-bw/bow.svg?branch=master)](https://travis-ci.org/bocharsky-bw/bow)
+
 BoW CMS is a PHP ready-to-use CMS based on Symfony 2 framework
 
 Based on Symfony Standard Edition
