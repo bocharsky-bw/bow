@@ -52,9 +52,16 @@
                 <div class="example">
                     <h2>+ Список последних статей:</h2>
                     <pre>{{ '{{' }} service('bw_blog.widget').lastPosts($count = 5, $categories = null, $template = 'last-posts')|raw {{ '}}' }}</pre>
-                    <a href="https://github.com/bocharsky-bw/bow/blob/master/src/BW/BlogBundle/Service/Widget.php#L73" target="_blank">Документация</a><br/>
+                    <a href="https://github.com/bocharsky-bw/bow/blob/master/src/BW/BlogBundle/Service/Widget.php#L74" target="_blank">Документация</a><br/>
                     <i>Пример:</i><br/>
                     {{ service('bw_blog.widget').lastPosts()|raw }}
+                </div>
+                <div class="example">
+                    <h2>+ Форма поиска:</h2>
+                    <pre>{{ '{{' }} service('bw_blog.widget').searchForm()|raw {{ '}}' }}</pre>
+                    <a href="https://github.com/bocharsky-bw/bow/blob/master/src/BW/BlogBundle/Service/Widget.php#L108" target="_blank">Документация</a><br/>
+                    <i>Пример:</i><br/>
+                    {{ service('bw_blog.widget').searchForm()|raw }}
                 </div>
                 <div class="example">
                     <h2>+ Список доступных языков:</h2>

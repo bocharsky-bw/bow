@@ -105,7 +105,7 @@ class Widget {
     /**
      * The search form
      */
-    public function searchFrom()
+    public function searchForm()
     {
         $form = $this->container->get('form.factory')->createBuilder()
             ->setMethod('GET')
