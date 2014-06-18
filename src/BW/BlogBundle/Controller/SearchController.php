@@ -34,6 +34,7 @@ class SearchController extends Controller
             $searchBy = array(
                 'entities' => array(
                     array(
+                        'name' => 'Статьи',
                         'class' => 'BWBlogBundle:Post',
                         'properties' => array(
                             'heading',
@@ -42,6 +43,7 @@ class SearchController extends Controller
                         ),
                     ),
                     array(
+                        'name' => 'Категории',
                         'class' => 'BWBlogBundle:Category',
                         'properties' => array(
                             'heading',
@@ -63,7 +65,10 @@ class SearchController extends Controller
                             }
                             $qb->setParameter("query", "%{$query}%", \PDO::PARAM_STR);
 
-                            $results[$entity['class']] = $qb->getQuery()->getResult();
+                            $result = $qb->getQuery()->getResult();
+                            if ($result) {
+                                $results[$entity['name']] = $result;
+                            }
                         }
 
                         break;

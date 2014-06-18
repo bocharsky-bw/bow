@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1>Поиск</h1>
-                {{ form(form) }}
+                {% include '@BWBlog/Widget/search-form.html.twig' %}
             </div>
         </div>
         {% if isFormSubmitted %}

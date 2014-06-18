@@ -32,7 +32,8 @@ class Widget {
      * @param null|int|array $categories ID категории
      * @param string $template
      */
-    public function listCategories($categories = null, $template = 'list-categories') {
+    public function listCategories($categories = null, $template = 'list-categories')
+    {
         $criteria = array(
             'published' => true,
         );
@@ -70,7 +71,8 @@ class Widget {
      * @param string $template Имя шаблона
      *
      */
-    public function lastPosts($count = 5, $categories = null, $template = 'last-posts') {
+    public function lastPosts($count = 5, $categories = null, $template = 'last-posts')
+    {
         $criteria = array(
             'published' => true,
         );
@@ -101,9 +103,36 @@ class Widget {
     }
 
     /**
+     * The search form
+     */
+    public function searchFrom()
+    {
+        $form = $this->container->get('form.factory')->createBuilder()
+            ->setMethod('GET')
+            ->setAction($this->container->get('router')->generate('search'))
+            ->add('query', 'text', array(
+                'label' => ' ',
+                'attr' => array(
+                    'placeholder' => 'Что ищем?..',
+                ),
+            ))
+            ->add('search', 'submit', array(
+                'label' => 'Найти'
+            ))
+            ->getForm()
+        ;
+
+        return $this->container->get('templating')
+            ->render('BWBlogBundle:Widget:search-form.html.twig', array(
+                'form' => $form->createView(),
+            ));
+    }
+
+    /**
      * Фильтр для настраиваемых параметров
      */
-    public function customFilter() {
+    public function customFilter()
+    {
         $fields = $this->container->get('doctrine')
             ->getRepository('BWBlogBundle:CustomField')
             ->findAll();
