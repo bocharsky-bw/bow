@@ -1,0 +1,26 @@
+<div class="bw_container">
+    <div class="bw_row">
+        <h2><i class="icon-picture"></i> Список фотографий</h2>
+    </div>
+</div>
+
+<div class="main-table">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Короткое описание</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</td>
+                <td><a href="{{ path('photo_edit', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                <td>{{ entity.shortDescription }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

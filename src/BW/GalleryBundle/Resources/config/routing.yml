@@ -1,0 +1,8 @@
+bw_gallery_gallery_admin:
+    resource: "@BWGalleryBundle/Resources/config/routing/gallery.admin.yml"
+    prefix:   /_admin/{_locale}/gallery
+
+bw_gallery_photo_admin:
+    resource: "@BWGalleryBundle/Resources/config/routing/photo.admin.yml"
+    prefix:   /_admin/{_locale}/photo
+

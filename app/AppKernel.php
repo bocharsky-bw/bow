@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new BW\SkeletonBundle\BWSkeletonBundle(),
             new BW\BreadcrumbsBundle\BWBreadcrumbsBundle(),
             new BW\SliderBundle\BWSliderBundle(),
+            new BW\GalleryBundle\BWGalleryBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

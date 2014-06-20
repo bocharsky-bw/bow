@@ -1,0 +1,36 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Список всех галерей {{ parent() }}{% endblock %}
+
+{% block content -%}
+    <div class="form-buttons">
+        {% include '@BWMain/Utility/Form/add-button.html.twig' with {'path': path('gallery_new')} %}
+    </div>
+
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-picture"></i> Список галерей</h1>
+        </div>
+    </div>
+
+    <div class="main-table">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Короткое описание</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td><a href="{{ path('gallery_edit', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                    <td>{{ entity.shortDescription|raw }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

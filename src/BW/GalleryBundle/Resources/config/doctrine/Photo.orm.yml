@@ -1,0 +1,20 @@
+BW\GalleryBundle\Entity\Photo:
+    type: entity
+    table: photos
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        shortDescription:
+            type: text
+    manyToOne:
+        gallery:
+            targetEntity: BW\GalleryBundle\Entity\Gallery
+            inversedBy: photos
+    lifecycleCallbacks: {  }

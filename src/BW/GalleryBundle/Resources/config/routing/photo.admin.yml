@@ -1,0 +1,30 @@
+photo:
+    pattern:  /
+    defaults: { _controller: "BWGalleryBundle:Photo:index" }
+
+photo_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BWGalleryBundle:Photo:show" }
+
+photo_new:
+    pattern:  /new
+    defaults: { _controller: "BWGalleryBundle:Photo:new" }
+
+photo_create:
+    pattern:  /create
+    defaults: { _controller: "BWGalleryBundle:Photo:create" }
+    requirements: { _method: post }
+
+photo_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BWGalleryBundle:Photo:edit" }
+
+photo_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BWGalleryBundle:Photo:update" }
+    requirements: { _method: post|put }
+
+photo_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BWGalleryBundle:Photo:delete" }
+    requirements: { _method: post|delete }

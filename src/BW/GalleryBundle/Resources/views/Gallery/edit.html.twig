@@ -1,0 +1,30 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Редактирование галереи {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-edit"></i> Редактирование галереи</h1>
+        </div>
+    </div>
+
+    {{ form_start(form) }}
+    <div class="form-buttons">
+        <a class="btn btn-primary icon-plus before-padding" href="{{ path('photo_new') }}" title="Добавить новый элемент">Добавить фото</a>
+        {{ form_widget(form.update) }}
+        {{ form_widget(form.updateAndClose) }}
+        {{ form_widget(form.delete) }}
+        {% include '@BWMain/Utility/Form/close-button.html.twig' with {'path': path('gallery')} %}
+    </div>
+    <div class="bw_container">
+        <div class="bw_row">
+            {{ form(form) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+    <br/>
+
+    {% include 'BWGalleryBundle:Photo:index.html.twig' with {'entities': entity.photos} %}
+{% endblock %}
