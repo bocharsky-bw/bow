@@ -2,6 +2,7 @@
 
 namespace BW\GalleryBundle\Form;
 
+use BW\BlogBundle\Form\ImageType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -35,6 +36,14 @@ class PhotoType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
+            ->add('smallImage', new ImageType('galleries/small-photo'), array(
+                'label' => 'Маленькое изображение ',
+                'required' => false,
+            ))
+            ->add('bigImage', new ImageType('galleries/big-photo'), array(
+                'label' => 'Большое изображение ',
+                'required' => false,
+            ))
         ;
     }
     
@@ -53,6 +62,6 @@ class PhotoType extends AbstractType
      */
     public function getName()
     {
-        return 'bw_gallerybundle_photo';
+        return 'bw_photo';
     }
 }

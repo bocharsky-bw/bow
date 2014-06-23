@@ -18,7 +18,19 @@
     </div>
     <div class="bw_container">
         <div class="bw_row">
-            {{ form(form) }}
+            {{ form_row(form.gallery) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.shortDescription) }}
+
+            {{ form_row(form.smallImage) }}
+            {% if entity.smallImage %}
+                <img src="{{ asset(entity.smallImage.webPath) }}" alt="{{ entity.smallImage.alt }}"/>
+            {% endif %}
+
+            {{ form_row(form.bigImage) }}
+            {% if entity.bigImage %}
+                <img src="{{ asset(entity.bigImage.webPath) }}" alt="{{ entity.bigImage.alt }}"/>
+            {% endif %}
         </div>
     </div>
     {{ form_end(form) }}

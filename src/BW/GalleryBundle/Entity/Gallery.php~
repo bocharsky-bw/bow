@@ -95,4 +95,37 @@ class Gallery
         return $this->shortDescription;
     }
 
+
+    /**
+     * Add photos
+     *
+     * @param \BW\GalleryBundle\Entity\Photo $photos
+     * @return Gallery
+     */
+    public function addPhoto(\BW\GalleryBundle\Entity\Photo $photos)
+    {
+        $this->photos[] = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Remove photos
+     *
+     * @param \BW\GalleryBundle\Entity\Photo $photos
+     */
+    public function removePhoto(\BW\GalleryBundle\Entity\Photo $photos)
+    {
+        $this->photos->removeElement($photos);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
 }

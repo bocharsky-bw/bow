@@ -30,6 +30,10 @@ class Photo
      */
     private $gallery;
 
+    private $smallImage;
+
+    private $bigImage;
+
 
     /* SETTERS / GETTERS */
 
@@ -110,5 +114,63 @@ class Photo
     public function getGallery()
     {
         return $this->gallery;
+    }
+
+
+
+    /**
+     * Set smallImage
+     *
+     * @param \BW\BlogBundle\Entity\Image $smallImage
+     * @return Photo
+     */
+    public function setSmallImage(\BW\BlogBundle\Entity\Image $smallImage = null)
+    {
+        if (isset($smallImage)) {
+            $file = $smallImage->getFile();
+            if (isset($file)) {
+                $this->smallImage = $smallImage;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get smallImage
+     *
+     * @return \BW\BlogBundle\Entity\Image 
+     */
+    public function getSmallImage()
+    {
+        return $this->smallImage;
+    }
+
+    /**
+     * Set bigImage
+     *
+     * @param \BW\BlogBundle\Entity\Image $bigImage
+     * @return Photo
+     */
+    public function setBigImage(\BW\BlogBundle\Entity\Image $bigImage = null)
+    {
+        if (isset($bigImage)) {
+            $file = $bigImage->getFile();
+            if (isset($file)) {
+                $this->bigImage = $bigImage;
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get bigImage
+     *
+     * @return \BW\BlogBundle\Entity\Image 
+     */
+    public function getBigImage()
+    {
+        return $this->bigImage;
     }
 }

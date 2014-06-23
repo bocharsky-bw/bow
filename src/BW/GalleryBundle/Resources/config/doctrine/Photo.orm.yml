@@ -13,6 +13,19 @@ BW\GalleryBundle\Entity\Photo:
             length: 255
         shortDescription:
             type: text
+    oneToOne:
+        smallImage:
+            targetEntity: BW\BlogBundle\Entity\Image
+            joinColumn:
+                name: small_image_id
+                referencedColumnName: id
+            cascade: [persist, remove]
+        bigImage:
+            targetEntity: BW\BlogBundle\Entity\Image
+            joinColumn:
+                name: big_image_id
+                referencedColumnName: id
+            cascade: [persist, remove]
     manyToOne:
         gallery:
             targetEntity: BW\GalleryBundle\Entity\Gallery

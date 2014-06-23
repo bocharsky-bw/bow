@@ -30,6 +30,10 @@ class Photo
      */
     private $gallery;
 
+    private $smallImage;
+
+    private $bigImage;
+
 
     /* SETTERS / GETTERS */
 
@@ -47,7 +51,7 @@ class Photo
      * Set name
      *
      * @param string $name
-     * @return Image
+     * @return Photo
      */
     public function setName($name)
     {
@@ -70,7 +74,7 @@ class Photo
      * Set shortDescription
      *
      * @param string $shortDescription
-     * @return Image
+     * @return Photo
      */
     public function setShortDescription($shortDescription)
     {
@@ -93,7 +97,7 @@ class Photo
      * Set gallery
      *
      * @param \BW\GalleryBundle\Entity\Gallery $gallery
-     * @return Image
+     * @return Photo
      */
     public function setGallery(\BW\GalleryBundle\Entity\Gallery $gallery = null)
     {
@@ -111,4 +115,6 @@ class Photo
     {
         return $this->gallery;
     }
+
+
 }

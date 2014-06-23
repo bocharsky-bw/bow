@@ -32,15 +32,28 @@ class ImageType extends AbstractType
             ->add('title', 'text', array(
                 'required' => false,
                 'trim' => true,
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
             ))
             ->add('alt', 'text', array(
                 'required' => false,
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
             ))
             ->add('subFolder', 'hidden', array(
                 'data' => $this->subFolder,
                 'required' => false,
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
             ))
-            ->add('file')
+            ->add('file', 'file', array(
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
         ;
     }
     
