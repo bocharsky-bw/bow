@@ -15,24 +15,24 @@ class PhotoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array(
-                'label' => 'Название ',
-                'attr' => array(
-                    'class' => 'form-controls',
-                ),
-            ))
-            ->add('shortDescription', 'textarea', array(
-                'label' => 'Короткое описание ',
-                'attr' => array(
-                    'class' => 'form-controls',
-                ),
-            ))
             ->add('gallery', 'entity', array(
                 'class' => 'BW\GalleryBundle\Entity\Gallery',
                 'property' => 'name',
                 'label' => 'Галерея ',
                 'attr' => array(
-                    'class' => 'form-controls',
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('name', 'text', array(
+                'label' => 'Название ',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('shortDescription', 'textarea', array(
+                'label' => 'Короткое описание ',
+                'attr' => array(
+                    'class' => 'form-control',
                 ),
             ))
         ;

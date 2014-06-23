@@ -1,15 +1,24 @@
-{% extends '::base.html.twig' %}
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
 
-{% block body -%}
-    <h1>Photo creation</h1>
+{% block title %}Добавление новой фотографии {{ parent() }}{% endblock %}
 
-    {{ form(form) }}
+{% block content -%}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-plus"></i> Создание фотографии</h1>
+        </div>
+    </div>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('photo') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    {{ form_start(form) }}
+    <div class="form-buttons">
+        {{ form_widget(form.create) }}
+        {{ form_widget(form.createAndClose) }}
+        {% include '@BWMain/Utility/Form/close-button.html.twig' with {'path': path('gallery')} %}
+    </div>
+    <div class="bw_container">
+        <div class="bw_row">
+            {{ form(form) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
 {% endblock %}

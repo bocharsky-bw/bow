@@ -44,7 +44,7 @@ class PhotoController extends Controller
         $entity = $em->getRepository('BWGalleryBundle:Photo')->find($id);
 
         if ( ! $entity) {
-            throw $this->createNotFoundException('Запрашиваемая галерея не существует.');
+            throw $this->createNotFoundException('Запрашиваемая фотография не существует.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -89,7 +89,9 @@ class PhotoController extends Controller
             $em->flush();
 
             if ($form->get('createAndClose')->isClicked()) {
-                return $this->redirect($this->generateUrl('photo'));
+                return $this->redirect($this->generateUrl('gallery_edit', array(
+                    'id' => $entity->getGallery()->getId(),
+                )));
             }
 
             return $this->redirect($this->generateUrl('photo_edit', array('id' => $entity->getId())));
@@ -114,7 +116,7 @@ class PhotoController extends Controller
         $entity = $em->getRepository('BWGalleryBundle:Photo')->find($id);
 
         if ( ! $entity) {
-            throw $this->createNotFoundException('Запрашиваемая галерея не существует.');
+            throw $this->createNotFoundException('Запрашиваемая фотография не существует.');
         }
 
         $form = $this->createEditForm($entity);
@@ -140,8 +142,8 @@ class PhotoController extends Controller
 
         $entity = $em->getRepository('BWGalleryBundle:Photo')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Запрашиваемая галерея не существует.');
+        if ( ! $entity) {
+            throw $this->createNotFoundException('Запрашиваемая фотография не существует.');
         }
 
         $form = $this->createEditForm($entity);
@@ -149,13 +151,17 @@ class PhotoController extends Controller
         if ($form->get('delete')->isClicked()) {
             $this->delete($id);
 
-            return $this->redirect($this->generateUrl('photo'));
+            return $this->redirect($this->generateUrl('gallery_edit', array(
+                'id' => $entity->getGallery()->getId(),
+            )));
         }
         if ($form->isValid()) {
             $em->flush();
 
             if ($form->get('updateAndClose')->isClicked()) {
-                return $this->redirect($this->generateUrl('photo'));
+                return $this->redirect($this->generateUrl('gallery_edit', array(
+                    'id' => $entity->getGallery()->getId(),
+                )));
             }
 
             return $this->redirect($this->generateUrl('photo_edit', array('id' => $id)));
@@ -182,7 +188,7 @@ class PhotoController extends Controller
         $entity = $em->getRepository('BWGalleryBundle:Photo')->find($id);
 
         if ( ! $entity) {
-            throw $this->createNotFoundException('Запрашиваемая галерея не существует.');
+            throw $this->createNotFoundException('Запрашиваемая фотография не существует.');
         }
 
         $em->remove($entity);
