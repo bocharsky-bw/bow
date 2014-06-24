@@ -37,12 +37,20 @@ class CustomFieldProperty
      */
     private $customField;
 
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="BW\BlogBundle\Entity\PostCustomField", mappedBy="customFieldProperties")
+     */
+    private $postCustomFields;
+
     
     /**
      * The constructor
      */
     public function __construct()
     {
+        $this->postCustomFields = new ArrayCollection();
     }
 
 
@@ -106,5 +114,38 @@ class CustomFieldProperty
     public function getCustomField()
     {
         return $this->customField;
+    }
+
+    /**
+     * Add postCustomFields
+     *
+     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
+     * @return CustomFieldProperty
+     */
+    public function addPostCustomField(\BW\BlogBundle\Entity\PostCustomField $postCustomFields)
+    {
+        $this->postCustomFields[] = $postCustomFields;
+
+        return $this;
+    }
+
+    /**
+     * Remove postCustomFields
+     *
+     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
+     */
+    public function removePostCustomField(\BW\BlogBundle\Entity\PostCustomField $postCustomFields)
+    {
+        $this->postCustomFields->removeElement($postCustomFields);
+    }
+
+    /**
+     * Get postCustomFields
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPostCustomFields()
+    {
+        return $this->postCustomFields;
     }
 }

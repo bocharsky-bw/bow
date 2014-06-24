@@ -30,6 +30,20 @@ class CustomField
     private $name = '';
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="expanded", type="boolean")
+     */
+    private $expanded = true;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="multiple", type="boolean")
+     */
+    private $multiple = true;
+
+    /**
      * @var ArrayCollection
      * 
      * @ORM\OneToMany(targetEntity="CustomFieldProperty", mappedBy="customField")
@@ -60,7 +74,9 @@ class CustomField
     {
         return $this->name;
     }
-    
+
+
+    /* GETTERS / SETTERS */
     
     /**
      * Get id
@@ -93,6 +109,72 @@ class CustomField
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set expanded
+     *
+     * @param boolean $expanded
+     * @return CustomField
+     */
+    public function setExpanded($expanded)
+    {
+        $this->expanded = $expanded;
+
+        return $this;
+    }
+
+    /**
+     * Get expanded
+     *
+     * @return boolean
+     */
+    public function getExpanded()
+    {
+        return $this->expanded;
+    }
+
+    /**
+     * Get expanded
+     *
+     * @return boolean
+     */
+    public function isExpanded()
+    {
+        return $this->expanded;
+    }
+
+    /**
+     * Set multiple
+     *
+     * @param boolean $multiple
+     * @return CustomField
+     */
+    public function setMultiple($multiple)
+    {
+        $this->multiple = $multiple;
+
+        return $this;
+    }
+
+    /**
+     * Get multiple
+     *
+     * @return boolean
+     */
+    public function getMultiple()
+    {
+        return $this->multiple;
+    }
+
+    /**
+     * Get multiple
+     *
+     * @return boolean
+     */
+    public function isMultiple()
+    {
+        return $this->multiple;
     }
 
     /**
@@ -161,36 +243,4 @@ class CustomField
         return $this->postCustomFields;
     }
 
-    /**
-     * Add posts
-     *
-     * @param \BW\BlogBundle\Entity\Post $posts
-     * @return CustomField
-     */
-    public function addPost(\BW\BlogBundle\Entity\Post $posts)
-    {
-        $this->posts[] = $posts;
-
-        return $this;
-    }
-
-    /**
-     * Remove posts
-     *
-     * @param \BW\BlogBundle\Entity\Post $posts
-     */
-    public function removePost(\BW\BlogBundle\Entity\Post $posts)
-    {
-        $this->posts->removeElement($posts);
-    }
-
-    /**
-     * Get posts
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPosts()
-    {
-        return $this->posts;
-    }
 }

@@ -31,12 +31,40 @@ class PostRepository extends EntityRepository {
         /* Custom Filter */
         $form = $request->query->get('form', FALSE);
         if ($form) {
-            if (isset($form['properteis'])) {
+            if (isset($form['apply'])) {
+                unset($form['apply']); // unset submit button from form data array if exists
+            }
+
+            /* Generate property array */
+            $properties = array();
+            foreach ($form as $property) {
+                if (is_array($property)) {
+                    foreach ($property as $prop) {
+                        $prop = (int)$prop;
+                        if ($prop) {
+                            $properties[] = $prop;
+                        }
+                    }
+                } elseif (is_scalar($property)) {
+                    $property = (int)$property;
+                    if ($property) {
+                        $properties[] = $property;
+                    }
+                } else {
+                    throw new \InvalidArgumentException('Filter takes an array or a scalar value');
+                }
+            }
+
+            if ($properties) {
                 $qb = $qb
-                        ->innerJoin('p.customFieldProperties', 'cfp')
-                        ->andWhere('cfp.id IN (:properties)')
-                        ->setParameter('properties', $form['properteis'])
-                    ;
+                    ->innerJoin('p.postCustomFields', 'pcf')
+                    ->innerJoin('pcf.customFieldProperties', 'cfp')
+                    ->andWhere('cfp.id IN (:properties)')
+                    ->groupBy('p.id')
+                    ->having('COUNT(p.id) = :count')
+                    ->setParameter('properties', $properties)
+                    ->setParameter('count', count($properties))
+                ;
             }
         }
         /* /Custom Filter */

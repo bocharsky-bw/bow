@@ -15,8 +15,17 @@ class PostCustomFieldType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('post')
-            ->add('customField')
+            ->add('customField', 'entity', array(
+                'class' => 'BW\BlogBundle\Entity\CustomField',
+                'property' => 'name',
+                'disabled' => true,
+            ))
+            ->add('customFieldProperties', 'entity', array(
+                'class' => 'BW\BlogBundle\Entity\CustomFieldProperty',
+                'property' => 'name',
+                'multiple' => true,
+                'expanded' => true,
+            ))
         ;
     }
     
@@ -35,6 +44,6 @@ class PostCustomFieldType extends AbstractType
      */
     public function getName()
     {
-        return 'bw_blogbundle_postcustomfield';
+        return 'bw_post_custom_field';
     }
 }

@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +37,34 @@ class PostCustomField
      */
     private $customField;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="BW\BlogBundle\Entity\CustomFieldProperty", inversedBy="postCustomFields")
+     */
+    private $customFieldProperties;
+
+
+    public function __construct()
+    {
+        $this->customFieldProperties = new ArrayCollection();
+    }
+
+    function __set($name, $value)
+    {
+        switch ($name) {
+            case 'customFieldProperties':
+                $this->customFieldProperties = new ArrayCollection(array($value));
+                break;
+            default:
+                throw new \InvalidArgumentException();
+        }
+
+        return $this;
+    }
+
+
+    /* GETTERS / SETTERS */
 
     /**
      * Get id
@@ -91,5 +120,45 @@ class PostCustomField
     public function getCustomField()
     {
         return $this->customField;
+    }
+
+    /**
+     * Add customFieldProperties
+     *
+     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
+     * @return PostCustomField
+     */
+    public function addCustomFieldProperty(\BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties)
+    {
+        $this->customFieldProperties[] = $customFieldProperties;
+
+        return $this;
+    }
+
+    /**
+     * Remove customFieldProperties
+     *
+     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
+     */
+    public function removeCustomFieldProperty(\BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties)
+    {
+        $this->customFieldProperties->removeElement($customFieldProperties);
+    }
+
+    /**
+     * Get customFieldProperties
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCustomFieldProperties()
+    {
+        switch ($this->customField->getType()) {
+            case 'checkbox':
+                return $this->customFieldProperties;
+            case 'radio':
+                return $this->customFieldProperties->get(0);
+            default:
+                return $this->customFieldProperties;
+        }
     }
 }

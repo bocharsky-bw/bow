@@ -18,6 +18,9 @@
     <div>
         {{ form_label(form.name, 'Название: ', {'label_attr': {'class': ''} }) }}
         {{ form_widget(form.name, {'attr': {'class': 'form-control '} }) }}
+        <a href="http://symfony.com/doc/current/reference/forms/types/entity.html#select-tag-checkboxes-or-radio-buttons" target="_blank">
+            Документация по рендерингу свойств поля в виде чекбоксов, радио-кнопкок или выпадающего списка
+        </a>
         <div class="error">
             {{ form_errors(form.name) }}
         </div>

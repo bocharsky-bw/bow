@@ -2,6 +2,8 @@
 
 namespace BW\BlogBundle\Service;
 
+use BW\BlogBundle\Entity\CustomField;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -137,20 +139,47 @@ class Widget {
             ->getRepository('BWBlogBundle:CustomField')
             ->findAll();
 
-        $defaults = array('properteis' => new \Doctrine\Common\Collections\ArrayCollection);
         $formFactory = $this->container->get('form.factory');
-        $form = $formFactory->createBuilder('form', $defaults, array('csrf_protection' => false))
+        $fb = $formFactory->createBuilder('form', null, array(
+            'csrf_protection' => false
+        ))
             ->setMethod('GET')
-            ->add('properteis', 'entity', array(
+        ;
+
+        /* Add recursively Custom Field Property groups */
+        foreach ($fields as $index => $field) {
+            /** @var CustomField $field */
+            $fb->add("field_{$index}", 'entity', array(
                 'class' => 'BWBlogBundle:CustomFieldProperty',
                 'property' => 'name',
-                'group_by' => 'customField',
+                'query_builder' => function(EntityRepository $er) use ($field) {
+                    return $er->createQueryBuilder('cfp')
+                        ->where('cfp.customField = :field_id')
+                        ->setParameter('field_id', $field->getId())
+                        ->orderBy('cfp.name', 'ASC')
+                    ;
+                },
+                'label' => $field->getName(),
+                'empty_value' => 'Нет',
                 'required' => FALSE,
-                'expanded' => TRUE,
-                'multiple' => TRUE,
+                'expanded' => $field->isExpanded(),
+                'multiple' => $field->isMultiple(),
+            ));
+        }
+
+        /* Add buttons */
+        $fb
+            ->add('apply', 'submit', array(
+                'label' => 'Применить',
             ))
-            ->add('apply', 'submit')
-            ->getForm();
+            ->add('reset', 'reset', array(
+                'label' => 'Вернуть',
+            ))
+            ->add('clear', 'button', array(
+                'label' => 'Очистить',
+            ))
+        ;
+        $form = $fb->getForm();
 
         $request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
         $form->handleRequest($request);

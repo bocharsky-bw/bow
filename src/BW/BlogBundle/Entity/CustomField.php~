@@ -30,12 +30,19 @@ class CustomField
     private $name = '';
 
     /**
-     * @var integer
+     * @var bool
      *
-     * @ORM\ManyToMany(targetEntity="Post", mappedBy="customFields")
+     * @ORM\Column(name="expanded", type="boolean")
      */
-    private $posts;
-    
+    private $expanded = true;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="multiple", type="boolean")
+     */
+    private $multiple = true;
+
     /**
      * @var ArrayCollection
      * 
@@ -67,7 +74,9 @@ class CustomField
     {
         return $this->name;
     }
-    
+
+
+    /* GETTERS / SETTERS */
     
     /**
      * Get id
@@ -100,6 +109,52 @@ class CustomField
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set expanded
+     *
+     * @param boolean $expanded
+     * @return CustomField
+     */
+    public function setExpanded($expanded)
+    {
+        $this->expanded = $expanded;
+
+        return $this;
+    }
+
+    /**
+     * Get expanded
+     *
+     * @return boolean
+     */
+    public function isExpanded()
+    {
+        return $this->expanded;
+    }
+
+    /**
+     * Set multiple
+     *
+     * @param boolean $multiple
+     * @return CustomField
+     */
+    public function setMultiple($multiple)
+    {
+        $this->multiple = $multiple;
+
+        return $this;
+    }
+
+    /**
+     * Get multiple
+     *
+     * @return boolean
+     */
+    public function isMultiple()
+    {
+        return $this->multiple;
     }
 
     /**
@@ -167,4 +222,5 @@ class CustomField
     {
         return $this->postCustomFields;
     }
+
 }

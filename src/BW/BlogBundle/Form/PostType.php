@@ -50,7 +50,9 @@ class PostType extends AbstractType
                     'required' => FALSE,
                     'empty_value' => 'Выберите язык',
                 ))
-                ->add('image', new ImageType('categories'))
+                ->add('image', new ImageType('categories'), array(
+                    'required' => false,
+                ))
                 // Meta tags
                 ->add('slug', 'text', array(
                     'required' => FALSE,
@@ -66,19 +68,9 @@ class PostType extends AbstractType
                 ->add('saveAndClose', 'submit')
                 ->add('delete', 'submit')
                 // CustomFields
-//                ->add('postCustomFields', new PostCustomFieldType())
                 ->add('postCustomFields',  'collection', array(
                     'type'=> new PostCustomFieldType(),
-                ));
-//                ->add('customFields', 'entity', array(
-//                    'class' => 'BWBlogBundle:CustomField',
-//                    'property' => 'name',
-//                    'required' => FALSE,
-//                    'expanded' => TRUE,
-//                    'multiple' => TRUE,
-//                ))
-//                ->add('customFieldProperties', 'collection')
-//                ->add('customFields', new CustomFieldType())
+                ))
             ;
     }
     

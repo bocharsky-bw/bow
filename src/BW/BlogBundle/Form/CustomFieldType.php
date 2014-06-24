@@ -15,11 +15,25 @@ class CustomFieldType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-                ->add('name', 'text')
-                ->add('save', 'submit')
-                ->add('saveAndClose', 'submit')
-                ->add('delete', 'submit')
-            ;
+            ->add('name', 'text')
+            ->add('expanded', 'checkbox', array(
+                'required' => false,
+                'label' => 'Расширенный вид ',
+                'attr' => array(
+                    'title' => 'Выпадающий список | Чекбоксы'
+                ),
+            ))
+            ->add('multiple', 'checkbox', array(
+                'required' => false,
+                'label' => 'Множественный выбор ',
+                'attr' => array(
+                    'title' => 'Радио-кнопки | Чекбоксы'
+                ),
+            ))
+            ->add('save', 'submit')
+            ->add('saveAndClose', 'submit')
+            ->add('delete', 'submit')
+        ;
     }
     
     /**
