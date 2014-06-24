@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Controller\Admin;
 
+use BW\BlogBundle\Entity\PostCustomField;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use BW\MainBundle\Controller\BWController;
@@ -61,6 +62,16 @@ class PostController extends BWController
                         );
 
                         return $this->redirect( $this->generateUrl('admin_posts') );
+                    }
+                }
+
+                if ($form->get('add_custom_field')->isClicked()) {
+                    $customField = $form->get('custom_field')->getData();
+                    if ($customField) {
+                        $postCustomField = new PostCustomField();
+                        $postCustomField->setPost($post);
+                        $postCustomField->setCustomField($customField);
+                        $em->persist($postCustomField);
                     }
                 }
                 

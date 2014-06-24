@@ -50,18 +50,18 @@ class PostCustomField
         $this->customFieldProperties = new ArrayCollection();
     }
 
-    function __set($name, $value)
-    {
-        switch ($name) {
-            case 'customFieldProperties':
-                $this->customFieldProperties = new ArrayCollection(array($value));
-                break;
-            default:
-                throw new \InvalidArgumentException();
-        }
-
-        return $this;
-    }
+//    function __set($name, $value)
+//    {
+//        switch ($name) {
+//            case 'customFieldProperties':
+//                $this->customFieldProperties = new ArrayCollection(array($value));
+//                break;
+//            default:
+//                throw new \InvalidArgumentException();
+//        }
+//
+//        return $this;
+//    }
 
 
     /* GETTERS / SETTERS */
@@ -152,13 +152,15 @@ class PostCustomField
      */
     public function getCustomFieldProperties()
     {
-        switch ($this->customField->getType()) {
-            case 'checkbox':
-                return $this->customFieldProperties;
-            case 'radio':
-                return $this->customFieldProperties->get(0);
-            default:
-                return $this->customFieldProperties;
-        }
+//        switch ($this->customField->getType()) {
+//            case 'checkbox':
+//                return $this->customFieldProperties;
+//            case 'radio':
+//                return $this->customFieldProperties->get(0);
+//            default:
+//                return $this->customFieldProperties;
+//        }
+
+        return $this->customFieldProperties;
     }
 }
