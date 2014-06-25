@@ -50,18 +50,16 @@ class PostCustomField
         $this->customFieldProperties = new ArrayCollection();
     }
 
-//    function __set($name, $value)
+    /**
+     * Use in PostType form for implode IDs
+     *
+     * @return string The current entity ID
+     */
+//    public function __toString()
 //    {
-//        switch ($name) {
-//            case 'customFieldProperties':
-//                $this->customFieldProperties = new ArrayCollection(array($value));
-//                break;
-//            default:
-//                throw new \InvalidArgumentException();
-//        }
-//
-//        return $this;
+//        return (string)$this->id;
 //    }
+
 
 
     /* GETTERS / SETTERS */

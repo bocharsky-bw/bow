@@ -120,6 +120,12 @@
         </div>
         
         <h2>Настраиваемые поля</h2>
+
+        {{ form_row(form.custom_field) }}
+
+        {{ form_row(form.add_custom_field) }}
+
+        {{ form_row(form.postCustomFields) }}
         {#
         <div>
             {% set separators = [] %}

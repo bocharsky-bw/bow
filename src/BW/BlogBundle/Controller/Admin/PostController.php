@@ -39,7 +39,7 @@ class PostController extends BWController
         } else {
             $post = new Post;
         }
-        
+
         $form = $this->createForm(new PostType(), $post);
         if ( ! $id) {
             $form->remove('delete');

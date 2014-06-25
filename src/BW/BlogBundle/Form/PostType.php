@@ -73,20 +73,29 @@ class PostType extends AbstractType
                 'property' => 'name',
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('cf')
-                        ->leftJoin('cf.postCustomFields', 'pcf')
-                        ->where('pcf.id IS NOT NULL')
-                        ->orderBy('cf.name', 'ASC')
+                        ->orderBy('cf.name')
                     ;
                 },
                 'required' => false,
                 'mapped' => false,
-                'label' => 'Настраиваемые поля ',
+                'label' => 'Выберите поле для добавления ',
+                'empty_value' => 'Не выбрано',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
             ))
             ->add('add_custom_field', 'submit', array(
                 'label' => 'Добавить',
+                'attr' => array(
+                    'class' => 'btn btn-primary icon-plus before-padding',
+                ),
             ))
             ->add('postCustomFields',  'collection', array(
-                'type'=> new PostCustomFieldType(),
+                'type' => new PostCustomFieldType(),
+                'options'  => array(
+                    'required' => false,
+                ),
+                'label' => 'Добавленые поля ',
             ))
         ;
     }
