@@ -1,0 +1,40 @@
+BW\UserBundle\Entity\Currency:
+    type: entity
+    table: currencies
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        abbr:
+            type: string
+            length: 20
+        symbol:
+            type: string
+            length: 1
+        alpha3:
+            type: string
+            length: 3
+            unique: true
+        numericCode:
+            column: numeric_code
+            type: smallint
+            unique: true
+        exchangeRate:
+            column: exchange_rate
+            type: decimal
+            precision: 15
+            scale: 2
+    oneToMany:
+        wallets:
+            targetEntity: BW\UserBundle\Entity\Wallet
+            mappedBy: currency
+        replenishments:
+            targetEntity: BW\UserBundle\Entity\Replenishment
+            mappedBy: currency
+    lifecycleCallbacks: {  }

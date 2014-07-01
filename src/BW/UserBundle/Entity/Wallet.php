@@ -2,50 +2,42 @@
 
 namespace BW\UserBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
- * BW\UserBundle\Entity\Wallet
- *
- * @ORM\Table(name="wallets")
- * @ORM\Entity(repositoryClass="BW\UserBundle\Entity\WalletRepository")
+ * Class Wallet
+ * @package BW\UserBundle\Entity
  */
 class Wallet
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
     /**
-     * @var decimal $totalAmount
-     *
-     * @ORM\Column(name="total_amount", type="decimal", precision=15, scale=2)
+     * @var float $totalAmount
      */
-    private $totalAmount;
+    private $totalAmount = 0.00;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Profile", inversedBy="wallets")
-     * @ORM\JoinColumn(name="profile_id", referencedColumnName="id")
+     * @var Profile
      */
     private $profile;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Currency", inversedBy="wallets")
-     * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
+     * @var Currency
      */
     private $currency;
-    
-    
-    public function __construct() {
-        $this->totalAmount = 0;
+
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
     }
     
-    
+
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
@@ -60,19 +52,20 @@ class Wallet
     /**
      * Set totalAmount
      *
-     * @param decimal $totalAmount
+     * @param float $totalAmount
      * @return Wallet
      */
     public function setTotalAmount($totalAmount)
     {
         $this->totalAmount = $totalAmount;
+
         return $this;
     }
 
     /**
      * Get totalAmount
      *
-     * @return decimal 
+     * @return float
      */
     public function getTotalAmount()
     {
@@ -82,19 +75,20 @@ class Wallet
     /**
      * Set profile
      *
-     * @param BW\UserBundle\Entity\Profile $profile
+     * @param \BW\UserBundle\Entity\Profile $profile
      * @return Wallet
      */
-    public function setProfile(\BW\UserBundle\Entity\Profile $profile = null)
+    public function setProfile(Profile $profile = null)
     {
         $this->profile = $profile;
+
         return $this;
     }
 
     /**
      * Get profile
      *
-     * @return BW\UserBundle\Entity\Profile 
+     * @return \BW\UserBundle\Entity\Profile
      */
     public function getProfile()
     {
@@ -104,19 +98,20 @@ class Wallet
     /**
      * Set currency
      *
-     * @param BW\UserBundle\Entity\Currency $currency
+     * @param \BW\UserBundle\Entity\Currency $currency
      * @return Wallet
      */
-    public function setCurrency(\BW\UserBundle\Entity\Currency $currency = null)
+    public function setCurrency(Currency $currency = null)
     {
         $this->currency = $currency;
+
         return $this;
     }
 
     /**
      * Get currency
      *
-     * @return BW\UserBundle\Entity\Currency 
+     * @return \BW\UserBundle\Entity\Currency
      */
     public function getCurrency()
     {

@@ -2,70 +2,62 @@
 
 namespace BW\RouterBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use BW\LocalizationBundle\Entity\Lang;
 
 /**
- * Route
- *
- * @ORM\Table(name="routes")
- * @ORM\Entity(repositoryClass="BW\RouterBundle\Entity\RouteRepository")
+ * Class Route
+ * @package BW\RouterBundle\Entity
  */
 class Route
 {
     /**
      * @var integer
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=255, unique=true)
+     * @TODO rename "path" to "uri"
      */
-    private $path;
-
-    /**
-     * @var array
-     *
-     * @ORM\Column(name="defaults", type="array")
-     */
-    private $defaults;
+    private $path = '';
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="query", type="string", length=255)
      */
-    private $query;
+    private $query = '';
 
     /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\LocalizationBundle\Entity\Lang")
-     * @ORM\JoinColumn(name="lang_id", referencedColumnName="id")
+     * @var array
+     */
+    private $defaults = array();
+
+    /**
+     * @var Lang
      */
     private $lang;
     
 
     /**
      * The controller name (a string like BlogBundle:Post:index)
+     *
      * @return string
      */
-    public function getController() {
-        
+    public function getController()
+    {
         return $this->defaults['_controller'];
     }
-    
-    
-    public function __construct() {
-        $this->path = '';
-        $this->query = '';
+
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
     }
     
+
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
@@ -101,29 +93,6 @@ class Route
     }
 
     /**
-     * Set defaults
-     *
-     * @param array $defaults
-     * @return Route
-     */
-    public function setDefaults($defaults)
-    {
-        $this->defaults = $defaults;
-    
-        return $this;
-    }
-
-    /**
-     * Get defaults
-     *
-     * @return array 
-     */
-    public function getDefaults()
-    {
-        return $this->defaults;
-    }
-
-    /**
      * Set query
      *
      * @param string $query
@@ -147,12 +116,35 @@ class Route
     }
 
     /**
+     * Set defaults
+     *
+     * @param array $defaults
+     * @return Route
+     */
+    public function setDefaults($defaults)
+    {
+        $this->defaults = $defaults;
+
+        return $this;
+    }
+
+    /**
+     * Get defaults
+     *
+     * @return array
+     */
+    public function getDefaults()
+    {
+        return $this->defaults;
+    }
+
+    /**
      * Set lang
      *
      * @param \BW\LocalizationBundle\Entity\Lang $lang
      * @return Route
      */
-    public function setLang(\BW\LocalizationBundle\Entity\Lang $lang = null)
+    public function setLang(Lang $lang = null)
     {
         $this->lang = $lang;
     

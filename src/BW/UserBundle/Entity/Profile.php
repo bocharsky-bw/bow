@@ -3,132 +3,100 @@
 namespace BW\UserBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Profile
  * @package BW\UserBundle\Entity
- *
- * @ORM\Table(name="profiles")
- * @ORM\Entity(repositoryClass="BW\UserBundle\Entity\ProfileRepository")
  */
 class Profile
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string $surname
-     *
-     * @ORM\Column(name="surname", type="string", length=255)
      */
     private $surname = '';
 
     /**
      * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name = '';
 
     /**
      * @var string $patronymic
-     *
-     * @ORM\Column(name="patronymic", type="string", length=255)
      */
     private $patronymic = '';
 
     /**
      * @var string $phone
-     *
-     * @ORM\Column(name="phone", type="string", length=255)
      */
     private $phone = '';
 
     /**
+     * @var Country $country
+     */
+    private $country;
+
+    /**
      * @var string $region
-     *
-     * @ORM\Column(name="region", type="string", length=255)
      */
     private $region = '';
 
     /**
      * @var string $city
-     *
-     * @ORM\Column(name="city", type="string", length=255)
      */
     private $city = '';
 
     /**
      * @var string $postcode
-     *
-     * @ORM\Column(name="postcode", type="string", length=255)
      */
     private $postcode = '';
 
     /**
      * @var string $street
-     *
-     * @ORM\Column(name="street", type="string", length=255)
      */
     private $street = '';
 
     /**
      * @var string $house
-     *
-     * @ORM\Column(name="house", type="string", length=255)
      */
     private $house = '';
 
     /**
      * @var string $apartment
-     *
-     * @ORM\Column(name="apartment", type="string", length=255)
      */
     private $apartment = '';
 
     /**
-     * @var string $country
-     *
-     * @ORM\ManyToOne(targetEntity="BW\UserBundle\Entity\Country")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
-     */
-    private $country = '';
-
-    /**
-     * @var null|User
-     *
-     * @ORM\OneToOne(targetEntity="BW\UserBundle\Entity\User", inversedBy="profile")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @var User $user
      */
     private $user;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="BW\UserBundle\Entity\Wallet", mappedBy="profile")
+     * @var ArrayCollection $wallets
      */
     private $wallets;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="BW\UserBundle\Entity\Replenishment", mappedBy="profile")
+     * @var ArrayCollection $replenishments
      */
     private $replenishments;
-    
-    
-    public function __construct() {
+
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
         $this->wallets = new ArrayCollection();
         $this->replenishments= new ArrayCollection();
     }
 
+
+    /* GETTERS / SETTERS */
 
     /**
      * Get id
@@ -149,6 +117,7 @@ class Profile
     public function setSurname($surname)
     {
         $this->surname = $surname;
+
         return $this;
     }
 
@@ -171,6 +140,7 @@ class Profile
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -193,6 +163,7 @@ class Profile
     public function setPatronymic($patronymic)
     {
         $this->patronymic = $patronymic;
+
         return $this;
     }
 
@@ -215,6 +186,7 @@ class Profile
     public function setPhone($phone)
     {
         $this->phone = $phone;
+
         return $this;
     }
 
@@ -231,19 +203,20 @@ class Profile
     /**
      * Set country
      *
-     * @param string $country
+     * @param Country $country
      * @return Profile
      */
-    public function setCountry($country)
+    public function setCountry(Country $country)
     {
         $this->country = $country;
+
         return $this;
     }
 
     /**
      * Get country
      *
-     * @return string 
+     * @return Country
      */
     public function getCountry()
     {
@@ -259,6 +232,7 @@ class Profile
     public function setRegion($region)
     {
         $this->region = $region;
+
         return $this;
     }
 
@@ -281,6 +255,7 @@ class Profile
     public function setCity($city)
     {
         $this->city = $city;
+
         return $this;
     }
 
@@ -303,6 +278,7 @@ class Profile
     public function setPostcode($postcode)
     {
         $this->postcode = $postcode;
+
         return $this;
     }
 
@@ -325,6 +301,7 @@ class Profile
     public function setStreet($street)
     {
         $this->street = $street;
+
         return $this;
     }
 
@@ -347,6 +324,7 @@ class Profile
     public function setHouse($house)
     {
         $this->house = $house;
+
         return $this;
     }
 
@@ -369,6 +347,7 @@ class Profile
     public function setApartment($apartment)
     {
         $this->apartment = $apartment;
+
         return $this;
     }
 
@@ -392,6 +371,7 @@ class Profile
     public function setUser(User $user = null)
     {
         $this->user = $user;
+
         return $this;
     }
 

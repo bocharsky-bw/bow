@@ -1,0 +1,35 @@
+BW\UserBundle\Entity\Replenishment:
+    type: entity
+    table: replenishments
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        additiveAmount:
+            column: additive_amount
+            type: decimal
+            precision: 15
+            scale: 2
+        equivalentAmount:
+            column: equivalent_amount
+            type: decimal
+            precision: 15
+            scale: 2
+        created:
+            type: datetime
+        status:
+            type: smallint
+    manyToOne:
+        profile:
+            targetEntity: BW\UserBundle\Entity\Profile
+            inversedBy: replenishments
+        currency:
+            targetEntity: BW\UserBundle\Entity\Currency
+            inversedBy: replenishments
+        receipt:
+            targetEntity: BW\UserBundle\Entity\Receipt
+            inversedBy:
+    lifecycleCallbacks: {  }

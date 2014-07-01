@@ -1,0 +1,23 @@
+BW\UserBundle\Entity\Wallet:
+    type: entity
+    table: wallets
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        totalAmount:
+            column: total_amount
+            type: decimal
+            precision: 15
+            scale: 2
+    manyToOne:
+        profile:
+            targetEntity: BW\UserBundle\Entity\Profile
+            inversedBy: wallets
+        currency:
+            targetEntity: BW\UserBundle\Entity\Currency
+            inversedBy: wallets
+    lifecycleCallbacks: {  }

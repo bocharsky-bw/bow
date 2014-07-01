@@ -2,80 +2,64 @@
 
 namespace BW\UserBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
- * BW\UserBundle\Entity\Replenishment
- *
- * @ORM\Table(name="replenishments")
- * @ORM\Entity(repositoryClass="BW\UserBundle\Entity\ReplenishmentRepository")
+ * Class Replenishment
+ * @package BW\UserBundle\Entity
  */
 class Replenishment
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
     /**
-     * @var decimal $additiveAmount
-     *
-     * @ORM\Column(name="additive_amount", type="decimal", precision=15, scale=2)
+     * @var float $additiveAmount
      */
-    private $additiveAmount;
+    private $additiveAmount = 0.00;
 
     /**
-     * @var decimal $equivalentAmount
-     *
-     * @ORM\Column(name="equivalent_amount", type="decimal", precision=15, scale=2)
+     * @var float $equivalentAmount
      */
-    private $equivalentAmount;
+    private $equivalentAmount = 0.00;
 
     /**
-     * @var datetime $created
-     *
-     * @ORM\Column(name="created", type="datetime")
+     * @var \DateTime $created
      */
     private $created;
 
     /**
-     * @var boolean $status 
+     * @var integer $status
      * replenishment_statuses в BW/UserBundle/Resources/config/config.yml
-     *
-     * @ORM\Column(name="status", type="smallint")
      */
-    private $status;
+    private $status = 0;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Profile", inversedBy="replenishments")
-     * @ORM\JoinColumn(name="profile_id", referencedColumnName="id")
+     * @var Profile $profile
      */
     private $profile;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Currency", inversedBy="replenishments")
-     * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
+     * @var Currency $currency
      */
     private $currency;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Receipt")
-     * @ORM\JoinColumn(name="receipt_id", referencedColumnName="id")
+     * @var Receipt $receipt
      */
     private $receipt;
-    
-    
-    public function __construct() {
-        $this->additiveAmount = 0;
-        $this->equivalentAmount = 0;
-        $this->status = 0;
+
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
         $this->created = new \DateTime;
     }
 
+
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
@@ -90,19 +74,20 @@ class Replenishment
     /**
      * Set additiveAmount
      *
-     * @param decimal $additiveAmount
+     * @param float $additiveAmount
      * @return Replenishment
      */
     public function setAdditiveAmount($additiveAmount)
     {
         $this->additiveAmount = $additiveAmount;
+
         return $this;
     }
 
     /**
      * Get additiveAmount
      *
-     * @return decimal 
+     * @return float
      */
     public function getAdditiveAmount()
     {
@@ -112,19 +97,20 @@ class Replenishment
     /**
      * Set equivalentAmount
      *
-     * @param decimal $equivalentAmount
+     * @param float $equivalentAmount
      * @return Replenishment
      */
     public function setEquivalentAmount($equivalentAmount)
     {
         $this->equivalentAmount = $equivalentAmount;
+
         return $this;
     }
 
     /**
      * Get equivalentAmount
      *
-     * @return decimal 
+     * @return float
      */
     public function getEquivalentAmount()
     {
@@ -134,19 +120,20 @@ class Replenishment
     /**
      * Set created
      *
-     * @param datetime $created
+     * @param \DateTime $created
      * @return Replenishment
      */
-    public function setCreated($created)
+    public function setCreated(\DateTime $created)
     {
         $this->created = $created;
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return datetime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -156,19 +143,20 @@ class Replenishment
     /**
      * Set status
      *
-     * @param smallint $status
+     * @param integer $status
      * @return Replenishment
      */
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
     /**
      * Get status
      *
-     * @return smallint 
+     * @return integer
      */
     public function getStatus()
     {
@@ -178,19 +166,20 @@ class Replenishment
     /**
      * Set profile
      *
-     * @param BW\UserBundle\Entity\Profile $profile
+     * @param \BW\UserBundle\Entity\Profile $profile
      * @return Replenishment
      */
-    public function setProfile(\BW\UserBundle\Entity\Profile $profile = null)
+    public function setProfile(Profile $profile = null)
     {
         $this->profile = $profile;
+
         return $this;
     }
 
     /**
      * Get profile
      *
-     * @return BW\UserBundle\Entity\Profile 
+     * @return \BW\UserBundle\Entity\Profile
      */
     public function getProfile()
     {
@@ -200,19 +189,20 @@ class Replenishment
     /**
      * Set currency
      *
-     * @param BW\UserBundle\Entity\Currency $currency
+     * @param \BW\UserBundle\Entity\Currency $currency
      * @return Replenishment
      */
-    public function setCurrency(\BW\UserBundle\Entity\Currency $currency = null)
+    public function setCurrency(Currency $currency = null)
     {
         $this->currency = $currency;
+
         return $this;
     }
 
     /**
      * Get currency
      *
-     * @return BW\UserBundle\Entity\Currency 
+     * @return \BW\UserBundle\Entity\Currency
      */
     public function getCurrency()
     {
@@ -225,7 +215,7 @@ class Replenishment
      * @param \BW\UserBundle\Entity\Receipt $receipt
      * @return Replenishment
      */
-    public function setReceipt(\BW\UserBundle\Entity\Receipt $receipt = null)
+    public function setReceipt(Receipt $receipt = null)
     {
         $this->receipt = $receipt;
 

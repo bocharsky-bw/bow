@@ -95,21 +95,22 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     public function supportsClass($class)
     {
         return $this->getEntityName() === $class
-            || is_subclass_of($class, $this->getEntityName());
+            || is_subclass_of($class, $this->getEntityName()
+        );
     }
     
     
     public function findUsersForMailing($message_id, $limit = 1) {
         $qb = $this->createQueryBuilder('u')
-                ->leftJoin('u.mailing', 'ma')
-                ->innerJoin('u.roles', 'r')
-                ->innerJoin('r.messages', 'm')
-                ->where('ma.user IS NULL')
-                ->andWhere('m.id = :message_id')
-                ->setParameter('message_id', $message_id)
-                ->andWhere('m.sending = 1')
-                ->setMaxResults($limit)
-            ;
+            ->leftJoin('u.mailing', 'ma')
+            ->innerJoin('u.roles', 'r')
+            ->innerJoin('r.messages', 'm')
+            ->where('ma.user IS NULL')
+            ->andWhere('m.id = :message_id')
+            ->setParameter('message_id', $message_id)
+            ->andWhere('m.sending = 1')
+            ->setMaxResults($limit)
+        ;
         
         return $qb->getQuery()->getResult();
     }

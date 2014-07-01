@@ -1,0 +1,35 @@
+BW\UserBundle\Entity\Country:
+    type: entity
+    table: countries
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 120
+        nameEn:
+            column: name_en
+            type: string
+            length: 60
+        alpha2:
+            type: string
+            length: 2
+        alpha3:
+            type: string
+            length: 3
+        numericCode:
+            column: numeric_code
+            type: smallint
+        code:
+            type: string
+            length: 15
+        enabled:
+            type: boolean
+    manyToOne:
+        currency:
+            targetEntity: BW\UserBundle\Entity\Currency
+    lifecycleCallbacks: {  }

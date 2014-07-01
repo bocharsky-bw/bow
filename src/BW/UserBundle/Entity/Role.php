@@ -2,49 +2,49 @@
 
 namespace BW\UserBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
- * @ORM\Table(name="roles")
- * @ORM\Entity(repositoryClass="BW\UserBundle\Entity\RoleRepository")
+ * Class Role
+ * @package BW\UserBundle\Entity
  */
 class Role implements RoleInterface
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
+     * @var integer $id
      */
     private $id;
 
     /**
-     * @ORM\Column(name="name", type="string", length=30)
+     * @var string $name
      */
-    private $name;
+    private $name = '';
 
     /**
-     * @ORM\Column(name="role", type="string", length=20, unique=true)
+     * @var string $role
      */
-    private $role;
+    private $role = '';
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="roles")
+     * @var ArrayCollection
      */
     private $users;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\BW\MailingBundle\Entity\Message", mappedBy="roles")
+     * @var ArrayCollection
      */
     private $messages;
 
     
-    public function __construct() {
+    public function __construct()
+    {
         $this->users = new ArrayCollection();
         $this->messages = new ArrayCollection();
     }
 
+
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
@@ -106,7 +106,7 @@ class Role implements RoleInterface
      * @param \BW\UserBundle\Entity\User $users
      * @return Role
      */
-    public function addUser(\BW\UserBundle\Entity\User $users)
+    public function addUser(User $users)
     {
         $this->users[] = $users;
     
@@ -118,7 +118,7 @@ class Role implements RoleInterface
      *
      * @param \BW\UserBundle\Entity\User $users
      */
-    public function removeUser(\BW\UserBundle\Entity\User $users)
+    public function removeUser(User $users)
     {
         $this->users->removeElement($users);
     }
@@ -136,7 +136,7 @@ class Role implements RoleInterface
     /**
      * Add messages
      *
-     * @param BW\MailingBundle\Entity\Message $messages
+     * @param \BW\MailingBundle\Entity\Message $messages
      * @return Role
      */
     public function addMessage(\BW\MailingBundle\Entity\Message $messages)
@@ -148,7 +148,7 @@ class Role implements RoleInterface
     /**
      * Remove messages
      *
-     * @param BW\MailingBundle\Entity\Message $messages
+     * @param \BW\MailingBundle\Entity\Message $messages
      */
     public function removeMessage(\BW\MailingBundle\Entity\Message $messages)
     {
@@ -158,7 +158,7 @@ class Role implements RoleInterface
     /**
      * Get messages
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMessages()
     {

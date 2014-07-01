@@ -2,46 +2,47 @@
 
 namespace BW\UserBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * BW\UserBundle\Entity\Receipt
- *
- * @ORM\Table(name="receipts")
- * @ORM\Entity(repositoryClass="BW\UserBundle\Entity\ReceiptRepository")
- * @ORM\HasLifecycleCallbacks
+ * Class Receipt
+ * @package BW\UserBundle\Entity
+ * @TODO Make relation to Image entity
  */
 class Receipt
 {
     
     /**
      * @var integer $id
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
      */
     private $id;
     
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string $name
      * @Assert\NotBlank
      */
-    protected $name;
+    private $name = '';
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string $path
      */
-    protected $path;
+    private $path = '';
     
     /**
      * @Assert\File(maxSize="6000000")
      */
-    protected $file;
-    
-    protected $temp;
+    private $file;
+
+    private $temp;
+
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+    }
     
     
     public function getAbsolutePath()
@@ -58,7 +59,7 @@ class Receipt
             : $this->getUploadDir() .'/'. $this->path;
     }
 
-    protected function getUploadRootDir()
+    private function getUploadRootDir()
     {
         // the absolute directory path where uploaded
         // documents should be saved
@@ -71,7 +72,7 @@ class Receipt
      * 
      * @return string 'uploads/path/to/subfolder'
      */
-    protected function getUploadDir() {
+    private function getUploadDir() {
         // get rid of the __DIR__ so it doesn't screw up
         // when displaying uploaded doc/image in the view.
         return 'uploads/receipts';
@@ -106,8 +107,8 @@ class Receipt
     }
 
     /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
+     * ORM\PrePersist()
+     * ORM\PreUpdate()
      */
     public function preUpload()
     {
@@ -119,8 +120,8 @@ class Receipt
     }
 
     /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
+     * ORM\PostPersist()
+     * ORM\PostUpdate()
      */
     public function upload()
     {
@@ -144,7 +145,7 @@ class Receipt
     }
 
     /**
-     * @ORM\PostRemove()
+     * ORM\PostRemove()
      */
     public function removeUpload()
     {
@@ -153,11 +154,8 @@ class Receipt
         }
     }
     
-    
-    public function __construct() {
-        $this->name = '';
-    }
-    
+
+    /* SETTERS / GETTERS */
 
     /**
      * Get id

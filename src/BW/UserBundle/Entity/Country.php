@@ -2,83 +2,60 @@
 
 namespace BW\UserBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
- * BW\UserBundle\Entity\Country
- *
- * @ORM\Table(name="countries")
- * @ORM\Entity(repositoryClass="BW\UserBundle\Entity\CountryRepository")
+ * Class Country
+ * @package BW\UserBundle\Entity
  */
 class Country
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
     /**
      * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=120)
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string $nameEn
-     *
-     * @ORM\Column(name="name_en", type="string", length=60)
      */
-    private $nameEn;
+    private $nameEn = '';
 
     /**
      * @var string $alpha2
-     *
-     * @ORM\Column(name="alpha2", type="string", length=2)
      */
-    private $alpha2;
+    private $alpha2 = '';
 
     /**
      * @var string $alpha3
-     *
-     * @ORM\Column(name="alpha3", type="string", length=3)
      */
-    private $alpha3;
+    private $alpha3 = '';
 
     /**
      * @var integer $numericCode
-     *
-     * @ORM\Column(name="numeric_code", type="smallint")
      */
-    private $numericCode;
+    private $numericCode = 0;
 
     /**
      * @var string $code
-     *
-     * @ORM\Column(name="code", type="string", length=15)
      */
-    private $code;
-    
+    private $code = '';
+
     /**
-     * @ORM\ManyToOne(targetEntity="Currency")
-     * @ORM\JoinColumn(name="currency_id", referencedColumnName="id")
+     * @var boolean $enabled
+     */
+    private $enabled = true;
+
+    /**
+     * @var Currency $currency
      */
     private $currency;
+
     
-    /**
-     * @var string $code
-     *
-     * @ORM\Column(name="enabled", type="boolean")
-     */
-    private $enabled;
-    
-    
-    public function __construct() {
-        $this->enabled = TRUE;
+    public function __construct()
+    {
     }
 
 
@@ -225,28 +202,6 @@ class Country
     }
 
     /**
-     * Set currency
-     *
-     * @param BW\UserBundle\Entity\Currency $currency
-     * @return Country
-     */
-    public function setCurrency(\BW\UserBundle\Entity\Currency $currency = null)
-    {
-        $this->currency = $currency;
-        return $this;
-    }
-
-    /**
-     * Get currency
-     *
-     * @return BW\UserBundle\Entity\Currency 
-     */
-    public function getCurrency()
-    {
-        return $this->currency;
-    }
-
-    /**
      * Set enabled
      *
      * @param boolean $enabled
@@ -262,10 +217,33 @@ class Country
     /**
      * Get enabled
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEnabled()
     {
         return $this->enabled;
     }
+
+    /**
+     * Set currency
+     *
+     * @param \BW\UserBundle\Entity\Currency $currency
+     * @return Country
+     */
+    public function setCurrency(Currency $currency = null)
+    {
+        $this->currency = $currency;
+        return $this;
+    }
+
+    /**
+     * Get currency
+     *
+     * @return \BW\UserBundle\Entity\Currency
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
 }

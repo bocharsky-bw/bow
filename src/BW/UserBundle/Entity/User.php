@@ -2,107 +2,115 @@
 
 namespace BW\UserBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use BW\MailingBundle\Entity\Mailing;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
- * User
- *
- * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="BW\UserBundle\Entity\UserRepository")
- * @ORM\HasLifecycleCallbacks()
+ * Class User
+ * @package BW\UserBundle\Entity
  */
 class User implements AdvancedUserInterface, \Serializable
 {
     /**
      * @var integer
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @var string $username
      */
-    private $username;
+    private $username = '';
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @var string $salt
      */
-    private $salt;
+    private $salt = '';
 
     /**
-     * @ORM\Column(type="string", length=40)
+     * @var string $password
      */
-    private $password;
+    private $password = '';
     
     /**
-     * @ORM\Column(type="string", length=60, nullable=true, unique=true)
+     * @var string $email
      */
-    private $email;
+    private $email = '';
 
     /**
-     * Активен пользователь или нет
-     * 
-     * @ORM\Column(name="is_active", type="boolean")
+     * Whether User is active
+     *
+     * @var boolean $active
      */
-    private $active;
+    private $active = false;
 
     /**
-     * Подтвержден e-mail пользователя или нет
-     * 
-     * @ORM\Column(name="is_confirm", type="boolean")
+     * Whether user e-mail is confirmed
+     *
+     * @var boolean $confirm
+     * @TODO Rename to "confirmed"
      */
-    private $confirm;
+    private $confirm = false;
 
     /**
-     * @ORM\Column(name="created", type="datetime")
+     * @var \DateTime $created
      */
     private $created;
     
     /**
-     * @ORM\Column(name="updated", type="datetime")
+     * @var \DateTime $updated
      */
     private $updated;
-    
+
     /**
-     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     * @var string $hash
+     */
+    private $hash = '';
+
+    /**
+     * @var string $facebookId
+     */
+    private $facebookId = '';
+
+    /**
+     * @var string $googleId
+     */
+    private $googleId = '';
+
+    /**
+     * @var string $vkontakteId
+     */
+    private $vkontakteId = '';
+
+    /**
+     * @var ArrayCollection $roles
      */
     private $roles;
-    
+
     /**
-     * @ORM\Column(name="hash", type="string", length=255)
-     */
-    private $hash;
-    
-    /**
-     * @ORM\Column(name="facebook_id", type="string", length=32, nullable=true, unique=true)
-     */
-    private $facebookId;
-    
-    /**
-     * @ORM\Column(name="google_id", type="string", length=32, nullable=true, unique=true)
-     */
-    private $googleId;
-    
-    /**
-     * @ORM\Column(name="vkontakte_id", type="string", length=32, nullable=true, unique=true)
-     */
-    private $vkontakteId;
-    
-    /**
-     * @ORM\OneToMany(targetEntity="\BW\MailingBundle\Entity\Mailing", mappedBy="user")
-     */
-    private $mailing;
-    
-    /**
-     * @ORM\OneToOne(targetEntity="Profile", mappedBy="user")
+     * @var Profile $profile
      */
     private $profile;
-    
+
+    /**
+     * @var ArrayCollection $mailing
+     */
+    private $mailing;
+
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+        $this->salt = md5(uniqid(NULL, TRUE));
+        $this->hash = md5(uniqid(NULL, TRUE));
+        $this->created = new \DateTime;
+        $this->updated = new \DateTime;
+        $this->roles = new ArrayCollection();
+        $this->mailing = new ArrayCollection();
+    }
+
     
     public function isAccountNonExpired()
     {
@@ -130,7 +138,7 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Генерирует пароль пользователя из 13 символов, уникальный для каждого нового вызова метода
+     * Generate random 13-symbols user password, unique for every method call
      * 
      * @return string
      */
@@ -142,7 +150,7 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Генерирует hash для ссылки автоматической активации аккаунта
+     * Generate hash for automatic activation link
      * 
      * @return string
      */
@@ -156,65 +164,14 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Generate date of update
      * 
-     * @ORM\PreUpdate
+     * ORM\PreUpdate
      * @return \BW\UserBundle\Entity\User
      */
-    public function generateUpdatedDate() {
+    public function generateUpdatedDate()
+    {
         $this->updated = new \DateTime;
         
         return $this;
-    }
-    
-    
-    public function __construct()
-    {
-        $this->roles = new ArrayCollection();
-        $this->mailing = new ArrayCollection();
-        
-        $this->active           = FALSE;
-        $this->confirm          = FALSE;
-        $this->salt             = md5(uniqid(NULL, TRUE));
-        $this->hash             = md5(uniqid(NULL, TRUE));
-        $this->created          = new \DateTime;
-        $this->updated          = new \DateTime;
-    }
-
-    
-    /**
-     * @inheritDoc
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getSalt()
-    {
-        return $this->salt;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getRoles()
-    {
-        return $this->roles->toArray();
-    }
-    
-    public function getRolesCollection()
-    {
-        return $this->roles;
     }
 
     /**
@@ -244,6 +201,9 @@ class User implements AdvancedUserInterface, \Serializable
         ) = unserialize($serialized);
     }
 
+
+    /* SETTERS / GETTERS */
+
     /**
      * Get id
      *
@@ -268,6 +228,14 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
      * Set salt
      *
      * @param string $salt
@@ -281,6 +249,14 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
      * Set password
      *
      * @param string $password
@@ -291,6 +267,14 @@ class User implements AdvancedUserInterface, \Serializable
         $this->password = $password;
     
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 
     /**
@@ -371,7 +355,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->confirm;
     }
-    
+
     /**
      * Is confirm
      *
@@ -388,7 +372,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @param \BW\UserBundle\Entity\Role $roles
      * @return User
      */
-    public function addRole(\BW\UserBundle\Entity\Role $roles)
+    public function addRole(Role $roles)
     {
         $this->roles[] = $roles;
     
@@ -400,9 +384,22 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @param \BW\UserBundle\Entity\Role $roles
      */
-    public function removeRole(\BW\UserBundle\Entity\Role $roles)
+    public function removeRole(Role $roles)
     {
         $this->roles->removeElement($roles);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return $this->roles->toArray();
+    }
+
+    public function getRolesCollection()
+    {
+        return $this->roles;
     }
 
     /**
@@ -549,9 +546,10 @@ class User implements AdvancedUserInterface, \Serializable
      * @param \BW\MailingBundle\Entity\Mailing $mailing
      * @return User
      */
-    public function addMailing(\BW\MailingBundle\Entity\Mailing $mailing)
+    public function addMailing(Mailing $mailing)
     {
         $this->mailing[] = $mailing;
+
         return $this;
     }
 
@@ -560,7 +558,7 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @param \BW\MailingBundle\Entity\Mailing $mailing
      */
-    public function removeMailing(\BW\MailingBundle\Entity\Mailing $mailing)
+    public function removeMailing(Mailing $mailing)
     {
         $this->mailing->removeElement($mailing);
     }
@@ -581,9 +579,10 @@ class User implements AdvancedUserInterface, \Serializable
      * @param \BW\UserBundle\Entity\Profile $profile
      * @return User
      */
-    public function setProfile(\BW\UserBundle\Entity\Profile $profile = null)
+    public function setProfile(Profile $profile = null)
     {
         $this->profile = $profile;
+
         return $this;
     }
 

@@ -1,0 +1,55 @@
+BW\UserBundle\Entity\Profile:
+    type: entity
+    table: profiles
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        surname:
+            type: string
+            length: 255
+        name:
+            type: string
+            length: 255
+        patronymic:
+            type: string
+            length: 255
+        phone:
+            type: string
+            length: 255
+        region:
+            type: string
+            length: 255
+        city:
+            type: string
+            length: 255
+        postcode:
+            type: string
+            length: 255
+        street:
+            type: string
+            length: 255
+        house:
+            type: string
+            length: 255
+        apartment:
+            type: string
+            length: 255
+    oneToOne:
+        user:
+            targetEntity: BW\UserBundle\Entity\User
+            inversedBy: profile
+    oneToMany:
+        wallets:
+            targetEntity: BW\UserBundle\Entity\Wallet
+            mappedBy: currency
+        replenishments:
+            targetEntity: BW\UserBundle\Entity\Replenishment
+            mappedBy: currency
+    manyToOne:
+        country:
+            targetEntity: BW\UserBundle\Entity\Country
+    lifecycleCallbacks: {  }

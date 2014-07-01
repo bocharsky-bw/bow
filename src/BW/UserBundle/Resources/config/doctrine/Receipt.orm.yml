@@ -1,0 +1,23 @@
+BW\UserBundle\Entity\Receipt:
+    type: entity
+    table: receipts
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        path:
+            type: string
+            length: 255
+            nullable: true
+    lifecycleCallbacks:
+        prePersist: [preUpload]
+        preUpdate: [preUpload]
+        postPersist: [upload]
+        postUpdate: [upload]
+        postRemove: [removeUpload]

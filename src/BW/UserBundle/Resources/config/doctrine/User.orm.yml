@@ -1,0 +1,71 @@
+BW\UserBundle\Entity\User:
+    type: entity
+    table: users
+    repositoryClass: BW\UserBundle\Entity\UserRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        username:
+            type: string
+            length: 25
+            unique: true
+        salt:
+            type: string
+            length: 32
+        password:
+            type: string
+            length: 40
+        email:
+            type: string
+            length: 60
+            unique: true
+            nullable: true
+        active:
+            column: is_active
+            type: boolean
+        confirm:
+            column: is_confirm
+            type: boolean
+        created:
+            type: datetime
+        updated:
+            type: datetime
+        hash:
+            type: string
+            length: 255
+        facebookId:
+            column: facebook_id
+            type: string
+            length: 32
+            unique: true
+            nullable: true
+        googleId:
+            column: google_id
+            type: string
+            length: 32
+            unique: true
+            nullable: true
+        vkontakteId:
+            column: vkontakte_id
+            type: string
+            length: 32
+            unique: true
+            nullable: true
+    oneToOne:
+        profile:
+            targetEntity: BW\UserBundle\Entity\Profile
+            mappedBy: user
+    oneToMany:
+        mailing:
+            targetEntity: BW\MailingBundle\Entity\Mailing
+            mappedBy: user
+    manyToMany:
+        roles:
+            targetEntity: BW\UserBundle\Entity\Role
+            inversedBy: users
+    lifecycleCallbacks:
+        preUpdate: [generateUpdatedDate]

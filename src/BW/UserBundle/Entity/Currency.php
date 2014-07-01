@@ -2,82 +2,68 @@
 
 namespace BW\UserBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * BW\UserBundle\Entity\Currency
- *
- * @ORM\Table(name="currencies")
- * @ORM\Entity(repositoryClass="BW\UserBundle\Entity\CurrencyRepository")
+ * Class Currency
+ * @package BW\UserBundle\Entity
  */
 class Currency
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
     /**
      * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name;
+    private $name = '';
     
     /**
      * @var string $abbr
-     *
-     * @ORM\Column(name="abbr", type="string", length=20)
      */
-    private $abbr;
+    private $abbr = '';
 
     /**
      * @var string $symbol
-     *
-     * @ORM\Column(name="symbol", type="string", length=1)
      */
-    private $symbol;
+    private $symbol = '';
 
     /**
      * @var string $alpha3
-     *
-     * @ORM\Column(name="alpha3", type="string", length=3, unique=true)
      */
-    private $alpha3;
+    private $alpha3 = '';
     
     /**
-     * @var string $numericCode
-     *
-     * @ORM\Column(name="numeric_code", type="smallint", unique=true)
+     * @var integer $numericCode
      */
-    private $numericCode;
+    private $numericCode = 0;
 
     /**
-     * @var decimal $exchangeRate
-     *
-     * @ORM\Column(name="exchange_rate", type="decimal", precision=15, scale=2)
+     * @var float $exchangeRate
      */
-    private $exchangeRate;
-    
+    private $exchangeRate = 0.00;
+
     /**
-     * @ORM\OneToMany(targetEntity="Wallet", mappedBy="currency")
+     * @var ArrayCollection
      */
     private $wallets;
-    
+
     /**
-     * @ORM\OneToMany(targetEntity="Replenishment", mappedBy="currency")
+     * @var ArrayCollection
      */
     private $replenishments;
 
 
-    public function __construct() {
+    public function __construct()
+    {
+        $this->wallets = new ArrayCollection();
+        $this->replenishments = new ArrayCollection();
     }
     
     
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
@@ -202,7 +188,7 @@ class Currency
     /**
      * Set exchangeRate
      *
-     * @param decimal $exchangeRate
+     * @param float $exchangeRate
      * @return Currency
      */
     public function setExchangeRate($exchangeRate)
@@ -214,7 +200,7 @@ class Currency
     /**
      * Get exchangeRate
      *
-     * @return decimal 
+     * @return float
      */
     public function getExchangeRate()
     {
@@ -224,10 +210,10 @@ class Currency
     /**
      * Add wallets
      *
-     * @param BW\UserBundle\Entity\Wallet $wallets
+     * @param \BW\UserBundle\Entity\Wallet $wallets
      * @return Currency
      */
-    public function addWallet(\BW\UserBundle\Entity\Wallet $wallets)
+    public function addWallet(Wallet $wallets)
     {
         $this->wallets[] = $wallets;
         return $this;
@@ -236,9 +222,9 @@ class Currency
     /**
      * Remove wallets
      *
-     * @param BW\UserBundle\Entity\Wallet $wallets
+     * @param \BW\UserBundle\Entity\Wallet $wallets
      */
-    public function removeWallet(\BW\UserBundle\Entity\Wallet $wallets)
+    public function removeWallet(Wallet $wallets)
     {
         $this->wallets->removeElement($wallets);
     }
@@ -246,7 +232,7 @@ class Currency
     /**
      * Get wallets
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getWallets()
     {
@@ -256,10 +242,10 @@ class Currency
     /**
      * Add replenishments
      *
-     * @param BW\UserBundle\Entity\Replenishment $replenishments
+     * @param \BW\UserBundle\Entity\Replenishment $replenishments
      * @return Currency
      */
-    public function addReplenishment(\BW\UserBundle\Entity\Replenishment $replenishments)
+    public function addReplenishment(Replenishment $replenishments)
     {
         $this->replenishments[] = $replenishments;
         return $this;
@@ -268,9 +254,9 @@ class Currency
     /**
      * Remove replenishments
      *
-     * @param BW\UserBundle\Entity\Replenishment $replenishments
+     * @param \BW\UserBundle\Entity\Replenishment $replenishments
      */
-    public function removeReplenishment(\BW\UserBundle\Entity\Replenishment $replenishments)
+    public function removeReplenishment(Replenishment $replenishments)
     {
         $this->replenishments->removeElement($replenishments);
     }
@@ -278,7 +264,7 @@ class Currency
     /**
      * Get replenishments
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getReplenishments()
     {
