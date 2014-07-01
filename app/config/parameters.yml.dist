@@ -2,9 +2,9 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     symfony
+    database_name:     bow
     database_user:     root
-    database_password: mysql
+    database_password: admin
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -14,4 +14,8 @@ parameters:
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
 
-    domain:            localhost
+    debug_toolbar:          true
+    debug_redirects:        false
+    use_assetic_controller: true
+
+    domain:            bow.localhost

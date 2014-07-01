@@ -5,7 +5,7 @@ security:
             algorithm:        sha1
             encode_as_base64: false
             iterations:       1
-        
+
 #        Symfony\Component\Security\Core\User\User: plaintext
 
     role_hierarchy:
@@ -16,8 +16,8 @@ security:
         users:
             entity:
                 class: BWUserBundle:User
-                #property: username
-                
+#                property: username
+
 #        in_memory:
 #            memory:
 #                users:
@@ -36,19 +36,19 @@ security:
             logout:
                 path:   user_sign_out
                 target: home
-        
+
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        login:
+        demo_login:
             pattern:  ^/demo/secured/login$
             security: false
 
-        secured_area:
+        demo_secured_area:
             pattern:    ^/demo/secured/
             form_login:
-                check_path: _security_check
+                check_path: _demo_security_check
                 login_path: _demo_login
             logout:
                 path:   _demo_logout
@@ -59,5 +59,4 @@ security:
 
     access_control:
         - { path: ^/_admin, roles: ROLE_ADMIN }
-        - { path: ^/demo/secured/hello/admin/, roles: ROLE_ADMIN }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
