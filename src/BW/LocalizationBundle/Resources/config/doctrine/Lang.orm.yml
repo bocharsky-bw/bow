@@ -1,0 +1,22 @@
+BW\LocalizationBundle\Entity\Lang:
+    type: entity
+    table: langs
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        sign:
+            type: string
+            length: 2
+            unique: true
+        locale:
+            type: string
+            length: 5
+            unique: true
+    lifecycleCallbacks: {  }

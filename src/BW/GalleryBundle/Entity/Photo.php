@@ -2,6 +2,7 @@
 
 namespace BW\GalleryBundle\Entity;
 
+use BW\BlogBundle\Entity\Image;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,20 +19,26 @@ class Photo
     /**
      * @var string
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string
      */
-    private $shortDescription;
+    private $shortDescription = '';
 
     /**
-     * @var Gallery
+     * @var Gallery $gallery
      */
     private $gallery;
 
+    /**
+     * @var Image $smallImage
+     */
     private $smallImage;
 
+    /**
+     * @var Image $bigImage
+     */
     private $bigImage;
 
 
@@ -99,7 +106,7 @@ class Photo
      * @param \BW\GalleryBundle\Entity\Gallery $gallery
      * @return Photo
      */
-    public function setGallery(\BW\GalleryBundle\Entity\Gallery $gallery = null)
+    public function setGallery(Gallery $gallery = null)
     {
         $this->gallery = $gallery;
 
@@ -124,7 +131,7 @@ class Photo
      * @param \BW\BlogBundle\Entity\Image $smallImage
      * @return Photo
      */
-    public function setSmallImage(\BW\BlogBundle\Entity\Image $smallImage = null)
+    public function setSmallImage(Image $smallImage = null)
     {
         if (isset($smallImage)) {
             $file = $smallImage->getFile();
@@ -152,7 +159,7 @@ class Photo
      * @param \BW\BlogBundle\Entity\Image $bigImage
      * @return Photo
      */
-    public function setBigImage(\BW\BlogBundle\Entity\Image $bigImage = null)
+    public function setBigImage(Image $bigImage = null)
     {
         if (isset($bigImage)) {
             $file = $bigImage->getFile();

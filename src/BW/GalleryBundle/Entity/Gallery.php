@@ -18,12 +18,12 @@ class Gallery
     /**
      * @var string
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string
      */
-    private $shortDescription;
+    private $shortDescription = '';
 
     /**
      * @var ArrayCollection

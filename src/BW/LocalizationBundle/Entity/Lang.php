@@ -2,55 +2,47 @@
 
 namespace BW\LocalizationBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
- * Lang
- *
- * @ORM\Table(name="langs")
- * @ORM\Entity(repositoryClass="BW\LocalizationBundle\Entity\LangRepository")
+ * Class Lang
+ * @package BW\LocalizationBundle\Entity
  */
 class Lang
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @var string $name
      */
-    private $name;
+    private $name = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="sign", type="string", length=2, unique=true)
+     * @var string $sign
      */
-    private $sign;
+    private $sign = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="locale", type="string", length=5, unique=true)
+     * @var string $locale
      */
-    private $locale;
-    
-    
-    public function __construct() {
+    private $locale = '';
+
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
     }
     
-    public function __toString() {
-        
-        return (string) $this->getSign();
+    public function __toString()
+    {
+        return (string)$this->getSign();
     }
 
+
+    /* GETTERS / SETTERS */
 
     /**
      * Get id
