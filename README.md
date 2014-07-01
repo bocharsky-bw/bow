@@ -1,5 +1,12 @@
-Symfony Standard Edition
-========================
+BoW
+===
+
+[![Build Status](https://travis-ci.org/bocharsky-bw/bow.svg?branch=master)](https://travis-ci.org/bocharsky-bw/bow)
+
+BoW CMS is a PHP ready-to-use CMS based on Symfony 2 framework
+
+Based on Symfony Standard Edition
+=================================
 
 Welcome to the Symfony Standard Edition - a fully-functional Symfony2
 application that you can use as the skeleton for your new applications.
