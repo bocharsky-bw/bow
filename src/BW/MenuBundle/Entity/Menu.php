@@ -2,63 +2,59 @@
 
 namespace BW\MenuBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 
 /**
- * Menu
- *
- * @ORM\Table(name="menus")
- * @ORM\Entity(repositoryClass="BW\MenuBundle\Entity\MenuRepository")
- * @ORM\HasLifecycleCallbacks
+ * Class Menu
+ * @package BW\MenuBundle\Entity
  */
 class Menu
 {
     /**
-     * @var integer
-     *
-     * @ORM\Id
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer $id
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="alias", type="string", length=255, unique=true)
+     * @var string $alias
      */
-    private $alias;
+    private $alias = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @var string $name
      */
-    private $name;
+    private $name = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @var string $description
+     * @TODO Rename to "shortDescription"
      */
-    private $description;
+    private $description = '';
 
     /**
-     * @var string
-     * @ORM\OrderBy({"ordering" = "ASC"})
-     * @ORM\OneToMany(targetEntity="Item", mappedBy="menu")
+     * @var ArrayCollection $items
      */
     private $items;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
+    }
+
 
     /**
      * Set default values
      * 
-     * @ORM\PrePersist
-     * @param array $values
+     * ORM\PrePersist
+     * @param LifecycleEventArgs $args
      * @return Category
      */
-    public function setDefaultValues(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+    public function setDefaultValues(LifecycleEventArgs $args) {
         $values = array(
             'alias' => '',
             'description' => '',
@@ -82,17 +78,9 @@ class Menu
         
         return $this;
     }
-    
-    
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->items = new ArrayCollection();
-    }
-    
+
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
@@ -102,6 +90,29 @@ class Menu
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set alias
+     *
+     * @param string $alias
+     * @return Menu
+     */
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+
+        return $this;
+    }
+
+    /**
+     * Get alias
+     *
+     * @return string
+     */
+    public function getAlias()
+    {
+        return $this->alias;
     }
 
     /**
@@ -156,7 +167,7 @@ class Menu
      * @param \BW\MenuBundle\Entity\Item $items
      * @return Menu
      */
-    public function addItem(\BW\MenuBundle\Entity\Item $items)
+    public function addItem(Item $items)
     {
         $this->items[] = $items;
     
@@ -168,7 +179,7 @@ class Menu
      *
      * @param \BW\MenuBundle\Entity\Item $items
      */
-    public function removeItem(\BW\MenuBundle\Entity\Item $items)
+    public function removeItem(Item $items)
     {
         $this->items->removeElement($items);
     }
@@ -181,28 +192,5 @@ class Menu
     public function getItems()
     {
         return $this->items;
-    }
-
-    /**
-     * Set alias
-     *
-     * @param string $alias
-     * @return Menu
-     */
-    public function setAlias($alias)
-    {
-        $this->alias = $alias;
-    
-        return $this;
-    }
-
-    /**
-     * Get alias
-     *
-     * @return string 
-     */
-    public function getAlias()
-    {
-        return $this->alias;
     }
 }

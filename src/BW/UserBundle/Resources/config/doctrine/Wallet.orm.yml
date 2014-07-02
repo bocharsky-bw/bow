@@ -20,4 +20,4 @@ BW\UserBundle\Entity\Wallet:
         currency:
             targetEntity: BW\UserBundle\Entity\Currency
             inversedBy: wallets
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

@@ -3,6 +3,7 @@
 namespace BW\BlogBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * PostRepository
@@ -13,20 +14,20 @@ use Doctrine\ORM\EntityRepository;
 class PostRepository extends EntityRepository {
     
     public function findNestedBy($left, $right) {
-        $request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+        $request = Request::createFromGlobals();
         
         $qb = $this->createQueryBuilder('p')
-                ->innerJoin('p.category', 'c')
-                ->innerJoin('p.route', 'r')
-                ->innerJoin('p.lang', 'l')
-                ->where('p.published = 1')
-                ->andWhere('c.published = 1')
-                ->andWhere('c.left >= :left')
-                ->andWhere('c.left <= :right')
-                ->setParameter('left', $left)
-                ->setParameter('right', $right)
-                ->orderBy('p.created', 'DESC')
-            ;
+            ->innerJoin('p.category', 'c')
+            ->innerJoin('p.route', 'r')
+            ->innerJoin('p.lang', 'l')
+            ->where('p.published = 1')
+            ->andWhere('c.published = 1')
+            ->andWhere('c.left >= :left')
+            ->andWhere('c.left <= :right')
+            ->setParameter('left', $left)
+            ->setParameter('right', $right)
+            ->orderBy('p.created', 'DESC')
+        ;
         
         /* Custom Filter */
         $form = $request->query->get('form', FALSE);

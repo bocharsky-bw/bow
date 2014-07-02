@@ -2,152 +2,115 @@
 
 namespace BW\MenuBundle\Entity;
 
-use BW\BlogBundle\Entity\Image;
-use Doctrine\ORM\Mapping as ORM;
+use BW\LocalizationBundle\Entity\Lang;
+use BW\RouterBundle\Entity\Route;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use BW\MainBundle\Entity\BWEntity;
+use BW\BlogBundle\Entity\Image;
 
 /**
- * Item
- *
- * @ORM\Table(name="menu_items")
- * @ORM\Entity(repositoryClass="BW\MenuBundle\Entity\ItemRepository")
- * @ORM\HasLifecycleCallbacks
+ * Class Item
+ * @package BW\MenuBundle\Entity
  */
-class Item extends BWEntity
+class Item
 {
     /**
-     * @var integer
-     *
-     * @ORM\Id
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer $id
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @var string $name
      */
-    private $name;
+    private $name = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @var string $title
      */
-    private $title;
+    private $title = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="href", type="string", length=255)
+     * @var string $href
      */
-    private $href;
+    private $href = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="class", type="string", length=255)
+     * @var string $class
      */
-    private $class;
+    private $class = '';
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="blank", type="boolean")
+     * @var boolean $blank
      */
-    private $blank;
+    private $blank = false;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="ordering", type="integer")
+     * @var integer $ordering
+     * @TODO Rename to "order"
      */
-    private $ordering;
-
+    private $ordering = 0;
 
     /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="Menu", inversedBy="items")
-     * @ORM\JoinColumn(name="menu_id", referencedColumnName="id")
+     * @var integer $level
+     */
+    private $level = 0;
+
+    /**
+     * @var integer $left
+     */
+    private $left = 0;
+
+    /**
+     * @var integer $right
+     */
+    private $right = 0;
+
+    /**
+     * @var Menu $menu
      */
     private $menu;
     
     /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\MenuBundle\Entity\Type")
-     * @ORM\JoinColumn(name="type_id", referencedColumnName="id")
-     */
-    private $type;
-    
-    /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\LocalizationBundle\Entity\Lang")
-     * @ORM\JoinColumn(name="lang_id", referencedColumnName="id")
+     * @var Lang $lang
      */
     private $lang;
-    
+
     /**
-     * @var integer
-     *
-     * @ORM\OneToMany(targetEntity="Item", mappedBy="parent")
-     */
-    private $children;
-    
-    /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     * @var Item $parent
      */
     private $parent;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="level", type="integer")
+     * @var ArrayCollection $children
      */
-    private $level;
-    
+    private $children;
+
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="lft", type="integer")
-     */
-    private $left;
-    
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="rgt", type="integer")
-     */
-    private $right;
-    
-    /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\RouterBundle\Entity\Route")
-     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     * @var Route $route
      */
     private $route;
 
     /**
-     * @ORM\OneToOne(targetEntity="\BW\BlogBundle\Entity\Image", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     * @var Image $image
      */
     private $image;
+
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
+
     
     /**
-     * Текущий уровень вложенности пункта меню
+     * Generate current nested level
      * 
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
+     * ORM\PrePersist
+     * ORM\PreUpdate
      * @return integer
      */
     public function generateLevel() {
@@ -163,19 +126,19 @@ class Item extends BWEntity
     }
     
     
-    public function __toString() {
-        
+    public function __toString()
+    {
         return str_repeat('- ', $this->getLevel()). $this->getName();
     }
 
     /**
      * Set default values
      * 
-     * @ORM\PrePersist
-     * @param array $values
+     * ORM\PrePersist
+     * @param LifecycleEventArgs $args
      * @return Item
      */
-    public function setDefaultValues(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+    public function setDefaultValues(LifecycleEventArgs $args) {
         $values = array(
             'title' => '',
             'href' => '',
@@ -200,23 +163,9 @@ class Item extends BWEntity
         
         return $this;
     }
-    
-    
-    
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->children     = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->blank        = FALSE;
-        $this->ordering     = 0;
-        $this->level        = 0;
-        $this->left         = 0;
-        $this->right        = 0;
-    }
-    
 
+
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
@@ -349,7 +298,7 @@ class Item extends BWEntity
      * @param \BW\MenuBundle\Entity\Menu $menu
      * @return Item
      */
-    public function setMenu(\BW\MenuBundle\Entity\Menu $menu = null)
+    public function setMenu(Menu $menu = null)
     {
         $this->menu = $menu;
     
@@ -372,7 +321,7 @@ class Item extends BWEntity
      * @param \BW\MenuBundle\Entity\Item $parent
      * @return Item
      */
-    public function setParent(\BW\MenuBundle\Entity\Item $parent = null)
+    public function setParent(Item $parent = null)
     {
         $this->parent = $parent;
     
@@ -395,7 +344,7 @@ class Item extends BWEntity
      * @param \BW\MenuBundle\Entity\Item $children
      * @return Item
      */
-    public function addChildren(\BW\MenuBundle\Entity\Item $children)
+    public function addChildren(Item $children = null)
     {
         $this->children[] = $children;
     
@@ -407,7 +356,7 @@ class Item extends BWEntity
      *
      * @param \BW\MenuBundle\Entity\Item $children
      */
-    public function removeChildren(\BW\MenuBundle\Entity\Item $children)
+    public function removeChildren(Item $children =null)
     {
         $this->children->removeElement($children);
     }
@@ -474,7 +423,7 @@ class Item extends BWEntity
      * @param \BW\LocalizationBundle\Entity\Lang $lang
      * @return Item
      */
-    public function setLang(\BW\LocalizationBundle\Entity\Lang $lang = null)
+    public function setLang(Lang $lang = null)
     {
         $this->lang = $lang;
     
@@ -489,29 +438,6 @@ class Item extends BWEntity
     public function getLang()
     {
         return $this->lang;
-    }
-
-    /**
-     * Set type
-     *
-     * @param \BW\MenuBundle\Entity\Type $type
-     * @return Item
-     */
-    public function setType(\BW\MenuBundle\Entity\Type $type = null)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return \BW\MenuBundle\Entity\Type 
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     /**
@@ -562,7 +488,7 @@ class Item extends BWEntity
      * @param \BW\RouterBundle\Entity\Route $route
      * @return $this
      */
-    public function setRoute(\BW\RouterBundle\Entity\Route $route = null)
+    public function setRoute(Route $route = null)
     {
         $this->route = $route;
         return $this;
@@ -582,7 +508,7 @@ class Item extends BWEntity
      * @param \BW\MenuBundle\Entity\Item $children
      * @return Item
      */
-    public function addChild(\BW\MenuBundle\Entity\Item $children)
+    public function addChild(Item $children)
     {
         $this->children[] = $children;
 
@@ -594,7 +520,7 @@ class Item extends BWEntity
      *
      * @param \BW\MenuBundle\Entity\Item $children
      */
-    public function removeChild(\BW\MenuBundle\Entity\Item $children)
+    public function removeChild(Item $children)
     {
         $this->children->removeElement($children);
     }
@@ -604,7 +530,7 @@ class Item extends BWEntity
      *
      * @param \BW\BlogBundle\Entity\Image $image
      *
-     * @return Post
+     * @return Item
      */
     public function setImage(Image $image = null)
     {

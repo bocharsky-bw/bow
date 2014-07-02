@@ -21,4 +21,4 @@ BW\RouterBundle\Entity\Route:
     manyToOne:
         lang:
             targetEntity: BW\LocalizationBundle\Entity\Lang
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

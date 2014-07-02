@@ -17,4 +17,4 @@ BW\GalleryBundle\Entity\Gallery:
         photos:
             targetEntity: BW\GalleryBundle\Entity\Photo
             mappedBy: gallery
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

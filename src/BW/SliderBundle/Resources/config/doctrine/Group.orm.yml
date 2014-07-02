@@ -19,4 +19,4 @@ BW\SliderBundle\Entity\Group:
         sliders:
             targetEntity: BW\SliderBundle\Entity\Slider
             mappedBy: group
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

@@ -1,0 +1,55 @@
+BW\BlogBundle\Entity\Post:
+    type: entity
+    table: posts
+    repositoryClass: BW\BlogBundle\Entity\PostRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        heading:
+            type: string
+            length: 255
+        slug:
+            type: string
+            length: 255
+        title:
+            type: string
+            length: 255
+        metaDescription:
+            type: string
+            length: 255
+        shortDescription:
+            column: short_description
+            type: text
+        content:
+            type: text
+        created:
+            type: datetime
+        updated:
+            type: datetime
+        published:
+            type: boolean
+        home:
+            type: boolean
+    oneToOne:
+        image:
+            targetEntity: BW\BlogBundle\Entity\Image
+            cascade: [persist, remove]
+    oneToMany:
+        postCustomFields:
+            targetEntity: BW\BlogBundle\Entity\PostCustomField
+            mappedBy: post
+    manyToOne:
+        category:
+            targetEntity: BW\BlogBundle\Entity\Category
+            inversedBy: posts
+        lang:
+            targetEntity: BW\LocalizationBundle\Entity\Lang
+        route:
+            targetEntity: BW\RouterBundle\Entity\Route
+            cascade: [remove]
+    lifecycleCallbacks:
+        prePersist: [setDefaultValues]

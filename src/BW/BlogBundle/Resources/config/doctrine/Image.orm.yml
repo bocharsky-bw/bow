@@ -1,0 +1,31 @@
+BW\BlogBundle\Entity\Image:
+    type: entity
+    table: images
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        alt:
+            type: string
+            length: 255
+        subFolder:
+            column: sub_folder
+            type: string
+            length: 255
+            nullable: true
+        filename:
+            type: string
+            length: 255
+            nullable: true
+    lifecycleCallbacks:
+        prePersist: [preUpload]
+        preUpdate: [preUpload]
+        postPersist: [upload]
+        postUpdate: [upload]
+        postRemove: [removeUpload]

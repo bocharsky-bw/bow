@@ -52,4 +52,4 @@ BW\UserBundle\Entity\Profile:
     manyToOne:
         country:
             targetEntity: BW\UserBundle\Entity\Country
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

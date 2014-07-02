@@ -30,4 +30,4 @@ BW\GalleryBundle\Entity\Photo:
         gallery:
             targetEntity: BW\GalleryBundle\Entity\Gallery
             inversedBy: photos
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

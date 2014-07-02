@@ -1,0 +1,25 @@
+BW\BlogBundle\Entity\CustomField:
+    type: entity
+    table: custom_fields
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        expanded:
+            type: boolean
+        multiple:
+            type: boolean
+    oneToMany:
+        postCustomFields:
+            targetEntity: BW\BlogBundle\Entity\PostCustomField
+            mappedBy: customField
+        customFieldProperties:
+            targetEntity: BW\BlogBundle\Entity\CustomFieldProperty
+            mappedBy: customField
+    lifecycleCallbacks: {}

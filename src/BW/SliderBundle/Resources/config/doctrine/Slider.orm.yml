@@ -24,4 +24,4 @@ BW\SliderBundle\Entity\Slider:
         group:
             targetEntity: BW\SliderBundle\Entity\Group
             inversedBy: sliders
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

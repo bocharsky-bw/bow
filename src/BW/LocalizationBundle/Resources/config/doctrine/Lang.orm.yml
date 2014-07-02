@@ -19,4 +19,4 @@ BW\LocalizationBundle\Entity\Lang:
             type: string
             length: 5
             unique: true
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

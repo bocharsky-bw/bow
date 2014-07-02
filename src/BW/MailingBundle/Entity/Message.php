@@ -2,84 +2,65 @@
 
 namespace BW\MailingBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use BW\UserBundle\Entity\Role;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * BW\MailingBundle\Entity\Message
- *
- * @ORM\Table(name="messages")
- * @ORM\Entity(repositoryClass="BW\MailingBundle\Entity\MessageRepository")
+ * Class Message
+ * @package BW\MailingBundle\Entity
  */
 class Message
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
     /**
      * @var boolean $sending
-     *
-     * @ORM\Column(name="sending", type="boolean")
      */
-    private $sending;
-    
+    private $sending = false;
+
     /**
      * @var string $subject
-     *
-     * @ORM\Column(name="subject", type="string", length=255)
      */
-    private $subject;
+    private $subject = '';
 
     /**
-     * @var text $text
-     *
-     * @ORM\Column(name="text", type="text")
+     * @var string $text
      */
-    private $text;
+    private $text = '';
 
     /**
-     * @var string $created
-     *
-     * @ORM\Column(name="created", type="datetime")
+     * @var \DateTime $created
      */
     private $created;
-    
+
     /**
-     * @var integer $roles
-     *
-     * @ORM\ManyToMany(targetEntity="\BW\UserBundle\Entity\Role", inversedBy="messages")
-     * @ORM\JoinTable(name="message_role")
-     */
-    private $roles;
-    
-    /**
-     * @var integer $roles
-     *
-     * @ORM\OneToMany(targetEntity="Mailing", mappedBy="message")
+     * @var ArrayCollection $roles
      */
     private $mailing;
-    
-    
-    
+
+    /**
+     * @var ArrayCollection $roles
+     */
+    private $roles;
+
+
+
     public function __construct() {
-        $this->sending = FALSE;
         $this->created = new \DateTime;
-        
+        $this->mailing = new ArrayCollection();
         $this->roles = new ArrayCollection();
     }
 
 
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -95,13 +76,14 @@ class Message
     public function setSending($sending)
     {
         $this->sending = $sending;
+
         return $this;
     }
 
     /**
      * Get sending
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getSending()
     {
@@ -117,13 +99,14 @@ class Message
     public function setSubject($subject)
     {
         $this->subject = $subject;
+
         return $this;
     }
 
     /**
      * Get subject
      *
-     * @return string 
+     * @return string
      */
     public function getSubject()
     {
@@ -133,19 +116,20 @@ class Message
     /**
      * Set text
      *
-     * @param text $text
+     * @param string $text
      * @return Message
      */
     public function setText($text)
     {
         $this->text = $text;
+
         return $this;
     }
 
     /**
      * Get text
      *
-     * @return text 
+     * @return string
      */
     public function getText()
     {
@@ -155,19 +139,20 @@ class Message
     /**
      * Set created
      *
-     * @param datetime $created
+     * @param \DateTime $created
      * @return Message
      */
-    public function setCreated($created)
+    public function setCreated(\DateTime $created)
     {
         $this->created = $created;
+
         return $this;
     }
 
     /**
      * Get created
      *
-     * @return datetime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -177,21 +162,22 @@ class Message
     /**
      * Add roles
      *
-     * @param BW\UserBundle\Entity\Role $roles
+     * @param \BW\UserBundle\Entity\Role $roles
      * @return Message
      */
-    public function addRole(\BW\UserBundle\Entity\Role $roles)
+    public function addRole(Role $roles)
     {
         $this->roles[] = $roles;
+
         return $this;
     }
 
     /**
      * Remove roles
      *
-     * @param BW\UserBundle\Entity\Role $roles
+     * @param \BW\UserBundle\Entity\Role $roles
      */
-    public function removeRole(\BW\UserBundle\Entity\Role $roles)
+    public function removeRole(Role $roles)
     {
         $this->roles->removeElement($roles);
     }
@@ -199,7 +185,7 @@ class Message
     /**
      * Get roles
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRoles()
     {
@@ -209,10 +195,10 @@ class Message
     /**
      * Add mailing
      *
-     * @param BW\MailingBundle\Entity\Mailing $mailing
+     * @param \BW\MailingBundle\Entity\Mailing $mailing
      * @return Message
      */
-    public function addMailing(\BW\MailingBundle\Entity\Mailing $mailing)
+    public function addMailing(Mailing $mailing)
     {
         $this->mailing[] = $mailing;
         return $this;
@@ -221,9 +207,9 @@ class Message
     /**
      * Remove mailing
      *
-     * @param BW\MailingBundle\Entity\Mailing $mailing
+     * @param \BW\MailingBundle\Entity\Mailing $mailing
      */
-    public function removeMailing(\BW\MailingBundle\Entity\Mailing $mailing)
+    public function removeMailing(Mailing $mailing)
     {
         $this->mailing->removeElement($mailing);
     }
@@ -231,7 +217,7 @@ class Message
     /**
      * Get mailing
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMailing()
     {

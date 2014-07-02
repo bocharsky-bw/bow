@@ -187,7 +187,7 @@ class Slide
      *
      * @return $this
      */
-    public function setSlider(\BW\SliderBundle\Entity\Slider $slider = null)
+    public function setSlider(Slider $slider = null)
     {
         $this->slider = $slider;
 

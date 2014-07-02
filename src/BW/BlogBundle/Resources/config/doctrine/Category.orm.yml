@@ -1,0 +1,63 @@
+BW\BlogBundle\Entity\Category:
+    type: entity
+    table: categories
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        heading:
+            type: string
+            length: 255
+        slug:
+            type: string
+            length: 255
+        title:
+            type: string
+            length: 255
+        metaDescription:
+            type: string
+            length: 255
+        shortDescription:
+            column: short_description
+            type: text
+        description:
+            type: text
+        published:
+            type: boolean
+        order:
+            column: ordering
+            type: integer
+        level:
+            type: integer
+        left:
+            column: lft
+            type: integer
+        right:
+            column: rgt
+            type: integer
+    oneToOne:
+        image:
+            targetEntity: BW\BlogBundle\Entity\Image
+            cascade: [persist, remove]
+    oneToMany:
+        children:
+            targetEntity: BW\BlogBundle\Entity\Category
+            mappedBy: parent
+        posts:
+            targetEntity: BW\BlogBundle\Entity\Post
+            mappedBy: category
+    manyToOne:
+        parent:
+            targetEntity: BW\BlogBundle\Entity\Category
+            inversedBy: children
+        route:
+            targetEntity: BW\RouterBundle\Entity\Route
+            cascade: [remove]
+        lang:
+            targetEntity: BW\LocalizationBundle\Entity\Lang
+    lifecycleCallbacks:
+        prePersist: [generateLevel, setDefaultValues]
+        preUpdate: [generateLevel]

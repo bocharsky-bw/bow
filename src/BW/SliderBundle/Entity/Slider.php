@@ -107,7 +107,7 @@ class Slider
      *
      * @return $this
      */
-    public function addSlide(\BW\SliderBundle\Entity\Slide $slides)
+    public function addSlide(Slide $slides)
     {
         $this->slides[] = $slides;
 
@@ -119,7 +119,7 @@ class Slider
      *
      * @param \BW\SliderBundle\Entity\Slide $slides
      */
-    public function removeSlide(\BW\SliderBundle\Entity\Slide $slides)
+    public function removeSlide(Slide $slides)
     {
         $this->slides->removeElement($slides);
     }
@@ -140,7 +140,7 @@ class Slider
      * @param \BW\SliderBundle\Entity\Group $group
      * @return Slider
      */
-    public function setGroup(\BW\SliderBundle\Entity\Group $group = null)
+    public function setGroup(Group $group = null)
     {
         $this->group = $group;
 

@@ -2,50 +2,37 @@
 
 namespace BW\MailingBundle\Entity;
 
+use BW\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
-use \Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * BW\MailingBundle\Entity\Mailing
- *
- * @ORM\Table(name="mailing")
- * @ORM\Entity(repositoryClass="BW\MailingBundle\Entity\MailingRepository")
+ * Class Mailing
+ * @package BW\MailingBundle\Entity
  */
 class Mailing
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
      */
     private $id;
 
     /**
      * @var boolean $success
-     *
-     * @ORM\Column(name="success", type="boolean")
      */
-    private $success;
+    private $success = false;
     
     /**
-     * @var integer $message
-     *
-     * @ORM\ManyToOne(targetEntity="Message", inversedBy="mailing")
-     * @ORM\JoinColumn(name="message_id", referencedColumnName="id")
+     * @var Message $message
      */
     private $message;
     
     /**
-     * @var integer $user
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\UserBundle\Entity\User", inversedBy="mailing")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @var User $user
      */
     private $user;
 
     
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
@@ -66,6 +53,7 @@ class Mailing
     public function setSuccess($success)
     {
         $this->success = $success;
+
         return $this;
     }
 
@@ -82,19 +70,20 @@ class Mailing
     /**
      * Set message
      *
-     * @param BW\MailingBundle\Entity\Message $message
+     * @param \BW\MailingBundle\Entity\Message $message
      * @return Mailing
      */
-    public function setMessage(\BW\MailingBundle\Entity\Message $message = null)
+    public function setMessage(Message $message = null)
     {
         $this->message = $message;
+
         return $this;
     }
 
     /**
      * Get message
      *
-     * @return BW\MailingBundle\Entity\Message 
+     * @return \BW\MailingBundle\Entity\Message
      */
     public function getMessage()
     {
@@ -104,19 +93,20 @@ class Mailing
     /**
      * Set user
      *
-     * @param BW\UserBundle\Entity\User $user
+     * @param \BW\UserBundle\Entity\User $user
      * @return Mailing
      */
-    public function setUser(\BW\UserBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return BW\UserBundle\Entity\User 
+     * @return \BW\UserBundle\Entity\User
      */
     public function getUser()
     {

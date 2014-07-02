@@ -102,7 +102,7 @@ class Gallery
      * @param \BW\GalleryBundle\Entity\Photo $photos
      * @return Gallery
      */
-    public function addPhoto(\BW\GalleryBundle\Entity\Photo $photos)
+    public function addPhoto(Photo $photos)
     {
         $this->photos[] = $photos;
 
@@ -114,7 +114,7 @@ class Gallery
      *
      * @param \BW\GalleryBundle\Entity\Photo $photos
      */
-    public function removePhoto(\BW\GalleryBundle\Entity\Photo $photos)
+    public function removePhoto(Photo $photos)
     {
         $this->photos->removeElement($photos);
     }

@@ -3,60 +3,43 @@
 namespace BW\BlogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CustomField
- *
- * @ORM\Table(name="custom_fields")
- * @ORM\Entity(repositoryClass="BW\BlogBundle\Entity\CustomFieldRepository")
+ * Class CustomField
+ * @package BW\BlogBundle\Entity
  */
 class CustomField
 {
     /**
-     * @var integer
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
+     * @var integer $id
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @var string $name
      */
     private $name = '';
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="expanded", type="boolean")
+     * @var boolean $expanded
      */
     private $expanded = true;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="multiple", type="boolean")
+     * @var boolean $multiple
      */
     private $multiple = true;
 
     /**
-     * @var ArrayCollection
-     * 
-     * @ORM\OneToMany(targetEntity="CustomFieldProperty", mappedBy="customField")
+     * @var ArrayCollection $postCustomFields
+     */
+    private $postCustomFields;
+
+    /**
+     * @var ArrayCollection $customFieldProperties
      */
     private $customFieldProperties;
 
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="BW\BlogBundle\Entity\PostCustomField", mappedBy="customField")
-     */
-    private $postCustomFields;
-    
     
     /**
      * The constructor
@@ -66,7 +49,8 @@ class CustomField
         $this->postCustomFields = new ArrayCollection();
         $this->customFieldProperties = new ArrayCollection();
     }
-    
+
+
     /**
      * @return string
      */
@@ -178,45 +162,12 @@ class CustomField
     }
 
     /**
-     * Add customFieldProperties
-     *
-     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
-     * @return CustomField
-     */
-    public function addCustomFieldProperty(\BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties)
-    {
-        $this->customFieldProperties[] = $customFieldProperties;
-
-        return $this;
-    }
-
-    /**
-     * Remove customFieldProperties
-     *
-     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
-     */
-    public function removeCustomFieldProperty(\BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties)
-    {
-        $this->customFieldProperties->removeElement($customFieldProperties);
-    }
-
-    /**
-     * Get customFieldProperties
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCustomFieldProperties()
-    {
-        return $this->customFieldProperties;
-    }
-
-    /**
      * Add postCustomFields
      *
      * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
      * @return CustomField
      */
-    public function addPostCustomField(\BW\BlogBundle\Entity\PostCustomField $postCustomFields)
+    public function addPostCustomField(PostCustomField $postCustomFields)
     {
         $this->postCustomFields[] = $postCustomFields;
 
@@ -228,7 +179,7 @@ class CustomField
      *
      * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
      */
-    public function removePostCustomField(\BW\BlogBundle\Entity\PostCustomField $postCustomFields)
+    public function removePostCustomField(PostCustomField $postCustomFields)
     {
         $this->postCustomFields->removeElement($postCustomFields);
     }
@@ -236,11 +187,44 @@ class CustomField
     /**
      * Get postCustomFields
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPostCustomFields()
     {
         return $this->postCustomFields;
+    }
+
+    /**
+     * Add customFieldProperties
+     *
+     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
+     * @return CustomField
+     */
+    public function addCustomFieldProperty(CustomFieldProperty $customFieldProperties)
+    {
+        $this->customFieldProperties[] = $customFieldProperties;
+
+        return $this;
+    }
+
+    /**
+     * Remove customFieldProperties
+     *
+     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
+     */
+    public function removeCustomFieldProperty(CustomFieldProperty $customFieldProperties)
+    {
+        $this->customFieldProperties->removeElement($customFieldProperties);
+    }
+
+    /**
+     * Get customFieldProperties
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCustomFieldProperties()
+    {
+        return $this->customFieldProperties;
     }
 
 }

@@ -1,0 +1,28 @@
+BW\MailingBundle\Entity\Message:
+    type: entity
+    table: messages
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        sending:
+            type: boolean
+        subject:
+            type: string
+            length: 255
+        text:
+            type: text
+        created:
+            type: datetime
+    oneToMany:
+        mailing:
+            targetEntity: BW\MailingBundle\Entity\Mailing
+            mappedBy: message
+    manyToMany:
+        roles:
+            targetEntity: BW\UserBundle\Entity\Role
+            inversedBy: messages
+    lifecycleCallbacks: {}

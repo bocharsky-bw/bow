@@ -22,4 +22,4 @@ BW\UserBundle\Entity\Role:
         messages:
             targetEntity: BW\MailingBundle\Entity\Message
             mappedBy: roles
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

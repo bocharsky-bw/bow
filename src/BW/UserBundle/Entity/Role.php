@@ -2,6 +2,7 @@
 
 namespace BW\UserBundle\Entity;
 
+use BW\MailingBundle\Entity\Message;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 
@@ -139,7 +140,7 @@ class Role implements RoleInterface
      * @param \BW\MailingBundle\Entity\Message $messages
      * @return Role
      */
-    public function addMessage(\BW\MailingBundle\Entity\Message $messages)
+    public function addMessage(Message $messages)
     {
         $this->messages[] = $messages;
         return $this;
@@ -150,7 +151,7 @@ class Role implements RoleInterface
      *
      * @param \BW\MailingBundle\Entity\Message $messages
      */
-    public function removeMessage(\BW\MailingBundle\Entity\Message $messages)
+    public function removeMessage(Message $messages)
     {
         $this->messages->removeElement($messages);
     }

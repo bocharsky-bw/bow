@@ -1,0 +1,20 @@
+BW\MailingBundle\Entity\Mailing:
+    type: entity
+    table: mailing
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        success:
+            type: boolean
+    manyToOne:
+        message:
+            targetEntity: BW\MailingBundle\Entity\Message
+            inversedBy: mailing
+        user:
+            targetEntity: BW\UserBundle\Entity\User
+            inversedBy: mailing
+    lifecycleCallbacks: {}

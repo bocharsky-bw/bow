@@ -3,174 +3,134 @@
 namespace BW\BlogBundle\Entity;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Mapping as ORM;
+use BW\LocalizationBundle\Entity\Lang;
+use BW\RouterBundle\Entity\Route;
 
 /**
- * Contact
- *
- * @ORM\Table(name="contacts")
- * @ORM\Entity(repositoryClass="BW\BlogBundle\Entity\ContactRepository")
- * @ORM\HasLifecycleCallbacks
+ * Class Contact
+ * @package BW\BlogBundle\Entity
  */
 class Contact
 {
     /**
-     * @var integer
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
+     * @var integer $id
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="heading", type="string", length=255)
+     * @var string $heading
      */
-    private $heading;
+    private $heading = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="country", type="string", length=255)
+     * @var string $country
      */
-    private $country;
+    private $country = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=255)
+     * @var string $city
      */
-    private $city;
+    private $city = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="street", type="string", length=255)
+     * @var string $street
      */
-    private $street;
+    private $street = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="house", type="string", length=255)
+     * @var string $house
      */
-    private $house;
+    private $house = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="office", type="string", length=255)
+     * @var string $office
      */
-    private $office;
+    private $office = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @var string $email
      */
-    private $email;
+    private $email = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="phone", type="string", length=255)
+     * @var string $phone
      */
-    private $phone;
+    private $phone = '';
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="skype", type="string", length=255)
+     * @var string $skype
      */
-    private $skype;
+    private $skype = '';
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="person", type="string", length=255)
+     * @var string $person
      */
-    private $person;
+    private $person = '';
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="company_name", type="string", length=255)
+     * @var string $companyName
      */
-    private $companyName;
+    private $companyName = '';
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="company_description", type="text")
+     * @var string $companyDescription
      */
-    private $companyDescription;
+    private $companyDescription = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text")
+     * @var string $description
      */
-    private $description;
+    private $description = '';
     
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="captcha", type="boolean")
+     * @var boolean $captcha
      */
     private $captcha = false;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="map", type="text")
+     * @var string $map
      */
-    private $map;
+    private $map = '';
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="slug", type="string", length=255)
+     * @var string $slug
      */
-    private $slug;
+    private $slug = '';
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @var string $title
      */
-    private $title;
+    private $title = '';
     
     /**
-     * @var string
-     *
-     * @ORM\Column(name="meta_description", type="string", length=255)
+     * @var string $metaDescription
      */
-    private $metaDescription;
-    
-    /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\LocalizationBundle\Entity\Lang")
-     * @ORM\JoinColumn(name="lang_id", referencedColumnName="id")
-     */
-    private $lang;
+    private $metaDescription = '';
 
     /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\RouterBundle\Entity\Route", cascade={"remove"})
-     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
+     * @var integer $route
      */
     private $route;
 
     /**
+     * @var integer $lang
+     */
+    private $lang;
+
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+    }
+
+
+    /**
      * Set default values
      *
-     * @ORM\PrePersist
+     * ORM\PrePersist
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
-     *
      * @return $this
      */
     public function setDefaultValues(LifecycleEventArgs $args) {
@@ -211,24 +171,9 @@ class Contact
         
         return $this;
     }
-    
-    
-    public function __construct() {
-        $this->country = '';
-        $this->city = '';
-        $this->street = '';
-        $this->house = '';
-        $this->office = '';
-        $this->email = '';
-        $this->phone = '';
-        $this->skype = '';
-        $this->person = '';
-        $this->companyName = '';
-        $this->companyDescription = '';
-        $this->map = '';
-    }
-    
-    
+
+
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
@@ -601,57 +546,11 @@ class Contact
     /**
      * Get metaDescription
      *
-     * @return string 
+     * @return string
      */
     public function getMetaDescription()
     {
         return $this->metaDescription;
-    }
-
-    /**
-     * Set lang
-     *
-     * @param \BW\LocalizationBundle\Entity\Lang $lang
-     * @return Contact
-     */
-    public function setLang(\BW\LocalizationBundle\Entity\Lang $lang = null)
-    {
-        $this->lang = $lang;
-
-        return $this;
-    }
-
-    /**
-     * Get lang
-     *
-     * @return \BW\LocalizationBundle\Entity\Lang 
-     */
-    public function getLang()
-    {
-        return $this->lang;
-    }
-
-    /**
-     * Set route
-     *
-     * @param \BW\RouterBundle\Entity\Route $route
-     * @return Contact
-     */
-    public function setRoute(\BW\RouterBundle\Entity\Route $route = null)
-    {
-        $this->route = $route;
-
-        return $this;
-    }
-
-    /**
-     * Get route
-     *
-     * @return \BW\RouterBundle\Entity\Route 
-     */
-    public function getRoute()
-    {
-        return $this->route;
     }
 
     /**
@@ -670,7 +569,7 @@ class Contact
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -693,7 +592,7 @@ class Contact
     /**
      * Get captcha
      *
-     * @return boolean 
+     * @return boolean
      */
     public function isCaptcha()
     {
@@ -703,10 +602,56 @@ class Contact
     /**
      * Get captcha
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getCaptcha()
     {
         return $this->captcha;
+    }
+
+    /**
+     * Set route
+     *
+     * @param \BW\RouterBundle\Entity\Route $route
+     * @return Contact
+     */
+    public function setRoute(Route $route = null)
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return \BW\RouterBundle\Entity\Route
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    /**
+     * Set lang
+     *
+     * @param \BW\LocalizationBundle\Entity\Lang $lang
+     * @return Contact
+     */
+    public function setLang(Lang $lang = null)
+    {
+        $this->lang = $lang;
+
+        return $this;
+    }
+
+    /**
+     * Get lang
+     *
+     * @return \BW\LocalizationBundle\Entity\Lang
+     */
+    public function getLang()
+    {
+        return $this->lang;
     }
 }

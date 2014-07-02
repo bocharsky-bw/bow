@@ -32,4 +32,4 @@ BW\UserBundle\Entity\Country:
     manyToOne:
         currency:
             targetEntity: BW\UserBundle\Entity\Currency
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

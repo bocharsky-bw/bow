@@ -1,0 +1,71 @@
+BW\BlogBundle\Entity\Contact:
+    type: entity
+    table: contacts
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        heading:
+            type: string
+            length: 255
+        country:
+            type: string
+            length: 255
+        city:
+            type: string
+            length: 255
+        street:
+            type: string
+            length: 255
+        house:
+            type: string
+            length: 255
+        office:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 255
+        phone:
+            type: string
+            length: 255
+        skype:
+            type: string
+            length: 255
+        person:
+            type: string
+            length: 255
+        companyName:
+            column: company_name
+            type: string
+            length: 255
+        companyDescription:
+            column: company_description
+            type: text
+        description:
+            type: text
+        captcha:
+            type: boolean
+        map:
+            type: text
+        slug:
+            type: string
+            length: 255
+        title:
+            type: string
+            length: 255
+        metaDescription:
+            column: meta_description
+            type: string
+            length: 255
+    manyToOne:
+        route:
+            targetEntity: BW\RouterBundle\Entity\Route
+            cascade: [remove]
+        lang:
+            targetEntity: BW\LocalizationBundle\Entity\Lang
+    lifecycleCallbacks:
+        prePersist: [setDefaultValues]

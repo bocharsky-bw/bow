@@ -3,63 +3,41 @@
 namespace BW\BlogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PostCustomField
- *
- * @ORM\Table(name="post_custom_field")
- * @ORM\Entity(repositoryClass="BW\BlogBundle\Entity\PostCustomFieldRepository")
+ * Class PostCustomField
+ * @package BW\BlogBundle\Entity
  */
 class PostCustomField
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer $id
      */
     private $id;
 
     /**
-     * @var Post
-     *
-     * @ORM\ManyToOne(targetEntity="BW\BlogBundle\Entity\Post", inversedBy="postCustomFields")
+     * @var Post $post
      */
     private $post;
 
     /**
-     * @var CustomField
-     *
-     * @ORM\ManyToOne(targetEntity="BW\BlogBundle\Entity\CustomField", inversedBy="postCustomFields")
-     * @ORM\JoinColumn(name="custom_field_id", referencedColumnName="id")
+     * @var CustomField $customField
      */
     private $customField;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\ManyToMany(targetEntity="BW\BlogBundle\Entity\CustomFieldProperty", inversedBy="postCustomFields")
+     * @var ArrayCollection $customFieldProperties
      */
     private $customFieldProperties;
 
 
+    /**
+     * The constructor
+     */
     public function __construct()
     {
         $this->customFieldProperties = new ArrayCollection();
     }
-
-    /**
-     * Use in PostType form for implode IDs
-     *
-     * @return string The current entity ID
-     */
-//    public function __toString()
-//    {
-//        return (string)$this->id;
-//    }
-
 
 
     /* GETTERS / SETTERS */
@@ -80,7 +58,7 @@ class PostCustomField
      * @param \BW\BlogBundle\Entity\Post $post
      * @return PostCustomField
      */
-    public function setPost(\BW\BlogBundle\Entity\Post $post = null)
+    public function setPost(Post $post = null)
     {
         $this->post = $post;
 
@@ -103,7 +81,7 @@ class PostCustomField
      * @param \BW\BlogBundle\Entity\CustomField $customField
      * @return PostCustomField
      */
-    public function setCustomField(\BW\BlogBundle\Entity\CustomField $customField = null)
+    public function setCustomField(CustomField $customField = null)
     {
         $this->customField = $customField;
 
@@ -126,7 +104,7 @@ class PostCustomField
      * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
      * @return PostCustomField
      */
-    public function addCustomFieldProperty(\BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties)
+    public function addCustomFieldProperty(CustomFieldProperty $customFieldProperties)
     {
         $this->customFieldProperties[] = $customFieldProperties;
 
@@ -138,7 +116,7 @@ class PostCustomField
      *
      * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
      */
-    public function removeCustomFieldProperty(\BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties)
+    public function removeCustomFieldProperty(CustomFieldProperty $customFieldProperties)
     {
         $this->customFieldProperties->removeElement($customFieldProperties);
     }
@@ -150,15 +128,6 @@ class PostCustomField
      */
     public function getCustomFieldProperties()
     {
-//        switch ($this->customField->getType()) {
-//            case 'checkbox':
-//                return $this->customFieldProperties;
-//            case 'radio':
-//                return $this->customFieldProperties->get(0);
-//            default:
-//                return $this->customFieldProperties;
-//        }
-
         return $this->customFieldProperties;
     }
 }

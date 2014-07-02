@@ -2,185 +2,149 @@
 
 namespace BW\BlogBundle\Entity;
 
+use BW\LocalizationBundle\Entity\Lang;
+use BW\RouterBundle\Entity\Route;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Category
- *
- * @ORM\Table(name="categories")
- * @ORM\Entity(repositoryClass="BW\BlogBundle\Entity\CategoryRepository")
- * @ORM\HasLifecycleCallbacks
+ * Class Category
+ * @package BW\BlogBundle\Entity
  */
 class Category
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer $id
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="heading", type="string", length=255)
+     * @var string $heading
      */
-    private $heading;
+    private $heading = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="slug", type="string", length=255)
+     * @var string $slug
      */
-    private $slug;
+    private $slug = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @var string $title
      */
-    private $title;
+    private $title = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="meta_description", type="string", length=255)
+     * @var string $metaDescription
      */
-    private $metaDescription;
-    
-    /**
-     * @var \BW\LocalizationBundle\Entity\Lang
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\LocalizationBundle\Entity\Lang")
-     * @ORM\JoinColumn(name="lang_id", referencedColumnName="id")
-     */
-    private $lang;
+    private $metaDescription = '';
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="published", type="boolean")
-     */
-    private $published;
-    
-    /**
-     * @var \BW\RouterBundle\Entity\Route
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\RouterBundle\Entity\Route", cascade={"remove"})
-     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
-     */
-    private $route;
-    
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="\BW\BlogBundle\Entity\Post", mappedBy="category")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-     */
-    private $posts;
-    
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="\BW\BlogBundle\Entity\Category", mappedBy="parent")
-     */
-    private $children;
-
-    /**
-     * @var \BW\BlogBundle\Entity\Category
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Category", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
-     * ORM\OrderBy({"id" = "ASC"})
-     */
-    private $parent;
-    
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="level", type="integer")
-     */
-    private $level;
-    
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="lft", type="integer")
-     */
-    private $left;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="rgt", type="integer")
-     */
-    private $right;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="short_description", type="text")
+     * @var string $shortDescription
      */
     private $shortDescription = '';
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text")
+     * @var string $description
      */
     private $description = '';
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="ordering", type="integer")
+     * @var boolean $published
      */
-    private $order;
+    private $published = true;
 
     /**
-     * @var \BW\BlogBundle\Entity\Image
-     *
-     * @ORM\OneToOne(targetEntity="\BW\BlogBundle\Entity\Image", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     * @var integer $order
+     */
+    private $order = 0;
+
+    /**
+     * @var integer $level
+     */
+    private $level = 0;
+
+    /**
+     * @var integer $left
+     */
+    private $left = 0;
+
+    /**
+     * @var integer $right
+     */
+    private $right = 0;
+
+    /**
+     * @var \BW\BlogBundle\Entity\Category $parent
+     */
+    private $parent;
+
+    /**
+     * @var ArrayCollection $children
+     */
+    private $children;
+
+    /**
+     * @var ArrayCollection $posts
+     */
+    private $posts;
+
+    /**
+     * @var \BW\BlogBundle\Entity\Image $image
      */
     private $image;
-    
-    
+
     /**
-     * Текущий уровень вложенности категории
-     * 
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     * @return integer
+     * @var \BW\RouterBundle\Entity\Route $route
      */
-    public function generateLevel() {
-        $this->level = 0;
-        $parent = $this->getParent();
-        
-        while ($parent) {
-            $this->level++;
-            $parent = $parent->getParent();
-        }
-        
-        return $this;
+    private $route;
+
+    /**
+     * @var \BW\LocalizationBundle\Entity\Lang $lang
+     */
+    private $lang;
+
+
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
-    public function __toString() {
+
+    public function __toString()
+    {
         return str_repeat('- ', $this->level) . $this->heading;
     }
 
     /**
+     * Generate current nested level
+     *
+     * ORM\PrePersist
+     * ORM\PreUpdate
+     * @return integer
+     */
+    public function generateLevel()
+    {
+        $this->level = 0;
+        $parent = $this->getParent();
+
+        while ($parent) {
+            $this->level++;
+            $parent = $parent->getParent();
+        }
+
+        return $this;
+    }
+
+    /**
      * Set default values
-     * @ORM\PrePersist
+     * ORM\PrePersist
      *
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      * @return $this
      */
-    public function setDefaultValues(LifecycleEventArgs $args) {
+    public function setDefaultValues(LifecycleEventArgs $args)
+    {
         $values = array(
             'slug' => '',
             'title' => '',
@@ -205,18 +169,9 @@ class Category
         
         return $this;
     }
-    
 
-    public function __construct() {
-        $this->children = new ArrayCollection();
-        $this->posts = new ArrayCollection();
-        $this->level = 0;
-        $this->left = 0;
-        $this->right = 0;
-        $this->published = TRUE;
-    }
-    
 
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
@@ -321,12 +276,66 @@ class Category
     }
 
     /**
+     * Set shortDescription
+     *
+     * @param string $shortDescription
+     * @return Category
+     */
+    public function setShortDescription($shortDescription)
+    {
+        if (isset($shortDescription)) {
+            $this->shortDescription = $shortDescription;
+        } else {
+            $this->shortDescription = '';
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get shortDescription
+     *
+     * @return string
+     */
+    public function getShortDescription()
+    {
+        return $this->shortDescription;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Category
+     */
+    public function setDescription($description)
+    {
+        if (isset($description)) {
+            $this->description = $description;
+        } else {
+            $this->description = '';
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
      * Set lang
      *
      * @param \BW\LocalizationBundle\Entity\Lang $lang
      * @return Category
      */
-    public function setLang(\BW\LocalizationBundle\Entity\Lang $lang = null)
+    public function setLang(Lang $lang = null)
     {
         $this->lang = $lang;
     
@@ -372,7 +381,7 @@ class Category
      * @param \BW\RouterBundle\Entity\Route $route
      * @return Post
      */
-    public function setRoute(\BW\RouterBundle\Entity\Route $route = null)
+    public function setRoute(Route $route = null)
     {
         $this->route = $route;
     
@@ -395,7 +404,7 @@ class Category
      * @param \BW\BlogBundle\Entity\Post $posts
      * @return Category
      */
-    public function addPost(\BW\BlogBundle\Entity\Post $posts)
+    public function addPost(Post $posts)
     {
         $this->posts[] = $posts;
     
@@ -407,7 +416,7 @@ class Category
      *
      * @param \BW\BlogBundle\Entity\Post $posts
      */
-    public function removePost(\BW\BlogBundle\Entity\Post $posts)
+    public function removePost(Post $posts)
     {
         $this->posts->removeElement($posts);
     }
@@ -428,7 +437,7 @@ class Category
      * @param \BW\BlogBundle\Entity\Category $children
      * @return Category
      */
-    public function addChildren(\BW\BlogBundle\Entity\Category $children)
+    public function addChildren(Category $children)
     {
         $this->children[] = $children;
         return $this;
@@ -439,7 +448,7 @@ class Category
      *
      * @param \BW\BlogBundle\Entity\Category $children
      */
-    public function removeChildren(\BW\BlogBundle\Entity\Category $children)
+    public function removeChildren(Category $children)
     {
         $this->children->removeElement($children);
     }
@@ -460,7 +469,7 @@ class Category
      * @param \BW\BlogBundle\Entity\Category $parent
      * @return Category
      */
-    public function setParent(\BW\BlogBundle\Entity\Category $parent = null)
+    public function setParent(Category $parent = null)
     {
         $this->parent = $parent;
         return $this;
@@ -548,7 +557,7 @@ class Category
      * @param \BW\BlogBundle\Entity\Category $children
      * @return Category
      */
-    public function addChild(\BW\BlogBundle\Entity\Category $children)
+    public function addChild(Category $children)
     {
         $this->children[] = $children;
 
@@ -560,63 +569,9 @@ class Category
      *
      * @param \BW\BlogBundle\Entity\Category $children
      */
-    public function removeChild(\BW\BlogBundle\Entity\Category $children)
+    public function removeChild(Category $children)
     {
         $this->children->removeElement($children);
-    }
-
-    /**
-     * Set shortDescription
-     *
-     * @param string $shortDescription
-     * @return Category
-     */
-    public function setShortDescription($shortDescription)
-    {
-        if (isset($shortDescription)) {
-            $this->shortDescription = $shortDescription;
-        } else {
-            $this->shortDescription = '';
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get shortDescription
-     *
-     * @return string
-     */
-    public function getShortDescription()
-    {
-        return $this->shortDescription;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Category
-     */
-    public function setDescription($description)
-    {
-        if (isset($description)) {
-            $this->description = $description;
-        } else {
-            $this->description = '';
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**

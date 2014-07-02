@@ -32,4 +32,4 @@ BW\UserBundle\Entity\Replenishment:
         receipt:
             targetEntity: BW\UserBundle\Entity\Receipt
             inversedBy:
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

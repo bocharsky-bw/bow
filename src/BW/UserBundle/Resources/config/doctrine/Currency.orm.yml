@@ -37,4 +37,4 @@ BW\UserBundle\Entity\Currency:
         replenishments:
             targetEntity: BW\UserBundle\Entity\Replenishment
             mappedBy: currency
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

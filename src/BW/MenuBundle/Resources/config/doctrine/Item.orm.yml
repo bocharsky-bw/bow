@@ -1,0 +1,57 @@
+BW\MenuBundle\Entity\Item:
+    type: entity
+    table: menu_items
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        title:
+            type: string
+            length: 255
+        href:
+            type: string
+            length: 255
+        class:
+            type: string
+            length: 255
+        blank:
+            type: boolean
+        ordering:
+            type: integer
+        level:
+            type: integer
+        left:
+            column: lft
+            type: integer
+        right:
+            column: rgt
+            type: integer
+    oneToOne:
+        image:
+            targetEntity: BW\BlogBundle\Entity\Image
+            cascade: [persist, remove]
+    oneToMany:
+        children:
+            targetEntity: BW\MenuBundle\Entity\Item
+            mappedBy: parent
+    manyToOne:
+        parent:
+            targetEntity: BW\MenuBundle\Entity\Item
+            inversedBy: children
+        menu:
+            targetEntity: BW\MenuBundle\Entity\Menu
+            inversedBy: items
+        lang:
+            targetEntity: BW\LocalizationBundle\Entity\Lang
+        route:
+            targetEntity: BW\RouterBundle\Entity\Route
+
+    lifecycleCallbacks:
+        prePersist: [generateLevel, setDefaultValues]
+        preUpdate: [generateLevel]
