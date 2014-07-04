@@ -28,12 +28,12 @@ class Role implements RoleInterface
     private $role = '';
 
     /**
-     * @var ArrayCollection
+     * @var ArrayCollection $users
      */
     private $users;
 
     /**
-     * @var ArrayCollection
+     * @var ArrayCollection $messages
      */
     private $messages;
 

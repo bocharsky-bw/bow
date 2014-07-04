@@ -17,7 +17,7 @@ BW\UserBundle\Entity\Role:
             unique: true
     manyToMany:
         users:
-            targetEntity: BW\UserBundle\Entity\Role
+            targetEntity: BW\UserBundle\Entity\User
             mappedBy: roles
         messages:
             targetEntity: BW\MailingBundle\Entity\Message
