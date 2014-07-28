@@ -52,7 +52,7 @@ class PostRepository extends EntityRepository {
                         $properties[] = $property;
                     }
                 } else {
-                    throw new \InvalidArgumentException('Filter takes an array or a scalar value');
+                    throw new \InvalidArgumentException('Filter expects an array or a scalar value');
                 }
             }
 
@@ -64,7 +64,7 @@ class PostRepository extends EntityRepository {
                     ->groupBy('p.id')
                     ->having('COUNT(p.id) = :count')
                     ->setParameter('properties', $properties)
-                    ->setParameter('count', count($properties))
+                    ->setParameter('count', count($form)) // Count affected custom fields
                 ;
             }
         }
