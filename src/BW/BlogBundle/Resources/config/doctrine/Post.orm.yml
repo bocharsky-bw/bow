@@ -42,6 +42,7 @@ BW\BlogBundle\Entity\Post:
         postCustomFields:
             targetEntity: BW\BlogBundle\Entity\PostCustomField
             mappedBy: post
+            cascade: [remove]
     manyToOne:
         category:
             targetEntity: BW\BlogBundle\Entity\Category
