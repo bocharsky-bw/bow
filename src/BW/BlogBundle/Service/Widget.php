@@ -137,7 +137,9 @@ class Widget {
     {
         $fields = $this->container->get('doctrine')
             ->getRepository('BWBlogBundle:CustomField')
-            ->findAll();
+            ->findBy(array(
+                'used' => true, // only used in filter
+            ));
 
         $formFactory = $this->container->get('form.factory');
         $fb = $formFactory->createBuilder('form', null, array(

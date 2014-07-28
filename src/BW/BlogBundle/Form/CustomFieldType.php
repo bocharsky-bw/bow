@@ -30,6 +30,10 @@ class CustomFieldType extends AbstractType
                     'title' => 'Радио-кнопки | Чекбоксы'
                 ),
             ))
+            ->add('used', 'checkbox', array(
+                'required' => false,
+                'label' => 'Используется в фильтре ',
+            ))
             ->add('save', 'submit')
             ->add('saveAndClose', 'submit')
             ->add('delete', 'submit')

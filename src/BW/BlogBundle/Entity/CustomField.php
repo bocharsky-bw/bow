@@ -31,6 +31,11 @@ class CustomField
     private $multiple = true;
 
     /**
+     * @var bool
+     */
+    private $used = true;
+
+    /**
      * @var ArrayCollection $postCustomFields
      */
     private $postCustomFields;
@@ -159,6 +164,39 @@ class CustomField
     public function isMultiple()
     {
         return $this->multiple;
+    }
+
+    /**
+     * Set used
+     *
+     * @param boolean $used
+     * @return CustomField
+     */
+    public function setUsed($used)
+    {
+        $this->used = $used;
+
+        return $this;
+    }
+
+    /**
+     * Get used
+     *
+     * @return boolean
+     */
+    public function getUsed()
+    {
+        return $this->used;
+    }
+
+    /**
+     * Get used
+     *
+     * @return boolean
+     */
+    public function isUsed()
+    {
+        return $this->used;
     }
 
     /**

@@ -45,10 +45,10 @@ BW\UserBundle\Entity\Profile:
     oneToMany:
         wallets:
             targetEntity: BW\UserBundle\Entity\Wallet
-            mappedBy: currency
+            mappedBy: profile
         replenishments:
             targetEntity: BW\UserBundle\Entity\Replenishment
-            mappedBy: currency
+            mappedBy: profile
     manyToOne:
         country:
             targetEntity: BW\UserBundle\Entity\Country
