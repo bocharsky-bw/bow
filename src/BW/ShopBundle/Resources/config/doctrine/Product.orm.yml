@@ -1,0 +1,27 @@
+BW\ShopBundle\Entity\Product:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        heading:
+            type: string
+            length: 255
+        description:
+            type: text
+        slug:
+            type: string
+            length: 255
+        title:
+            type: string
+            length: 255
+        metaDescription:
+            type: string
+            length: 255
+        published:
+            type: boolean
+    lifecycleCallbacks: {  }

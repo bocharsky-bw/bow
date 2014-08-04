@@ -22,6 +22,9 @@ admin:
     finances: Финансы
     currencies: Валюты
     replenishments: Пополнения
+    shop: Магазин
+    products: Товары
+    vendors: Производители
 
 localization:
     lang: Язык

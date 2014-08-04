@@ -1,0 +1,7 @@
+parameters:
+#    bw_shop.example.class: BW\ShopBundle\Example
+
+services:
+#    bw_shop.example:
+#        class: %bw_shop.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

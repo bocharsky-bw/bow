@@ -1,3 +1,7 @@
+bw_shop:
+    resource: "@BWShopBundle/Resources/config/routing.yml"
+    prefix:   /
+
 bw_gallery:
     resource: "@BWGalleryBundle/Resources/config/routing.yml"
     prefix:   /

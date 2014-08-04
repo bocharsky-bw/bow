@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+<div class="form-buttons">
+    {{ form.create is defined ? form_widget(form.create) }}
+    {{ form.createAndClose is defined ? form_widget(form.createAndClose) }}
+    {{ form.update is defined ? form_widget(form.update) }}
+    {{ form.updateAndClose is defined ? form_widget(form.updateAndClose) }}
+    {{ form.delete is defined ? form_widget(form.delete) }}
+    {% include '@BWMain/Utility/Form/close-button.html.twig' with {'path': path('vendor')} %}
+</div>
+
+{{ form(form) }}
+
+{{ form_end(form) }}

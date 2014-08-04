@@ -1,0 +1,30 @@
+vendor:
+    path:     /
+    defaults: { _controller: "BWShopBundle:Vendor:index" }
+
+vendor_show:
+    path:     /{id}/show
+    defaults: { _controller: "BWShopBundle:Vendor:show" }
+
+vendor_new:
+    path:     /new
+    defaults: { _controller: "BWShopBundle:Vendor:new" }
+
+vendor_create:
+    path:     /create
+    defaults: { _controller: "BWShopBundle:Vendor:create" }
+    requirements: { _method: post }
+
+vendor_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BWShopBundle:Vendor:edit" }
+
+vendor_update:
+    path:     /{id}/update
+    defaults: { _controller: "BWShopBundle:Vendor:update" }
+    requirements: { _method: post|put }
+
+vendor_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BWShopBundle:Vendor:delete" }
+    requirements: { _method: post|delete }

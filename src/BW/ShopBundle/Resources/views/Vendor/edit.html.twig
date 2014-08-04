@@ -1,0 +1,16 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block content -%}
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-edit"></i> Редактирование производителя</h1>
+        </div>
+    </div>
+
+    <div class="bw_container">
+        <div class="bw_row">
+            {% include 'BWShopBundle:Vendor:form.html.twig' %}
+        </div>
+    </div>
+
+{% endblock %}

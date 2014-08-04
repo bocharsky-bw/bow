@@ -1,0 +1,36 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Список всех производителей {{ parent() }}{% endblock %}
+
+{% block content -%}
+    <div class="form-buttons">
+        {% include '@BWMain/Utility/Form/add-button.html.twig' with {'path': path('vendor_new')} %}
+    </div>
+
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-list"></i> Список производителей</h1>
+        </div>
+    </div>
+
+    <div class="main-table">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Заголовок</th>
+                    <th>Описание</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td><a href="{{ path('vendor_edit', {'id': entity.id}) }}" title="Изменить запись">{{ entity.heading }}</a></td>
+                    <td>{{ entity.description }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

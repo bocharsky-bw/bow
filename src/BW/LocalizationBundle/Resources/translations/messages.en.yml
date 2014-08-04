@@ -13,6 +13,9 @@ admin:
     menu: Menu
     menu_items: Menu items
     view_site: View site
+    shop: Shop
+    products: Products
+    vendors: Vendors
 
 localization:
     lang: Language
