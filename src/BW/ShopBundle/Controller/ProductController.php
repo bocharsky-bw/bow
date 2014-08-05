@@ -2,22 +2,21 @@
 
 namespace BW\ShopBundle\Controller;
 
+use BW\MainBundle\Utility\FormUtility;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use BW\ShopBundle\Entity\Product;
 use BW\ShopBundle\Form\ProductType;
 
 /**
- * Product controller.
- *
+ * Class ProductController
+ * @package BW\ShopBundle\Controller
  */
 class ProductController extends Controller
 {
 
     /**
      * Lists all Product entities.
-     *
      */
     public function indexAction()
     {
@@ -29,9 +28,9 @@ class ProductController extends Controller
             'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new Product entity.
-     *
      */
     public function createAction(Request $request)
     {
@@ -44,7 +43,11 @@ class ProductController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('product_show', array('id' => $entity->getId())));
+            if ($form->get('createAndClose')->isClicked()) {
+                return $this->redirect($this->generateUrl('product'));
+            }
+
+            return $this->redirect($this->generateUrl('product_edit', array('id' => $entity->getId())));
         }
 
         return $this->render('BWShopBundle:Product:new.html.twig', array(
@@ -57,7 +60,6 @@ class ProductController extends Controller
      * Creates a form to create a Product entity.
      *
      * @param Product $entity The entity
-     *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(Product $entity)
@@ -67,14 +69,14 @@ class ProductController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        FormUtility::addCreateButton($form);
+        FormUtility::addCreateAndCloseButton($form);
 
         return $form;
     }
 
     /**
      * Displays a form to create a new Product entity.
-     *
      */
     public function newAction()
     {
@@ -89,7 +91,6 @@ class ProductController extends Controller
 
     /**
      * Finds and displays a Product entity.
-     *
      */
     public function showAction($id)
     {
@@ -97,7 +98,7 @@ class ProductController extends Controller
 
         $entity = $em->getRepository('BWShopBundle:Product')->find($id);
 
-        if (!$entity) {
+        if ( ! $entity) {
             throw $this->createNotFoundException('Unable to find Product entity.');
         }
 
@@ -111,7 +112,6 @@ class ProductController extends Controller
 
     /**
      * Displays a form to edit an existing Product entity.
-     *
      */
     public function editAction($id)
     {
@@ -127,8 +127,8 @@ class ProductController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('BWShopBundle:Product:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -137,7 +137,6 @@ class ProductController extends Controller
     * Creates a form to edit a Product entity.
     *
     * @param Product $entity The entity
-    *
     * @return \Symfony\Component\Form\Form The form
     */
     private function createEditForm(Product $entity)
@@ -147,13 +146,15 @@ class ProductController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        FormUtility::addUpdateButton($form);
+        FormUtility::addUpdateAndCloseButton($form);
+        FormUtility::addDeleteButton($form);
 
         return $form;
     }
+
     /**
      * Edits an existing Product entity.
-     *
      */
     public function updateAction(Request $request, $id)
     {
@@ -161,7 +162,7 @@ class ProductController extends Controller
 
         $entity = $em->getRepository('BWShopBundle:Product')->find($id);
 
-        if (!$entity) {
+        if ( ! $entity) {
             throw $this->createNotFoundException('Unable to find Product entity.');
         }
 
@@ -170,20 +171,42 @@ class ProductController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            if ($editForm->get('delete')->isClicked()) {
+                $this->delete($id);
+                return $this->redirect($this->generateUrl('product'));
+            }
+
             $em->flush();
+
+            if ($editForm->get('updateAndClose')->isClicked()) {
+                return $this->redirect($this->generateUrl('product'));
+            }
 
             return $this->redirect($this->generateUrl('product_edit', array('id' => $id)));
         }
 
         return $this->render('BWShopBundle:Product:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
+
+    private function delete($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('BWShopBundle:Product')->find($id);
+
+        if ( ! $entity) {
+            throw $this->createNotFoundException('Unable to find Product entity.');
+        }
+
+        $em->remove($entity);
+        $em->flush();
+    }
+
     /**
      * Deletes a Product entity.
-     *
      */
     public function deleteAction(Request $request, $id)
     {
@@ -191,15 +214,7 @@ class ProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('BWShopBundle:Product')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Product entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+            $this->delete($id);
         }
 
         return $this->redirect($this->generateUrl('product'));
@@ -209,7 +224,6 @@ class ProductController extends Controller
      * Creates a form to delete a Product entity by id.
      *
      * @param mixed $id The entity id
-     *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm($id)

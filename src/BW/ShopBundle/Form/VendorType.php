@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class VendorType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -22,9 +22,30 @@ class VendorType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
-            ->add('description', 'text', array(
+            ->add('description', 'textarea', array(
                 'required' => false,
                 'label' => 'Описание',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('slug', 'text', array(
+                'required' => false,
+                'label' => 'Псевдоним URL',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('title', 'text', array(
+                'required' => false,
+                'label' => 'Заголовок страницы в браузере',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('metaDescription', 'textarea', array(
+                'required' => false,
+                'label' => 'Описание страницы',
                 'attr' => array(
                     'class' => 'form-control',
                 ),
@@ -47,6 +68,6 @@ class VendorType extends AbstractType
      */
     public function getName()
     {
-        return 'bw_shopbundle_vendor';
+        return 'bw_vendor';
     }
 }

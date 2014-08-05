@@ -5,7 +5,8 @@ namespace BW\ShopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Product
+ * Class Product
+ * @package BW\ShopBundle\Entity
  */
 class Product
 {
@@ -15,35 +16,72 @@ class Product
     private $id;
 
     /**
-     * @var string
+     * @var boolean
      */
-    private $heading;
-
-    /**
-     * @var string
-     */
-    private $description;
-
-    /**
-     * @var string
-     */
-    private $slug;
-
-    /**
-     * @var string
-     */
-    private $title;
-
-    /**
-     * @var string
-     */
-    private $metaDescription;
+    private $published = true;
 
     /**
      * @var boolean
      */
-    private $published;
+    private $recent = false;
 
+    /**
+     * @var boolean
+     */
+    private $featured = false;
+
+    /**
+     * @var boolean
+     */
+    private $popular = false;
+
+    /**
+     * @var string
+     */
+    private $sku = '';
+
+    /**
+     * @var string
+     */
+    private $price = 0.00;
+
+    /**
+     * @var string
+     */
+    private $heading = '';
+
+    /**
+     * @var string
+     */
+    private $shortDescription;
+
+    /**
+     * @var string
+     */
+    private $description = '';
+
+    /**
+     * @var string
+     */
+    private $slug = '';
+
+    /**
+     * @var string
+     */
+    private $title = '';
+
+    /**
+     * @var string
+     */
+    private $metaDescription = '';
+
+    /**
+     * @var \BW\ShopBundle\Entity\Vendor
+     */
+    private $vendor;
+
+
+    /* SETTERS / GETTERS */
 
     /**
      * Get id
@@ -53,6 +91,144 @@ class Product
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set published
+     *
+     * @param boolean $published
+     * @return Product
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+
+    /**
+     * Get published
+     *
+     * @return boolean
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * Set recent
+     *
+     * @param boolean $recent
+     * @return Product
+     */
+    public function setRecent($recent)
+    {
+        $this->recent = $recent;
+
+        return $this;
+    }
+
+    /**
+     * Get recent
+     *
+     * @return boolean
+     */
+    public function getRecent()
+    {
+        return $this->recent;
+    }
+
+    /**
+     * Set featured
+     *
+     * @param boolean $featured
+     * @return Product
+     */
+    public function setFeatured($featured)
+    {
+        $this->featured = $featured;
+
+        return $this;
+    }
+
+    /**
+     * Get featured
+     *
+     * @return boolean
+     */
+    public function getFeatured()
+    {
+        return $this->featured;
+    }
+
+    /**
+     * Set popular
+     *
+     * @param boolean $popular
+     * @return Product
+     */
+    public function setPopular($popular)
+    {
+        $this->popular = $popular;
+
+        return $this;
+    }
+
+    /**
+     * Get popular
+     *
+     * @return boolean
+     */
+    public function getPopular()
+    {
+        return $this->popular;
+    }
+
+    /**
+     * Set sku
+     *
+     * @param string $sku
+     * @return Product
+     */
+    public function setSku($sku)
+    {
+        $this->sku = $sku;
+
+        return $this;
+    }
+
+    /**
+     * Get sku
+     *
+     * @return string
+     */
+    public function getSku()
+    {
+        return $this->sku;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     * @return Product
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
     }
 
     /**
@@ -79,6 +255,29 @@ class Product
     }
 
     /**
+     * Set shortDescription
+     *
+     * @param string $shortDescription
+     * @return Product
+     */
+    public function setShortDescription($shortDescription)
+    {
+        $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get shortDescription
+     *
+     * @return string
+     */
+    public function getShortDescription()
+    {
+        return $this->shortDescription;
+    }
+
+    /**
      * Set description
      *
      * @param string $description
@@ -94,7 +293,7 @@ class Product
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -117,7 +316,7 @@ class Product
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -140,7 +339,7 @@ class Product
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -163,7 +362,7 @@ class Product
     /**
      * Get metaDescription
      *
-     * @return string 
+     * @return string
      */
     public function getMetaDescription()
     {
@@ -171,25 +370,25 @@ class Product
     }
 
     /**
-     * Set published
+     * Set vendor
      *
-     * @param boolean $published
+     * @param \BW\ShopBundle\Entity\Vendor $vendor
      * @return Product
      */
-    public function setPublished($published)
+    public function setVendor(Vendor $vendor = null)
     {
-        $this->published = $published;
+        $this->vendor = $vendor;
 
         return $this;
     }
 
     /**
-     * Get published
+     * Get vendor
      *
-     * @return boolean 
+     * @return \BW\ShopBundle\Entity\Vendor
      */
-    public function getPublished()
+    public function getVendor()
     {
-        return $this->published;
+        return $this->vendor;
     }
 }

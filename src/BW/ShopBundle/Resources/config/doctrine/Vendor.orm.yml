@@ -1,6 +1,6 @@
 BW\ShopBundle\Entity\Vendor:
     type: entity
-    table: null
+    table: vendors
     id:
         id:
             type: integer
@@ -12,6 +12,18 @@ BW\ShopBundle\Entity\Vendor:
             type: string
             length: 255
         description:
+            type: text
+        slug:
             type: string
             length: 255
+        title:
+            type: string
+            length: 255
+        metaDescription:
+            type: string
+            length: 255
+    oneToMany:
+        products:
+            targetEntity: BW\ShopBundle\Entity\Product
+            mappedBy: vendor
     lifecycleCallbacks: {  }

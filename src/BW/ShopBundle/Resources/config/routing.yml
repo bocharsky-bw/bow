@@ -1,10 +1,10 @@
-bw_shop_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: BWShopBundle:Default:index }
-
 bw_shop_vendor_admin:
     resource: "@BWShopBundle/Resources/config/routing/vendor_admin.yml"
     prefix:   /_admin/{_locale}/vendor
+
+bw_shop_vendor:
+    resource: "@BWShopBundle/Resources/config/routing/vendor.yml"
+    prefix:   /{_locale}/vendors
 
 bw_shop_product_admin:
     resource: "@BWShopBundle/Resources/config/routing/product_admin.yml"

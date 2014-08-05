@@ -16,6 +16,20 @@ class VendorController extends Controller
 {
 
     /**
+     * Lists all Vendor entities in frontend.
+     */
+    public function listAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('BWShopBundle:Vendor')->findBy(array());
+
+        return $this->render('BWShopBundle:Vendor:list.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
+    /**
      * Lists all Vendor entities.
      */
     public function indexAction()
@@ -107,6 +121,24 @@ class VendorController extends Controller
         return $this->render('BWShopBundle:Vendor:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Finds and displays a Vendor entity by slug.
+     */
+    public function showBySlugAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('BWShopBundle:Vendor')->findOneBySlug($slug);
+
+        if ( ! $entity) {
+            throw $this->createNotFoundException('Unable to find Vendor entity.');
+        }
+
+        return $this->render('BWShopBundle:Vendor:show.html.twig', array(
+            'entity' => $entity,
         ));
     }
 

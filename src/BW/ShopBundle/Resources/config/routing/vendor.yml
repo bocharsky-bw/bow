@@ -1,0 +1,7 @@
+vendor_list:
+    path:     /
+    defaults: { _controller: "BWShopBundle:Vendor:list" }
+
+vendor_show_by_slug:
+    path:     /{slug}
+    defaults: { _controller: "BWShopBundle:Vendor:showBySlug" }

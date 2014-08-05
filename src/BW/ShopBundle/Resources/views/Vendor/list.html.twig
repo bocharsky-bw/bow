@@ -1,0 +1,28 @@
+{% extends 'BWSkeletonBundle:Frontend:layout.html.twig' %}
+
+{% block title %}Список всех производителей {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {{ service('bw_blog.widget').lastPosts()|raw }}
+            </div>
+            <div class="col-lg-9">
+                <h1>Все производители</h1>
+                <div class="vendors">
+                    {% for entity in entities %}
+                        <div class="vendor">
+                            <h2>
+                                <a href="{{ path('vendor_show_by_slug', {'slug': entity.slug}) }}" title="Просмотреть товары производителя">
+                                    {{ entity.heading }}
+                                </a>
+                            </h2>
+                            <div>{{ entity.description|raw }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

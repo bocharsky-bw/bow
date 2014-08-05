@@ -19,7 +19,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Заголовок</th>
-                    <th>Описание</th>
+                    <th>Псевдоним URL</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +27,7 @@
                 <tr>
                     <td>{{ entity.id }}</td>
                     <td><a href="{{ path('vendor_edit', {'id': entity.id}) }}" title="Изменить запись">{{ entity.heading }}</a></td>
-                    <td>{{ entity.description }}</td>
+                    <td>{{ entity.slug }}</td>
                 </tr>
             {% endfor %}
             </tbody>
