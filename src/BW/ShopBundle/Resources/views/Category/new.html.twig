@@ -1,6 +1,6 @@
 {% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
 
-{% block title %}Редактирование товара{% endblock %}
+{% block title %}Создание новой категории{% endblock %}
 
 {% block js %}
     {{ parent() }}
@@ -10,9 +10,9 @@
     <script type="text/javascript">
         $(document).ready(function(){
             //alert('DOM');
-            var editorDescription = CKEDITOR.replace( 'bw_product_description' );
+            var editorDescription = CKEDITOR.replace( 'bw_category_description' );
             CKFinder.setupCKEditor( editorDescription, '{{ asset('libs/ckfinder2/') }}' );
-            var editorShortDescription = CKEDITOR.replace( 'bw_product_shortDescription' );
+            var editorShortDescription = CKEDITOR.replace( 'bw_category_shortDescription' );
             CKFinder.setupCKEditor( editorShortDescription, '{{ asset('libs/ckfinder2/') }}' );
         });
     </script>
@@ -22,14 +22,13 @@
 {% block content -%}
     <div class="bw_container">
         <div class="bw_row">
-            <h1><i class="icon-edit"></i> Редактирование товара</h1>
+            <h1><i class="icon-plus"></i> Создание категории</h1>
         </div>
     </div>
 
     <div class="bw_container">
         <div class="bw_row">
-            {% include 'BWShopBundle:Product:form.html.twig' %}
+            {% include 'BWShopBundle:Category:form.html.twig' %}
         </div>
     </div>
-
 {% endblock %}

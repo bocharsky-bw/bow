@@ -5,30 +5,15 @@
         {{ form.update is defined ? form_widget(form.update) }}
         {{ form.updateAndClose is defined ? form_widget(form.updateAndClose) }}
         {{ form.delete is defined ? form_widget(form.delete) }}
-        {% include '@BWMain/Utility/Form/close-button.html.twig' with {'path': path('product')} %}
+        {% include '@BWMain/Utility/Form/close-button.html.twig' with {'path': path('category')} %}
     </div>
 
     <div style="padding-bottom: 10px;">
         {{ form_row(form.published) }}
-        {{ form_row(form.recent) }}
-        {{ form_row(form.featured) }}
-        {{ form_row(form.popular) }}
     </div>
 
     <div style="padding-bottom: 10px;">
-        {{ form_row(form.category) }}
-    </div>
-
-    <div style="padding-bottom: 10px;">
-        {{ form_row(form.vendor) }}
-    </div>
-
-    <div style="padding-bottom: 10px;">
-        {{ form_row(form.sku) }}
-    </div>
-
-    <div style="padding-bottom: 10px;">
-        {{ form_row(form.price) }}
+        {{ form_row(form.parent) }}
     </div>
 
     <div style="padding-bottom: 10px;">
@@ -41,6 +26,10 @@
 
     <div style="padding-bottom: 10px;">
         {{ form_row(form.description) }}
+    </div>
+
+    <div style="padding-bottom: 10px;">
+        {{ form_row(form.order) }}
     </div>
 
     <h2 >Meta теги:</h2>

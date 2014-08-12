@@ -39,8 +39,18 @@ BW\ShopBundle\Entity\Product:
         metaDescription:
             type: string
             length: 255
+        created:
+            type: datetime
+        updated:
+            type: datetime
     manyToOne:
+        category:
+            targetEntity: BW\ShopBundle\Entity\Category
+            inversedBy: products
         vendor:
             targetEntity: BW\ShopBundle\Entity\Vendor
             inversedBy: products
+        route:
+            targetEntity: BW\RouterBundle\Entity\Route
+            cascade: [remove]
     lifecycleCallbacks: {  }

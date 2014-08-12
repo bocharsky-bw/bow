@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductType extends AbstractType
+class CategoryType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -20,53 +20,22 @@ class ProductType extends AbstractType
                 'required' => false,
                 'label' => 'Опубликовано',
             ))
-            ->add('recent', 'checkbox', array(
-                'required' => false,
-                'label' => 'Новый',
-            ))
-            ->add('featured', 'checkbox', array(
-                'required' => false,
-                'label' => 'Рекомендуемый',
-            ))
-            ->add('popular', 'checkbox', array(
-                'required' => false,
-                'label' => 'Популярный',
-            ))
-            ->add('category', 'entity', array(
+            ->add('parent', 'entity', array(
                 'class' => 'BWShopBundle:Category',
                 //'property' => 'heading',
-                'query_builder' => function(EntityRepository $er) {
+                'query_builder' => function(EntityRepository $er) use($options) {
                     return $er->createQueryBuilder('c')
+                        ->where('c.id != :id')
+                        ->andWhere('c.left < :left OR c.left > :right')
+                        ->setParameter('id', (int)$options['data']->getId())
+                        ->setParameter('left', (int)$options['data']->getLeft())
+                        ->setParameter('right', (int)$options['data']->getRight())
                         ->orderBy('c.left', 'ASC')
-                    ;
+                        ;
                 },
+                'label' => 'Родительская категория',
                 'required' => false,
-                'label' => 'Категория',
-                'empty_value' => '< Без категории >',
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
-            ->add('vendor', 'entity', array(
-                'class' => 'BW\ShopBundle\Entity\Vendor',
-                'property' => 'heading',
-                'required' => true,
-                'empty_value' => '< Без производителя >',
-                'label' => 'Производитель',
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
-            ->add('sku', 'text', array(
-                'required' => true,
-                'label' => 'Артикул',
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
-            ->add('price', 'text', array(
-                'required' => true,
-                'label' => 'Цена',
+                'empty_value' => '< Корневая категория >',
                 'attr' => array(
                     'class' => 'form-control',
                 ),
@@ -92,9 +61,11 @@ class ProductType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
-            ->add('created', 'datetime', array(
+            ->add('order', 'number', array(
                 'required' => false,
-                'label' => 'Создано',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
             ))
             ->add('slug', 'text', array(
                 'required' => false,
@@ -126,7 +97,7 @@ class ProductType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BW\ShopBundle\Entity\Product'
+            'data_class' => 'BW\ShopBundle\Entity\Category'
         ));
     }
 
@@ -135,6 +106,6 @@ class ProductType extends AbstractType
      */
     public function getName()
     {
-        return 'bw_product';
+        return 'bw_category';
     }
 }

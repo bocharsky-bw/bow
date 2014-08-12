@@ -1,0 +1,3 @@
+category_show_by_slug:
+    path:     /{slug}
+    defaults: { _controller: "BWShopBundle:Category:showBySlug" }

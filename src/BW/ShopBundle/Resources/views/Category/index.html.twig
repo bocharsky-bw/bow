@@ -1,0 +1,40 @@
+{% extends 'BWSkeletonBundle:Backend:layout.html.twig' %}
+
+{% block title %}Список всех категорий {{ parent() }}{% endblock %}
+
+{% block content -%}
+    <div class="form-buttons">
+        {% include '@BWMain/Utility/Form/add-button.html.twig' with {'path': path('category_new')} %}
+    </div>
+
+    <div class="bw_container">
+        <div class="bw_row">
+            <h1><i class="icon-list"></i> Список категорий</h1>
+        </div>
+    </div>
+
+    <div class="main-table">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Псевдоним URL</th>
+                    <th class="ta_c">Опубликовано</th>
+                    <th class="ta_c">Порядок</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td><a href="{{ path('category_edit', { 'id': entity.id }) }}">{{ entity.heading }}</a></td>
+                    <td>{{ entity.slug }}</td>
+                    <td class="ta_c">{{ entity.published ? 'Да' : 'Нет' }}</td>
+                    <td class="ta_c">{{ entity.order }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

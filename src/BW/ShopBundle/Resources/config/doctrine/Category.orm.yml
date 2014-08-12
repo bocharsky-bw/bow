@@ -1,0 +1,57 @@
+BW\ShopBundle\Entity\Category:
+    type: entity
+    table: shop_categories
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        heading:
+            type: string
+            length: 255
+        slug:
+            type: string
+            length: 255
+        title:
+            type: string
+            length: 255
+        metaDescription:
+            type: string
+            length: 255
+        shortDescription:
+            column: short_description
+            type: text
+        description:
+            type: text
+        published:
+            type: boolean
+        order:
+            column: ordering
+            type: integer
+        level:
+            type: integer
+        left:
+            column: lft
+            type: integer
+        right:
+            column: rgt
+            type: integer
+    oneToMany:
+        children:
+            targetEntity: BW\ShopBundle\Entity\Category
+            mappedBy: parent
+        products:
+            targetEntity: BW\ShopBundle\Entity\Product
+            mappedBy: category
+    manyToOne:
+        parent:
+            targetEntity: BW\ShopBundle\Entity\Category
+            inversedBy: children
+        route:
+            targetEntity: BW\RouterBundle\Entity\Route
+            cascade: [remove]
+    lifecycleCallbacks:
+        prePersist: [generateLevel]
+        preUpdate: [generateLevel]

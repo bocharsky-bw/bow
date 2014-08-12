@@ -1,0 +1,7 @@
+product_list:
+    path:     /
+    defaults: { _controller: "BWShopBundle:Product:list" }
+
+product_show_by_slug:
+    path:     /{slug}
+    defaults: { _controller: "BWShopBundle:Product:showBySlug" }

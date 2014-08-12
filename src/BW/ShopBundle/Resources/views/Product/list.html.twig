@@ -1,0 +1,39 @@
+{% extends 'BWSkeletonBundle:Frontend:layout.html.twig' %}
+
+{% block title %}Список всех товаров {{ parent() }}{% endblock %}
+
+{% block content -%}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {{ service('bw_blog.widget').lastPosts()|raw }}
+            </div>
+            <div class="col-lg-9">
+                <h1><i class="icon-list"></i> Все товары</h1>
+                <div class="products">
+                    {% for entity in entities %}
+                        <div class="product">
+                            <h2>
+                                <a href="{{ path('product_show_by_slug', {'slug': entity.slug}) }}">{{ entity.heading }}</a>
+                            </h2>
+                            {% if entity.category %}
+                                <div class="category">
+                                    <a href="{{ path('category_show_by_slug', {'slug': entity.category.slug}) }}">
+                                        {{ entity.category.heading }}
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <div class="short_description">
+                                {{ entity.shortDescription|raw }}
+                            </div>
+                            <div class="price">
+                                {{ entity.price }} грн.
+                                <input type="button" value="Купить"/>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -16,6 +16,42 @@ class ProductController extends Controller
 {
 
     /**
+     * Lists all Category entities.
+     */
+    public function listAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('BWShopBundle:Product')->findBy(array(
+            'published' => true,
+        ), array(
+//            'created' => 'ASC',
+        ));
+
+        return $this->render('BWShopBundle:Product:list.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
+    /**
+     * Finds and displays a Product entity by slug.
+     */
+    public function showBySlugAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('BWShopBundle:Product')->findOneBySlug($slug);
+
+        if ( ! $entity) {
+            throw $this->createNotFoundException('Unable to find Product entity.');
+        }
+
+        return $this->render('BWShopBundle:Product:show.html.twig', array(
+            'entity'      => $entity,
+        ));
+    }
+
+    /**
      * Lists all Product entities.
      */
     public function indexAction()

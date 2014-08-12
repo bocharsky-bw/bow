@@ -19,8 +19,9 @@
                 <tr>
                     <th>ID</th>
                     <th>Заголовок</th>
-                    <th>Производитель</th>
                     <th>Псевдоним URL</th>
+                    <th>Производитель</th>
+                    <th>Категория</th>
                     <th>Опубликовано</th>
                 </tr>
             </thead>
@@ -29,8 +30,9 @@
                 <tr>
                     <td>{{ entity.id }}</td>
                     <td><a href="{{ path('product_edit', { 'id': entity.id }) }}">{{ entity.heading }}</a></td>
-                    <td>{{ entity.vendor ? entity.vendor.heading : '< Без производителя >' }}</td>
                     <td>{{ entity.slug }}</td>
+                    <td>{{ entity.vendor ? entity.vendor.heading : '< Без производителя >' }}</td>
+                    <td>{{ entity.category ? entity.category.heading : '< Без категории >' }}</td>
                     <td>{{ entity.published ? 'Да' : 'Нет' }}</td>
                 </tr>
             {% endfor %}
