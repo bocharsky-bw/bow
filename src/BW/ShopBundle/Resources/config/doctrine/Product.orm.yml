@@ -53,4 +53,9 @@ BW\ShopBundle\Entity\Product:
         route:
             targetEntity: BW\RouterBundle\Entity\Route
             cascade: [remove]
+    oneToMany:
+        productImages:
+            targetEntity: BW\ShopBundle\Entity\ProductImage
+            mappedBy: product
+            cascade: [persist]
     lifecycleCallbacks: {  }

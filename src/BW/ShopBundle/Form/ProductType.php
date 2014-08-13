@@ -15,6 +15,9 @@ class ProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var \BW\ShopBundle\Entity\Product $entity */
+        $entity = $options['data'];
+
         $builder
             ->add('published', 'checkbox', array(
                 'required' => false,
@@ -116,6 +119,11 @@ class ProductType extends AbstractType
                 'attr' => array(
                     'class' => 'form-control',
                 ),
+            ))
+            ->add('productImages', 'collection', array(
+                'type' => new ProductImageType($entity),
+                'allow_add' => true,
+                'allow_delete' => true,
             ))
         ;
     }

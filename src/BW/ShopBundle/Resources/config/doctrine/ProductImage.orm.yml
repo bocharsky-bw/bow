@@ -1,0 +1,18 @@
+BW\ShopBundle\Entity\ProductImage:
+    type: entity
+    table: product_image
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    oneToOne:
+        image:
+            targetEntity: BW\FileBundle\Entity\Image
+            cascade: [persist]
+    manyToOne:
+        product:
+            targetEntity: BW\ShopBundle\Entity\Product
+            inversedBy: productImages
+    lifecycleCallbacks: {  }

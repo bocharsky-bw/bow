@@ -100,6 +100,11 @@ class Product
      */
     private $updated;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $productImages;
+
 
     public function __construct()
     {
@@ -509,5 +514,40 @@ class Product
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Add productImages
+     *
+     * @param \BW\ShopBundle\Entity\ProductImage $productImages
+     * @return Product
+     */
+    public function addProductImage(ProductImage $productImages)
+    {
+        if ($productImages->getImage() && $productImages->getImage()->getFile()) {
+            $this->productImages[] = $productImages;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove productImages
+     *
+     * @param \BW\ShopBundle\Entity\ProductImage $productImages
+     */
+    public function removeProductImage(ProductImage $productImages)
+    {
+        $this->productImages->removeElement($productImages);
+    }
+
+    /**
+     * Get productImages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductImages()
+    {
+        return $this->productImages;
     }
 }

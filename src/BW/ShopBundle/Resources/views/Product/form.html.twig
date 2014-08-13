@@ -44,7 +44,6 @@
     </div>
 
     <h2 >Meta теги:</h2>
-
     <div style="padding-bottom: 10px;">
         {{ form_row(form.slug) }}
     </div>
@@ -56,4 +55,19 @@
     <div style="padding-bottom: 10px;">
         {{ form_row(form.metaDescription) }}
     </div>
+
+    {{ form_row(form.productImages.vars.prototype) }}
+
+    <h2>Изображения</h2>
+    {% for productImage in form.productImages %}
+        <div>
+            <img src="{{ asset(productImage.vars.data.image.webPath) }}"
+                 alt="{{ productImage.vars.data.image.alt }}"
+                 title="{{ productImage.vars.data.image.title }}"
+                 style="max-width: 100px; max-height: 100px"
+            />
+        </div>
+        {{ form_row(productImage) }}
+    {% endfor %}
+
 {{ form_end(form) }}
