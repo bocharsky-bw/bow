@@ -16,7 +16,7 @@
         {{ form_row(form.description) }}
     </div>
 
-    <h2 >Meta теги:</h2>
+    <h2>Meta теги:</h2>
 
     <div style="padding-bottom: 10px;">
         {{ form_row(form.slug) }}
@@ -28,5 +28,15 @@
 
     <div style="padding-bottom: 10px;">
         {{ form_row(form.metaDescription) }}
+    </div>
+
+    <h2>Изображение:</h2>
+
+    <div style="padding-bottom: 10px;">
+        {% if entity.image %}
+            <img src="{{ asset(entity.image.webPath) }}" alt="{{ entity.image.alt }}" title="{{ entity.image.title }}" />
+        {% endif %}
+        {{ form_row(form.image) }}
+    </div>
 
 {{ form_end(form) }}

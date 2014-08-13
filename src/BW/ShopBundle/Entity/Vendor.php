@@ -2,6 +2,7 @@
 
 namespace BW\ShopBundle\Entity;
 
+use BW\FileBundle\Entity\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Vendor
 {
+    /**
+     * The upload dir.
+     */
+    const UPLOAD_DIR = 'vendors';
+
     /**
      * @var integer
      */
@@ -46,6 +52,10 @@ class Vendor
      */
     private $products;
 
+    /**
+     * @var \BW\FileBundle\Entity\Image
+     */
+    private $image;
 
     /**
      * The constructor
@@ -214,5 +224,32 @@ class Vendor
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \BW\FileBundle\Entity\Image $image
+     * @return Vendor
+     */
+    public function setImage(Image $image = null)
+    {
+//        if (isset($image) && $image->getFile()) {
+            $this->image = $image;
+        if ($image instanceof Image) {
+            $this->image->setSubFolder(self::UPLOAD_DIR);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \BW\FileBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 }

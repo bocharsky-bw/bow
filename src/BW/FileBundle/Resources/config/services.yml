@@ -1,0 +1,7 @@
+parameters:
+#    bw_file.example.class: BW\FileBundle\Example
+
+services:
+#    bw_file.example:
+#        class: %bw_file.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

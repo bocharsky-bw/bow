@@ -1,0 +1,3 @@
+bw_file_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: BWFileBundle:Default:index }

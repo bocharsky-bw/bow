@@ -22,8 +22,12 @@ BW\ShopBundle\Entity\Vendor:
         metaDescription:
             type: string
             length: 255
+    oneToOne:
+        image:
+            targetEntity: BW\FileBundle\Entity\Image
+            cascade: [persist, remove]
     oneToMany:
         products:
             targetEntity: BW\ShopBundle\Entity\Product
             mappedBy: vendor
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks: {}

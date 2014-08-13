@@ -1,3 +1,7 @@
+bw_file:
+    resource: "@BWFileBundle/Resources/config/routing.yml"
+    prefix:   /
+
 bw_shop:
     resource: "@BWShopBundle/Resources/config/routing.yml"
     prefix:   /

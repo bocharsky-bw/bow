@@ -1,6 +1,6 @@
-BW\BlogBundle\Entity\Image:
+BW\FileBundle\Entity\Image:
     type: entity
-    table: images_deprecated
+    table: images
     id:
         id:
             type: integer
@@ -8,21 +8,21 @@ BW\BlogBundle\Entity\Image:
             generator:
                 strategy: AUTO
     fields:
+        filename:
+            type: string
+            length: 255
+            nullable: true
+        subFolder:
+            column: sub_folder
+            type: string
+            length: 255
+            nullable: true
         title:
             type: string
             length: 255
         alt:
             type: string
             length: 255
-        subFolder:
-            column: sub_folder
-            type: string
-            length: 255
-            nullable: true
-        filename:
-            type: string
-            length: 255
-            nullable: true
     lifecycleCallbacks:
         prePersist: [preUpload]
         preUpdate: [preUpload]
