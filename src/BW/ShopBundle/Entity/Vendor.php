@@ -240,7 +240,7 @@ class Vendor
             if ( ! $image->getFile()) {
                 $this->image = null; // clear image if file not uploaded
             } else {
-                $this->image->setSubFolder(self::UPLOAD_DIR);
+//                $this->image->setSubFolder(self::UPLOAD_DIR);
             }
         }
 

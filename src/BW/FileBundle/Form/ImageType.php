@@ -2,6 +2,7 @@
 
 namespace BW\FileBundle\Form;
 
+use BW\FileBundle\Entity\Image;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -30,6 +31,9 @@ class ImageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // May be overridden in parent form type
+        $builder->setEmptyData((new Image())->setSubFolder($this->subFolder));
+
         $builder
             ->add('file', 'file', array(
                 'required' => false,
@@ -39,13 +43,13 @@ class ImageType extends AbstractType
                 ),
             ))
             // May be overridden in parent form type
-            ->add('subFolder', 'hidden', array(
-                'required' => false,
-                'data' => $this->subFolder,
-                'attr' => array(
-                    'class' => 'form-control',
-                ),
-            ))
+//            ->add('subFolder', 'hidden', array(
+//                'required' => false,
+//                'data' => $this->subFolder,
+//                'attr' => array(
+//                    'class' => 'form-control',
+//                ),
+//            ))
             ->add('title', 'text', array(
                 'required' => false,
                 'trim' => true,
