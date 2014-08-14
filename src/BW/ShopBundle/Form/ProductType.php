@@ -124,6 +124,7 @@ class ProductType extends AbstractType
                 'type' => new ProductImageType($entity),
                 'allow_add' => true,
                 'allow_delete' => true,
+                'delete_empty' => true,
             ))
         ;
     }

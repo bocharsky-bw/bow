@@ -43,6 +43,10 @@
         {{ form_row(form.description) }}
     </div>
 
+    <div style="padding-bottom: 10px;">
+        {{ form_row(form.created) }}
+    </div>
+
     <h2 >Meta теги:</h2>
     <div style="padding-bottom: 10px;">
         {{ form_row(form.slug) }}
@@ -56,18 +60,61 @@
         {{ form_row(form.metaDescription) }}
     </div>
 
-    {{ form_row(form.productImages.vars.prototype) }}
-
     <h2>Изображения</h2>
-    {% for productImage in form.productImages %}
-        <div>
-            <img src="{{ asset(productImage.vars.data.image.webPath) }}"
-                 alt="{{ productImage.vars.data.image.alt }}"
-                 title="{{ productImage.vars.data.image.title }}"
-                 style="max-width: 100px; max-height: 100px"
-            />
-        </div>
-        {{ form_row(productImage) }}
-    {% endfor %}
+    <ul class="images"  data-index="" data-prototype="{{ form_widget(form.productImages.vars.prototype)|e }}">
+        {% for productImage in form.productImages %}
+            <li>
+                <img src="{{ asset(productImage.vars.data.image.webPath) }}"
+                     alt="{{ productImage.vars.data.image.alt }}"
+                     title="{{ productImage.vars.data.image.title }}"
+                     style="max-width: 100px; max-height: 100px"
+                />
+                {{ form_row(productImage) }}
+            </li>
+        {% endfor %}
+    </ul>
 
 {{ form_end(form) }}
+
+<script>
+    var $collectionHolder;
+
+    // setup an "add an image" link
+    var addImageButton = $('<button class="btn btn-primary icon-plus before-padding add_entity" type="button">Добавить</button>');
+
+    jQuery(document).ready(function() {
+        // Get the ul that holds the collection of images
+        $collectionHolder = $('ul.images');
+
+        // add the "add an image" before the ul.images
+        $collectionHolder.before(addImageButton);
+
+        // count the current form inputs we have (e.g. 2), use that as the new
+        // index when inserting a new item (e.g. 2)
+        $collectionHolder.data('index', $collectionHolder.find('li').length);
+
+        addImageButton.on('click', function(e) {
+            // add a new image form (see next code block)
+            addImageForm($collectionHolder);
+        });
+    });
+
+    function addImageForm($collectionHolder) {
+        // Get the data-prototype explained earlier
+        var prototype = $collectionHolder.data('prototype');
+
+        // get the new index
+        var index = $collectionHolder.data('index');
+
+        // Replace '__name__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        var newForm = prototype.replace(/__name__/g, index);
+
+        // increase the index with one for the next item
+        $collectionHolder.data('index', index + 1);
+
+        // Display the form in the page in an li at the begin of ul.images
+        var $newFormLi = $('<li></li>').append(newForm);
+        $collectionHolder.prepend($newFormLi);
+    }
+</script>

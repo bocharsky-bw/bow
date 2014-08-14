@@ -65,7 +65,7 @@ class ImageType extends AbstractType
             ->add('upload', 'submit', array(
                 'label' => 'Загрузить',
                 'attr' => array(
-                    'class' => 'btn btn-primary',
+                    'class' => 'btn btn-primary icon-upload-alt before-padding',
                 ),
             ))
         ;
