@@ -1,4 +1,4 @@
-BW\FileBundle\Entity\Image:
+BW\UploadBundle\Entity\Image:
     type: entity
     table: images
     id:

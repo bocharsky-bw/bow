@@ -1,13 +1,13 @@
 <?php
 
-namespace BW\FileBundle\Entity;
+namespace BW\UploadBundle\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class Image
- * @package BW\FileBundle\Entity
+ * @package BW\UploadBundle\Entity
  */
 class Image
 {

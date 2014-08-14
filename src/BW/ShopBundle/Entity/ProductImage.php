@@ -2,7 +2,7 @@
 
 namespace BW\ShopBundle\Entity;
 
-use BW\FileBundle\Entity\Image;
+use BW\UploadBundle\Entity\Image;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,7 +22,7 @@ class ProductImage
     private $id;
 
     /**
-     * @var \BW\FileBundle\Entity\Image
+     * @var \BW\UploadBundle\Entity\Image
      */
     private $image;
 
@@ -47,7 +47,7 @@ class ProductImage
     /**
      * Set image
      *
-     * @param \BW\FileBundle\Entity\Image $image
+     * @param \BW\UploadBundle\Entity\Image $image
      * @return ProductImage
      */
     public function setImage(Image $image = null)
@@ -68,7 +68,7 @@ class ProductImage
     /**
      * Get image
      *
-     * @return \BW\FileBundle\Entity\Image 
+     * @return \BW\UploadBundle\Entity\Image
      */
     public function getImage()
     {

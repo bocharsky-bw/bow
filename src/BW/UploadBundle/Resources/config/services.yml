@@ -1,0 +1,7 @@
+parameters:
+#    bw_upload.example.class: BW\UploadBundle\Example
+
+services:
+#    bw_upload.example:
+#        class: %bw_upload.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

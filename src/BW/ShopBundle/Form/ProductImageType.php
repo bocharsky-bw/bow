@@ -2,7 +2,7 @@
 
 namespace BW\ShopBundle\Form;
 
-use BW\FileBundle\Form\ImageType;
+use BW\UploadBundle\Form\ImageType;
 use BW\ShopBundle\Entity\ProductImage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

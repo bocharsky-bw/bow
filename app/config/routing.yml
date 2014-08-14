@@ -1,5 +1,5 @@
-bw_file:
-    resource: "@BWFileBundle/Resources/config/routing.yml"
+bw_upload:
+    resource: "@BWUploadBundle/Resources/config/routing.yml"
     prefix:   /
 
 bw_shop:

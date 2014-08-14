@@ -1,8 +1,8 @@
 <?php
 
-namespace BW\FileBundle\Form;
+namespace BW\UploadBundle\Form;
 
-use BW\FileBundle\Entity\Image;
+use BW\UploadBundle\Entity\Image;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -81,7 +81,7 @@ class ImageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BW\FileBundle\Entity\Image'
+            'data_class' => 'BW\UploadBundle\Entity\Image'
         ));
     }
 

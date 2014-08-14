@@ -24,7 +24,7 @@ BW\ShopBundle\Entity\Vendor:
             length: 255
     oneToOne:
         image:
-            targetEntity: BW\FileBundle\Entity\Image
+            targetEntity: BW\UploadBundle\Entity\Image
             cascade: [persist, remove]
     oneToMany:
         products:

@@ -2,7 +2,7 @@
 
 namespace BW\ShopBundle\Entity;
 
-use BW\FileBundle\Entity\Image;
+use BW\UploadBundle\Entity\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -53,7 +53,7 @@ class Vendor
     private $products;
 
     /**
-     * @var \BW\FileBundle\Entity\Image
+     * @var \BW\UploadBundle\Entity\Image
      */
     private $image;
 
@@ -229,7 +229,7 @@ class Vendor
     /**
      * Set image
      *
-     * @param \BW\FileBundle\Entity\Image $image
+     * @param \BW\UploadBundle\Entity\Image $image
      * @return Vendor
      */
     public function setImage(Image $image = null)
@@ -250,7 +250,7 @@ class Vendor
     /**
      * Get image
      *
-     * @return \BW\FileBundle\Entity\Image
+     * @return \BW\UploadBundle\Entity\Image
      */
     public function getImage()
     {

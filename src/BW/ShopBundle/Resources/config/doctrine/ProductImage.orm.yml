@@ -9,7 +9,7 @@ BW\ShopBundle\Entity\ProductImage:
                 strategy: AUTO
     oneToOne:
         image:
-            targetEntity: BW\FileBundle\Entity\Image
+            targetEntity: BW\UploadBundle\Entity\Image
             cascade: [persist, remove]
     manyToOne:
         product:
