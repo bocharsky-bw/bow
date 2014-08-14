@@ -524,7 +524,7 @@ class Product
      */
     public function addProductImage(ProductImage $productImages)
     {
-        if ($productImages->getImage() && $productImages->getImage()->getFile()) {
+        if ($productImages->getImage()) {
             $this->productImages[] = $productImages;
         }
 

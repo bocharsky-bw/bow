@@ -57,5 +57,5 @@ BW\ShopBundle\Entity\Product:
         productImages:
             targetEntity: BW\ShopBundle\Entity\ProductImage
             mappedBy: product
-            cascade: [persist]
+            cascade: [persist, remove]
     lifecycleCallbacks: {  }

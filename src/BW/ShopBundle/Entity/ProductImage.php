@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
 class ProductImage
 {
     /**
+     * The upload dir.
+     */
+    const UPLOAD_DIR = 'products';
+
+    /**
      * @var integer
      */
     private $id;
@@ -47,8 +52,14 @@ class ProductImage
      */
     public function setImage(Image $image = null)
     {
-        if ($image->getFile()) {
-            $this->image = $image;
+        $this->image = $image;
+
+        if (isset($image)) {
+            if ( ! $image->getFile()) {
+                $this->image = null; // clear image if file not uploaded
+            } else {
+                $this->image->setSubFolder(self::UPLOAD_DIR);
+            }
         }
 
         return $this;

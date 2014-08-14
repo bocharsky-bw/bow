@@ -10,7 +10,7 @@ BW\ShopBundle\Entity\ProductImage:
     oneToOne:
         image:
             targetEntity: BW\FileBundle\Entity\Image
-            cascade: [persist]
+            cascade: [persist, remove]
     manyToOne:
         product:
             targetEntity: BW\ShopBundle\Entity\Product

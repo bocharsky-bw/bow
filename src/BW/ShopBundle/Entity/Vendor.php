@@ -234,10 +234,14 @@ class Vendor
      */
     public function setImage(Image $image = null)
     {
-//        if (isset($image) && $image->getFile()) {
-            $this->image = $image;
-        if ($image instanceof Image) {
-            $this->image->setSubFolder(self::UPLOAD_DIR);
+        $this->image = $image;
+
+        if (isset($image)) {
+            if ( ! $image->getFile()) {
+                $this->image = null; // clear image if file not uploaded
+            } else {
+                $this->image->setSubFolder(self::UPLOAD_DIR);
+            }
         }
 
         return $this;

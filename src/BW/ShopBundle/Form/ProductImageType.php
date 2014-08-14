@@ -3,6 +3,7 @@
 namespace BW\ShopBundle\Form;
 
 use BW\FileBundle\Form\ImageType;
+use BW\ShopBundle\Entity\ProductImage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -24,13 +25,15 @@ class ProductImageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $builder->setEmptyData((new ProductImage())->setProduct($this->product));
+
         $builder
             ->add('image', new ImageType('products'))
-            ->add('product', 'entity', array(
-                'class' => 'BW\ShopBundle\Entity\Product',
-                'property' => 'id',
-                'data' => $this->product,
-            ))
+//            ->add('product', 'entity', array(
+//                'class' => 'BW\ShopBundle\Entity\Product',
+//                'property' => 'id',
+//                'data' => $this->product,
+//            ))
         ;
     }
     
