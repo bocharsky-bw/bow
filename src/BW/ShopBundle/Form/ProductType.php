@@ -53,7 +53,7 @@ class ProductType extends AbstractType
             ->add('vendor', 'entity', array(
                 'class' => 'BW\ShopBundle\Entity\Vendor',
                 'property' => 'heading',
-                'required' => true,
+                'required' => false,
                 'empty_value' => '< Без производителя >',
                 'label' => 'Производитель',
                 'attr' => array(
@@ -61,7 +61,7 @@ class ProductType extends AbstractType
                 ),
             ))
             ->add('sku', 'text', array(
-                'required' => true,
+                'required' => false,
                 'label' => 'Артикул',
                 'attr' => array(
                     'class' => 'form-control',

@@ -35,17 +35,17 @@ class Vendor
     /**
      * @var string
      */
-    private $slug;
+    private $slug = '';
 
     /**
      * @var string
      */
-    private $title;
+    private $title = '';
 
     /**
      * @var string
      */
-    private $metaDescription;
+    private $metaDescription = '';
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -56,6 +56,7 @@ class Vendor
      * @var \BW\UploadBundle\Entity\Image
      */
     private $image;
+
 
     /**
      * The constructor
@@ -109,7 +110,11 @@ class Vendor
      */
     public function setDescription($description)
     {
-        $this->description = $description;
+        if (isset($description)) {
+            $this->description = $description;
+        } else {
+            $this->description = '';
+        }
 
         return $this;
     }
@@ -132,7 +137,11 @@ class Vendor
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
+        if (isset($slug)) {
+            $this->slug = $slug;
+        } else {
+            $this->slug = '';
+        }
 
         return $this;
     }
@@ -155,7 +164,11 @@ class Vendor
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+        if (isset($title)) {
+            $this->title = $title;
+        } else {
+            $this->title = '';
+        }
 
         return $this;
     }
@@ -178,7 +191,11 @@ class Vendor
      */
     public function setMetaDescription($metaDescription)
     {
-        $this->metaDescription = $metaDescription;
+        if (isset($metaDescription)) {
+            $this->metaDescription = $metaDescription;
+        } else {
+            $this->metaDescription = '';
+        }
 
         return $this;
     }

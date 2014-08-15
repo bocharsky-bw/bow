@@ -53,7 +53,7 @@ class Product
     /**
      * @var string
      */
-    private $shortDescription;
+    private $shortDescription = '';
 
     /**
      * @var string
@@ -225,7 +225,11 @@ class Product
      */
     public function setSku($sku)
     {
-        $this->sku = $sku;
+        if (isset($sku)) {
+            $this->sku = $sku;
+        } else {
+            $this->sku = '';
+        }
 
         return $this;
     }
@@ -294,7 +298,11 @@ class Product
      */
     public function setShortDescription($shortDescription)
     {
-        $this->shortDescription = $shortDescription;
+        if (isset($shortDescription)) {
+            $this->shortDescription = $shortDescription;
+        } else {
+            $this->shortDescription = '';
+        }
 
         return $this;
     }
@@ -317,7 +325,11 @@ class Product
      */
     public function setDescription($description)
     {
-        $this->description = $description;
+        if (isset($description)) {
+            $this->description = $description;
+        } else {
+            $this->description = '';
+        }
 
         return $this;
     }
@@ -340,7 +352,11 @@ class Product
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
+        if (isset($slug)) {
+            $this->slug = $slug;
+        } else {
+            $this->slug = '';
+        }
 
         return $this;
     }
@@ -363,7 +379,11 @@ class Product
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+        if (isset($title)) {
+            $this->title = $title;
+        } else {
+            $this->title = '';
+        }
 
         return $this;
     }
@@ -386,7 +406,11 @@ class Product
      */
     public function setMetaDescription($metaDescription)
     {
-        $this->metaDescription = $metaDescription;
+        if (isset($metaDescription)) {
+            $this->metaDescription = $metaDescription;
+        } else {
+            $this->metaDescription = '';
+        }
 
         return $this;
     }

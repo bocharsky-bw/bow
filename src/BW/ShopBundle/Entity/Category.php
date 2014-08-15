@@ -168,8 +168,12 @@ class Category
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
-    
+        if (isset($slug)) {
+            $this->slug = $slug;
+        } else {
+            $this->slug = '';
+        }
+
         return $this;
     }
 
@@ -191,8 +195,12 @@ class Category
      */
     public function setTitle($title)
     {
-        $this->title = $title;
-    
+        if (isset($title)) {
+            $this->title = $title;
+        } else {
+            $this->title = '';
+        }
+
         return $this;
     }
 
@@ -214,8 +222,12 @@ class Category
      */
     public function setMetaDescription($metaDescription)
     {
-        $this->metaDescription = $metaDescription;
-    
+        if (isset($metaDescription)) {
+            $this->metaDescription = $metaDescription;
+        } else {
+            $this->metaDescription = '';
+        }
+
         return $this;
     }
 
