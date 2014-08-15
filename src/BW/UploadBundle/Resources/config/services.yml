@@ -5,3 +5,7 @@ services:
 #    bw_upload.example:
 #        class: %bw_upload.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+    bw_upload.service.image_resize:
+        class: BW\UploadBundle\Service\ImageResizingService
+        arguments: []
