@@ -28,7 +28,7 @@
             {% for entity in entities %}
                 <tr>
                     <td>{{ entity.id }}</td>
-                    <td><a href="{{ path('category_edit', { 'id': entity.id }) }}">{{ entity.heading }}</a></td>
+                    <td>{{ '|— '|repeat(entity.level) }} <a href="{{ path('category_edit', { 'id': entity.id }) }}">{{ entity.heading }}</a></td>
                     <td>{{ entity.slug }}</td>
                     <td class="ta_c">{{ entity.published ? 'Да' : 'Нет' }}</td>
                     <td class="ta_c">{{ entity.order }}</td>

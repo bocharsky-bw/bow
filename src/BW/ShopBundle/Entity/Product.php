@@ -2,13 +2,14 @@
 
 namespace BW\ShopBundle\Entity;
 
+use BW\MainBundle\Service\SluggableInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Product
  * @package BW\ShopBundle\Entity
  */
-class Product
+class Product implements SluggableInterface
 {
     /**
      * @var integer
@@ -112,6 +113,10 @@ class Product
         $this->updated = new \DateTime();
     }
 
+    public function getStringForSlug()
+    {
+        return $this->getHeading();
+    }
 
     /* SETTERS / GETTERS */
 

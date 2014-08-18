@@ -2,6 +2,7 @@
 
 namespace BW\ShopBundle\Entity;
 
+use BW\MainBundle\Service\SluggableInterface;
 use BW\RouterBundle\Entity\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -9,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Class Category
  * @package BW\ShopBundle\Entity
  */
-class Category
+class Category implements SluggableInterface
 {
     /**
      * @var integer $id
@@ -122,6 +123,11 @@ class Category
         }
 
         return $this;
+    }
+
+    public function getStringForSlug()
+    {
+        return $this->getHeading();
     }
 
 

@@ -2,6 +2,7 @@
 
 namespace BW\ShopBundle\Entity;
 
+use BW\MainBundle\Service\SluggableInterface;
 use BW\UploadBundle\Entity\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Vendor
  * @package BW\ShopBundle\Entity
  */
-class Vendor
+class Vendor implements SluggableInterface
 {
     /**
      * The upload dir.
@@ -66,6 +67,10 @@ class Vendor
         $this->products = new ArrayCollection();
     }
 
+    public function getStringForSlug()
+    {
+        return $this->getHeading();
+    }
 
     /* SETTERS / GETTERS */
 

@@ -23,7 +23,9 @@ class CategoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BWShopBundle:Category')->findAll();
+        $entities = $em->getRepository('BWShopBundle:Category')->findBy(array(), array(
+            'left' => 'ASC',
+        ));
 
         return $this->render('BWShopBundle:Category:index.html.twig', array(
             'entities' => $entities,
