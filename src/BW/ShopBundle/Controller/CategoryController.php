@@ -46,6 +46,11 @@ class CategoryController extends Controller
             $em->persist($entity);
             $em->flush();
 
+            // Сгенерировать и упорядочить дерево Nested Set
+            $this->get('bw_blog.nested_set')->regenerateTree(
+                $em->getClassMetadata('BWShopBundle:Category')->getTableName() // Имя таблицы класса
+            );
+
             if ($form->get('createAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('category'));
             }
@@ -180,6 +185,11 @@ class CategoryController extends Controller
             }
 
             $em->flush();
+
+            // Сгенерировать и упорядочить дерево Nested Set
+            $this->get('bw_blog.nested_set')->regenerateTree(
+                $em->getClassMetadata('BWShopBundle:Category')->getTableName() // Имя таблицы класса
+            );
 
             if ($editForm->get('updateAndClose')->isClicked()) {
                 return $this->redirect($this->generateUrl('category'));
