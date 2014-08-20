@@ -34,7 +34,7 @@
 
     <div style="padding-bottom: 10px;">
         {% if entity.image %}
-            <img src="{{ asset(entity.image.webPath) }}" alt="{{ entity.image.alt }}" title="{{ entity.image.title }}" />
+            <img src="{{ asset(entity.image.webPath)|crop(200, 200) }}" alt="{{ entity.image.alt }}" title="{{ entity.image.title }}" />
         {% endif %}
         {{ form_row(form.image) }}
     </div>

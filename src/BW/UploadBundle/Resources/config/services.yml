@@ -6,6 +6,12 @@ services:
 #        class: %bw_upload.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
 
-    bw_upload.service.image_resize:
+    bw_upload.service.image_resizing:
         class: BW\UploadBundle\Service\ImageResizingService
         arguments: []
+
+    bw_upload.twig.bw_extension:
+        class: BW\UploadBundle\Twig\BWExtension
+        arguments: ["@bw_upload.service.image_resizing", "@logger"]
+        tags:
+            - { name: twig.extension }
