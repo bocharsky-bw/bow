@@ -11,14 +11,16 @@
                 {{ service('bw_blog.widget').lastPosts()|raw }}
             </div>
             <div class="col-lg-9">
-                <h1>{{ entity.heading }}</h1>
+                <h1>Товары {{ entity.heading }}</h1>
+                {% if entity.image %}
+                    <div class="image">
+                        <img src="{{ asset(entity.image.webPath)|imagine_filter('middle_thumb') }}" alt="{{ entity.image.alt }}" title="{{ entity.image.title }}" />
+                    </div>
+                {% endif %}
                 <div>{{ entity.description|raw }}</div>
                 <div class="products">
                     {% for product in entity.products %}
-                        <div class="product">
-                            <h2><a href="{{ path('product_show', {'id': product.id}) }}">{{ product.heading }}</a></h2>
-                            <div>{{ product.shortDescription|raw }}</div>
-                        </div>
+                        {% include 'BWShopBundle:Product:row.html.twig' with {'entity': product} %}
                     {% endfor %}
                 </div>
             </div>

@@ -1,0 +1,49 @@
+<div class="product">
+    <h2>
+        <a href="{{ path('product_show_by_slug', {'slug': entity.slug}) }}">{{ entity.heading }}</a>
+    </h2>
+    {% if entity.productImages.count %}
+        <div class="image">
+            <a href="{{ path('product_show_by_slug', {'slug': entity.slug}) }}">
+                <img src="{{ asset(entity.productImages.first.image.webPath)|imagine_filter('middle_thumb') }}"
+                     alt="{{ entity.productImages.first.image.alt }}"
+                     title="{{ entity.productImages.first.image.title }}"
+                />
+            </a>
+        </div>
+    {% endif %}
+    {% if entity.category %}
+        <div class="category">
+            Категория: <a href="{{ path('category_show_by_slug', {'slug': entity.category.slug}) }}">
+                {{ entity.category.heading }}
+            </a>
+        </div>
+    {% endif %}
+    {% if entity.vendor %}
+        <div class="vendor">
+            Производитель: <a href="{{ path('vendor_show_by_slug', {'slug': entity.vendor.slug}) }}">
+                {{ entity.vendor.heading }}
+            </a>
+            {% if entity.vendor.image %}
+                <div class="vendor_image">
+                    <a href="{{ path('vendor_show_by_slug', {'slug': entity.vendor.slug}) }}">
+                        <img src="{{ asset(entity.vendor.image.webPath)|imagine_filter('small_thumb') }}"
+                             alt="{{ entity.vendor.image.alt }}"
+                             title="{{ entity.vendor.image.title }}"
+                        />
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    <div class="sku">
+        Артикул: {{ entity.sku }}
+    </div>
+    <div class="price">
+        Цена: {{ entity.price }} грн.
+        <input class="btn btn-primary" type="button" value="Купить"/>
+    </div>
+    <div class="short_description">
+        Краткое описание: {{ entity.shortDescription|raw }}
+    </div>
+</div>

@@ -253,4 +253,35 @@ class CategoryController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Finds and displays a Category entity.
+     */
+    public function showBySlugAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('BWShopBundle:Category')->findOneBy(array(
+            'slug' => $slug,
+            'published' => true,
+        ));
+        if ( ! $entity) {
+            throw $this->createNotFoundException('Unable to find Category entity.');
+        }
+
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');
+        $qb
+            ->innerJoin('p.category', 'c')
+            ->where('c.left >= :left AND c.left < :right')
+            ->setParameter('left', $entity->getLeft())
+            ->setParameter('right', $entity->getRight())
+        ;
+        $products = $qb->getQuery()->getResult();
+
+        return $this->render('BWShopBundle:Category:show.html.twig', array(
+            'entity' => $entity,
+            'products' => $products,
+        ));
+    }
 }

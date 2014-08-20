@@ -11,31 +11,53 @@
                 {{ service('bw_blog.widget').lastPosts()|raw }}
             </div>
             <div class="col-lg-9">
-                <h1>{{ entity.heading }}</h1>
-                <table class="record_properties">
-                    <tbody>
-                        <tr>
-                            <th>Description</th>
-                            <td>{{ entity.description|raw }}</td>
-                        </tr>
-                        <tr>
-                            <th>Slug</th>
-                            <td>{{ entity.slug }}</td>
-                        </tr>
-                        <tr>
-                            <th>Title</th>
-                            <td>{{ entity.title }}</td>
-                        </tr>
-                        <tr>
-                            <th>Metadescription</th>
-                            <td>{{ entity.metaDescription }}</td>
-                        </tr>
-                        <tr>
-                            <th>Published</th>
-                            <td>{{ entity.published }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="product">
+                    <h1>
+                        {{ entity.heading }}
+                    </h1>
+                    {% if entity.productImages.count %}
+                        <div class="image">
+                            <img src="{{ asset(entity.productImages.first.image.webPath)|imagine_filter('large_thumb') }}"
+                                 alt="{{ entity.productImages.first.image.alt }}"
+                                 title="{{ entity.productImages.first.image.title }}"
+                            />
+                        </div>
+                    {% endif %}
+                    {% if entity.category %}
+                        <div class="category">
+                            Категория: <a href="{{ path('category_show_by_slug', {'slug': entity.category.slug}) }}">
+                                {{ entity.category.heading }}
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if entity.vendor %}
+                        <div class="vendor">
+                            Производитель: <a href="{{ path('vendor_show_by_slug', {'slug': entity.vendor.slug}) }}">
+                                {{ entity.vendor.heading }}
+                            </a>
+                            {% if entity.vendor.image %}
+                                <div class="vendor_image">
+                                    <a href="{{ path('vendor_show_by_slug', {'slug': entity.vendor.slug}) }}">
+                                        <img src="{{ asset(entity.vendor.image.webPath)|imagine_filter('small_thumb') }}"
+                                             alt="{{ entity.vendor.image.alt }}"
+                                             title="{{ entity.vendor.image.title }}"
+                                                />
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    <div class="sku">
+                        Артикул: {{ entity.sku }}
+                    </div>
+                    <div class="price">
+                        Цена: {{ entity.price }} грн.
+                        <input class="btn btn-primary" type="button" value="Купить"/>
+                    </div>
+                    <div class="short_description">
+                        Описание: {{ entity.description|raw }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -1,72 +1,42 @@
-{% extends '::base.html.twig' %}
+{% extends 'BWSkeletonBundle:Frontend:layout.html.twig' %}
 
-{% block body -%}
-    <h1>Category</h1>
+{% block title %}{{ entity.title ? entity.title : entity.heading }}{% endblock %}
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Heading</th>
-                <td>{{ entity.heading }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ entity.slug }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ entity.title }}</td>
-            </tr>
-            <tr>
-                <th>Metadescription</th>
-                <td>{{ entity.metaDescription }}</td>
-            </tr>
-            <tr>
-                <th>Shortdescription</th>
-                <td>{{ entity.shortDescription }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ entity.description }}</td>
-            </tr>
-            <tr>
-                <th>Published</th>
-                <td>{{ entity.published }}</td>
-            </tr>
-            <tr>
-                <th>Order</th>
-                <td>{{ entity.order }}</td>
-            </tr>
-            <tr>
-                <th>Level</th>
-                <td>{{ entity.level }}</td>
-            </tr>
-            <tr>
-                <th>Left</th>
-                <td>{{ entity.left }}</td>
-            </tr>
-            <tr>
-                <th>Right</th>
-                <td>{{ entity.right }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block metaDescription %}{{ entity.metaDescription }}{% endblock %}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('category') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('category_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+{% block content -%}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                {{ service('bw_blog.widget').lastPosts()|raw }}
+            </div>
+            <div class="col-lg-9">
+                <div class="category">
+                    <h1>
+                        {{ entity.heading }}
+                    </h1>
+                    {% if entity.parent %}
+                        <div class="category">
+                            Родительская категория:
+                            <a href="{{ path('category_show_by_slug', {'slug': entity.parent.slug}) }}">
+                                {{ entity.parent.heading }}
+                            </a>
+                        </div>
+                    {% endif %}
+                    <div class="description">
+                        {{ entity.description|raw }}
+                    </div>
+                </div>
+                {% if products %}
+                    <div class="products">
+                        {% for product in products %}
+                            {% include 'BWShopBundle:Product:row.html.twig' with {'entity': product} %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div>Товары отстутствуют</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

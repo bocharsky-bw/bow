@@ -1,0 +1,17 @@
+<div class="vendor">
+    <h2>
+        <a href="{{ path('vendor_show_by_slug', {'slug': entity.slug}) }}" title="Просмотреть товары производителя">
+            {{ entity.heading }}
+        </a>
+    </h2>
+    {% if entity.image %}
+        <div class="image">
+            <a href="{{ path('vendor_show_by_slug', {'slug': entity.slug}) }}">
+                <img src="{{ asset(entity.image.webPath)|imagine_filter('middle_thumb') }}" alt="{{ entity.image.alt }}" title="{{ entity.image.title }}" />
+            </a>
+        </div>
+    {% endif %}
+    <div class="description">
+        {{ entity.description|raw }}
+    </div>
+</div>
