@@ -42,6 +42,9 @@ bw_blog:
     resource: "@BWBlogBundle/Resources/config/routing.yml"
     prefix:   /
 
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
 # Must be at the end in routes list!
 bw_main:
     resource: "@BWMainBundle/Resources/config/routing.yml"

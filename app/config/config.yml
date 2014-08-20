@@ -69,3 +69,26 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# Imagine Configuration
+liip_imagine:
+    resolvers:
+       default:
+          web_path:
+              web_root: %kernel.root_dir%/../web
+              cache_prefix: cache
+
+    filter_sets:
+        cache: ~
+        small_thumb:
+            quality: 75
+            filters:
+                thumbnail: { size: [50, 50], mode: outbound } # mode: (outbound|inset)
+        middle_thumb:
+            quality: 75
+            filters:
+                thumbnail: { size: [150, 150], mode: outbound } # mode: (outbound|inset)
+        large_thumb:
+            quality: 75
+            filters:
+                thumbnail: { size: [300, 300], mode: outbound } # mode: (outbound|inset)

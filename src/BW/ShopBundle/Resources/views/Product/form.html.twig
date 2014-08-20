@@ -64,10 +64,9 @@
     <ul class="images"  data-index="" data-prototype="{{ form_widget(form.productImages.vars.prototype)|e }}">
         {% for productImage in form.productImages %}
             <li>
-                <img src="{{ asset(productImage.vars.data.image.webPath) }}"
+                <img src="{{ asset(productImage.vars.data.image.webPath)|imagine_filter('middle_thumb') }}"
                      alt="{{ productImage.vars.data.image.alt }}"
                      title="{{ productImage.vars.data.image.title }}"
-                     style="max-width: 100px; max-height: 100px"
                 />
                 {{ form_row(productImage) }}
             </li>
