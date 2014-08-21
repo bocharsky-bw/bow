@@ -1,0 +1,15 @@
+{% set icon = '<i class="fa fa-sort"></i>' %}
+{% set attrs = '' %}
+
+{% for attr, value in options %}
+    {% if 'class' == attr %}
+        {% if 'asc' == value %}
+            {% set icon = '<i class="fa fa-sort-asc"></i>' %}
+        {% elseif 'desc' == value %}
+            {% set icon = '<i class="fa fa-sort-desc"></i>' %}
+        {% endif %}
+    {% endif %}
+    {% set attrs = attrs ~ attr ~ '="' ~ value ~ '" ' %}
+{% endfor %}
+
+<a {{ attrs|raw }}>{{ icon|raw }} {{ title }}</a>

@@ -50,9 +50,6 @@ BW\ShopBundle\Entity\Product:
         vendor:
             targetEntity: BW\ShopBundle\Entity\Vendor
             inversedBy: products
-        route:
-            targetEntity: BW\RouterBundle\Entity\Route
-            cascade: [remove]
     oneToMany:
         productImages:
             targetEntity: BW\ShopBundle\Entity\ProductImage

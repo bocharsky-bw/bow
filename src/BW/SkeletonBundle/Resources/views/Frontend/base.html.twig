@@ -1,17 +1,19 @@
 <!doctype html>
 <html lang="{% block lang %}en{% endblock %}">
     <head>
-        <meta charset="{% block charset %}UTF-8{% endblock %}">
-        
-        <title>{% block title %}% Base Template %{% endblock %}</title>
-        <meta name="description" content="{% block description %}{% endblock %}"/>
-        
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        
-        {% block css %}<!-- % CSS % -->{% endblock %}
-            
-        {% block js %}<!-- % JS % -->{% endblock %}
+        {% block head %}
+            <meta charset="{% block charset %}UTF-8{% endblock %}">
+
+            <title>{% block title %}% Base Template %{% endblock %}</title>
+            <meta name="description" content="{% block description %}{% endblock %}"/>
+
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+            {% block css %}<!-- % CSS % -->{% endblock %}
+
+            {% block js %}<!-- % JS % -->{% endblock %}
+        {% endblock %}
     </head>
     <body id="body">
         {% block body %}

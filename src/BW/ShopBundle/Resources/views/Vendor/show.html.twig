@@ -4,6 +4,13 @@
 
 {% block metaDescription %}{{ entity.metaDescription ? entity.metaDescription : entity.heading }}{% endblock %}
 
+{% block head %}
+    {{ parent() }}
+    {% if app.request.query.get('page') %}
+        <link rel="canonical" href="{{ url('vendor_show_by_slug', {'slug': entity.slug}) }}" />
+    {% endif %}
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <div class="row">
@@ -11,18 +18,31 @@
                 {{ service('bw_blog.widget').lastPosts()|raw }}
             </div>
             <div class="col-lg-9">
-                <h1>Товары {{ entity.heading }}</h1>
-                {% if entity.image %}
-                    <div class="image">
-                        <img src="{{ asset(entity.image.webPath)|imagine_filter('middle_thumb') }}" alt="{{ entity.image.alt }}" title="{{ entity.image.title }}" />
-                    </div>
-                {% endif %}
-                <div>{{ entity.description|raw }}</div>
-                <div class="products">
-                    {% for product in entity.products %}
-                        {% include 'BWShopBundle:Product:row.html.twig' with {'entity': product} %}
-                    {% endfor %}
+                <div class="vendor">
+                    <h1>{{ entity.heading }}</h1>
+                    {% if entity.image %}
+                        <div class="image">
+                            <img src="{{ asset(entity.image.webPath)|imagine_filter('middle_thumb') }}" alt="{{ entity.image.alt }}" title="{{ entity.image.title }}" />
+                        </div>
+                    {% endif %}
+                    <div>{{ entity.description|raw }}</div>
                 </div>
+                <h2>Все товары производителя</h2>
+                {% if pagination.getTotalItemCount %}
+                    <div class="products">
+                        {% for product in pagination %}
+                            {% include 'BWShopBundle:Product:row.html.twig' with {'entity': product} %}
+                        {% endfor %}
+                    </div>
+                    <div class="count">
+                        {{ pagination.getTotalItemCount }}
+                    </div>
+                    <div class="navigation">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                {% else %}
+                    <div>Товары отстутствуют</div>
+                {% endif %}
             </div>
         </div>
     </div>

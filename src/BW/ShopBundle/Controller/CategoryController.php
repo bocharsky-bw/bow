@@ -257,14 +257,20 @@ class CategoryController extends Controller
     /**
      * Finds and displays a Category entity.
      */
-    public function showBySlugAction($slug)
+    public function showBySlugAction(Request $request, $slug)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BWShopBundle:Category')->findOneBy(array(
-            'slug' => $slug,
-            'published' => true,
-        ));
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->getRepository('BWShopBundle:Category')->createQueryBuilder('c');
+        $qb
+            ->addSelect('p')
+            ->leftJoin('c.parent', 'p')
+            ->where($qb->expr()->eq('c.published', true))
+            ->andWhere($qb->expr()->eq('c.slug', ':slug'))
+            ->setParameter('slug', $slug)
+        ;
+        $entity = $qb->getQuery()->getOneOrNullResult();
         if ( ! $entity) {
             throw $this->createNotFoundException('Unable to find Category entity.');
         }
@@ -272,16 +278,28 @@ class CategoryController extends Controller
         /** @var \Doctrine\ORM\QueryBuilder $qb */
         $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');
         $qb
-            ->innerJoin('p.category', 'c')
-            ->where('c.left >= :left AND c.left < :right')
+            ->addSelect('v')
+            ->addSelect('c')
+            ->addSelect('pi')
+            ->addSelect('i')
+            ->innerJoin('p.vendor', 'v')
+            ->leftJoin('p.category', 'c')
+            ->leftJoin('p.productImages', 'pi')
+            ->leftJoin('pi.image', 'i')
+            ->where($qb->expr()->eq('p.published', true))
+            ->andWhere('c.left >= :left AND c.left < :right')
             ->setParameter('left', $entity->getLeft())
             ->setParameter('right', $entity->getRight())
         ;
-        $products = $qb->getQuery()->getResult();
+        $pagination = $this->get('knp_paginator')->paginate(
+            $qb,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('count', 10)
+        );
 
         return $this->render('BWShopBundle:Category:show.html.twig', array(
             'entity' => $entity,
-            'products' => $products,
+            'pagination' => $pagination,
         ));
     }
 }

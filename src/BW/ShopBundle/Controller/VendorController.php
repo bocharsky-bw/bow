@@ -3,6 +3,7 @@
 namespace BW\ShopBundle\Controller;
 
 use BW\MainBundle\Utility\FormUtility;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use BW\ShopBundle\Entity\Vendor;
@@ -121,24 +122,6 @@ class VendorController extends Controller
         return $this->render('BWShopBundle:Vendor:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a Vendor entity by slug.
-     */
-    public function showBySlugAction($slug)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('BWShopBundle:Vendor')->findOneBySlug($slug);
-
-        if ( ! $entity) {
-            throw $this->createNotFoundException('Unable to find Vendor entity.');
-        }
-
-        return $this->render('BWShopBundle:Vendor:show.html.twig', array(
-            'entity' => $entity,
         ));
     }
 
@@ -267,5 +250,51 @@ class VendorController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+
+    /**
+     * Finds and displays a Vendor entity by slug.
+     */
+    public function showBySlugAction(Request $request, $slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var QueryBuilder $qb */
+        $qb = $em->getRepository('BWShopBundle:Vendor')->createQueryBuilder('v');
+        $qb
+            ->addSelect('i')
+            ->innerJoin('v.image', 'i')
+            ->where($qb->expr()->eq('v.slug', ':slug'))
+            ->setParameter('slug', $slug)
+        ;
+        $entity = $qb->getQuery()->getOneOrNullResult();
+        if ( ! $entity) {
+            throw $this->createNotFoundException('Unable to find Vendor entity.');
+        }
+
+        $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');
+        $qb
+            ->addSelect('v')
+            ->addSelect('c')
+            ->addSelect('pi')
+            ->addSelect('i')
+            ->innerJoin('p.vendor', 'v')
+            ->leftJoin('p.category', 'c')
+            ->leftJoin('p.productImages', 'pi')
+            ->leftJoin('pi.image', 'i')
+            ->where($qb->expr()->eq('p.published', true))
+            ->andWhere($qb->expr()->eq('p.vendor', $entity->getId()))
+        ;
+        $pagination = $this->get('knp_paginator')->paginate(
+            $qb,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('count', 10)
+        );
+
+        return $this->render('BWShopBundle:Vendor:show.html.twig', array(
+            'entity' => $entity,
+            'pagination' => $pagination,
+        ));
     }
 }
