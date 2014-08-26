@@ -39,7 +39,15 @@
                     <div class="col-lg-12">
                         <div id="main_menu">
                             <div id="bw_main_menu">
-                                {{ service('bw_menu.widget').getMenu('main_menu', false)|raw }}
+                                <ul>
+                                    <li>
+                                        <a href="{{ path('product_list') }}">Product list</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('vendor_list') }}">Vendor list</a>
+                                    </li>
+                                </ul>
+                                {#{ service('bw_menu.widget').getMenu('main_menu', false)|raw }#}
                             </div>
                             <div id="bw_langs">
                                 {{ service('bw_localization.widget').langs()|raw }}

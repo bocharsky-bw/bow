@@ -2,7 +2,8 @@
 <ul>
 {% for category in categories %}
     <li>
-        <a href="{{ path('bw_router_index', {'q': category.route.query}) }}">{{ category.heading }}</a>
+        {#<a href="{{ path('bw_router_index', {'q': category.route.query}) }}">{{ category.heading }}</a>#}
+        <a href="{{ app.request.uriForPath(category.route.path) }}">{{ category.heading }}</a>
     </li>
 {% endfor %}
 </ul>

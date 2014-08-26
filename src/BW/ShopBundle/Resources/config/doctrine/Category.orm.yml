@@ -51,7 +51,7 @@ BW\ShopBundle\Entity\Category:
             inversedBy: children
         route:
             targetEntity: BW\RouterBundle\Entity\Route
-            cascade: [remove]
+            cascade: [persist, remove]
     lifecycleCallbacks:
         prePersist: [generateLevel]
         preUpdate: [generateLevel]

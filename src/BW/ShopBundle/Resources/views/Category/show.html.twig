@@ -25,7 +25,7 @@
                     {% if entity.parent %}
                         <div class="category">
                             Родительская категория:
-                            <a href="{{ path('category_show_by_slug', {'slug': entity.parent.slug}) }}">
+                            <a href="{{ app.request.uriForPath(entity.parent.route.path) }}">
                                 {{ entity.parent.heading }}
                             </a>
                         </div>

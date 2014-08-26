@@ -175,7 +175,7 @@ class NestedSet {
             if ($entity->getRoute()) {
                 $path = $this->container->get('router')->generate('bw_router_index', 
                     array(
-                        'q' => $entity->getRoute()->getQuery(),
+                        'q' => $entity->getRoute()->getPath(),
                     )
                 );
             } else {

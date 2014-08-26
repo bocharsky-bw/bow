@@ -25,7 +25,8 @@
                     {% endif %}
                     {% if entity.category %}
                         <div class="category">
-                            Категория: <a href="{{ path('category_show_by_slug', {'slug': entity.category.slug}) }}">
+                            {#Категория: <a href="{{ path('category_show_by_slug', {'slug': entity.category.slug}) }}">#}
+                            Категория: <a href="{{ app.request.uriForPath(entity.category.route.path) }}">
                                 {{ entity.category.heading }}
                             </a>
                         </div>

@@ -1,7 +1,6 @@
 BW\RouterBundle\Entity\Route:
     type: entity
     table: routes
-    repositoryClass: BW\RouterBundle\Entity\RouteRepository
     id:
         id:
             type: integer
@@ -13,12 +12,6 @@ BW\RouterBundle\Entity\Route:
             type: string
             length: 255
             unique: true
-        query:
-            type: string
-            length: 255
         defaults:
             type: array
-    manyToOne:
-        lang:
-            targetEntity: BW\LocalizationBundle\Entity\Lang
-    lifecycleCallbacks: {}
+    lifecycleCallbacks: { }

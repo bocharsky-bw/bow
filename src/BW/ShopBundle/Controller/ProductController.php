@@ -33,23 +33,23 @@ class ProductController extends Controller
         ));
     }
 
-    /**
-     * Finds and displays a Product entity by slug.
-     */
-    public function showBySlugAction($slug)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('BWShopBundle:Product')->findOneBySlug($slug);
-
-        if ( ! $entity) {
-            throw $this->createNotFoundException('Unable to find Product entity.');
-        }
-
-        return $this->render('BWShopBundle:Product:show.html.twig', array(
-            'entity'      => $entity,
-        ));
-    }
+//    /**
+//     * Finds and displays a Product entity by slug.
+//     */
+//    public function showBySlugAction($slug)
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//
+//        $entity = $em->getRepository('BWShopBundle:Product')->findOneBySlug($slug);
+//
+//        if ( ! $entity) {
+//            throw $this->createNotFoundException('Unable to find Product entity.');
+//        }
+//
+//        return $this->render('BWShopBundle:Product:show.html.twig', array(
+//            'entity'      => $entity,
+//        ));
+//    }
 
     /**
      * Lists all Product entities.

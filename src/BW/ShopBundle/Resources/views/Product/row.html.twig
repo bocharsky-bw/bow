@@ -1,10 +1,12 @@
 <div class="product">
     <h2>
-        <a href="{{ path('product_show_by_slug', {'slug': entity.slug}) }}">{{ entity.heading }}</a>
+        {#<a href="{{ path('product_show_by_slug', {'slug': entity.slug}) }}">{{ entity.heading }}</a>#}
+        <a href="{{ app.request.uriForPath(entity.route.path) }}">{{ entity.heading }}</a>
     </h2>
     {% if entity.productImages.count %}
         <div class="image">
-            <a href="{{ path('product_show_by_slug', {'slug': entity.slug}) }}">
+            {#<a href="{{ path('product_show_by_slug', {'slug': entity.slug}) }}">#}
+            <a href="{{ app.request.uriForPath(entity.route.path) }}">
                 <img src="{{ asset(entity.productImages.first.image.webPath)|imagine_filter('middle_thumb') }}"
                      alt="{{ entity.productImages.first.image.alt }}"
                      title="{{ entity.productImages.first.image.title }}"
@@ -14,7 +16,8 @@
     {% endif %}
     {% if entity.category %}
         <div class="category">
-            Категория: <a href="{{ path('category_show_by_slug', {'slug': entity.category.slug}) }}">
+            {#Категория: <a href="{{ path('category_show_by_slug', {'slug': entity.category.slug}) }}">#}
+            Категория: <a href="{{ app.request.uriForPath(entity.category.route.path) }}">
                 {{ entity.category.heading }}
             </a>
         </div>

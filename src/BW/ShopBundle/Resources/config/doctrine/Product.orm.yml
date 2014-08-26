@@ -52,7 +52,7 @@ BW\ShopBundle\Entity\Product:
             inversedBy: products
         route:
             targetEntity: BW\RouterBundle\Entity\Route
-            cascade: [remove]
+            cascade: [persist, remove]
     oneToMany:
         productImages:
             targetEntity: BW\ShopBundle\Entity\ProductImage

@@ -2,51 +2,27 @@
 
 namespace BW\RouterBundle\Entity;
 
-use BW\LocalizationBundle\Entity\Lang;
-
 /**
  * Class Route
  * @package BW\RouterBundle\Entity
+ * @TODO Create EventListener and store route automatically
  */
 class Route
 {
     /**
-     * @var integer
+     * @var integer $id
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @TODO rename "path" to "uri"
+     * @var string $path The query with locale
      */
     private $path = '';
 
     /**
-     * @var string
-     */
-    private $query = '';
-
-    /**
-     * @var array
+     * @var array $defaults
      */
     private $defaults = array();
-
-    /**
-     * @var Lang
-     */
-    private $lang;
-    
-
-    /**
-     * The controller name (a string like BlogBundle:Post:index)
-     *
-     * @return string
-     */
-    public function getController()
-    {
-        return $this->defaults['_controller'];
-    }
 
 
     /**
@@ -55,14 +31,36 @@ class Route
     public function __construct()
     {
     }
-    
+
+
+    /**
+     * The controller name (a string like BlogBundle:Post:index)
+     *
+     * @return string
+     */
+    public function getController()
+    {
+        return isset($this->defaults['_controller'])
+            ? $this->defaults['_controller']
+            : null
+        ;
+    }
+
+
+    public function handleEntity(RouteInterface $entity)
+    {
+        $entity->setRoute($this);
+        $this->setPath($entity->generatePath());
+        $this->setDefaults($entity->getDefaults());
+    }
+
 
     /* SETTERS / GETTERS */
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -70,7 +68,7 @@ class Route
     }
 
     /**
-     * Set path
+     * Set uri
      *
      * @param string $path
      * @return Route
@@ -78,41 +76,18 @@ class Route
     public function setPath($path)
     {
         $this->path = $path;
-    
+
         return $this;
     }
 
     /**
-     * Get path
+     * Get uri
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {
         return $this->path;
-    }
-
-    /**
-     * Set query
-     *
-     * @param string $query
-     * @return Route
-     */
-    public function setQuery($query)
-    {
-        $this->query = $query;
-    
-        return $this;
-    }
-
-    /**
-     * Get query
-     *
-     * @return string 
-     */
-    public function getQuery()
-    {
-        return $this->query;
     }
 
     /**
@@ -121,7 +96,7 @@ class Route
      * @param array $defaults
      * @return Route
      */
-    public function setDefaults($defaults)
+    public function setDefaults(array $defaults)
     {
         $this->defaults = $defaults;
 
@@ -136,28 +111,5 @@ class Route
     public function getDefaults()
     {
         return $this->defaults;
-    }
-
-    /**
-     * Set lang
-     *
-     * @param \BW\LocalizationBundle\Entity\Lang $lang
-     * @return Route
-     */
-    public function setLang(Lang $lang = null)
-    {
-        $this->lang = $lang;
-    
-        return $this;
-    }
-
-    /**
-     * Get lang
-     *
-     * @return \BW\LocalizationBundle\Entity\Lang 
-     */
-    public function getLang()
-    {
-        return $this->lang;
     }
 }

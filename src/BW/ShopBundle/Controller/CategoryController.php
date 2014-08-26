@@ -3,6 +3,7 @@
 namespace BW\ShopBundle\Controller;
 
 use BW\MainBundle\Utility\FormUtility;
+use BW\RouterBundle\Entity\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -100,21 +101,49 @@ class CategoryController extends Controller
     /**
      * Finds and displays a Category entity.
      */
-    public function showAction($id)
+    public function showAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('BWShopBundle:Category')->find($id);
-
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->getRepository('BWShopBundle:Category')->createQueryBuilder('c');
+        $qb
+            ->addSelect('p')
+            ->leftJoin('c.parent', 'p')
+            ->where($qb->expr()->eq('c.published', true))
+            ->andWhere($qb->expr()->eq('c.id', ':id'))
+            ->setParameter('id', $id)
+        ;
+        $entity = $qb->getQuery()->getOneOrNullResult();
         if ( ! $entity) {
             throw $this->createNotFoundException('Unable to find Category entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
+        $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');
+        $qb
+            ->addSelect('v')
+            ->addSelect('c')
+            ->addSelect('pi')
+            ->addSelect('i')
+            ->innerJoin('p.vendor', 'v')
+            ->leftJoin('p.category', 'c')
+            ->leftJoin('p.productImages', 'pi')
+            ->leftJoin('pi.image', 'i')
+            ->where($qb->expr()->eq('p.published', true))
+            ->andWhere('c.left >= :left AND c.left < :right')
+            ->setParameter('left', $entity->getLeft())
+            ->setParameter('right', $entity->getRight())
+        ;
+        $pagination = $this->get('knp_paginator')->paginate(
+            $qb,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('count', 10)
+        );
 
         return $this->render('BWShopBundle:Category:show.html.twig', array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'pagination' => $pagination,
         ));
     }
 
@@ -254,52 +283,52 @@ class CategoryController extends Controller
         ;
     }
 
-    /**
-     * Finds and displays a Category entity.
-     */
-    public function showBySlugAction(Request $request, $slug)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        /** @var \Doctrine\ORM\QueryBuilder $qb */
-        $qb = $em->getRepository('BWShopBundle:Category')->createQueryBuilder('c');
-        $qb
-            ->addSelect('p')
-            ->leftJoin('c.parent', 'p')
-            ->where($qb->expr()->eq('c.published', true))
-            ->andWhere($qb->expr()->eq('c.slug', ':slug'))
-            ->setParameter('slug', $slug)
-        ;
-        $entity = $qb->getQuery()->getOneOrNullResult();
-        if ( ! $entity) {
-            throw $this->createNotFoundException('Unable to find Category entity.');
-        }
-
-        /** @var \Doctrine\ORM\QueryBuilder $qb */
-        $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');
-        $qb
-            ->addSelect('v')
-            ->addSelect('c')
-            ->addSelect('pi')
-            ->addSelect('i')
-            ->innerJoin('p.vendor', 'v')
-            ->leftJoin('p.category', 'c')
-            ->leftJoin('p.productImages', 'pi')
-            ->leftJoin('pi.image', 'i')
-            ->where($qb->expr()->eq('p.published', true))
-            ->andWhere('c.left >= :left AND c.left < :right')
-            ->setParameter('left', $entity->getLeft())
-            ->setParameter('right', $entity->getRight())
-        ;
-        $pagination = $this->get('knp_paginator')->paginate(
-            $qb,
-            $request->query->getInt('page', 1),
-            $request->query->getInt('count', 10)
-        );
-
-        return $this->render('BWShopBundle:Category:show.html.twig', array(
-            'entity' => $entity,
-            'pagination' => $pagination,
-        ));
-    }
+//    /**
+//     * Finds and displays a Category entity.
+//     */
+//    public function showBySlugAction(Request $request, $slug)
+//    {
+//        $em = $this->getDoctrine()->getManager();
+//
+//        /** @var \Doctrine\ORM\QueryBuilder $qb */
+//        $qb = $em->getRepository('BWShopBundle:Category')->createQueryBuilder('c');
+//        $qb
+//            ->addSelect('p')
+//            ->leftJoin('c.parent', 'p')
+//            ->where($qb->expr()->eq('c.published', true))
+//            ->andWhere($qb->expr()->eq('c.slug', ':slug'))
+//            ->setParameter('slug', $slug)
+//        ;
+//        $entity = $qb->getQuery()->getOneOrNullResult();
+//        if ( ! $entity) {
+//            throw $this->createNotFoundException('Unable to find Category entity.');
+//        }
+//
+//        /** @var \Doctrine\ORM\QueryBuilder $qb */
+//        $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');
+//        $qb
+//            ->addSelect('v')
+//            ->addSelect('c')
+//            ->addSelect('pi')
+//            ->addSelect('i')
+//            ->innerJoin('p.vendor', 'v')
+//            ->leftJoin('p.category', 'c')
+//            ->leftJoin('p.productImages', 'pi')
+//            ->leftJoin('pi.image', 'i')
+//            ->where($qb->expr()->eq('p.published', true))
+//            ->andWhere('c.left >= :left AND c.left < :right')
+//            ->setParameter('left', $entity->getLeft())
+//            ->setParameter('right', $entity->getRight())
+//        ;
+//        $pagination = $this->get('knp_paginator')->paginate(
+//            $qb,
+//            $request->query->getInt('page', 1),
+//            $request->query->getInt('count', 10)
+//        );
+//
+//        return $this->render('BWShopBundle:Category:show.html.twig', array(
+//            'entity' => $entity,
+//            'pagination' => $pagination,
+//        ));
+//    }
 }

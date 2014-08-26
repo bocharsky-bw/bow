@@ -5,3 +5,16 @@ services:
 #    bw_router.example:
 #        class: %bw_router.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+    bw_router.event_listener.database_route_loading:
+        class: BW\RouterBundle\EventListener\DatabaseRouteLoadingEventListener
+        arguments: ["@request_stack", "@doctrine.orm.entity_manager", "@router", "@logger"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 64 }
+
+    bw_router.event_listener.routing:
+        class: BW\RouterBundle\EventListener\RoutingEventListener
+        arguments: ["@request_stack", "@router", "@logger"]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }

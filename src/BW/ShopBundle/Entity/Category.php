@@ -4,13 +4,14 @@ namespace BW\ShopBundle\Entity;
 
 use BW\MainBundle\Service\SluggableInterface;
 use BW\RouterBundle\Entity\Route;
+use BW\RouterBundle\Entity\RouteInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class Category
  * @package BW\ShopBundle\Entity
  */
-class Category implements SluggableInterface
+class Category implements SluggableInterface, RouteInterface
 {
     /**
      * @var integer $id
@@ -123,6 +124,46 @@ class Category implements SluggableInterface
         }
 
         return $this;
+    }
+
+    public function generatePath()
+    {
+        $slug = $this->getSlug();
+
+        if (0 !== strcmp('/', $slug[0])) {
+            $segments = array();
+            $parent = $this->getParent();
+
+            if ($parent) {
+                $segments[] = ''; // Add slash to the end of path
+            }
+
+            while ($parent) {
+                if ($parent->getSlug()) {
+                    $segments[] = $parent->getSlug();
+                }
+                $parent = $parent->getParent();
+            }
+
+            $slug = '/' . implode('/', array_reverse($segments)) . $this->getSlug();
+        }
+
+        return $slug;
+    }
+
+    public function getDefaults()
+    {
+        if ( ! $this->getId()) {
+            throw new \RuntimeException(''
+                . 'The entity ID not defined. '
+                . 'Maybe you forgot to execute "flush" method before handle the entity?'
+            );
+        }
+
+        return array(
+            '_controller' => 'BWShopBundle:Category:show',
+            'id' => $this->getId(),
+        );
     }
 
     public function getStringForSlug()
