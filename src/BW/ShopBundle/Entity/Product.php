@@ -3,6 +3,7 @@
 namespace BW\ShopBundle\Entity;
 
 use BW\MainBundle\Service\SluggableInterface;
+use BW\RouterBundle\Entity\Route;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -459,7 +460,7 @@ class Product implements SluggableInterface
      * @param \BW\ShopBundle\Entity\Category $category
      * @return Product
      */
-    public function setCategory(\BW\ShopBundle\Entity\Category $category = null)
+    public function setCategory(Category $category = null)
     {
         $this->category = $category;
 
@@ -482,7 +483,7 @@ class Product implements SluggableInterface
      * @param \BW\RouterBundle\Entity\Route $route
      * @return Product
      */
-    public function setRoute(\BW\RouterBundle\Entity\Route $route = null)
+    public function setRoute(Route $route = null)
     {
         $this->route = $route;
 

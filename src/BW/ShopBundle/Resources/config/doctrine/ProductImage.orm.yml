@@ -1,6 +1,6 @@
 BW\ShopBundle\Entity\ProductImage:
     type: entity
-    table: product_image
+    table: shop_product_image
     id:
         id:
             type: integer

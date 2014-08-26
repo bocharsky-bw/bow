@@ -1,6 +1,6 @@
 bw_shop_vendor_admin:
     resource: "@BWShopBundle/Resources/config/routing/vendor_admin.yml"
-    prefix:   /_admin/{_locale}/vendor
+    prefix:   /_admin/{_locale}/shop/vendor
 
 bw_shop_vendor:
     resource: "@BWShopBundle/Resources/config/routing/vendor.yml"
@@ -8,7 +8,7 @@ bw_shop_vendor:
 
 bw_shop_category_admin:
     resource: "@BWShopBundle/Resources/config/routing/category_admin.yml"
-    prefix:   /_admin/{_locale}/category
+    prefix:   /_admin/{_locale}/shop/category
 
 bw_shop_category:
     resource: "@BWShopBundle/Resources/config/routing/category.yml"
@@ -16,7 +16,7 @@ bw_shop_category:
 
 bw_shop_product_admin:
     resource: "@BWShopBundle/Resources/config/routing/product_admin.yml"
-    prefix:   /_admin/{_locale}/product
+    prefix:   /_admin/{_locale}/shop/product
 
 bw_shop_product:
     resource: "@BWShopBundle/Resources/config/routing/product.yml"

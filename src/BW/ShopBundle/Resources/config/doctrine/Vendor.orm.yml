@@ -1,6 +1,6 @@
 BW\ShopBundle\Entity\Vendor:
     type: entity
-    table: vendors
+    table: shop_vendors
     id:
         id:
             type: integer
