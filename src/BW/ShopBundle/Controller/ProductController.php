@@ -3,6 +3,9 @@
 namespace BW\ShopBundle\Controller;
 
 use BW\MainBundle\Utility\FormUtility;
+use BW\ShopBundle\Entity\Category;
+use BW\ShopBundle\Entity\Vendor;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use BW\ShopBundle\Entity\Product;
@@ -18,8 +21,70 @@ class ProductController extends Controller
     /**
      * Lists all Category entities.
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
+        $builder = $this->createFormBuilder(null, array(
+            'csrf_protection' => false,
+        ))->setMethod('GET');
+        $builder
+            ->add('vendor', 'entity', array(
+                'class' => 'BW\ShopBundle\Entity\Vendor',
+                'property' => 'heading',
+                'expanded' => true,
+                'multiple' => true,
+                'label' => 'Производитель',
+            ))
+            ->add('category', 'entity', array(
+                'class' => 'BW\ShopBundle\Entity\Category',
+                'property' => 'heading',
+                'expanded' => true,
+                'multiple' => true,
+                'label' => 'Категория ',
+            ))
+            ->add('apply', 'submit', array(
+                'label' => 'Применить',
+            ))
+        ;
+        $form = $builder->getForm();
+        $form->handleRequest($request);
+        $url = array();
+        $queryForFilter = array();
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $data = $form->getData();
+                foreach ($data as $block) {
+                    if ($block instanceof ArrayCollection) {
+                        $count = $block->count();
+                        if (1 === $count) {
+                            $entity = $block->first();
+                            if ($entity instanceof Vendor) {
+                                $url[] = $this->generateUrl('vendor_show_by_slug', array(
+                                    'slug' => $entity->getSlug(),
+                                ), true);
+                            } elseif ($entity instanceof Category) {
+                                $url[] = $request->getUriForPath($entity->getRoute()->getPath());
+                            }
+                        } elseif (1 < $count) {
+                            $ids = array();
+                            foreach ($block as $vendor) {
+                                $ids[] = $vendor->getId();
+                            }
+                            $queryForFilter[] = implode('-', $ids);
+                        }
+                    }
+                }
+            }
+        }
+        var_dump($url);
+        var_dump($queryForFilter);
+        if (isset($url[0])) {
+            $url = $url[0];
+        }
+        var_dump($url);
+
+
+
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('BWShopBundle:Product')->findBy(array(
@@ -30,6 +95,7 @@ class ProductController extends Controller
 
         return $this->render('BWShopBundle:Product:list.html.twig', array(
             'entities' => $entities,
+            'form' => $form->createView(),
         ));
     }
 
