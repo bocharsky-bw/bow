@@ -23,91 +23,13 @@ class ProductController extends Controller
      */
     public function listAction(Request $request)
     {
-        $builder = $this->createFormBuilder(null, array(
-            'csrf_protection' => false,
-        ))->setMethod('GET');
-        $builder
-            ->add('vendor', 'entity', array(
-                'class' => 'BW\ShopBundle\Entity\Vendor',
-                'property' => 'heading',
-                'expanded' => true,
-                'multiple' => true,
-                'label' => 'Производитель',
-            ))
-            ->add('category', 'entity', array(
-                'class' => 'BW\ShopBundle\Entity\Category',
-                'property' => 'heading',
-                'expanded' => true,
-                'multiple' => true,
-                'label' => 'Категория ',
-            ))
-            ->add('apply', 'submit', array(
-                'label' => 'Применить',
-            ))
-        ;
-        $form = $builder->getForm();
+        $filter = $this->get('bw_shop.service.product_filter');
+
+        $form = $filter->createProductFilterForm();
         $form->handleRequest($request);
-        $urls = array();
-        $filterQueryBlocks = array();
-        $filterQuery = '';
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $data = $form->getData();
-                foreach ($data as $blockName => $block) {
-                    if ($block instanceof ArrayCollection) {
-                        $count = $block->count();
-                        if (0 < $count) {
-                            if (1 === $count) {
-                                $entity = $block->first();
-                                if ($entity instanceof Vendor) { // Get direct URL of Vendor page
-                                    $urls[] = $this->generateUrl('vendor_show_by_slug', array(
-                                        'slug' => $entity->getSlug(),
-                                    ), true);
-                                } elseif ($entity instanceof Category) { // Get direct URL of Category page
-                                    $urls[] = $request->getUriForPath($entity->getRoute()->getPath());
-                                }
-                            }
-                            // Get all IDs, used in query
-                            $ids = array();
-                            foreach ($block as $entity) {
-                                if ($entity instanceof Vendor) { // Get direct URL of Vendor page
-                                    $ids[] = $entity->getSlug();
-                                } elseif ($entity instanceof Category) { // Get direct URL of Category page
-                                    $ids[] = $entity->getId();
-                                }
-                            }
-                            $filterQueryBlocks[$blockName] = $ids;
-                            $filterQuery .= '&' . $blockName . '=' . implode('-', $ids);
-                        }
-                    }
-                }
-            }
-        }
 
-        var_dump($urls);
-        var_dump($filterQueryBlocks);
-        if ($filterQuery) {
-            $filterQuery .= '*';
-        }
-        var_dump($filterQuery);
-        $redirectUrl = '';
-        // Try to get direct URL to Vendor or Category route first
-        if (1 === count($filterQueryBlocks)) {
-            if (isset($urls[0])) {
-                $redirectUrl = $urls[0];
-            }
-        }
-        // Generate redirect URL if not exists
-        if ( ! $redirectUrl) {
-            $route = $request->attributes->get('_route');
-            if ($route) {
-                $redirectUrl = $this->generateUrl($route, array(), true) . $filterQuery;
-            }
-        }
-        var_dump('Redirect URL: ' . $redirectUrl);
-
-
-
+        $redirectUrl = $filter->generateUrl($form);
+        var_dump($redirectUrl);
 
         $em = $this->getDoctrine()->getManager();
 
@@ -260,11 +182,11 @@ class ProductController extends Controller
     }
 
     /**
-    * Creates a form to edit a Product entity.
-    *
-    * @param Product $entity The entity
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Product entity.
+     *
+     * @param Product $entity The entity
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Product $entity)
     {
         $form = $this->createForm(new ProductType(), $entity, array(
@@ -359,6 +281,6 @@ class ProductController extends Controller
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
-        ;
+            ;
     }
 }
