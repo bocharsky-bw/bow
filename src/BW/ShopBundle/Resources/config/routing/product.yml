@@ -2,6 +2,12 @@ product_list:
     path:     /
     defaults: { _controller: "BWShopBundle:Product:list" }
 
-product_show_by_slug:
-    path:     /{slug}
-    defaults: { _controller: "BWShopBundle:Product:showBySlug" }
+product_filter_form_handle:
+    path:     /filter-form-handle
+    defaults: { _controller: "BWShopBundle:Product:filterFormHandle" }
+    requirements: {_method: post}
+
+product_filter:
+    path:     /{filter_query}
+    defaults: { _controller: "BWShopBundle:Product:filter" }
+

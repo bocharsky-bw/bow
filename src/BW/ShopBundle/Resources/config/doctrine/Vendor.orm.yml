@@ -26,6 +26,8 @@ BW\ShopBundle\Entity\Vendor:
         image:
             targetEntity: BW\UploadBundle\Entity\Image
             cascade: [persist, remove]
+        customFieldProperty:
+            targetEntity: BW\BlogBundle\Entity\CustomFieldProperty
     oneToMany:
         products:
             targetEntity: BW\ShopBundle\Entity\Product

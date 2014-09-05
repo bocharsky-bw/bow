@@ -2,6 +2,7 @@
 
 namespace BW\ShopBundle\Entity;
 
+use BW\BlogBundle\Entity\CustomFieldProperty;
 use BW\MainBundle\Service\SluggableInterface;
 use BW\RouterBundle\Entity\Route;
 use BW\RouterBundle\Entity\RouteInterface;
@@ -92,6 +93,11 @@ class Category implements SluggableInterface, RouteInterface
      * @var \Doctrine\Common\Collections\Collection
      */
     private $products;
+
+    /**
+     * @var \BW\BlogBundle\Entity\CustomFieldProperty
+     */
+    private $customFieldProperty;
 
 
     public function __construct()
@@ -563,5 +569,28 @@ class Category implements SluggableInterface, RouteInterface
     public function getProducts()
     {
         return $this->products;
+    }
+
+    /**
+     * Set customFieldProperty
+     *
+     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperty
+     * @return Category
+     */
+    public function setCustomFieldProperty(CustomFieldProperty $customFieldProperty = null)
+    {
+        $this->customFieldProperty = $customFieldProperty;
+
+        return $this;
+    }
+
+    /**
+     * Get customFieldProperty
+     *
+     * @return \BW\BlogBundle\Entity\CustomFieldProperty 
+     */
+    public function getCustomFieldProperty()
+    {
+        return $this->customFieldProperty;
     }
 }

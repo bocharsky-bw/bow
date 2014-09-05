@@ -2,6 +2,7 @@
 
 namespace BW\ShopBundle\Entity;
 
+use BW\BlogBundle\Entity\CustomFieldProperty;
 use BW\MainBundle\Service\SluggableInterface;
 use BW\UploadBundle\Entity\Image;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -57,6 +58,11 @@ class Vendor implements SluggableInterface
      * @var \BW\UploadBundle\Entity\Image
      */
     private $image;
+
+    /**
+     * @var \BW\BlogBundle\Entity\CustomFieldProperty
+     */
+    private $customFieldProperty;
 
 
     /**
@@ -277,5 +283,28 @@ class Vendor implements SluggableInterface
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set customFieldProperty
+     *
+     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperty
+     * @return Vendor
+     */
+    public function setCustomFieldProperty(CustomFieldProperty $customFieldProperty = null)
+    {
+        $this->customFieldProperty = $customFieldProperty;
+
+        return $this;
+    }
+
+    /**
+     * Get customFieldProperty
+     *
+     * @return \BW\BlogBundle\Entity\CustomFieldProperty 
+     */
+    public function getCustomFieldProperty()
+    {
+        return $this->customFieldProperty;
     }
 }

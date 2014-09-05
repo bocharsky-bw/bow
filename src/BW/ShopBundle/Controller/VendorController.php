@@ -264,7 +264,7 @@ class VendorController extends Controller
         $qb = $em->getRepository('BWShopBundle:Vendor')->createQueryBuilder('v');
         $qb
             ->addSelect('i')
-            ->innerJoin('v.image', 'i')
+            ->leftJoin('v.image', 'i')
             ->where($qb->expr()->eq('v.slug', ':slug'))
             ->setParameter('slug', $slug)
         ;

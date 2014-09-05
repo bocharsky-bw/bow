@@ -2,10 +2,12 @@
 
 namespace BW\ShopBundle\Controller;
 
+use BW\BlogBundle\Entity\CustomFieldProperty;
 use BW\MainBundle\Utility\FormUtility;
 use BW\ShopBundle\Entity\Category;
 use BW\ShopBundle\Entity\Vendor;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use BW\ShopBundle\Entity\Product;
@@ -17,6 +19,79 @@ use BW\ShopBundle\Form\ProductType;
  */
 class ProductController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function filterFormHandleAction(Request $request)
+    {
+        $filter = $this->get('bw_shop.service.product_filter');
+
+        $form = $filter->getProductFilterForm();
+        if ($form->isValid()) {
+            $redirectUrl = $filter->generateUrl();
+            $content = $request->getContent(); // Использовать setContent()
+            var_dump(urldecode($content));
+            die('d');
+
+            var_dump($redirectUrl); /** @TODO DEBUG */
+
+            return $this->redirect($redirectUrl);
+        } else {
+            die('form invalid');
+        }
+
+    }
+
+    /**
+     * Filter the product list
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function filterAction(Request $request, $filter_query)
+    {
+        $session = $request->getSession();
+        $filter = $this->get('bw_shop.service.product_filter');
+        $em = $this->getDoctrine()->getManager();
+
+        /////////////////
+        $filter_query = preg_replace('@\-\*$@', '', $filter_query);
+        $ids = explode('-', $filter_query);
+        $properties = $em->getRepository('BWBlogBundle:CustomFieldProperty')->findBy(array(
+            'id' => $ids,
+        ));
+        $fields = array();
+        /** @var CustomFieldProperty $property */
+        foreach($properties as $property) {
+            $fields[$property->getCustomField()->getId()][] = $property->getId();
+        }
+        $content = '';
+        var_dump($fields);
+        foreach ($fields as $fieldId => $properties) {
+            foreach ($properties as $propertyId) {
+                $content .= "form[{$fieldId}][]={$propertyId}&";
+            }
+        }
+        $content .= 'form[apply]=';
+        /////////////////
+
+        $form = $filter->createProductFilterForm();
+        $form->handleRequest($request);
+
+        /** @var QueryBuilder $qb */
+        $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');
+        $qb
+            ->where($qb->expr()->eq('p.published', true))
+            ->orderBy('p.created', 'ASC')
+        ;
+
+        $entities = $qb->getQuery()->getResult();
+
+        return $this->render('BWShopBundle:Product:list.html.twig', array(
+            'entities' => $entities,
+            'form' => $form->createView(),
+        ));
+    }
 
     /**
      * Lists all Category entities.
@@ -25,18 +100,20 @@ class ProductController extends Controller
     {
         $filter = $this->get('bw_shop.service.product_filter');
 
-        $form = $filter->createProductFilterForm();
-        $form->handleRequest($request);
+        $form = $filter->getProductFilterForm();
+        if ($form->isValid()) {
+            $redirectUrl = $filter->generateUrl();
+            var_dump($redirectUrl); /** @TODO DEBUG */
 
-        $redirectUrl = $filter->generateUrl($form);
-        var_dump($redirectUrl);
+            return $this->redirect($redirectUrl);
+        }
 
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('BWShopBundle:Product')->findBy(array(
             'published' => true,
         ), array(
-//            'created' => 'ASC',
+            'created' => 'ASC',
         ));
 
         return $this->render('BWShopBundle:Product:list.html.twig', array(
