@@ -268,10 +268,16 @@ class VendorController extends Controller
             ->where($qb->expr()->eq('v.slug', ':slug'))
             ->setParameter('slug', $slug)
         ;
+        /** @var Vendor $entity */
         $entity = $qb->getQuery()->getOneOrNullResult();
         if ( ! $entity) {
             throw $this->createNotFoundException('Unable to find Vendor entity.');
         }
+
+        $filter = $this->get('bw_shop.service.product_filter');
+        $form = $filter->createProductFilterForm(array(
+            $entity->getCustomFieldProperty(),
+        ));
 
         $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');
         $qb
@@ -295,6 +301,7 @@ class VendorController extends Controller
         return $this->render('BWShopBundle:Vendor:show.html.twig', array(
             'entity' => $entity,
             'pagination' => $pagination,
+            'form' => $form->createView(),
         ));
     }
 }

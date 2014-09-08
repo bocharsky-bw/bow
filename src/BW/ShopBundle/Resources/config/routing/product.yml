@@ -1,13 +1,8 @@
-product_list:
-    path:     /
-    defaults: { _controller: "BWShopBundle:Product:list" }
-
-product_filter_form_handle:
-    path:     /filter-form-handle
-    defaults: { _controller: "BWShopBundle:Product:filterFormHandle" }
+product_filter_redirect:
+    path:     /filter/redirect
+    defaults: { _controller: "BWShopBundle:Product:filterRedirect" }
     requirements: {_method: post}
 
-product_filter:
-    path:     /{filter_query}
-    defaults: { _controller: "BWShopBundle:Product:filter" }
-
+product_list:
+    path:     /{filterQuery}
+    defaults: { _controller: "BWShopBundle:Product:list", filterQuery: "" }

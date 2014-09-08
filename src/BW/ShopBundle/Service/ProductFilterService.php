@@ -24,26 +24,22 @@ class ProductFilterService
     private $container;
 
 
+    /**
+     * The construct
+     *
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
 
-    public function getProductFilterForm()
-    {
-        $request = $this->container->get('request_stack')->getCurrentRequest();
-
-        $form = $this->createProductFilterForm();
-        $form->handleRequest($request);
-
-        return $form;
-    }
-
     /**
+     * @param null|array|ArrayCollection $collection
      * @return Form
      */
-    public function createProductFilterForm()
+    public function createProductFilterForm($collection = null)
     {
         $fields = $this->container->get('doctrine')
             ->getRepository('BWBlogBundle:CustomField')
@@ -57,10 +53,10 @@ class ProductFilterService
             'csrf_protection' => false,
         ))
             ->setMethod('POST')
-            ->setAction($this->container->get('router')->generate('product_filter_form_handle'))
+            ->setAction($this->container->get('router')->generate('product_filter_redirect'))
         ;
 
-        $builder
+//        $builder
 //            ->add('vendor', 'entity', array(
 //                'class' => 'BW\ShopBundle\Entity\Vendor',
 //                'property' => 'heading',
@@ -77,14 +73,14 @@ class ProductFilterService
 //            ))
             // Other custom fields
 //            // DEMO
-//            ->add('color', 'entity', array(
+//            ->add('properties', 'entity', array(
 //                'class' => 'BW\BlogBundle\Entity\CustomFieldProperty',
 //                'property' => 'name',
 //                'expanded' => true,
 //                'multiple' => true,
 //                'label' => 'Дополнительные поля',
 //            ))
-        ;
+//        ;
 
         /* Add recursively Custom Field Property groups */
         foreach ($fields as $index => $field) {
@@ -99,9 +95,10 @@ class ProductFilterService
                         ->orderBy('cfp.name', 'ASC')
                     ;
                 },
+                'data' => $collection, // bind data from redirect URL
                 'label' => $field->getName(),
                 'empty_value' => 'Нет',
-                'required' => FALSE,
+                'required' => false,
                 'expanded' => $field->isExpanded(),
                 'multiple' => $field->isMultiple(),
             ));
@@ -132,21 +129,21 @@ class ProductFilterService
             foreach ($formData as $fieldId => $collection) {
                 $count = $collection->count();
 
-                if (0 < $count) { // append all keys to ArrayObject
+                if (0 < $count) { // append all IDs to ArrayObject
                     if (4 === $fieldId) {
                         /** @var CustomFieldProperty $property */
                         foreach ($collection as $property) {
-                            $keysVendor->append($property->getId()); // append unique key to ArrayObject
+                            $keysVendor->append($property->getId()); // append unique ID to ArrayObject
                         }
                     } elseif (3 === $fieldId) {
                         /** @var CustomFieldProperty $property */
                         foreach ($collection as $property) {
-                            $keysCategory->append($property->getId()); // append unique key to ArrayObject
+                            $keysCategory->append($property->getId()); // append unique ID to ArrayObject
                         }
                     } else {
                         /** @var CustomFieldProperty $property */
                         foreach ($collection as $property) {
-                            $keysProperty->append($property->getId()); // append unique key to ArrayObject
+                            $keysProperty->append($property->getId()); // append unique ID to ArrayObject
                         }
                     }
                 }
@@ -166,7 +163,7 @@ class ProductFilterService
                     'slug' => $vendor->getSlug(),
                 ), true);
 
-                $keysVendor->exchangeArray(array()); // clear vendor keys array
+                $keysVendor->exchangeArray(array()); // clear vendor IDs array
             } elseif (0 === $keysVendor->count() && 1 === $keysCategory->count() && 0 === $keysProperty->count()) {
                 $category = $this->container->get('doctrine.orm.entity_manager')
                     ->getRepository('BWShopBundle:Category')
@@ -179,10 +176,10 @@ class ProductFilterService
                     $category->getRoute()->getPath()
                 );
 
-                $keysCategory->exchangeArray(array()); // clear categories keys array
+                $keysCategory->exchangeArray(array()); // clear category IDs array
             }
 
-            // generate SEF keys string
+            // generate IDs for filter query string
             $keys = new \ArrayObject();
             if ($keysVendor->count()) {
                 $keys->append(implode('-', (array)$keysVendor));
@@ -193,11 +190,12 @@ class ProductFilterService
             if ($keysProperty->count()) {
                 $keys->append(implode('-', (array)$keysProperty));
             }
-            $url .= implode('-', (array)$keys);
 
-            // mark SEF keys string with asterisk (*) if exists
+            // create filter query string from IDs
             if ($keys->count()) {
-                $url .= '-*';
+                $url .= '/'; // add slash (/) at begin of filter query string
+                $url .= implode('-', (array)$keys); // create filter query string
+                $url .= '-*'; // add asterisk sign (*) at the end of filter query string
             }
         }
 

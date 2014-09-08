@@ -4,9 +4,6 @@ namespace BW\ShopBundle\Controller;
 
 use BW\BlogBundle\Entity\CustomFieldProperty;
 use BW\MainBundle\Utility\FormUtility;
-use BW\ShopBundle\Entity\Category;
-use BW\ShopBundle\Entity\Vendor;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,125 +17,115 @@ use BW\ShopBundle\Form\ProductType;
 class ProductController extends Controller
 {
     /**
+     * Handle the filter form
+     *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function filterFormHandleAction(Request $request)
+    public function filterRedirectAction(Request $request)
     {
         $filter = $this->get('bw_shop.service.product_filter');
-
-        $form = $filter->getProductFilterForm();
+        $form = $filter->createProductFilterForm();
+        $form->handleRequest($request);
         if ($form->isValid()) {
             $redirectUrl = $filter->generateUrl();
-            $content = $request->getContent(); // Использовать setContent()
-            var_dump(urldecode($content));
-            die('d');
-
-            var_dump($redirectUrl); /** @TODO DEBUG */
 
             return $this->redirect($redirectUrl);
         } else {
-            die('form invalid');
+            die('Form invalid.');
         }
-
     }
 
-    /**
-     * Filter the product list
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function filterAction(Request $request, $filter_query)
-    {
-        $session = $request->getSession();
-        $filter = $this->get('bw_shop.service.product_filter');
-        $em = $this->getDoctrine()->getManager();
-
-        /////////////////
-        $filter_query = preg_replace('@\-\*$@', '', $filter_query);
-        $ids = explode('-', $filter_query);
-        $properties = $em->getRepository('BWBlogBundle:CustomFieldProperty')->findBy(array(
-            'id' => $ids,
-        ));
-        $fields = array();
-        /** @var CustomFieldProperty $property */
-        foreach($properties as $property) {
-            $fields[$property->getCustomField()->getId()][] = $property->getId();
-        }
-        $content = '';
-        var_dump($fields);
-        foreach ($fields as $fieldId => $properties) {
-            foreach ($properties as $propertyId) {
-                $content .= "form[{$fieldId}][]={$propertyId}&";
-            }
-        }
-        $content .= 'form[apply]=';
-        /////////////////
-
-        $form = $filter->createProductFilterForm();
-        $form->handleRequest($request);
-
-        /** @var QueryBuilder $qb */
-        $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');
-        $qb
-            ->where($qb->expr()->eq('p.published', true))
-            ->orderBy('p.created', 'ASC')
-        ;
-
-        $entities = $qb->getQuery()->getResult();
-
-        return $this->render('BWShopBundle:Product:list.html.twig', array(
-            'entities' => $entities,
-            'form' => $form->createView(),
-        ));
-    }
+//    /**
+//     * Filter the product list
+//     *
+//     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+//     */
+//    public function filterAction(Request $request, $filterQuery)
+//    {
+//        $filter = $this->get('bw_shop.service.product_filter');
+//        $em = $this->getDoctrine()->getManager();
+//
+//        // Get array of property IDs from filter query string
+//        $filterQuery = preg_replace('@\-\*(\?.*)?$@', '', $filterQuery); // remove asterisk sign (-*) with query string at the end
+//        $ids = explode('-', $filterQuery);
+//
+//        // Get collection of entities from property IDs
+//        $collection = $em->getRepository('BWBlogBundle:CustomFieldProperty')->findBy(array(
+//            'id' => $ids,
+//        ));
+//
+////        $fields = array();
+////        /** @var CustomFieldProperty $entity */
+////        foreach($collection as $entity) {
+////            $fields[$entity->getCustomField()->getId()][] = $entity->getId();
+////        }
+////        $content = '';
+////        var_dump($fields);
+////        foreach ($fields as $fieldId => $properties) {
+////            foreach ($properties as $propertyId) {
+////                $content .= "form[{$fieldId}][]={$propertyId}&";
+////            }
+////        }
+////        $content .= 'form[apply]=';
+//        /////////////////
+//
+//        $form = $filter->createProductFilterForm($collection);
+//        /** @var QueryBuilder $qb */
+//        $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');
+//        $qb
+//            ->where($qb->expr()->eq('p.published', true))
+//            ->orderBy('p.created', 'ASC')
+//        ;
+//
+//        $entities = $qb->getQuery()->getResult();
+//
+//        return $this->render('BWShopBundle:Product:list.html.twig', array(
+//            'entities' => $entities,
+//            'form' => $form->createView(),
+//        ));
+//    }
 
     /**
      * Lists all Category entities.
      */
-    public function listAction(Request $request)
+    public function listAction($filterQuery)
     {
-        $filter = $this->get('bw_shop.service.product_filter');
-
-        $form = $filter->getProductFilterForm();
-        if ($form->isValid()) {
-            $redirectUrl = $filter->generateUrl();
-            var_dump($redirectUrl); /** @TODO DEBUG */
-
-            return $this->redirect($redirectUrl);
-        }
-
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('BWShopBundle:Product')->findBy(array(
-            'published' => true,
-        ), array(
-            'created' => 'ASC',
+        // Get array of property IDs from filter query string
+        $filterQuery = preg_replace('@\-\*(\?.*)?$@', '', $filterQuery); // remove asterisk sign (-*) with query string at the end
+        $ids = explode('-', $filterQuery);
+
+        // Get collection of entities from property IDs
+        $collection = $em->getRepository('BWBlogBundle:CustomFieldProperty')->findBy(array(
+            'id' => $ids,
         ));
+
+        $filter = $this->get('bw_shop.service.product_filter');
+        $form = $filter->createProductFilterForm($collection);
+
+        /** @var QueryBuilder $qb */
+        $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');
+        $qb
+            ->addSelect('r')
+            ->addSelect('v')
+            ->addSelect('c')
+            ->addSelect('cr')
+            ->leftJoin('p.route', 'r')
+            ->leftJoin('p.vendor', 'v')
+            ->leftJoin('p.category', 'c')
+            ->leftJoin('c.route', 'cr')
+            ->where('p.published = 1')
+            ->orderBy('p.created', 'ASC')
+        ;
+        $entities = $qb->getQuery()->getResult(); // Collection of products
 
         return $this->render('BWShopBundle:Product:list.html.twig', array(
             'entities' => $entities,
             'form' => $form->createView(),
         ));
     }
-
-//    /**
-//     * Finds and displays a Product entity by slug.
-//     */
-//    public function showBySlugAction($slug)
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//
-//        $entity = $em->getRepository('BWShopBundle:Product')->findOneBySlug($slug);
-//
-//        if ( ! $entity) {
-//            throw $this->createNotFoundException('Unable to find Product entity.');
-//        }
-//
-//        return $this->render('BWShopBundle:Product:show.html.twig', array(
-//            'entity'      => $entity,
-//        ));
-//    }
 
     /**
      * Lists all Product entities.

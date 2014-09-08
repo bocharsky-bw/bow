@@ -114,10 +114,16 @@ class CategoryController extends Controller
             ->andWhere($qb->expr()->eq('c.id', ':id'))
             ->setParameter('id', $id)
         ;
+        /** @var Category $entity */
         $entity = $qb->getQuery()->getOneOrNullResult();
         if ( ! $entity) {
             throw $this->createNotFoundException('Unable to find Category entity.');
         }
+
+        $filter = $this->get('bw_shop.service.product_filter');
+        $form = $filter->createProductFilterForm(array(
+            $entity->getCustomFieldProperty(),
+        ));
 
         /** @var \Doctrine\ORM\QueryBuilder $qb */
         $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');
@@ -144,6 +150,7 @@ class CategoryController extends Controller
         return $this->render('BWShopBundle:Category:show.html.twig', array(
             'entity' => $entity,
             'pagination' => $pagination,
+            'form' => $form->createView(),
         ));
     }
 
