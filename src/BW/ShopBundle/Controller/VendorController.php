@@ -15,7 +15,6 @@ use BW\ShopBundle\Form\VendorType;
  */
 class VendorController extends Controller
 {
-
     /**
      * Lists all Vendor entities in frontend.
      */
@@ -25,8 +24,12 @@ class VendorController extends Controller
 
         $entities = $em->getRepository('BWShopBundle:Vendor')->findBy(array());
 
+        $filter = $this->get('bw_shop.service.product_filter');
+        $form = $filter->createProductFilterForm();
+
         return $this->render('BWShopBundle:Vendor:list.html.twig', array(
             'entities' => $entities,
+            'form' => $form->createView(),
         ));
     }
 
