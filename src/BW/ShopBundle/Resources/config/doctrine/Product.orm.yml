@@ -43,6 +43,15 @@ BW\ShopBundle\Entity\Product:
             type: datetime
         updated:
             type: datetime
+    oneToMany:
+        productImages:
+            targetEntity: BW\ShopBundle\Entity\ProductImage
+            mappedBy: product
+            cascade: [persist, remove]
+        productCustomFields:
+            targetEntity: BW\ShopBundle\Entity\ProductCustomField
+            mappedBy: product
+            cascade: [persist, remove]
     manyToOne:
         category:
             targetEntity: BW\ShopBundle\Entity\Category
@@ -52,10 +61,5 @@ BW\ShopBundle\Entity\Product:
             inversedBy: products
         route:
             targetEntity: BW\RouterBundle\Entity\Route
-            cascade: [persist, remove]
-    oneToMany:
-        productImages:
-            targetEntity: BW\ShopBundle\Entity\ProductImage
-            mappedBy: product
             cascade: [persist, remove]
     lifecycleCallbacks: {  }

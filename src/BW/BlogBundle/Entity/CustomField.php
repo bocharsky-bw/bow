@@ -2,6 +2,7 @@
 
 namespace BW\BlogBundle\Entity;
 
+use BW\ShopBundle\Entity\ProductCustomField;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -11,22 +12,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 class CustomField
 {
     /**
-     * @var integer $id
+     * @var integer
      */
     private $id;
 
     /**
-     * @var string $name
+     * @var string
      */
     private $name = '';
 
     /**
-     * @var boolean $expanded
+     * @var boolean
      */
     private $expanded = true;
 
     /**
-     * @var boolean $multiple
+     * @var boolean
      */
     private $multiple = true;
 
@@ -36,14 +37,19 @@ class CustomField
     private $used = true;
 
     /**
-     * @var ArrayCollection $postCustomFields
-     */
-    private $postCustomFields;
-
-    /**
-     * @var ArrayCollection $customFieldProperties
+     * @var ArrayCollection
      */
     private $customFieldProperties;
+
+    /**
+     * @var ArrayCollection
+     */
+    private $productCustomFields;
+
+    /**
+     * @var ArrayCollection
+     */
+    private $postCustomFields;
 
     
     /**
@@ -51,8 +57,9 @@ class CustomField
      */
     public function __construct()
     {
-        $this->postCustomFields = new ArrayCollection();
         $this->customFieldProperties = new ArrayCollection();
+        $this->productCustomFields = new ArrayCollection();
+        $this->postCustomFields = new ArrayCollection();
     }
 
 
@@ -200,39 +207,6 @@ class CustomField
     }
 
     /**
-     * Add postCustomFields
-     *
-     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
-     * @return CustomField
-     */
-    public function addPostCustomField(PostCustomField $postCustomFields)
-    {
-        $this->postCustomFields[] = $postCustomFields;
-
-        return $this;
-    }
-
-    /**
-     * Remove postCustomFields
-     *
-     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
-     */
-    public function removePostCustomField(PostCustomField $postCustomFields)
-    {
-        $this->postCustomFields->removeElement($postCustomFields);
-    }
-
-    /**
-     * Get postCustomFields
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPostCustomFields()
-    {
-        return $this->postCustomFields;
-    }
-
-    /**
      * Add customFieldProperties
      *
      * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperties
@@ -265,4 +239,69 @@ class CustomField
         return $this->customFieldProperties;
     }
 
+    /**
+     * Add productCustomFields
+     *
+     * @param \BW\ShopBundle\Entity\ProductCustomField $productCustomFields
+     * @return CustomField
+     */
+    public function addProductCustomField(ProductCustomField $productCustomFields)
+    {
+        $this->productCustomFields[] = $productCustomFields;
+
+        return $this;
+    }
+
+    /**
+     * Remove productCustomFields
+     *
+     * @param \BW\ShopBundle\Entity\ProductCustomField $productCustomFields
+     */
+    public function removeProductCustomField(ProductCustomField $productCustomFields)
+    {
+        $this->productCustomFields->removeElement($productCustomFields);
+    }
+
+    /**
+     * Get productCustomFields
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductCustomFields()
+    {
+        return $this->productCustomFields;
+    }
+
+    /**
+     * Add postCustomFields
+     *
+     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
+     * @return CustomField
+     */
+    public function addPostCustomField(PostCustomField $postCustomFields)
+    {
+        $this->postCustomFields[] = $postCustomFields;
+
+        return $this;
+    }
+
+    /**
+     * Remove postCustomFields
+     *
+     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
+     */
+    public function removePostCustomField(PostCustomField $postCustomFields)
+    {
+        $this->postCustomFields->removeElement($postCustomFields);
+    }
+
+    /**
+     * Get postCustomFields
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPostCustomFields()
+    {
+        return $this->postCustomFields;
+    }
 }

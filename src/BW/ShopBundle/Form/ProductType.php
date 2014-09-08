@@ -2,7 +2,9 @@
 
 namespace BW\ShopBundle\Form;
 
+use BW\ShopBundle\Entity\Product;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -15,7 +17,7 @@ class ProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var \BW\ShopBundle\Entity\Product $entity */
+        /** @var Product $entity */
         $entity = $options['data'];
 
         $builder
@@ -126,7 +128,55 @@ class ProductType extends AbstractType
                 'allow_delete' => true,
                 'delete_empty' => true,
             ))
+            // CustomFields
+            ->add('customField', 'entity', array(
+                'class' => 'BW\BlogBundle\Entity\CustomField',
+                'property' => 'name',
+                'query_builder' => function(EntityRepository $er) use ($entity) {
+                    $qb = $er->createQueryBuilder('cf');
+                    if ($entity->getId()) {
+                        $qb
+                            ->leftJoin(
+                                'cf.productCustomFields',
+                                'pcf',
+                                Join::WITH,
+                                'cf.id = pcf.customField AND pcf.product = :product'
+                            )
+                            ->where($qb->expr()->isNull('pcf.product')) // get only unrelated entities
+                            ->setParameter('product', $entity)
+                        ;
+                    }
+                    $qb->orderBy('cf.name');
+
+                    return $qb;
+                },
+                'required' => false,
+                'mapped' => false,
+                'label' => 'Выберите поле для добавления ',
+                'empty_value' => '< Не выбрано >',
+                'attr' => array(
+                    'class' => 'form-control',
+                ),
+            ))
+            ->add('addCustomField', 'submit', array(
+                'label' => 'Добавить',
+                'attr' => array(
+                    'class' => 'btn btn-primary icon-plus before-padding',
+                ),
+            ))
         ;
+
+        if ($entity->getProductCustomFields()->count()) {
+            $builder->add('productCustomFields', 'collection', array(
+                'type' => new ProductCustomFieldType($entity),
+                'options' => array(
+                    'required' => false,
+                ),
+                'label' => 'Добавленые поля ',
+                'allow_add' => true,
+                'allow_delete' => true,
+            ));
+        }
     }
     
     /**

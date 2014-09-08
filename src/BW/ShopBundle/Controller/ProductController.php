@@ -4,6 +4,7 @@ namespace BW\ShopBundle\Controller;
 
 use BW\BlogBundle\Entity\CustomFieldProperty;
 use BW\MainBundle\Utility\FormUtility;
+use BW\ShopBundle\Entity\ProductCustomField;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -152,6 +153,17 @@ class ProductController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            if ($form->get('addCustomField')->isClicked()) {
+                $customField = $form->get('customField')->getData();
+                if ($customField) {
+                    $productCustomField = new ProductCustomField();
+                    $productCustomField->setProduct($entity);
+                    $productCustomField->setCustomField($customField);
+                    $em->persist($productCustomField);
+                }
+            }
+
             $em->persist($entity);
             $em->flush();
 
@@ -273,7 +285,6 @@ class ProductController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('BWShopBundle:Product')->find($id);
-
         if ( ! $entity) {
             throw $this->createNotFoundException('Unable to find Product entity.');
         }
@@ -286,6 +297,14 @@ class ProductController extends Controller
             if ($editForm->get('delete')->isClicked()) {
                 $this->delete($id);
                 return $this->redirect($this->generateUrl('product'));
+            } elseif ($editForm->get('addCustomField')->isClicked()) {
+                $customField = $editForm->get('customField')->getData();
+                if ($customField) {
+                    $productCustomField = new ProductCustomField();
+                    $productCustomField->setProduct($entity);
+                    $productCustomField->setCustomField($customField);
+                    $em->persist($productCustomField);
+                }
             }
 
             $em->flush();

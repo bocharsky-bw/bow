@@ -18,10 +18,13 @@ BW\BlogBundle\Entity\CustomField:
         used:
             type: boolean
     oneToMany:
-        postCustomFields:
-            targetEntity: BW\BlogBundle\Entity\PostCustomField
-            mappedBy: customField
         customFieldProperties:
             targetEntity: BW\BlogBundle\Entity\CustomFieldProperty
+            mappedBy: customField
+        productCustomFields:
+            targetEntity: BW\ShopBundle\Entity\ProductCustomField
+            mappedBy: customField
+        postCustomFields:
+            targetEntity: BW\BlogBundle\Entity\PostCustomField
             mappedBy: customField
     lifecycleCallbacks: {}

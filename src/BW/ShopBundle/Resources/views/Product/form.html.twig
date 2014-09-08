@@ -73,6 +73,21 @@
         {% endfor %}
     </ul>
 
+    <h2>Настраиваемые поля</h2>
+
+    {{ form_row(form.customField) }}
+
+    {{ form_row(form.addCustomField) }}
+
+    {% if form.productCustomFields is defined %}
+        {% for productCustomField in form.productCustomFields %}
+            {#<a href="{{ path('admin_post_custom_field_delete', {'id': postCustomField.vars.data.id}) }}" title="Удалить поле" onclick="return confirm('Перед удалением сохраните все изменения. Удалить поле?')">&times;</a>#}
+            {{ form_row(productCustomField) }}
+        {% endfor %}
+    {% else %}
+        Поля отсутствуют
+    {% endif %}
+
 {{ form_end(form) }}
 
 <script>

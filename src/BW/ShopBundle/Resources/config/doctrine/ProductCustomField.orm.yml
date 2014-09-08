@@ -1,0 +1,22 @@
+BW\ShopBundle\Entity\ProductCustomField:
+    type: entity
+    table: product_custom_field
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields: {}
+    manyToOne:
+        product:
+            targetEntity: BW\ShopBundle\Entity\Product
+            inversedBy: productCustomFields
+        customField:
+            targetEntity: BW\BlogBundle\Entity\CustomField
+            inversedBy: productCustomFields
+    manyToMany:
+        customFieldProperties:
+            targetEntity: BW\BlogBundle\Entity\CustomFieldProperty
+#            inversedBy: productCustomFields
+    lifecycleCallbacks: {}

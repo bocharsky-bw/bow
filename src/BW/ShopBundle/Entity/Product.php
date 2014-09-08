@@ -5,6 +5,7 @@ namespace BW\ShopBundle\Entity;
 use BW\MainBundle\Service\SluggableInterface;
 use BW\RouterBundle\Entity\Route;
 use BW\RouterBundle\Entity\RouteInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -108,11 +109,18 @@ class Product implements SluggableInterface, RouteInterface
      */
     private $productImages;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $productCustomFields;
+
 
     public function __construct()
     {
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
+        $this->productImages = new ArrayCollection();
+        $this->productCustomFields = new ArrayCollection();
     }
 
 
@@ -622,5 +630,38 @@ class Product implements SluggableInterface, RouteInterface
     public function getProductImages()
     {
         return $this->productImages;
+    }
+
+    /**
+     * Add productCustomFields
+     *
+     * @param \BW\ShopBundle\Entity\ProductCustomField $productCustomFields
+     * @return Product
+     */
+    public function addProductCustomField(ProductCustomField $productCustomFields)
+    {
+        $this->productCustomFields[] = $productCustomFields;
+
+        return $this;
+    }
+
+    /**
+     * Remove productCustomFields
+     *
+     * @param \BW\ShopBundle\Entity\ProductCustomField $productCustomFields
+     */
+    public function removeProductCustomField(ProductCustomField $productCustomFields)
+    {
+        $this->productCustomFields->removeElement($productCustomFields);
+    }
+
+    /**
+     * Get productCustomFields
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProductCustomFields()
+    {
+        return $this->productCustomFields;
     }
 }
