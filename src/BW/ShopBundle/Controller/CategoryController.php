@@ -2,6 +2,7 @@
 
 namespace BW\ShopBundle\Controller;
 
+use BW\CustomBundle\Entity\Property;
 use BW\MainBundle\Utility\FormUtility;
 use BW\RouterBundle\Entity\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,12 +39,20 @@ class CategoryController extends Controller
      */
     public function createAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $entity = new Category();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            // create custom property and relate with category
+            $field = $em->getRepository('BWCustomBundle:Field')->find(3); // get vendor custom field entity
+            $property = new Property();
+            $property->setField($field);
+            $property->setName($entity->getHeading());
+            $entity->setProperty($property);
+
             $em->persist($entity);
             $em->flush();
 
@@ -219,6 +228,11 @@ class CategoryController extends Controller
                 $this->delete($id);
                 return $this->redirect($this->generateUrl('category'));
             }
+
+            // update related custom property
+            $entity->getProperty()->setName(
+                $entity->getHeading()
+            );
 
             $em->flush();
 

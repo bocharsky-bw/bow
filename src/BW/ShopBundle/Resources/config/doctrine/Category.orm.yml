@@ -41,6 +41,9 @@ BW\ShopBundle\Entity\Category:
     oneToOne:
         property:
             targetEntity: BW\CustomBundle\Entity\Property
+            cascade: [persist, remove]
+            joinColumn:
+                nullable: false
     oneToMany:
         children:
             targetEntity: BW\ShopBundle\Entity\Category
