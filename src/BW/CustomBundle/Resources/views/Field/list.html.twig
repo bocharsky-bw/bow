@@ -14,7 +14,7 @@
             <h1><i class="icon-puzzle-piece"></i> Список настраиваемых полей</h1>
         </div>
     </div>
-    {% if customFields %}
+    {% if entities %}
         <div class="main-table">   
             <table class="table table-striped table-hover">
                 <thead>
@@ -26,17 +26,17 @@
                         <th style="width: 5%" class="ta_c">ID</th>
                     </tr>
                 </thead> 
-                {% for field in customFields %}
+                {% for entity in entities %}
                     <tbody>
                         <tr>
                             <td class="ta_c">
                                 {{ loop.index }}
                             </td>
                             <td>
-                                <a href="{{ path('admin_custom_field_edit', {'id': field.id}) }}" title="Редактировать запись">{{ field.name }}</a> 
+                                <a href="{{ path('admin_custom_field_edit', {'id': entity.id}) }}" title="Редактировать запись">{{ entity.name }}</a>
                             </td>
                             <td class="ta_c">
-                                <span title="ID записи в БД">{{ field.id }}</span>
+                                <span title="ID записи в БД">{{ entity.id }}</span>
                             </td>
                         </tr>
                     </tbody>

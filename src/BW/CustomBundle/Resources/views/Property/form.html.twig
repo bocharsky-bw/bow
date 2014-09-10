@@ -14,8 +14,8 @@
             {% if form.delete is defined %}
                 {{ form_widget(form.delete, {'attr': {'class': 'btn btn-default icon-remove before-padding', 'title': 'Удалить запись', 'onclick': "return confirm('Удалить запись из БД?')"}, 'label': 'Удалить'}) }}
             {% endif %}
-            {% if customFieldProperty.customField %}
-                <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_custom_field_edit', {'id': customFieldProperty.customField.id}) }}" title="Отменить несохраненные изменения">Закрыть</a>
+            {% if entity.field %}
+                <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_custom_field_edit', {'id': entity.field.id}) }}" title="Отменить несохраненные изменения">Закрыть</a>
             {% else %}
                 <a class="btn btn-default icon-ban-circle before-padding" href="{{ path('admin_custom_fields') }}" title="Отменить несохраненные изменения">Закрыть</a>
             {% endif %}

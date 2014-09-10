@@ -2,68 +2,59 @@
 
 namespace BW\BlogBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Class Image
  * @package BW\BlogBundle\Entity
- *
- * @ORM\Table(name="images")
- * @ORM\Entity(repositoryClass="BW\BlogBundle\Entity\ImageRepository")
- * @ORM\HasLifecycleCallbacks
  */
 class Image
 {
     /**
      * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
-     * @var string The title attr
-     *
-     * @ORM\Column(type="string", length=255)
+     * @var string $title The title attr
      */
     protected $title = '';
 
     /**
-     * @var string The alt attr
-     *
-     * @ORM\Column(type="string", length=255)
+     * @var string $alt The alt attr
      */
     protected $alt = '';
 
     /**
-     * @var string The path
-     *
-     * @ORM\Column(name="sub_folder", type="string", length=255, nullable=true)
+     * @var string $subFolder The path
      */
     protected $subFolder = '';
 
     /**
-     * @var null|string The path
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string $filename The path
      */
     protected $filename = null;
 
     /**
-     * @var null|string The temp path of image
+     * @var string $temp The temp path of image
      */
     protected $temp = null;
 
     /**
-     * @var UploadedFile The uploaded file
+     * @var UploadedFile $file The uploaded file
      *
      * @Assert\File(maxSize="6000000")
      */
     protected $file;
+
+
+    /**
+     * The constructor
+     */
+    public function __construct()
+    {
+    }
 
 
     public function getAbsolutePath()
@@ -128,8 +119,8 @@ class Image
     }
 
     /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
+     * ORM\PrePersist()
+     * ORM\PreUpdate()
      */
     public function preUpload()
     {
@@ -141,8 +132,8 @@ class Image
     }
 
     /**
-     * @ORM\PostPersist()
-     * @ORM\PostUpdate()
+     * ORM\PostPersist()
+     * ORM\PostUpdate()
      */
     public function upload()
     {
@@ -166,7 +157,7 @@ class Image
     }
 
     /**
-     * @ORM\PostRemove()
+     * ORM\PostRemove()
      */
     public function removeUpload()
     {
@@ -177,24 +168,6 @@ class Image
         }
     }
 
-
-    public function __construct()
-    {
-    }
-
-
-    /**
-     * Set subFolder
-     *
-     * @param string $subFolder
-     * @return Image
-     */
-    public function setSubFolder($subFolder)
-    {
-        $this->subFolder = str_replace('../', '', $subFolder);
-
-        return $this;
-    }
 
     /* SETTERS / GETTERS */
 
@@ -260,6 +233,19 @@ class Image
     public function getAlt()
     {
         return $this->alt;
+    }
+
+    /**
+     * Set subFolder
+     *
+     * @param string $subFolder
+     * @return Image
+     */
+    public function setSubFolder($subFolder)
+    {
+        $this->subFolder = str_replace('../', '', $subFolder);
+
+        return $this;
     }
 
     /**

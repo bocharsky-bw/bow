@@ -128,25 +128,25 @@ class ProductType extends AbstractType
                 'allow_delete' => true,
                 'delete_empty' => true,
             ))
-            // CustomFields
-            ->add('customField', 'entity', array(
-                'class' => 'BW\BlogBundle\Entity\CustomField',
+            // Custom Fields
+            ->add('field', 'entity', array(
+                'class' => 'BW\CustomBundle\Entity\Field',
                 'property' => 'name',
                 'query_builder' => function(EntityRepository $er) use ($entity) {
-                    $qb = $er->createQueryBuilder('cf');
+                    $qb = $er->createQueryBuilder('f');
                     if ($entity->getId()) {
                         $qb
                             ->leftJoin(
-                                'cf.productCustomFields',
-                                'pcf',
+                                'BWShopBundle:ProductField',
+                                'pf',
                                 Join::WITH,
-                                'cf.id = pcf.customField AND pcf.product = :product'
+                                'f.id = pf.field AND pf.product = :product'
                             )
-                            ->where($qb->expr()->isNull('pcf.product')) // get only unrelated entities
+                            ->where($qb->expr()->isNull('pf.product')) // get only unrelated entities
                             ->setParameter('product', $entity)
                         ;
                     }
-                    $qb->orderBy('cf.name');
+                    $qb->orderBy('f.name');
 
                     return $qb;
                 },
@@ -158,7 +158,7 @@ class ProductType extends AbstractType
                     'class' => 'form-control',
                 ),
             ))
-            ->add('addCustomField', 'submit', array(
+            ->add('addField', 'submit', array(
                 'label' => 'Добавить',
                 'attr' => array(
                     'class' => 'btn btn-primary icon-plus before-padding',
@@ -166,9 +166,9 @@ class ProductType extends AbstractType
             ))
         ;
 
-        if ($entity->getProductCustomFields()->count()) {
-            $builder->add('productCustomFields', 'collection', array(
-                'type' => new ProductCustomFieldType($entity),
+        if ($entity->getProductFields()->count()) {
+            $builder->add('productFields', 'collection', array(
+                'type' => new ProductFieldType($entity),
                 'options' => array(
                     'required' => false,
                 ),

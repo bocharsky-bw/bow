@@ -2,8 +2,8 @@
 
 namespace BW\ShopBundle\Service;
 
-use BW\BlogBundle\Entity\CustomField;
-use BW\BlogBundle\Entity\CustomFieldProperty;
+use BW\CustomBundle\Entity\Field;
+use BW\CustomBundle\Entity\Property;
 use BW\ShopBundle\Entity\Category;
 use BW\ShopBundle\Entity\Vendor;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -42,7 +42,7 @@ class ProductFilterService
     public function createProductFilterForm($collection = null)
     {
         $fields = $this->container->get('doctrine')
-            ->getRepository('BWBlogBundle:CustomField')
+            ->getRepository('BWCustomBundle:Field')
             ->findBy(array(
                 'used' => true, // only used in filter
             ))
@@ -74,7 +74,7 @@ class ProductFilterService
             // Other custom fields
 //            // DEMO
 //            ->add('properties', 'entity', array(
-//                'class' => 'BW\BlogBundle\Entity\CustomFieldProperty',
+//                'class' => 'BW\CustomBundle\Entity\Property',
 //                'property' => 'name',
 //                'expanded' => true,
 //                'multiple' => true,
@@ -84,13 +84,13 @@ class ProductFilterService
 
         /* Add recursively Custom Field Property groups */
         foreach ($fields as $index => $field) {
-            /** @var CustomField $field */
+            /** @var Field $field */
             $builder->add($field->getId(), 'entity', array(
-                'class' => 'BWBlogBundle:CustomFieldProperty',
+                'class' => 'BWCustomBundle:Property',
                 'property' => 'name',
                 'query_builder' => function(EntityRepository $er) use ($field) {
                     return $er->createQueryBuilder('cfp')
-                        ->where('cfp.customField = :field_id')
+                        ->where('cfp.field = :field_id')
                         ->setParameter('field_id', $field->getId())
                         ->orderBy('cfp.name', 'ASC')
                     ;
@@ -131,17 +131,17 @@ class ProductFilterService
 
                 if (0 < $count) { // append all IDs to ArrayObject
                     if (4 === $fieldId) {
-                        /** @var CustomFieldProperty $property */
+                        /** @var Property $property */
                         foreach ($collection as $property) {
                             $keysVendor->append($property->getId()); // append unique ID to ArrayObject
                         }
                     } elseif (3 === $fieldId) {
-                        /** @var CustomFieldProperty $property */
+                        /** @var Property $property */
                         foreach ($collection as $property) {
                             $keysCategory->append($property->getId()); // append unique ID to ArrayObject
                         }
                     } else {
-                        /** @var CustomFieldProperty $property */
+                        /** @var Property $property */
                         foreach ($collection as $property) {
                             $keysProperty->append($property->getId()); // append unique ID to ArrayObject
                         }
@@ -155,7 +155,7 @@ class ProductFilterService
                 $vendor = $this->container->get('doctrine.orm.entity_manager')
                     ->getRepository('BWShopBundle:Vendor')
                     ->findOneBy(array(
-                        'customFieldProperty' => $keysVendor->offsetGet(0),
+                        'property' => $keysVendor->offsetGet(0),
                     ))
                 ;
 
@@ -168,7 +168,7 @@ class ProductFilterService
                 $category = $this->container->get('doctrine.orm.entity_manager')
                     ->getRepository('BWShopBundle:Category')
                     ->findOneBy(array(
-                        'customFieldProperty' => $keysCategory->offsetGet(0),
+                        'property' => $keysCategory->offsetGet(0),
                     ))
                 ;
 

@@ -2,7 +2,7 @@
 
 namespace BW\ShopBundle\Entity;
 
-use BW\BlogBundle\Entity\CustomFieldProperty;
+use BW\CustomBundle\Entity\Property;
 use BW\MainBundle\Service\SluggableInterface;
 use BW\UploadBundle\Entity\Image;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -60,9 +60,9 @@ class Vendor implements SluggableInterface
     private $image;
 
     /**
-     * @var \BW\BlogBundle\Entity\CustomFieldProperty
+     * @var \BW\CustomBundle\Entity\Property
      */
-    private $customFieldProperty;
+    private $property;
 
 
     /**
@@ -73,10 +73,12 @@ class Vendor implements SluggableInterface
         $this->products = new ArrayCollection();
     }
 
+
     public function getStringForSlug()
     {
         return $this->getHeading();
     }
+
 
     /* SETTERS / GETTERS */
 
@@ -286,25 +288,25 @@ class Vendor implements SluggableInterface
     }
 
     /**
-     * Set customFieldProperty
+     * Set property
      *
-     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperty
+     * @param \BW\CustomBundle\Entity\Property $property
      * @return Vendor
      */
-    public function setCustomFieldProperty(CustomFieldProperty $customFieldProperty = null)
+    public function setProperty(Property $property = null)
     {
-        $this->customFieldProperty = $customFieldProperty;
+        $this->property = $property;
 
         return $this;
     }
 
     /**
-     * Get customFieldProperty
+     * Get property
      *
-     * @return \BW\BlogBundle\Entity\CustomFieldProperty 
+     * @return \BW\CustomBundle\Entity\Property
      */
-    public function getCustomFieldProperty()
+    public function getProperty()
     {
-        return $this->customFieldProperty;
+        return $this->property;
     }
 }

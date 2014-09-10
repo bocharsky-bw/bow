@@ -39,8 +39,8 @@ BW\ShopBundle\Entity\Category:
             column: rgt
             type: integer
     oneToOne:
-        customFieldProperty:
-            targetEntity: BW\BlogBundle\Entity\CustomFieldProperty
+        property:
+            targetEntity: BW\CustomBundle\Entity\Property
     oneToMany:
         children:
             targetEntity: BW\ShopBundle\Entity\Category

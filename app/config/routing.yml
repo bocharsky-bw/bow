@@ -1,3 +1,7 @@
+bw_custom:
+    resource: "@BWCustomBundle/Resources/config/routing.yml"
+    prefix:   /
+
 bw_upload:
     resource: "@BWUploadBundle/Resources/config/routing.yml"
     prefix:   /

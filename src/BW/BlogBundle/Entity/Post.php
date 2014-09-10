@@ -85,9 +85,9 @@ class Post
     private $route;
 
     /**
-     * @var ArrayCollection $postCustomFields
+     * @var ArrayCollection $postFields
      */
-    private $postCustomFields;
+    private $postFields;
 
     /**
      * @var Image
@@ -99,7 +99,7 @@ class Post
     {
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
-        $this->postCustomFields = new ArrayCollection();
+        $this->postFields = new ArrayCollection();
     }
 
 
@@ -492,36 +492,36 @@ class Post
     }
 
     /**
-     * Add postCustomFields
+     * Add postFields
      *
-     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
+     * @param \BW\BlogBundle\Entity\PostField $postFields
      * @return Post
      */
-    public function addPostCustomField(PostCustomField $postCustomFields)
+    public function addPostField(PostField $postFields)
     {
-        $this->postCustomFields[] = $postCustomFields;
+        $this->postFields[] = $postFields;
 
         return $this;
     }
 
     /**
-     * Remove postCustomFields
+     * Remove postFields
      *
-     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
+     * @param \BW\BlogBundle\Entity\PostField $postFields
      */
-    public function removePostCustomField(PostCustomField $postCustomFields)
+    public function removePostField(PostField $postFields)
     {
-        $this->postCustomFields->removeElement($postCustomFields);
+        $this->postFields->removeElement($postFields);
     }
 
     /**
-     * Get postCustomFields
+     * Get postFields
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPostCustomFields()
+    public function getPostFields()
     {
-        return $this->postCustomFields;
+        return $this->postFields;
     }
 
 }

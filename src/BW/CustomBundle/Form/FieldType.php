@@ -1,14 +1,14 @@
 <?php
 
-namespace BW\BlogBundle\Form;
+namespace BW\CustomBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CustomFieldType extends AbstractType
+class FieldType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -46,7 +46,7 @@ class CustomFieldType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BW\BlogBundle\Entity\CustomField'
+            'data_class' => 'BW\CustomBundle\Entity\Field'
         ));
     }
 

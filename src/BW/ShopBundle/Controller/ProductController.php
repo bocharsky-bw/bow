@@ -2,14 +2,14 @@
 
 namespace BW\ShopBundle\Controller;
 
-use BW\BlogBundle\Entity\CustomFieldProperty;
+use BW\CustomBundle\Entity\Property;
 use BW\MainBundle\Utility\FormUtility;
-use BW\ShopBundle\Entity\ProductCustomField;
-use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use BW\ShopBundle\Entity\ProductField;
 use BW\ShopBundle\Entity\Product;
 use BW\ShopBundle\Form\ProductType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class ProductController
@@ -52,14 +52,14 @@ class ProductController extends Controller
 //        $ids = explode('-', $filterQuery);
 //
 //        // Get collection of entities from property IDs
-//        $collection = $em->getRepository('BWBlogBundle:CustomFieldProperty')->findBy(array(
+//        $collection = $em->getRepository('BWCustomBundle:Property')->findBy(array(
 //            'id' => $ids,
 //        ));
 //
 ////        $fields = array();
-////        /** @var CustomFieldProperty $entity */
+////        /** @var Property $entity */
 ////        foreach($collection as $entity) {
-////            $fields[$entity->getCustomField()->getId()][] = $entity->getId();
+////            $fields[$entity->getField()->getId()][] = $entity->getId();
 ////        }
 ////        $content = '';
 ////        var_dump($fields);
@@ -99,7 +99,7 @@ class ProductController extends Controller
         $ids = explode('-', $filterQuery);
 
         // Get collection of entities from property IDs
-        $collection = $em->getRepository('BWBlogBundle:CustomFieldProperty')->findBy(array(
+        $collection = $em->getRepository('BWCustomBundle:Property')->findBy(array(
             'id' => $ids,
         ));
 
@@ -154,13 +154,13 @@ class ProductController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            if ($form->get('addCustomField')->isClicked()) {
-                $customField = $form->get('customField')->getData();
-                if ($customField) {
-                    $productCustomField = new ProductCustomField();
-                    $productCustomField->setProduct($entity);
-                    $productCustomField->setCustomField($customField);
-                    $em->persist($productCustomField);
+            if ($form->get('addField')->isClicked()) {
+                $field = $form->get('field')->getData();
+                if ($field) {
+                    $productField = new ProductField();
+                    $productField->setProduct($entity);
+                    $productField->setField($field);
+                    $em->persist($productField);
                 }
             }
 
@@ -297,13 +297,13 @@ class ProductController extends Controller
             if ($editForm->get('delete')->isClicked()) {
                 $this->delete($id);
                 return $this->redirect($this->generateUrl('product'));
-            } elseif ($editForm->get('addCustomField')->isClicked()) {
-                $customField = $editForm->get('customField')->getData();
-                if ($customField) {
-                    $productCustomField = new ProductCustomField();
-                    $productCustomField->setProduct($entity);
-                    $productCustomField->setCustomField($customField);
-                    $em->persist($productCustomField);
+            } elseif ($editForm->get('addField')->isClicked()) {
+                $field = $editForm->get('field')->getData();
+                if ($field) {
+                    $productField = new ProductField();
+                    $productField->setProduct($entity);
+                    $productField->setField($field);
+                    $em->persist($productField);
                 }
             }
 

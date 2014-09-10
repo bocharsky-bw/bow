@@ -1,6 +1,6 @@
 BW\BlogBundle\Entity\Contact:
     type: entity
-    table: contacts
+    table: blog_contacts
     id:
         id:
             type: integer

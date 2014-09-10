@@ -1,6 +1,6 @@
 BW\BlogBundle\Entity\Category:
     type: entity
-    table: categories
+    table: blog_categories
     id:
         id:
             type: integer

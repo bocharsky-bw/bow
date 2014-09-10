@@ -2,12 +2,12 @@
 
 namespace BW\ShopBundle\Controller;
 
+use BW\ShopBundle\Entity\Vendor;
+use BW\ShopBundle\Form\VendorType;
 use BW\MainBundle\Utility\FormUtility;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use BW\ShopBundle\Entity\Vendor;
-use BW\ShopBundle\Form\VendorType;
 
 /**
  * Class VendorController
@@ -279,7 +279,7 @@ class VendorController extends Controller
 
         $filter = $this->get('bw_shop.service.product_filter');
         $form = $filter->createProductFilterForm(array(
-            $entity->getCustomFieldProperty(),
+            $entity->getProperty(),
         ));
 
         $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');

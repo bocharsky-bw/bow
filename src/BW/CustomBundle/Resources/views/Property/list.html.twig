@@ -1,24 +1,22 @@
 <h2>Список свойств</h2>
-{% if customField.customFieldProperties.count %}
+{% if entity.properties.count %}
     <div class="main-table">   
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th style="width: 5%" class="ta_c">
-                        №
-                    </th>
+                    <th style="width: 5%" class="ta_c">№</th>
                     <th>Название</th>
                     <th style="width: 5%" class="ta_c">ID</th>
                 </tr>
             </thead> 
-            {% for property in customField.customFieldProperties %}
+            {% for property in entity.properties %}
                 <tbody>
                     <tr>
                         <td class="ta_c">
                             {{ loop.index }}
                         </td>
                         <td>
-                            <a href="{{ path('admin_custom_field_property_edit', {'field_id': property.customField.id, 'id': property.id}) }}" title="Редактировать запись">{{ property.name }}</a> 
+                            <a href="{{ path('admin_custom_field_property_edit', {'field_id': property.field.id, 'id': property.id}) }}" title="Редактировать запись">{{ property.name }}</a>
                         </td>
                         <td class="ta_c">
                             <span title="ID записи в БД">{{ property.id }}</span>

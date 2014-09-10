@@ -112,7 +112,7 @@ class Product implements SluggableInterface, RouteInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $productCustomFields;
+    private $productFields;
 
 
     public function __construct()
@@ -120,7 +120,7 @@ class Product implements SluggableInterface, RouteInterface
         $this->created = new \DateTime();
         $this->updated = new \DateTime();
         $this->productImages = new ArrayCollection();
-        $this->productCustomFields = new ArrayCollection();
+        $this->productFields = new ArrayCollection();
     }
 
 
@@ -633,35 +633,35 @@ class Product implements SluggableInterface, RouteInterface
     }
 
     /**
-     * Add productCustomFields
+     * Add productFields
      *
-     * @param \BW\ShopBundle\Entity\ProductCustomField $productCustomFields
+     * @param \BW\ShopBundle\Entity\ProductField $productFields
      * @return Product
      */
-    public function addProductCustomField(ProductCustomField $productCustomFields)
+    public function addProductField(ProductField $productFields)
     {
-        $this->productCustomFields[] = $productCustomFields;
+        $this->productFields[] = $productFields;
 
         return $this;
     }
 
     /**
-     * Remove productCustomFields
+     * Remove productFields
      *
-     * @param \BW\ShopBundle\Entity\ProductCustomField $productCustomFields
+     * @param \BW\ShopBundle\Entity\ProductField $productFields
      */
-    public function removeProductCustomField(ProductCustomField $productCustomFields)
+    public function removeProductField(ProductField $productFields)
     {
-        $this->productCustomFields->removeElement($productCustomFields);
+        $this->productFields->removeElement($productFields);
     }
 
     /**
-     * Get productCustomFields
+     * Get productFields
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getProductCustomFields()
+    public function getProductFields()
     {
-        return $this->productCustomFields;
+        return $this->productFields;
     }
 }

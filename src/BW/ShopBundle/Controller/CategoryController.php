@@ -122,7 +122,7 @@ class CategoryController extends Controller
 
         $filter = $this->get('bw_shop.service.product_filter');
         $form = $filter->createProductFilterForm(array(
-            $entity->getCustomFieldProperty(),
+            $entity->getProperty(),
         ));
 
         /** @var \Doctrine\ORM\QueryBuilder $qb */

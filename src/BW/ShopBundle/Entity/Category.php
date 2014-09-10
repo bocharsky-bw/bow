@@ -2,7 +2,7 @@
 
 namespace BW\ShopBundle\Entity;
 
-use BW\BlogBundle\Entity\CustomFieldProperty;
+use BW\CustomBundle\Entity\Property;
 use BW\MainBundle\Service\SluggableInterface;
 use BW\RouterBundle\Entity\Route;
 use BW\RouterBundle\Entity\RouteInterface;
@@ -95,9 +95,9 @@ class Category implements SluggableInterface, RouteInterface
     private $products;
 
     /**
-     * @var \BW\BlogBundle\Entity\CustomFieldProperty
+     * @var \BW\CustomBundle\Entity\Property
      */
-    private $customFieldProperty;
+    private $property;
 
 
     public function __construct()
@@ -106,11 +106,11 @@ class Category implements SluggableInterface, RouteInterface
         $this->products = new ArrayCollection();
     }
 
-
     public function __toString()
     {
         return str_repeat('- ', $this->level) . $this->heading;
     }
+
 
     /**
      * Generate current nested level
@@ -544,7 +544,7 @@ class Category implements SluggableInterface, RouteInterface
      * @param \BW\ShopBundle\Entity\Product $products
      * @return Category
      */
-    public function addProduct(\BW\ShopBundle\Entity\Product $products)
+    public function addProduct(Product $products)
     {
         $this->products[] = $products;
 
@@ -556,7 +556,7 @@ class Category implements SluggableInterface, RouteInterface
      *
      * @param \BW\ShopBundle\Entity\Product $products
      */
-    public function removeProduct(\BW\ShopBundle\Entity\Product $products)
+    public function removeProduct(Product $products)
     {
         $this->products->removeElement($products);
     }
@@ -572,25 +572,25 @@ class Category implements SluggableInterface, RouteInterface
     }
 
     /**
-     * Set customFieldProperty
+     * Set property
      *
-     * @param \BW\BlogBundle\Entity\CustomFieldProperty $customFieldProperty
+     * @param \BW\CustomBundle\Entity\Property $property
      * @return Category
      */
-    public function setCustomFieldProperty(CustomFieldProperty $customFieldProperty = null)
+    public function setProperty(Property $property = null)
     {
-        $this->customFieldProperty = $customFieldProperty;
+        $this->property = $property;
 
         return $this;
     }
 
     /**
-     * Get customFieldProperty
+     * Get property
      *
-     * @return \BW\BlogBundle\Entity\CustomFieldProperty 
+     * @return \BW\CustomBundle\Entity\Property 
      */
-    public function getCustomFieldProperty()
+    public function getProperty()
     {
-        return $this->customFieldProperty;
+        return $this->property;
     }
 }

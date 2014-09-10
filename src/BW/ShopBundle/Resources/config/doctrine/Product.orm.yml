@@ -48,8 +48,8 @@ BW\ShopBundle\Entity\Product:
             targetEntity: BW\ShopBundle\Entity\ProductImage
             mappedBy: product
             cascade: [persist, remove]
-        productCustomFields:
-            targetEntity: BW\ShopBundle\Entity\ProductCustomField
+        productFields:
+            targetEntity: BW\ShopBundle\Entity\ProductField
             mappedBy: product
             cascade: [persist, remove]
     manyToOne:

@@ -1,0 +1,20 @@
+BW\BlogBundle\Entity\PostField:
+    type: entity
+    table: blog_post_custom_fields
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields: {}
+    manyToOne:
+        post:
+            targetEntity: BW\BlogBundle\Entity\Post
+            inversedBy: postFields
+        field:
+            targetEntity: BW\CustomBundle\Entity\Field
+    manyToMany:
+        properties:
+            targetEntity: BW\CustomBundle\Entity\Property
+    lifecycleCallbacks: {}

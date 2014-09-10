@@ -1,0 +1,26 @@
+# Custom Fields
+admin_custom_fields:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/custom/field
+    defaults: { _controller: BWCustomBundle:Field:fields, _locale: %locale% }
+
+admin_custom_field_add:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/custom/field/add
+    defaults: { _controller: BWCustomBundle:Field:field, _locale: %locale% }
+
+admin_custom_field_edit:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/custom/field/{id}/edit
+    defaults: { _controller: BWCustomBundle:Field:field, _locale: %locale% }
+
+# Custom Properties
+admin_custom_field_property_add:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/custom/field/{field_id}/property/add
+    defaults: { _controller: BWCustomBundle:Property:property, _locale: %locale% }
+
+admin_custom_field_property_edit:
+    host:     %domain%
+    pattern:  /_admin/{_locale}/custom/field/{field_id}/property/{id}/edit
+    defaults: { _controller: BWCustomBundle:Property:property, _locale: %locale% }

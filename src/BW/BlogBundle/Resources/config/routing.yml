@@ -59,33 +59,6 @@ admin_contact_edit:
     pattern:  /_admin/{_locale}/contact/{id}/edit
     defaults: { _controller: BWBlogBundle:Admin/Contact:contact, _locale: %locale% }
     
-# Custom Fields 
-admin_custom_fields:
-    host:     %domain%
-    pattern:  /_admin/{_locale}/custom-fields
-    defaults: { _controller: BWBlogBundle:Admin/CustomField:customFields, _locale: %locale% }
-  
-admin_custom_field_add:
-    host:     %domain%
-    pattern:  /_admin/{_locale}/custom-field/add
-    defaults: { _controller: BWBlogBundle:Admin/CustomField:customField, _locale: %locale% }
-
-admin_custom_field_edit:
-    host:     %domain%
-    pattern:  /_admin/{_locale}/custom-field/{id}/edit
-    defaults: { _controller: BWBlogBundle:Admin/CustomField:customField, _locale: %locale% }
-  
-# Custom Field Properties
-admin_custom_field_property_add:
-    host:     %domain%
-    pattern:  /_admin/{_locale}/custom-field/{field_id}/property/add
-    defaults: { _controller: BWBlogBundle:Admin/CustomFieldProperty:customFieldProperty, _locale: %locale% }
-
-admin_custom_field_property_edit:
-    host:     %domain%
-    pattern:  /_admin/{_locale}/custom-field/{field_id}/property/{id}/edit
-    defaults: { _controller: BWBlogBundle:Admin/CustomFieldProperty:customFieldProperty, _locale: %locale% }
-    
 ############
 # Frontend #
 ############

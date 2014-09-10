@@ -3,17 +3,17 @@
 namespace BW\ShopBundle\Form;
 
 use BW\ShopBundle\Entity\Product;
-use BW\ShopBundle\Entity\ProductCustomField;
+use BW\ShopBundle\Entity\ProductField;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
- * Class ProductCustomFieldType
+ * Class ProductFieldType
  * @package BW\ShopBundle\Form
  */
-class ProductCustomFieldType extends AbstractType
+class ProductFieldType extends AbstractType
 {
     /**
      * @var \BW\ShopBundle\Entity\Product
@@ -39,15 +39,15 @@ class ProductCustomFieldType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $index = (int)str_replace(array('[', ']'), '', $options['property_path']);
-        /** @var ProductCustomField $productCustomField */
-        $productCustomField = $this->product->getProductCustomFields()->get($index);
-        $customField = $productCustomField->getCustomField();
+        /** @var ProductField $productField */
+        $productField = $this->product->getProductFields()->get($index);
+        $field = $productField->getField();
 
-        $productCustomField->setProduct($this->product);
+        $productField->setProduct($this->product);
 
         $builder
-//            ->add('customField', 'entity', array(
-//                'class' => 'BW\BlogBundle\Entity\CustomField',
+//            ->add('field', 'entity', array(
+//                'class' => 'BW\CustomBundle\Entity\Field',
 //                'property' => 'name',
 //                'disabled' => true,
 //                // 'label' => 'Поле ',
@@ -55,20 +55,20 @@ class ProductCustomFieldType extends AbstractType
 //                    'class' => 'form-control',
 //                ),
 //            ))
-            ->add('customFieldProperties', 'entity', array(
-                'class' => 'BW\BlogBundle\Entity\CustomFieldProperty',
+            ->add('properties', 'entity', array(
+                'class' => 'BW\CustomBundle\Entity\Property',
                 'property' => 'name',
-                'query_builder' => function(EntityRepository $er) use ($customField) {
+                'query_builder' => function(EntityRepository $er) use ($field) {
                     return $er->createQueryBuilder('cfp')
-                        ->where('cfp.customField = :customField')
-                        ->setParameter('customField', $customField)
+                        ->where('cfp.field = :field')
+                        ->setParameter('field', $field)
                         ->orderBy('cfp.name', 'ASC')
                     ;
                 },
-                // 'group_by' => 'customField',
+                // 'group_by' => 'field',
                 'multiple' => true,
                 'expanded' => false,
-                'label' => $customField->getName(),
+                'label' => $field->getName(),
                 'attr' => array(
                     'class' => 'form-control',
                     'style' => 'height: 120px;'
@@ -83,7 +83,7 @@ class ProductCustomFieldType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BW\ShopBundle\Entity\ProductCustomField'
+            'data_class' => 'BW\ShopBundle\Entity\ProductField'
         ));
     }
 

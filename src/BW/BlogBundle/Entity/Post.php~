@@ -3,144 +3,115 @@
 namespace BW\BlogBundle\Entity;
 
 use BW\LocalizationBundle\Entity\Lang;
+use BW\RouterBundle\Entity\Route;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 
 /**
- * Post
- *
- * @ORM\Table(name="posts")
- * @ORM\Entity(repositoryClass="BW\BlogBundle\Entity\PostRepository")
- * @ORM\HasLifecycleCallbacks()
+ * Class Post
+ * @package BW\BlogBundle\Entity
  */
 class Post
 {
     /**
-     * @var integer
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="id", type="integer")
+     * @var integer $id
      */
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="slug", type="string", length=255)
-     */
-    private $slug;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255)
-     */
-    private $title;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="meta_description", type="string", length=255)
-     */
-    private $metaDescription;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="heading", type="string", length=255)
+     * @var string $heading
      */
     private $heading;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="short_description", type="text")
+     * @var string $slug
+     */
+    private $slug;
+
+    /**
+     * @var string $title
+     */
+    private $title;
+
+    /**
+     * @var string$metaDescription
+     */
+    private $metaDescription;
+
+    /**
+     * @var string $shortDescription
      */
     private $shortDescription;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="content", type="text")
+     * @var string $content
+     * @TODO Rename to "description"
      */
     private $content;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created", type="datetime")
+     * @var \DateTime $created
      */
     private $created;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updated", type="datetime")
+     * @var \DateTime $updated
      */
     private $updated;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="published", type="boolean")
+     * @var boolean $published
      */
     private $published = true;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="home", type="boolean")
+     * @var boolean $home
      */
     private $home = false;
 
     /**
-     * @var \BW\LocalizationBundle\Entity\Lang
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\LocalizationBundle\Entity\Lang")
-     * @ORM\JoinColumn(name="lang_id", referencedColumnName="id")
-     */
-    private $lang;
-
-    /**
-     * @var integer
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\RouterBundle\Entity\Route", cascade={"remove"})
-     * @ORM\JoinColumn(name="route_id", referencedColumnName="id")
-     */
-    private $route;
-    
-    /**
-     * @var \BW\BlogBundle\Entity\Category
-     *
-     * @ORM\ManyToOne(targetEntity="\BW\BlogBundle\Entity\Category", inversedBy="posts")
+     * @var Category $category
      */
     private $category;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="BW\BlogBundle\Entity\PostCustomField", mappedBy="post")
+     * @var Lang $lang
      */
-    private $postCustomFields;
+    private $lang;
 
     /**
-     * @var \BW\BlogBundle\Entity\Image
-     *
-     * @ORM\OneToOne(targetEntity="\BW\BlogBundle\Entity\Image", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     * @var Route $route
+     */
+    private $route;
+
+    /**
+     * @var ArrayCollection $postFields
+     */
+    private $postFields;
+
+    /**
+     * @var Image
      */
     private $image;
 
+
+    public function __construct()
+    {
+        $this->created = new \DateTime();
+        $this->updated = new \DateTime();
+        $this->postFields = new ArrayCollection();
+    }
+
+
     /**
      * Set default values
-     * @ORM\PrePersist
      *
+     * ORM\PrePersist
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
-     *
      * @return $this
      */
-    public function setDefaultValues(\Doctrine\ORM\Event\LifecycleEventArgs $args) {
+    public function setDefaultValues(LifecycleEventArgs $args)
+    {
         $values = array(
             'slug' => '',
             'title' => '',
@@ -148,7 +119,7 @@ class Post
             'shortDescription' => '',
             'content' => '',
         );
-        
+
         $item = $args->getEntity();
         $class = __CLASS__;
         if ($item instanceof $class) {
@@ -164,17 +135,12 @@ class Post
                 }
             }
         }
-        
+
         return $this;
     }
-    
 
-    public function __construct() {
-        $this->created = new \DateTime();
-        $this->updated = new \DateTime();
-        $this->postCustomFields = new ArrayCollection();
-    }
-    
+
+    /* SETTERS / GETTERS */
     
     /**
      * Get id
@@ -184,6 +150,29 @@ class Post
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set heading
+     *
+     * @param string $heading
+     * @return Post
+     */
+    public function setHeading($heading)
+    {
+        $this->heading = $heading;
+
+        return $this;
+    }
+
+    /**
+     * Get heading
+     *
+     * @return string
+     */
+    public function getHeading()
+    {
+        return $this->heading;
     }
 
     /**
@@ -253,29 +242,6 @@ class Post
     public function getMetaDescription()
     {
         return $this->metaDescription;
-    }
-
-    /**
-     * Set heading
-     *
-     * @param string $heading
-     * @return Post
-     */
-    public function setHeading($heading)
-    {
-        $this->heading = $heading;
-    
-        return $this;
-    }
-
-    /**
-     * Get heading
-     *
-     * @return string 
-     */
-    public function getHeading()
-    {
-        return $this->heading;
     }
 
     /**
@@ -394,12 +360,32 @@ class Post
     }
 
     /**
+     * Is home
+     *
+     * @return boolean
+     */
+    public function isHome()
+    {
+        return $this->home;
+    }
+
+    /**
+     * Get home
+     *
+     * @return boolean
+     */
+    public function getHome()
+    {
+        return $this->home;
+    }
+
+    /**
      * Set lang
      *
      * @param Lang $lang
      * @return Post
      */
-    public function setLang(\BW\LocalizationBundle\Entity\Lang $lang = null)
+    public function setLang(Lang $lang = null)
     {
         $this->lang = $lang;
     
@@ -423,7 +409,7 @@ class Post
      * @param \BW\RouterBundle\Entity\Route $route
      * @return Post
      */
-    public function setRoute(\BW\RouterBundle\Entity\Route $route = null)
+    public function setRoute(Route $route = null)
     {
         $this->route = $route;
     
@@ -446,7 +432,7 @@ class Post
      * @param \BW\BlogBundle\Entity\Category $category
      * @return Post
      */
-    public function setCategory(\BW\BlogBundle\Entity\Category $category = null)
+    public function setCategory(Category $category = null)
     {
         $this->category = $category;
     
@@ -474,26 +460,6 @@ class Post
         $this->home = $home;
         
         return $this;
-    }
-
-    /**
-     * Is home
-     *
-     * @return boolean 
-     */
-    public function isHome()
-    {
-        return $this->home;
-    }
-
-    /**
-     * Get home
-     *
-     * @return boolean 
-     */
-    public function getHome()
-    {
-        return $this->home;
     }
 
     /**
@@ -526,36 +492,36 @@ class Post
     }
 
     /**
-     * Add postCustomFields
+     * Add postFields
      *
-     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
+     * @param \BW\BlogBundle\Entity\PostField $postFields
      * @return Post
      */
-    public function addPostCustomField(\BW\BlogBundle\Entity\PostCustomField $postCustomFields)
+    public function addPostField(PostField $postFields)
     {
-        $this->postCustomFields[] = $postCustomFields;
+        $this->postFields[] = $postFields;
 
         return $this;
     }
 
     /**
-     * Remove postCustomFields
+     * Remove postFields
      *
-     * @param \BW\BlogBundle\Entity\PostCustomField $postCustomFields
+     * @param \BW\BlogBundle\Entity\PostField $postFields
      */
-    public function removePostCustomField(\BW\BlogBundle\Entity\PostCustomField $postCustomFields)
+    public function removePostField(PostField $postFields)
     {
-        $this->postCustomFields->removeElement($postCustomFields);
+        $this->postFields->removeElement($postFields);
     }
 
     /**
-     * Get postCustomFields
+     * Get postFields
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPostCustomFields()
+    public function getPostFields()
     {
-        return $this->postCustomFields;
+        return $this->postFields;
     }
 
 }

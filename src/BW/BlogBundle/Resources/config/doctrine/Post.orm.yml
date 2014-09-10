@@ -1,6 +1,6 @@
 BW\BlogBundle\Entity\Post:
     type: entity
-    table: posts
+    table: blog_posts
     repositoryClass: BW\BlogBundle\Entity\PostRepository
     id:
         id:
@@ -39,8 +39,8 @@ BW\BlogBundle\Entity\Post:
             targetEntity: BW\BlogBundle\Entity\Image
             cascade: [persist, remove]
     oneToMany:
-        postCustomFields:
-            targetEntity: BW\BlogBundle\Entity\PostCustomField
+        postFields:
+            targetEntity: BW\BlogBundle\Entity\PostField
             mappedBy: post
             cascade: [remove]
     manyToOne:

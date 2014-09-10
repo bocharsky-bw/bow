@@ -1,0 +1,24 @@
+BW\CustomBundle\Entity\Field:
+    type: entity
+    table: custom_fields
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        expanded:
+            type: boolean
+        multiple:
+            type: boolean
+        used:
+            type: boolean
+    oneToMany:
+        properties:
+            targetEntity: BW\CustomBundle\Entity\Property
+            mappedBy: field
+    lifecycleCallbacks: {}
