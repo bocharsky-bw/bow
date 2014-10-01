@@ -39,6 +39,18 @@
             {% endif %}
         </div>
     {% endif %}
+    {% if entity.productFields.count %}
+        <div class="fields">
+            {% for productField in entity.productFields %}
+                <div class="field">
+                    <strong>{{ productField.field.name }}:</strong>
+                    {% for property in productField.properties %}
+                        {{ property.name ~ (not loop.last ? ',' : '') }}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="sku">
         Артикул: {{ entity.sku }}
     </div>

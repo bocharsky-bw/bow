@@ -7,6 +7,7 @@ use BW\MainBundle\Utility\FormUtility;
 use BW\ShopBundle\Entity\ProductField;
 use BW\ShopBundle\Entity\Product;
 use BW\ShopBundle\Form\ProductType;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\QueryBuilder;
@@ -98,13 +99,13 @@ class ProductController extends Controller
         $filterQuery = preg_replace('@\-\*(\?.*)?$@', '', $filterQuery); // remove asterisk sign (-*) with query string at the end
         $ids = explode('-', $filterQuery);
 
-        // Get collection of entities from property IDs
-        $collection = $em->getRepository('BWCustomBundle:Property')->findBy(array(
+        /** @var array $collection Get collection of entities from property IDs */
+        $properties = $em->getRepository('BWCustomBundle:Property')->findBy(array(
             'id' => $ids,
         ));
 
         $filter = $this->get('bw_shop.service.product_filter');
-        $form = $filter->createProductFilterForm($collection);
+        $form = $filter->createProductFilterForm($properties);
 
         /** @var QueryBuilder $qb */
         $qb = $em->getRepository('BWShopBundle:Product')->createQueryBuilder('p');
@@ -120,7 +121,47 @@ class ProductController extends Controller
             ->where('p.published = 1')
             ->orderBy('p.created', 'ASC')
         ;
+        if ($properties) {
+            $qb
+//                ->addSelect('pf')
+//                ->addSelect('pr')
+                ->leftJoin('p.productFields', 'pf')
+                ->innerJoin('pf.properties', 'pr')
+            ;
+
+            $fields = [];
+            /** @var Property $property */
+            foreach ($properties as $property) {
+                $propertyIds[] = $property->getId();
+                $groupPropertyIds[$property->getField()->getId()][] = $property->getId();
+            }
+
+            $qb
+                ->andWhere('pr.id IN (:properties)')
+                ->groupBy('p.id')
+                ->having('COUNT(p.id) = :count')
+                ->setParameter('properties', $propertyIds)
+                ->setParameter('count', count($groupPropertyIds)) // Count affected custom fields
+            ;
+        }
         $entities = $qb->getQuery()->getResult(); // Collection of products
+//SELECT
+//	-- COUNT(sp.id),
+//	sp.heading,
+//	spcf.product_id, spcf.field_id,
+//	cf.name,
+//	cp.id, cp.name
+//FROM shop_products AS sp
+//LEFT JOIN shop_product_custom_fields AS spcf
+//	ON spcf.product_id = sp.id
+//LEFT JOIN custom_fields AS cf
+//	ON cf.id = spcf.field_id
+//LEFT JOIN product_field_property AS pfp
+//	ON pfp.product_field_id = spcf.id
+//LEFT JOIN custom_properties AS cp
+//	ON cp.id = pfp.property_id
+//WHERE cp.id IN (9,3,4)
+//	-- GROUP BY sp.id
 
         return $this->render('BWShopBundle:Product:list.html.twig', array(
             'entities' => $entities,

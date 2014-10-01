@@ -12,6 +12,9 @@
             </div>
             <div class="col-lg-9">
                 <h1><i class="icon-list"></i> Все товары</h1>
+                <div class="count">
+                    Всего найдено: <strong>{{ entities|length }}</strong> товаров.
+                </div>
                 <div class="products">
                     {% for entity in entities %}
                         {% include 'BWShopBundle:Product:row.html.twig' %}
